@@ -1,11 +1,13 @@
 package com.heretic.bitpieces_practice.tables;
 
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.Table;
 
 public class Tables {
 
 	@Table("users_required_fields") 
+	@BelongsTo(parent = User.class, foreignKeyName = "users_id")
 	public static class Users_required_fields extends Model {}
 
 	@Table("users") 
@@ -15,6 +17,7 @@ public class Tables {
 	public static class Creator extends Model {}
 
 	@Table("creators_required_fields") 
+	@BelongsTo(parent = Creator.class, foreignKeyName = "creators_id")
 	public static class Creators_required_fields extends Model {}
 
 	@Table("users_btc_addresses") 
@@ -44,8 +47,14 @@ public class Tables {
 	@Table("rewards") 
 	public static class Reward extends Model {}
 
-	@Table("Rewards_earned") 
+	@Table("rewards_earned") 
 	public static class Rewards_earned extends Model {}
+	
+	@Table("pieces_available")
+	public static class Pieces_available extends Model {}
+	
+	@Table("pieces_owned_total")
+	public static class Pieces_owned_total extends Model {}
 
 }
 

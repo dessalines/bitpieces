@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.javalite.activejdbc.Base;
 
+import com.heretic.bitpieces_practice.actions.Actions;
+import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_required_fields;
@@ -26,6 +28,7 @@ public class InitializeTables {
 
 		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/bitpieces_practice", "root", "teresa");
 
+		delete_all();
 		
 		setup_users();
 
@@ -33,9 +36,59 @@ public class InitializeTables {
 		
 		issue_pieces();
 		
+		sell_pieces_to_user();
 		
+		create_bid();
+		
+		create_ask();
 
 
+	}
+	
+	private static void sell_pieces_to_user() {
+		// Dick is buying from leonardo, the creator
+		
+		
+	}
+	
+	
+	private static void create_ask() {
+		// TODO find a way to validate an ask
+		
+		// Find Bill
+		User dick = Users_required_fields.findFirst("first_name = 'Dick'").parent(User.class);
+		
+		Creator leonardo = Creators_required_fields.findFirst("first_name = 'Leonardo'").parent(Creator.class);
+		
+		Actions.createAsk(dick.getId(), leonardo.getId(), 10, 100d);
+		
+	}
+	
+	private static void create_bid() {
+		
+		// TODO find a way to validate a bid
+		
+		// Find Bill
+		User bill = Users_required_fields.findFirst("first_name = 'Bill'").parent(User.class);
+		
+		Creator leonardo = Creators_required_fields.findFirst("first_name = 'Leonardo'").parent(Creator.class);
+		
+		Actions.createBid(bill.getId(), leonardo.getId(), 5, 100d);
+				
+		
+		
+		
+	}
+	private static final void delete_all() {
+		Pieces_issued.deleteAll();
+		Users_required_fields.deleteAll();
+		Users_btc_address.deleteAll();
+		Bid.deleteAll();
+		User.deleteAll();
+		Creators_required_fields.deleteAll();
+		Creators_btc_address.deleteAll();
+		Creator.deleteAll();
+		
 	}
 
 	private static void issue_pieces() {
@@ -53,10 +106,6 @@ public class InitializeTables {
 	}
 
 	private static void setup_creators() {
-		Creators_required_fields.deleteAll();
-		Creators_btc_address.deleteAll();
-		Pieces_issued.deleteAll();
-		Creator.deleteAll();
 		
 		Creator creator1 = new Creator();
 		creator1.saveIt();
@@ -75,9 +124,7 @@ public class InitializeTables {
 	}
 
 	private static void setup_users() {
-		Users_required_fields.deleteAll();
-		Users_btc_address.deleteAll();
-		User.deleteAll();
+
 		
 		User user1 = new User();
 		user1.saveIt();
