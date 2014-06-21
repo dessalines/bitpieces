@@ -41,8 +41,11 @@ public class Tables {
 	@Table("asks") 
 	public static class Ask extends Model {}
 
-	@Table("sales") 
-	public static class Sale extends Model {}
+	@Table("sales_from_users") 
+	public static class Sales_from_users extends Model {}
+	
+	@Table("sales_from_creators") 
+	public static class Sales_from_creators extends Model {}
 
 	@Table("rewards") 
 	public static class Reward extends Model {}

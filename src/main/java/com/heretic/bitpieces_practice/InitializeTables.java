@@ -4,14 +4,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.Model;
 
 import com.heretic.bitpieces_practice.actions.Actions;
+import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_required_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_total;
+import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
+import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Users_required_fields;
@@ -36,7 +41,9 @@ public class InitializeTables {
 		
 		issue_pieces();
 		
-		sell_pieces_to_user();
+		sell_from_creator();
+		
+		sell_from_user();
 		
 		create_bid();
 		
@@ -45,22 +52,54 @@ public class InitializeTables {
 
 	}
 	
-	private static void sell_pieces_to_user() {
-		// Dick is buying from leonardo, the creator
+	private static void sell_from_user() {
 		
+		// Bill is buying some from dick
+		Users_required_fields bill = Users_required_fields.findFirst("first_name = 'Bill'");
+		Integer billUserId = bill.getInteger("users_id");
+		Users_btc_address billBtcAddr = Users_btc_address.findFirst("users_id = ?", billUserId);
+		
+		Users_required_fields dick = Users_required_fields.findFirst("first_name = 'Dick'");
+		Integer dickUserId = dick.getInteger("users_id");
+		Users_btc_address dickBtcAddr = Users_btc_address.findFirst("users_id = ?", dickUserId);
+		
+		Creators_required_fields leonardo = Creators_required_fields.findFirst("first_name = 'Leonardo'");
+		Integer leonardoUserId = leonardo.getInteger("creators_id");
+		
+		Actions.sellFromUser(dickBtcAddr, billBtcAddr, leonardoUserId, 5, 3d);
+		
+		
+	}
+	
+	private static void sell_from_creator() {
+		// Dick is buying from leonardo, the creator
+		Users_required_fields dick = Users_required_fields.findFirst("first_name = 'Dick'");
+		Integer dickUserId = dick.getInteger("users_id");
+		Users_btc_address userBtcAddr = Users_btc_address.findFirst("users_id = ?", dickUserId);
+		
+		Creators_required_fields leonardo = Creators_required_fields.findFirst("first_name = 'Leonardo'");
+		Integer leonardoUserId = leonardo.getInteger("creators_id");
+		Creators_btc_address creatorBtcAddr = Creators_btc_address.findFirst("creators_id = ?", leonardoUserId);
+		
+		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 20, 10d);
+		
+
 		
 	}
 	
 	
 	private static void create_ask() {
-		// TODO find a way to validate an ask
+	
 		
-		// Find Bill
-		User dick = Users_required_fields.findFirst("first_name = 'Dick'").parent(User.class);
 		
-		Creator leonardo = Creators_required_fields.findFirst("first_name = 'Leonardo'").parent(Creator.class);
+		// TODO don't use the Parent thing, just get the users_id
+		Users_required_fields dick = Users_required_fields.findFirst("first_name = 'Dick'");
+		Integer dickUserId = dick.getInteger("users_id");
 		
-		Actions.createAsk(dick.getId(), leonardo.getId(), 10, 100d);
+		Creators_required_fields leonardo = Creators_required_fields.findFirst("first_name = 'Leonardo'");
+		Integer leonardoCreatorId = leonardo.getInteger("creators_id");
+		
+		Actions.createAsk(dickUserId, leonardoCreatorId, 10, 100d);
 		
 	}
 	
@@ -69,21 +108,25 @@ public class InitializeTables {
 		// TODO find a way to validate a bid
 		
 		// Find Bill
-		User bill = Users_required_fields.findFirst("first_name = 'Bill'").parent(User.class);
+		Users_required_fields bill = Users_required_fields.findFirst("first_name = 'Bill'");
+		Integer billUserId = bill.getInteger("users_id");
 		
-		Creator leonardo = Creators_required_fields.findFirst("first_name = 'Leonardo'").parent(Creator.class);
+		Creators_required_fields leonardo = Creators_required_fields.findFirst("first_name = 'Leonardo'");
+		Integer leonardoCreatorId = leonardo.getInteger("creators_id");
 		
-		Actions.createBid(bill.getId(), leonardo.getId(), 5, 100d);
+		Actions.createBid(billUserId, leonardoCreatorId, 5, 100d);
 				
-		
-		
-		
 	}
+	
 	private static final void delete_all() {
+		Sales_from_creators.deleteAll();
+		Sales_from_users.deleteAll();
+		Pieces_owned.deleteAll();
 		Pieces_issued.deleteAll();
 		Users_required_fields.deleteAll();
 		Users_btc_address.deleteAll();
 		Bid.deleteAll();
+		Ask.deleteAll();
 		User.deleteAll();
 		Creators_required_fields.deleteAll();
 		Creators_btc_address.deleteAll();
@@ -99,7 +142,7 @@ public class InitializeTables {
 		Pieces_issued.createIt("creators_id",  leonardo.get("creators_id"), "time_", SDF.format(new Date()), "pieces_issued", 200);
 		Pieces_issued.createIt("creators_id", leonardo.get("creators_id"), 
 				"time_", SDF.format(new Date(new Date().getTime()+86400000)), 
-				"pieces_issued", 200);
+				"pieces_issued", 300);
 		
 		Pieces_total piecesTotal = Pieces_total.findFirst("creators_id = ?", leonardo.get("creators_id"));
 		System.out.println(piecesTotal);
