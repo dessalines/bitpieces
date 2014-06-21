@@ -106,7 +106,7 @@ CREATE TABLE pieces_owned
    creators_id int(11) NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    time_ DATETIME NOT NULL,
-   pieces_owned BIGINT(8) UNSIGNED NOT NULL,
+   pieces_owned BIGINT(8) NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -244,20 +244,31 @@ creators_id, sum(pieces_issued) as pieces_total
 from pieces_issued
 group by creators_id;
 
-CREATE view pieces_available as
-select
-pieces_issued.creators_id, sum(pieces_issued), sum(pieces_owned), sum(pieces_issued) - IFNULL(sum(pieces_owned), 0) as pieces_available
-from pieces_issued
-left join pieces_owned on pieces_issued.creators_id = pieces_owned.creators_id
-group by creators_id
-;
-
 CREATE VIEW pieces_owned_total as
 select 
 pieces_owned.owners_id, pieces_owned.creators_id, sum(pieces_owned.pieces_owned) as pieces_owned_total
 from pieces_owned
 group by owners_id, creators_id;
 
+
+
+-- Pieces available is the total pieces - pieces_owned_total 
+CREATE view pieces_available as
+select
+pieces_total.creators_id,
+pieces_total,
+IFNull(sum(pieces_owned_total), 0) as pieces_owned_total,
+pieces_total - IFNULL(sum(pieces_owned_total), 0) as pieces_available
+from pieces_total
+left join pieces_owned_total on pieces_owned_total.creators_id = pieces_total.creators_id
+group by creators_id
+;
+
+select * from pieces_total;
+select * from pieces_available;
+select * from pieces_owned;
+select * from pieces_owned_total;
+select * from pieces_issued;
 
 
 
