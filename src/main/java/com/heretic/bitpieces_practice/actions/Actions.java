@@ -86,8 +86,7 @@ public class Actions {
 		
 		Double amount_to_host = price*SERVICE_FEE_PCT;
 		Double amount_to_user = price - amount_to_host;
-		
-		
+				
 		
 		String dateOfTransactionStr = SDF.format(new Date());
 		// Do the transaction
