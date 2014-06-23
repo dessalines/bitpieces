@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 public class Tools {
+	
+	public static final StrongPasswordEncryptor PASS_ENCRYPT = new StrongPasswordEncryptor();
 	
 	public static Properties loadProperties(String propertiesFileLocation) {
 

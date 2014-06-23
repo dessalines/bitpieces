@@ -100,7 +100,7 @@ public class Actions {
 		
 		// Charge the fee
 		Fees fee = Fees.create("sales_from_creators_id", sale.getId(),
-				"host_btc_addr_id", Host_btc_addresses.findById(1).getId(),
+				"host_btc_addr_id", Host_btc_addresses.findFirst("").getId(),
 				"fee", amount_to_host);
 		fee.saveIt();
 		

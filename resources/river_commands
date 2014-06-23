@@ -1,0 +1,48 @@
+river commands:
+
+curl -XPUT 'localhost:9200/_river/my_jdbc_river/_meta' -d '{
+    "type" : "jdbc",
+    "jdbc" : {
+        "url" : "jdbc:mysql://localhost/bitpieces_practice",
+        "user" : "river",
+        "password" : "asdf",
+        "sql" : "select * from users_current_view"
+    }
+}'
+
+
+curl -XPUT 'localhost:9200/_river/fees/_meta' -d '{
+    "type" : "jdbc",
+    "jdbc" : {
+        "url" : "jdbc:mysql://localhost/bitpieces_practice",
+        "user" : "river",
+        "password" : "asdf",
+        "sql" : "select * from fees",
+        "index" : "fees",
+        "type" : "fees"
+    }
+}'
+
+curl -XPUT 'localhost:9200/_river/pieces/_meta' -d '{
+    "type" : "jdbc",
+    "jdbc" : {
+        "url" : "jdbc:mysql://localhost/bitpieces_practice",
+        "user" : "river",
+        "password" : "asdf",
+        "sql" : "select * from pieces_owned",
+        "index" : "pieces",
+        "type" : "pieces"
+    }
+}'
+
+// CAN"T HAVE UNDERSCORES IN INDEXES AND TYPES
+
+http://localhost:9200/jdbc/_search?pretty&q=*
+
+curl -XDELETE 'localhost:9200/_river/pieces'
+curl -XDELETE 'localhost:9200/_river/fees'
+curl -XDELETE 'localhost:9200/_river/users'
+
+
+curl -XDELETE 'localhost:9200/_river/pieces_owned'
+curl -XGET 'localhost:9200/_river/my_river/_status'
