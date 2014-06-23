@@ -1,7 +1,11 @@
 package com.heretic.bitpieces_practice;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
@@ -59,6 +63,27 @@ public class InitializeTables {
 
 		create_ask();
 
+		password_checker();
+		
+		ask_bid_acceptor();
+
+
+	}
+
+
+	private static void ask_bid_acceptor() {
+		Actions.askBidAccepter();
+		
+	}
+
+
+	private static void password_checker() {
+		Creators_required_fields leo = Creators_required_fields.findFirst("username like 'Leonardo%'");
+		String encrypted_password = leo.getString("password_encrypted");
+
+		String passwordChecked = (Tools.PASS_ENCRYPT.checkPassword("cat", encrypted_password)==true) ? "Success" : "Failure";
+
+		System.out.println("password check is a " + passwordChecked);
 
 	}
 
@@ -90,14 +115,14 @@ public class InitializeTables {
 		// Dick is buying from leonardo, the creator
 		Users_required_fields dick = Users_required_fields.findFirst("username like 'Dick%'");
 		Integer dickUserId = dick.getInteger("users_id");
-	
+
 		Users_btc_address userBtcAddr = Users_btc_address.findFirst("users_id = ?", dickUserId);
 
 		Creators_required_fields leonardo = Creators_required_fields.findFirst("username like 'Leonardo%'");
 		Integer leonardoUserId = leonardo.getInteger("creators_id");
 		Creators_btc_address creatorBtcAddr = Creators_btc_address.findFirst("creators_id = ?", leonardoUserId);
 
-		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 20, 10d);
+		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 165, 10d);
 
 
 
@@ -115,7 +140,7 @@ public class InitializeTables {
 		Creators_required_fields leonardo = Creators_required_fields.findFirst("username like 'Leonardo%'");
 		Integer leonardoCreatorId = leonardo.getInteger("creators_id");
 
-		Actions.createAsk(dickUserId, leonardoCreatorId, 10, 100d);
+		Actions.createAsk(dickUserId, leonardoCreatorId, 150, 100d,"2014-06-28", true);
 
 	}
 
@@ -130,7 +155,20 @@ public class InitializeTables {
 		Creators_required_fields leonardo = Creators_required_fields.findFirst("username like 'Leonardo%'");
 		Integer leonardoCreatorId = leonardo.getInteger("creators_id");
 
-		Actions.createBid(billUserId, leonardoCreatorId, 5, 100d);
+		Actions.createBid(billUserId, leonardoCreatorId, 5, 120d, "2014-06-28", true);
+		
+		// Find John, also wants to bid on it, at a higher bid, and more pieces
+		Users_required_fields john = Users_required_fields.findFirst("username like 'John%'");
+		Integer johnUserId = john.getInteger("users_id");
+		
+		Actions.createBid(johnUserId, leonardoCreatorId, 10, 130d, "2014-06-28", true);
+		
+		// Finally Terry, wants to bid the lowest, but more than the asker has to sell
+		Users_required_fields terry = Users_required_fields.findFirst("username like 'Terry%'");
+		Integer terryUserId = terry.getInteger("users_id");
+		
+		Actions.createBid(terryUserId, leonardoCreatorId, 200, 110d, "2014-06-28", true);
+		
 
 	}
 
@@ -155,9 +193,9 @@ public class InitializeTables {
 	private static void issue_pieces() {
 		// A creator issues some pieces
 		// Find leonardo davinci
-//		Creators_required_fields leonardo = Creators_required_fields.findFirst("username = 'Leonardo'");
+		//		Creators_required_fields leonardo = Creators_required_fields.findFirst("username = 'Leonardo'");
 		Creators_required_fields leonardo = Creators_required_fields.findFirst("username like ?", "Leonardo%");
-		
+
 		Pieces_issued.createIt("creators_id",  leonardo.get("creators_id"), "time_", SDF.format(new Date()), "pieces_issued", 200);
 		Pieces_issued.createIt("creators_id", leonardo.get("creators_id"), 
 				"time_", SDF.format(new Date(new Date().getTime()+86400000)), 
@@ -189,24 +227,22 @@ public class InitializeTables {
 
 	private static void setup_users() {
 
+		List<Object> userIds = new ArrayList<Object>();
+		for (int i = 0; i < 4; i++) {
+			User user1 = new User();
+			user1.saveIt();
+			
+			userIds.add(user1.getId());
+		}
 
-		User user1 = new User();
-		user1.saveIt();
+		Iterator<Object> it = userIds.iterator();
+		for (String name : Arrays.asList("Bill_Jeffries", "Dick_Tatum", "John_Himperdinkle", "Terry_Westworth")) {
+			Object cUserId = it.next();
+			Users_required_fields.createIt("users_id", cUserId, "username", name, 
+					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"));
+			Users_btc_address.createIt("users_id", cUserId, "btc_addr", "fake");
+		}
 
-		User user2 = new User();
-		user2.saveIt();
-
-		
-		
-		Users_required_fields.createIt("users_id", user1.getId(), "username", "Bill_Jeffries", 
-				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"));
-		Users_required_fields.createIt("users_id", user2.getId(), "username", "Dick_Tatum",
-				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("cat"));
-
-		Users_btc_address.createIt("users_id", user1.getId(), "btc_addr", "fake");
-		Users_btc_address.createIt("users_id", user1.getId(), "btc_addr", "fake2");
-
-		Users_btc_address.createIt("users_id", user2.getId(), "btc_addr", "fake");
 
 
 	}

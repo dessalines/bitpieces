@@ -20,7 +20,8 @@ rewards_earned,
 host_btc_addresses,
 fees
 ;
-DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view
+DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
+ask_bid_accept_checker
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -38,8 +39,8 @@ CREATE TABLE users_required_fields
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
    users_id int(11) NOT NULL,
    FOREIGN KEY (users_id) REFERENCES users(id),
-   first_name VARCHAR(56) NOT NULL,
-   last_name VARCHAR(56) NOT NULL,
+   username VARCHAR(56) NOT NULL,
+   password_encrypted TINYTEXT NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -58,8 +59,8 @@ CREATE TABLE creators_required_fields
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
    creators_id int(11) NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
-   first_name VARCHAR(56) NOT NULL,
-   last_name VARCHAR(56) NOT NULL,
+   username VARCHAR(56) NOT NULL,
+   password_encrypted TINYTEXT NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -132,6 +133,8 @@ CREATE TABLE bids
    creators_id int(11) NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    time_ DATETIME NOT NULL,
+   valid_until DATETIME NOT NULL,
+   partial_fill TINYINT(1) NOT NULL,
    pieces BIGINT(8) UNSIGNED NOT NULL,
    bid DOUBLE UNSIGNED NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
@@ -147,6 +150,8 @@ CREATE TABLE asks
    creators_id int(11) NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    time_ DATETIME NOT NULL,
+   valid_until DATETIME NOT NULL,
+   partial_fill TINYINT(1) NOT NULL,
    pieces BIGINT(8) UNSIGNED NOT NULL,
    ask DOUBLE UNSIGNED NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
@@ -305,25 +310,55 @@ group by creators_id
 
 CREATE VIEW users_current_view as
 select
-users.id, first_name, last_name
+users.id, username
 from users
 left join users_required_fields on users.id = users_required_fields.users_id
 ;
 
+CREATE VIEW ask_bid_accept_checker as 
+select 
+--*,
+--sum(bids.pieces)
+asks.id as ask_id,
+asks.users_id as askers_id,
+asks.pieces as ask_pieces,
+asks.ask,
+asks.valid_until as ask_valid_until,
+asks.partial_fill as ask_partial_fill,
+bids.id as bid_id,
+bids.users_id as bidders_id,
+bids.pieces as bids_pieces,
+bids.bid,
+bids.valid_until as bid_valid_until,
+bids.partial_fill as bid_partial_fill,
+bid-ask as price_difference
 
 
+from 
+asks
+left join
+bids
+on asks.creators_id = bids.creators_id
+where bid >= ask
+and current_time() < asks.valid_until
+and current_time() < bids.valid_until
+
+-- ordering by the highest bidder, and when the asker placed his asc (first in line)
+order by asks.id asc,bid-ask desc
+;
+
+/*
 select * from pieces_total;
 select * from pieces_available;
 select * from pieces_owned;
 select * from pieces_owned_total;
 select * from pieces_issued;
 select * from users_current_view;
-
-
 select * from worth;
 select * from prices;
+*/
 
-
+--grant select on bitpieces.* to 'river'@'%' identified by 'asdf';
 
 -- the audit tables and triggers
 

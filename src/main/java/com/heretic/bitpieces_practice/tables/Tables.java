@@ -64,6 +64,9 @@ public class Tables {
 	
 	@Table("fees")
 	public static class Fees extends Model {}
+	
+	@Table("ask_bid_accept_checker")
+	public static class Ask_bid_accept_checker extends Model {}
 
 }
 
