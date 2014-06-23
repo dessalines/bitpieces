@@ -12,6 +12,8 @@ import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_required_fields;
+import com.heretic.bitpieces_practice.tables.Tables.Fees;
+import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_total;
@@ -36,6 +38,8 @@ public class InitializeTables {
 		delete_all();
 		
 		setup_users();
+		
+		setup_host_btc_address();
 
 		setup_creators();
 		
@@ -52,6 +56,10 @@ public class InitializeTables {
 
 	}
 	
+	private static void setup_host_btc_address() {
+		Host_btc_addresses.createIt("btc_addr", "fake");
+	}
+
 	private static void sell_from_user() {
 		
 		// Bill is buying some from dick
@@ -119,6 +127,8 @@ public class InitializeTables {
 	}
 	
 	private static final void delete_all() {
+		Fees.deleteAll();
+		Host_btc_addresses.deleteAll();
 		Sales_from_creators.deleteAll();
 		Sales_from_users.deleteAll();
 		Pieces_owned.deleteAll();

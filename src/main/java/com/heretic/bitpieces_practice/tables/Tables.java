@@ -58,6 +58,12 @@ public class Tables {
 	
 	@Table("pieces_owned_total")
 	public static class Pieces_owned_total extends Model {}
+	
+	@Table("host_btc_addresses")
+	public static class Host_btc_addresses extends Model {}
+	
+	@Table("fees")
+	public static class Fees extends Model {}
 
 }
 

@@ -7,6 +7,8 @@ import java.util.NoSuchElementException;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
+import com.heretic.bitpieces_practice.tables.Tables.Fees;
+import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_total;
@@ -16,6 +18,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
 
 public class Actions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final Double SERVICE_FEE_PCT = .05d;
 
 
 	public static Bid createBid(Object userId, Object creatorId, Integer pieces, Double bid_amount) {
@@ -81,6 +84,10 @@ public class Actions {
 					pieces_available + " are available");
 		}
 		
+		Double amount_to_host = price*SERVICE_FEE_PCT;
+		Double amount_to_user = price - amount_to_host;
+		
+		
 		
 		String dateOfTransactionStr = SDF.format(new Date());
 		// Do the transaction
@@ -88,9 +95,16 @@ public class Actions {
 				"to_users_btc_addr_id", userBtcAddr.getId(),
 				"time_", dateOfTransactionStr,
 				"pieces", pieces,
-				"price", price);
+				"price", amount_to_user);
 		
 		sale.saveIt();
+		
+		// Charge the fee
+		Fees fee = Fees.create("sales_from_creators_id", sale.getId(),
+				"host_btc_addr_id", Host_btc_addresses.findById(1).getId(),
+				"fee", amount_to_host);
+		fee.saveIt();
+		
 		
 
 		
@@ -112,12 +126,12 @@ public class Actions {
 			Double price) {
 		
 		String dateOfTransactionStr = SDF.format(new Date());
-		Integer ownersId = fromUserBtcAddr.getInteger("users_id");
+		Integer sellersId = fromUserBtcAddr.getInteger("users_id");
 		Integer buyersId = toUserBtcAddr.getInteger("users_id");
 		
 		
 		// Make sure that the from user actually has those pieces, and subtract them from pieces owned
-		Pieces_owned_total pieces_owned_total_obj = Pieces_owned_total.findFirst("owners_id = ? and creators_id = ?", ownersId, creatorsId);
+		Pieces_owned_total pieces_owned_total_obj = Pieces_owned_total.findFirst("owners_id = ? and creators_id = ?", sellersId, creatorsId);
 		Integer pieces_owned_total = pieces_owned_total_obj.getInteger("pieces_owned_total");
 		
 		if (pieces_owned_total < pieces) {
@@ -125,12 +139,18 @@ public class Actions {
 					pieces_owned_total + ".");
 		}
 
-		Pieces_owned pieces_owned = Pieces_owned.create("owners_id", ownersId,
+		Pieces_owned pieces_owned_seller = Pieces_owned.create("owners_id", sellersId,
 				"creators_id", creatorsId,
 				"time_", dateOfTransactionStr,
 				"pieces_owned", -pieces);
-		pieces_owned.saveIt();
+		pieces_owned_seller.saveIt();
 				
+		Pieces_owned pieces_owned_buyer = Pieces_owned.create("owners_id", buyersId,
+				"creators_id", creatorsId,
+				"time_", dateOfTransactionStr,
+				"pieces_owned", pieces);
+		pieces_owned_buyer.saveIt();
+		
 		
 		Sales_from_users sale = Sales_from_users.create("from_users_btc_addr_id", fromUserBtcAddr.getId(),
 				"to_users_btc_addr_id", toUserBtcAddr.getId(),
