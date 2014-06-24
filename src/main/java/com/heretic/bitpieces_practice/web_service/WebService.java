@@ -10,7 +10,6 @@ import org.javalite.activejdbc.Base;
 
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.actions.Actions;
-import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tools.Tools;
 
 public class WebService {
@@ -38,17 +37,46 @@ public class WebService {
 		});
 
 		post("/registeruser", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
 			dbInit(prop);
 
-			res.header("Access-Control-Allow-Origin", "http://localhost");
+			
 
 			// Create the user
 			Actions.createUserFromAjax(req.body());
-
+			dbClose();
 			return "Hello World: " + req.body();
-
+		
 		});
+		
+		post("/userlogin", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			dbInit(prop);
 
+			
+
+			// log the user in
+			String userId = Actions.userLogin(req.body());
+			
+			dbClose();
+			
+			if (userId != null) {
+				// Put the users ID in the session
+				req.session().attribute("userId", userId); // put the user id in the session data
+
+			
+				System.out.println("The session user Id is " + req.session().attribute("userId"));
+				return "Logged in";
+			} else {
+				return "Incorrect Username or password";
+			}
+			
+	
+
+			
+		});
+		
+		
 
 	}
 	private static final void dbInit(Properties prop) {
@@ -57,4 +85,8 @@ public class WebService {
 				prop.getProperty("dbuser"), 
 				prop.getProperty("dbpassword"));
 	}
+	private static final void dbClose() {
+		Base.close();
+	}
+	
 }

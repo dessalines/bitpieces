@@ -311,8 +311,6 @@ public class Actions {
 
 	public static User createUserFromAjax(String reqBody) {
 
-		
-		
 		// Create a user
 		User user = new User();
 		user.saveIt();
@@ -328,6 +326,25 @@ public class Actions {
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")));
 
 		return user;
+	}
+
+	public static String userLogin(String reqBody) {
+		
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+		
+		// fetch the required fields
+		Users_required_fields user = Users_required_fields.findFirst("username = '" + postMap.get("username") + "'");
+		
+		String encryptedPassword = user.getString("password_encrypted");
+		
+		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
+		
+		String returnVal = (correctPass == true) ? user.getString("users_id") : null;
+		
+		return returnVal;
+		
+		
+		
 	}
 
 
