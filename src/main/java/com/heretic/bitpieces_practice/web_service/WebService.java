@@ -21,35 +21,35 @@ public class WebService {
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 
 
-		
-		
-	
+
+
+
 		get("/hello", (req, res) -> {
-	
+
 			return "hi from the bitpieces web service";
 		});
-        get("/help", (req, res) -> {
-            res.redirect("/hello");
-            return null;
-         });
-        get("/", (req, res) -> {
-            res.redirect("/hello");
-            return null;
-         });
-        
-        post("/registeruser", (req, res) -> {
-    		dbInit(prop);
+		get("/help", (req, res) -> {
+			res.redirect("/hello");
+			return null;
+		});
+		get("/", (req, res) -> {
+			res.redirect("/hello");
+			return null;
+		});
 
-        	res.header("Access-Control-Allow-Origin", "http://localhost");
+		post("/registeruser", (req, res) -> {
+			dbInit(prop);
 
-        	// Create the user
-        	Actions.createUserFromAjax(req.body());
-        	        	
-        	return "Hello World: " + req.body();
- 
-        });
-        
-        
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+
+			// Create the user
+			Actions.createUserFromAjax(req.body());
+
+			return "Hello World: " + req.body();
+
+		});
+
+
 	}
 	private static final void dbInit(Properties prop) {
 		Base.open("com.mysql.jdbc.Driver", 
