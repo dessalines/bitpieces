@@ -3,7 +3,10 @@ package com.heretic.bitpieces_practice.actions;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+
+import org.omg.PortableInterceptor.USER_EXCEPTION;
 
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Ask_bid_accept_checker;
@@ -16,7 +19,10 @@ import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_total;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
+import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
+import com.heretic.bitpieces_practice.tables.Tables.Users_required_fields;
+import com.heretic.bitpieces_practice.tools.Tools;
 
 public class Actions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -301,6 +307,27 @@ public class Actions {
 		// Change the pieces owned
 
 		return sale;
+	}
+
+	public static User createUserFromAjax(String reqBody) {
+
+		
+		
+		// Create a user
+		User user = new User();
+		user.saveIt();
+
+		System.out.println("got here");
+		
+		// create user 
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+
+		// Create the required fields 
+		Users_required_fields userRequiredFields = Users_required_fields.createIt("users_id", user.getId(),
+				"username", postMap.get("username"),
+				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")));
+
+		return user;
 	}
 
 
