@@ -140,7 +140,7 @@ public class InitializeTables {
 		Creators_required_fields leonardo = Creators_required_fields.findFirst("username like 'Leonardo%'");
 		Integer leonardoCreatorId = leonardo.getInteger("creators_id");
 
-		Actions.createAsk(dickUserId, leonardoCreatorId, 150, 100d,"2014-06-28", true);
+		Actions.createAsk(dickUserId, leonardoCreatorId, 160, 100d,"2014-06-28", true);
 
 	}
 
@@ -167,9 +167,8 @@ public class InitializeTables {
 		Users_required_fields terry = Users_required_fields.findFirst("username like 'Terry%'");
 		Integer terryUserId = terry.getInteger("users_id");
 		
-		Actions.createBid(terryUserId, leonardoCreatorId, 200, 110d, "2014-06-28", true);
+		Actions.createBid(terryUserId, leonardoCreatorId, 30, 110d, "2014-06-28", true);
 		
-
 	}
 
 	private static final void delete_all() {
