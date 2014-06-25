@@ -334,6 +334,9 @@ public class Actions {
 		
 		// fetch the required fields
 		Users_required_fields user = Users_required_fields.findFirst("username = '" + postMap.get("username") + "'");
+		if (user==null) {
+			return null;
+		}
 		
 		String encryptedPassword = user.getString("password_encrypted");
 		
