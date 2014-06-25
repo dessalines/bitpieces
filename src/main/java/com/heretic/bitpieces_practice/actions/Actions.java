@@ -2,12 +2,15 @@ package com.heretic.bitpieces_practice.actions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.javalite.activejdbc.LazyList;
 import org.omg.PortableInterceptor.USER_EXCEPTION;
 
+import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Ask_bid_accept_checker;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
@@ -27,7 +30,7 @@ import com.heretic.bitpieces_practice.tools.Tools;
 public class Actions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final Double SERVICE_FEE_PCT = .05d;
-
+	private static final Gson GSON = new Gson();
 
 	public static Bid createBid(Object userId, Object creatorId, Integer pieces, Double bid_amount, 
 			String validUntil, Boolean partial) {
@@ -346,6 +349,14 @@ public class Actions {
 		
 		return returnVal;
 		
+		
+		
+	}
+
+	public static String getPiecesOwnedTotal(String userId) {
+		LazyList<Pieces_owned_total> pieces_owned_total = Pieces_owned_total.where("owners_id = ?", userId);
+	
+		return pieces_owned_total.toJson(true, "creators_id", "pieces_owned_total");
 		
 		
 	}
