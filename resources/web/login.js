@@ -29,10 +29,10 @@ $(document).ready(function(){
 
 
 // !!!!!!They must have names unfortunately
-$( "#registerForm" ).submit(function( event ) {
+$( "#registerBtn" ).click(function( event ) {
 
 	// serializes the form's elements.
-	var formData = $(this).serializeArray();
+	var formData = $("#registerForm").serializeArray();
 	console.log(formData);
 
 	// Loading
@@ -46,7 +46,24 @@ $( "#registerForm" ).submit(function( event ) {
     	data: formData, 
     	success: function(data)
     	{
-               alert(data); // show response from the php script.
+              if (data!="Incorrect Username or password") {
+                
+                document.cookie="authenticated_session_id=" + data + 
+                "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
+                // Hide the modal, reset the form, show successful
+                $("#myModal").modal('hide');
+                $('#registerForm')[0].reset();
+                
+                toastr.success('Registered and logged in.')
+                
+                showHideElementsLoggedIn();
+               } else {
+
+                toastr.error('Incorrect username or password')
+               }
+
+               console.log(document.cookie);
+
            }
        });
 
@@ -65,7 +82,7 @@ $( "#signinBtn" ).click(function( event ) {
 	// Loading
 	$(this).button('loading');
 
-    var url = "http://localhost:4567/userlogin"; // the script where you handle the form input.
+  var url = "http://localhost:4567/userlogin"; // the script where you handle the form input.
 
     // username = $('#userLoginDiv').find('input[name="username"]').val();
     // // = $("#inputUsername3").val();
@@ -109,6 +126,8 @@ $( "#signinBtn" ).click(function( event ) {
     event.preventDefault();
     return false;
 });
+
+
 
 // Logging out
 $('#logouthref').click(function(){ 

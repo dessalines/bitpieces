@@ -66,12 +66,14 @@ public class WebService {
 			dbInit(prop);
 
 			// Create the user
-			Actions.createUserFromAjax(req.body());
+			String userId = Actions.createUserFromAjax(req.body());
+			
+			String authSession = verifyLogin(userId, req.session().id());
 			dbClose();
 
 			// TODO make sure that username doesn't already exist
 			// make a unique index on the DB for usernames
-			return "Hello World: " + req.body();
+			return authSession;
 
 		});
 
@@ -86,25 +88,12 @@ public class WebService {
 			// log the user in
 			String userId = Actions.userLogin(req.body());
 
+			String authSession = verifyLogin(userId, req.session().id());
+			
 			dbClose();
 
-			if (userId != null) {
-				// Put the users ID in the session
-				//				req.session().attribute("userId", userId); // put the user id in the session data
-
-				// Store the users Id in a static map, give them a session id
-				String authenticatedSession = req.session().id();
-				SESSION_TO_USER_MAP.put(authenticatedSession, userId);
-
-
-				res.cookie("/", "auth2", authenticatedSession, 200000, false);
-				res.cookie("/", "derp", "k", 200000, false);	
-
-				System.out.println("The session user Id is " + userId);
-				return authenticatedSession;
-			} else {
-				return "Incorrect Username or password";
-			}
+			return authSession;
+	
 		});
 
 
@@ -112,6 +101,25 @@ public class WebService {
 
 
 	}
+	
+	private static String verifyLogin(String userId, String authenticatedSession) {
+		if (userId != null) {
+			// Put the users ID in the session
+			//				req.session().attribute("userId", userId); // put the user id in the session data
+
+			// Store the users Id in a static map, give them a session id
+			SESSION_TO_USER_MAP.put(authenticatedSession, userId);
+
+//			res.cookie("/", "auth2", authenticatedSession, 200000, false);
+//			res.cookie("/", "derp", "k", 200000, false);	
+
+			return authenticatedSession;
+		} else {
+			return "Incorrect Username or password";
+		}
+		
+	}
+	
 	private static void getPiecesOwned(String userId) {
 		// TODO Auto-generated method stub
 

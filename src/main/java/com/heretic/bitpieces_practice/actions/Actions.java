@@ -312,7 +312,7 @@ public class Actions {
 		return sale;
 	}
 
-	public static User createUserFromAjax(String reqBody) {
+	public static String createUserFromAjax(String reqBody) {
 
 		// Create a user
 		User user = new User();
@@ -328,7 +328,7 @@ public class Actions {
 				"username", postMap.get("username"),
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")));
 
-		return user;
+		return user.getIdName();
 	}
 
 	public static String userLogin(String reqBody) {
