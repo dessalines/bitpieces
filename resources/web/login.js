@@ -93,18 +93,22 @@ $( "#signinBtn" ).click(function( event ) {
     	type: "POST",
     	url: url,
     	 xhrFields: {
-     	withCredentials: false
+     	withCredentials: true
    		},
     	data: formData,
     	success: function(data, status, xhr) {
-    			asdf = xhr.getResponseHeader('Set-Cookie');
-    			console.log(asdf);
-    			console.log(xhr.getAllResponseHeaders()); 
+    			
+       //    console.log(xhr);
+    			// console.log(asdf);
+    			// console.log(xhr.getAllResponseHeaders()); 
+
                // alert(data); // show response from the php script.
                if (data!="Incorrect Username or password") {
+                xhr.getResponseHeader('Set-Cookie');
                	
-               	document.cookie="authenticated_session_id=" + data + 
-               	"; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
+                // old way
+               	// document.cookie="authenticated_session_id=" + data + 
+               	// "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
                 $("#myModal").modal('hide');
                 $('#loginForm')[0].reset();
@@ -113,11 +117,12 @@ $( "#signinBtn" ).click(function( event ) {
                 
                 showHideElementsLoggedIn();
                } else {
-
+                delete_cookie("authenticated_session_id");
                 toastr.error('Incorrect username or password')
                }
 
                console.log(document.cookie);
+               console.log(formData.username);
            }
 
        });
@@ -131,7 +136,7 @@ $( "#signinBtn" ).click(function( event ) {
 
 // Logging out
 $('#logouthref').click(function(){ 
-  delete_cookie("authenticated_session_id=");
+  delete_cookie("authenticated_session_id");
   showHideElementsLoggedIn();
   toastr.success('Logged out.')
 

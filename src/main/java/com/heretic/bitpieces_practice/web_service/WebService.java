@@ -3,21 +3,30 @@ package com.heretic.bitpieces_practice.web_service;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.javalite.activejdbc.Base;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tools.Tools;
 
 public class WebService {
 
-	public static final Map<String, String> SESSION_TO_USER_MAP = new HashMap<String, String>();
+	// How long to keep teh cookies
+	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(1);
+	
 
+	// Use an expiring map to store the authenticated sessions
+	public static final Cache<String, String> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
+		    .maximumSize(10000)
+		    .expireAfterWrite(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS)
+		    .build();
+	
 	private static final Gson GSON = new Gson();
 	private static Logger log = Logger.getLogger(WebService.class.getName());
 	public static void main(String[] args) {
@@ -49,7 +58,8 @@ public class WebService {
 		get("/:auth/getpiecesownedtotal", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			dbInit(prop);
-			String userId = SESSION_TO_USER_MAP.get(req.params(":auth"));
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth"));
+
 
 			String json = Actions.getPiecesOwnedTotal(userId);
 
@@ -90,7 +100,14 @@ public class WebService {
 
 			String authSession = verifyLogin(userId, req.session().id());
 			
+			// Set some cookies for that users login
+			res.cookie("derp2", "k", COOKIE_EXPIRE_SECONDS, false);
+			res.cookie("authenticated_session_id", authSession, COOKIE_EXPIRE_SECONDS, false);
+			
+			
 			dbClose();
+			
+			System.out.println(GSON.toJson(SESSION_TO_USER_MAP));
 
 			return authSession;
 	
@@ -111,7 +128,7 @@ public class WebService {
 			SESSION_TO_USER_MAP.put(authenticatedSession, userId);
 
 //			res.cookie("/", "auth2", authenticatedSession, 200000, false);
-//			res.cookie("/", "derp", "k", 200000, false);	
+//				
 
 			return authenticatedSession;
 		} else {
@@ -132,6 +149,10 @@ public class WebService {
 	}
 	private static final void dbClose() {
 		Base.close();
+	}
+	
+	public static Integer cookieExpiration(Integer minutes) {
+		return minutes*60;
 	}
 
 }
