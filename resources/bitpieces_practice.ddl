@@ -319,6 +319,7 @@ CREATE VIEW ask_bid_accept_checker as
 select 
 --*,
 --sum(bids.pieces)
+asks.creators_id,
 asks.id as ask_id,
 asks.users_id as askers_id,
 asks.pieces as ask_pieces,
@@ -327,12 +328,11 @@ asks.valid_until as ask_valid_until,
 asks.partial_fill as ask_partial_fill,
 bids.id as bid_id,
 bids.users_id as bidders_id,
-bids.pieces as bids_pieces,
+bids.pieces as bid_pieces,
 bids.bid,
 bids.valid_until as bid_valid_until,
 bids.partial_fill as bid_partial_fill,
 bid-ask as price_difference
-
 
 from 
 asks
@@ -340,12 +340,14 @@ left join
 bids
 on asks.creators_id = bids.creators_id
 where bid >= ask
-and current_time() < asks.valid_until
-and current_time() < bids.valid_until
+and NOW() < asks.valid_until
+and NOW() < bids.valid_until
 
 -- ordering by the highest bidder, and when the asker placed his asc (first in line)
 order by asks.id asc,bid-ask desc
 ;
+
+
 
 /*
 select * from pieces_total;
@@ -356,6 +358,9 @@ select * from pieces_issued;
 select * from users_current_view;
 select * from worth;
 select * from prices;
+select * from ask_bid_accept_checker
+
+select * from pieces_owned order by owners_id, time_ desc
 */
 
 --grant select on bitpieces.* to 'river'@'%' identified by 'asdf';
