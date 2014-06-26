@@ -3,6 +3,8 @@ package com.heretic.bitpieces_practice.web_service;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +22,7 @@ public class WebService {
 	// How long to keep teh cookies
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(1);
 	
+
 
 	// Use an expiring map to store the authenticated sessions
 	public static final Cache<String, String> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
@@ -78,7 +81,7 @@ public class WebService {
 			// Create the user
 			String userId = Actions.createUserFromAjax(req.body());
 			
-			String authSession = verifyLogin(userId, req.session().id());
+			String authSession = verifyLogin(userId, Tools.generateSecureRandom());
 			dbClose();
 
 			// TODO make sure that username doesn't already exist
@@ -98,7 +101,7 @@ public class WebService {
 			// log the user in
 			String userId = Actions.userLogin(req.body());
 
-			String authSession = verifyLogin(userId, req.session().id());
+			String authSession = verifyLogin(userId, Tools.generateSecureRandom());
 			
 			// Set some cookies for that users login
 			res.cookie("derp2", "k", COOKIE_EXPIRE_SECONDS, false);
@@ -112,9 +115,6 @@ public class WebService {
 			return authSession;
 	
 		});
-
-
-
 
 
 	}
