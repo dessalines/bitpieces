@@ -3,8 +3,6 @@ package com.heretic.bitpieces_practice.web_service;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -20,23 +18,23 @@ import com.heretic.bitpieces_practice.tools.Tools;
 public class WebService {
 
 	// How long to keep teh cookies
-	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(1);
-	
+	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(30);
+
 
 
 	// Use an expiring map to store the authenticated sessions
 	public static final Cache<String, String> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
-		    .maximumSize(10000)
-		    .expireAfterWrite(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS)
-		    .build();
-	
+			.maximumSize(10000)
+			.expireAfterWrite(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS)
+			.build();
+
 	private static final Gson GSON = new Gson();
 	private static Logger log = Logger.getLogger(WebService.class.getName());
 	public static void main(String[] args) {
 
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 
-	
+
 
 		get("/session", (req,res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
@@ -65,9 +63,12 @@ public class WebService {
 
 
 			String json = Actions.getPiecesOwnedTotal(userId);
+			
+			json = "{\"list\": " + json + "}";
 
 			dbClose();
 
+			System.out.println(json);
 			return json;
 
 
@@ -76,17 +77,31 @@ public class WebService {
 
 		post("/registeruser", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
 			dbInit(prop);
 
 			// Create the user
+
+
 			String userId = Actions.createUserFromAjax(req.body());
-			
-			String authSession = verifyLogin(userId, Tools.generateSecureRandom());
+
 			dbClose();
 
-			// TODO make sure that username doesn't already exist
-			// make a unique index on the DB for usernames
-			return authSession;
+			
+			// Its null if it couldn't create the user, usually cause of constraints
+			if (userId != null) {
+				String authSession = verifyLogin(userId, Tools.generateSecureRandom());
+			
+				// Set some cookies for that users login
+				res.cookie("derp2", "k", COOKIE_EXPIRE_SECONDS, false);
+				res.cookie("authenticated_session_id", authSession, COOKIE_EXPIRE_SECONDS, false);
+
+				// TODO make sure that username doesn't already exist
+				// make a unique index on the DB for usernames
+				return "user registered";
+			} else {
+				return "user not created";
+			}
 
 		});
 
@@ -102,23 +117,23 @@ public class WebService {
 			String userId = Actions.userLogin(req.body());
 
 			String authSession = verifyLogin(userId, Tools.generateSecureRandom());
-			
+
 			// Set some cookies for that users login
 			res.cookie("derp2", "k", COOKIE_EXPIRE_SECONDS, false);
 			res.cookie("authenticated_session_id", authSession, COOKIE_EXPIRE_SECONDS, false);
-			
-			
+
+
 			dbClose();
-			
+
 			System.out.println(GSON.toJson(SESSION_TO_USER_MAP));
 
-			return authSession;
-	
+			return "user logged in";
+
 		});
 
 
 	}
-	
+
 	private static String verifyLogin(String userId, String authenticatedSession) {
 		if (userId != null) {
 			// Put the users ID in the session
@@ -127,16 +142,16 @@ public class WebService {
 			// Store the users Id in a static map, give them a session id
 			SESSION_TO_USER_MAP.put(authenticatedSession, userId);
 
-//			res.cookie("/", "auth2", authenticatedSession, 200000, false);
-//				
+			//			res.cookie("/", "auth2", authenticatedSession, 200000, false);
+			//				
 
 			return authenticatedSession;
 		} else {
 			return "Incorrect Username or password";
 		}
-		
+
 	}
-	
+
 	private static void getPiecesOwned(String userId) {
 		// TODO Auto-generated method stub
 
@@ -150,7 +165,7 @@ public class WebService {
 	private static final void dbClose() {
 		Base.close();
 	}
-	
+
 	public static Integer cookieExpiration(Integer minutes) {
 		return minutes*60;
 	}

@@ -18,10 +18,10 @@ $(document).ready(function() {
     		
                alert(data); // show response from the php script.
                btn.button('reset');
-           }
-       });
+             }
+           });
     event.preventDefault();
-});
+  });
 
 
 	$( "#piecesownedtotalBtn" ).click(function() {
@@ -40,11 +40,29 @@ $(document).ready(function() {
     	success: function(data, status, xhr) {
     		
     		
-               alert(data); // show response from the php script.
-               btn.button('reset');
-           }
-       });
-    event.preventDefault();
+               // arr = $.extend({}, data);
+               // var obj = JSON.parse("arr: " + data);
+               var template = $('#piecesownedTemplate').html();
+             
+                // $.mustache.parse(template);   // optional, speeds up future uses
+                 // Mustache.parse(template);   // optional, speeds up future uses
+
+              var rendered = Mustache.render(template, data);
+              // var rendered = Mustache.render(template, {name : "LUKE"});
+              
+              console.log(data);
+              // console.log(obj);
+              
+              console.log(template);
+              console.log(rendered);
+
+              $('#piecesownedDiv').html(rendered);
+
+
+    btn.button('reset');
+  }
 });
+    event.preventDefault();
+  });
 
 });

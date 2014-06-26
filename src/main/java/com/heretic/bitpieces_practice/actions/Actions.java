@@ -319,46 +319,53 @@ public class Actions {
 		user.saveIt();
 
 		System.out.println("got here");
-		
+
 		// create user 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// Create the required fields 
-		Users_required_fields userRequiredFields = Users_required_fields.createIt("users_id", user.getId(),
-				"username", postMap.get("username"),
-				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")));
+		try {
+			Users_required_fields userRequiredFields = Users_required_fields.createIt("users_id", user.getId(),
+					"username", postMap.get("username"),
+					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
+					"email", postMap.get("email"));
+		} catch (org.javalite.activejdbc.DBException e) {
+			return null;
+		}
 
 		return user.getIdName();
 	}
 
 	public static String userLogin(String reqBody) {
-		
+
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
-		
+
 		// fetch the required fields
 		Users_required_fields user = Users_required_fields.findFirst("username = '" + postMap.get("username") + "'");
 		if (user==null) {
 			return null;
 		}
-		
+
 		String encryptedPassword = user.getString("password_encrypted");
-		
+
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
-		
+
 		String returnVal = (correctPass == true) ? user.getString("users_id") : null;
-		
+
 		return returnVal;
-		
-		
-		
+
+
+
 	}
 
 	public static String getPiecesOwnedTotal(String userId) {
 		LazyList<Pieces_owned_total> pieces_owned_total = Pieces_owned_total.where("owners_id = ?", userId);
-	
+
 		return pieces_owned_total.toJson(true, "creators_id", "pieces_owned_total");
 		
-		
+//		return GSON.toJson(pieces_owned_total.toMaps());
+
+
 	}
 
 

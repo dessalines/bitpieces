@@ -213,9 +213,11 @@ public class InitializeTables {
 		creator2.saveIt();
 
 		Creators_required_fields.createIt("creators_id", creator1.getId(), "username", "Leonardo_Davinci",
-				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("cat"));
+				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("cat"),
+				"email", "asdf@gmail.com");
 		Creators_required_fields.createIt("creators_id", creator2.getId(), "username", "Dusty_Springfield",
-				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"));
+				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
+				"email", "asdf@gmail.com");
 
 		Creators_btc_address.createIt("creators_id", creator1.getId(), "btc_addr", "fake");
 		Creators_btc_address.createIt("creators_id", creator2.getId(), "btc_addr", "fake");
@@ -238,7 +240,8 @@ public class InitializeTables {
 		for (String name : Arrays.asList("Bill_Jeffries", "Dick_Tatum", "John_Himperdinkle", "Terry_Westworth")) {
 			Object cUserId = it.next();
 			Users_required_fields.createIt("users_id", cUserId, "username", name, 
-					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"));
+					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
+					"email", "asdf@gmail.com");
 			Users_btc_address.createIt("users_id", cUserId, "btc_addr", "fake");
 		}
 

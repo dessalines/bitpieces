@@ -6,8 +6,7 @@ body {
   padding-bottom: 40px;
   color: #5a5a5a;
 }
-
-
+  
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
@@ -135,4 +134,6 @@ body {
   .featurette-heading {
     margin-top: 120px;
   }
+
+
 }

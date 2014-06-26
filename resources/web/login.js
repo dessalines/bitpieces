@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	
+
+
 	console.log(document.cookie);
 	$('#registerForm').bootstrapValidator({
 		message: 'This value is not valid',
@@ -15,7 +16,6 @@ $(document).ready(function(){
   showHideElementsLoggedIn();
 
 
-	$('#registerBtn').button();
 	$('#registerBtn').button();
 
 	// $('#registerForm').submit(function(){
@@ -43,15 +43,18 @@ $( "#registerBtn" ).click(function( event ) {
     $.ajax({
     	type: "POST",
     	url: url,
+         xhrFields: {
+      withCredentials: true
+      },
     	data: formData, 
-    	success: function(data)
-    	{
+    	success: function(data, status, xhr) {
+    	
               if (data!="Incorrect Username or password") {
-                
-                document.cookie="authenticated_session_id=" + data + 
-                "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
+                xhr.getResponseHeader('Set-Cookie');
+                // document.cookie="authenticated_session_id=" + data + 
+                // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
-                $("#myModal").modal('hide');
+                $("#userloginModal").modal('hide');
                 $('#registerForm')[0].reset();
                 
                 toastr.success('Registered and logged in.')
@@ -110,10 +113,10 @@ $( "#signinBtn" ).click(function( event ) {
                	// document.cookie="authenticated_session_id=" + data + 
                	// "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
-                $("#myModal").modal('hide');
+                $("#userloginModal").modal('hide');
                 $('#loginForm')[0].reset();
                 
-                toastr.success('Logged in.')
+                toastr.success('Logged in.');
                 
                 showHideElementsLoggedIn();
                } else {
