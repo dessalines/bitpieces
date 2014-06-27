@@ -43,11 +43,11 @@ $(document).ready(function() {
                // arr = $.extend({}, data);
                // var obj = JSON.parse("arr: " + data);
                var template = $('#piecesownedTemplate').html();
-             
+             dataObject = jQuery.parseJSON(data);
                 // $.mustache.parse(template);   // optional, speeds up future uses
-                 // Mustache.parse(template);   // optional, speeds up future uses
+                 Mustache.parse(template);   // optional, speeds up future uses
 
-              var rendered = Mustache.render(template, data);
+              var rendered = Mustache.render(template,dataObject );
               // var rendered = Mustache.render(template, {name : "LUKE"});
               
               console.log(data);

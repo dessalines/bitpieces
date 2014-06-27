@@ -112,16 +112,18 @@
 
             <button id="helloBtn" type="button" class="btn btn-default">Hello!</button>
             <button id="piecesownedtotalBtn" type="button" class="btn btn-default">Pieces Owned Total</button>
-           <div id="piecesownedDiv">Loading...</div>
+           <div id="piecesownedDiv">Loading...
             <script id="piecesownedTemplate" type="x-tmpl-mustache">
-             Pieces owned  
-     
-            
+            pieces owned 
           {{#list}} 
             {{pieces_owned_total}}
-          {{/list}}
+          {{/list}} 
+     
+            
+   
 
             </script>
+            </div>
 
           <h2 class="sub-header">Section title</h2>
           <div class="table-responsive">
