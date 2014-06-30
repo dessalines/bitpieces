@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.javalite.activejdbc.Base;
 
+import spark.Response;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.gson.Gson;
@@ -27,7 +29,7 @@ public class WebService {
 			.maximumSize(10000)
 			.expireAfterWrite(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS)
 			.build();
-
+	
 	private static final Gson GSON = new Gson();
 	private static Logger log = Logger.getLogger(WebService.class.getName());
 	public static void main(String[] args) {
@@ -59,12 +61,11 @@ public class WebService {
 		get("/:auth/getpiecesownedtotal", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			dbInit(prop);
+			
 			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth"));
-
-
+			
 			String json = Actions.getPiecesOwnedTotal(userId);
 			
-//			json = "{\"list\": " + json + "}";
 
 			dbClose();
 
@@ -81,26 +82,42 @@ public class WebService {
 			dbInit(prop);
 
 			// Create the user
-
-
 			String userId = Actions.createUserFromAjax(req.body());
 
 			dbClose();
 
-			
 			// Its null if it couldn't create the user, usually cause of constraints
 			if (userId != null) {
-				String authSession = verifyLogin(userId, Tools.generateSecureRandom());
-			
-				// Set some cookies for that users login
-				res.cookie("derp2", "k", COOKIE_EXPIRE_SECONDS, false);
-				res.cookie("authenticated_session_id", authSession, COOKIE_EXPIRE_SECONDS, false);
+				verifyLoginAndSetCookies(userId, res);
 
-				// TODO make sure that username doesn't already exist
-				// make a unique index on the DB for usernames
 				return "user registered";
 			} else {
-				return "user not created";
+				
+				res.status(666);
+				return "User already exists";
+			}
+
+		});
+		
+		post("/registercreator", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+
+			// Create the user
+			String creatorId = Actions.createCreatorFromAjax(req.body());
+
+			dbClose();
+
+			// Its null if it couldn't create the user, usually cause of constraints
+			if (creatorId != null) {
+				verifyLoginAndSetCookies(creatorId, res);
+
+				return "creator registered";
+			} else {
+				
+				res.status(666);
+				return "Creator already exists";
 			}
 
 		});
@@ -111,58 +128,44 @@ public class WebService {
 
 			dbInit(prop);
 
-
-
 			// log the user in
 			String userId = Actions.userLogin(req.body());
 			
 			dbClose();
 
-			if (userId != null) {
-			String authSession = verifyLogin(userId, Tools.generateSecureRandom());
-
-			// Set some cookies for that users login
-			res.cookie("derp2", "k", COOKIE_EXPIRE_SECONDS, false);
-			res.cookie("authenticated_session_id", authSession, COOKIE_EXPIRE_SECONDS, false);
-
-
 			
+			String message = verifyLoginAndSetCookies(userId, res);
 
-			System.out.println(GSON.toJson(SESSION_TO_USER_MAP));
-
-			return "user logged in";
-			} else {
-				res.status(666);
-				return "Sorry wrong user idjit";
-			}
+			return message;
 
 		});
 
 
 	}
 
-	private static String verifyLogin(String userId, String authenticatedSession) {
+	private static String verifyLoginAndSetCookies(String userId, Response res) {
 		if (userId != null) {
+			String authenticatedSession = Tools.generateSecureRandom();
 			// Put the users ID in the session
 			//				req.session().attribute("userId", userId); // put the user id in the session data
 
 			// Store the users Id in a static map, give them a session id
 			SESSION_TO_USER_MAP.put(authenticatedSession, userId);
 
-			//			res.cookie("/", "auth2", authenticatedSession, 200000, false);
-			//				
+			
+			// Set some cookies for that users login
+			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
+			System.out.println(GSON.toJson(SESSION_TO_USER_MAP));
 
 			return authenticatedSession;
 		} else {
+			res.status(666);
 			return "Incorrect Username or password";
 		}
 
 	}
 
-	private static void getPiecesOwned(String userId) {
-		// TODO Auto-generated method stub
 
-	}
 	private static final void dbInit(Properties prop) {
 		Base.open("com.mysql.jdbc.Driver", 
 				prop.getProperty("dburl"), 

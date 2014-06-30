@@ -12,7 +12,9 @@ import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Ask_bid_accept_checker;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
+import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_required_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Fees;
 import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
@@ -332,6 +334,29 @@ public class Actions {
 		}
 
 		return user.getIdName();
+	}
+	
+	public static String createCreatorFromAjax(String reqBody) {
+
+		// Create a user
+		Creator creator = new Creator();
+		creator.saveIt();
+
+
+		// create user 
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+
+		// Create the required fields 
+		try {
+			Creators_required_fields creatorRequiredFields = Creators_required_fields.createIt("creators_id", creator.getId(),
+					"username", postMap.get("username"),
+					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
+					"email", postMap.get("email"));
+		} catch (org.javalite.activejdbc.DBException e) {
+			return null;
+		}
+
+		return creator.getIdName();
 	}
 
 	public static String userLogin(String reqBody) {

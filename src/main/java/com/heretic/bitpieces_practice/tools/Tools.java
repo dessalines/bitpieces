@@ -3,6 +3,7 @@ package com.heretic.bitpieces_practice.tools;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.HashMap;
@@ -39,15 +40,21 @@ public class Tools {
 
 	public static final Map<String, String> createMapFromAjaxPost(String reqBody) {
 
-		System.out.println(reqBody);
+		
 
 		Map<String, String> postMap = new HashMap<String, String>();
 		String[] split = reqBody.split("&");
 		for (int i = 0; i < split.length; i++) {
 			String[] keyValue = split[i].split("=");
-			postMap.put(keyValue[0], keyValue[1]);
+			try {
+				postMap.put(keyValue[0], java.net.URLDecoder.decode(keyValue[1], "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 
+		System.out.println(postMap);
+		
 		return postMap;
 
 	}
