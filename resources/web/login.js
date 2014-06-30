@@ -16,7 +16,7 @@ $(document).ready(function(){
   showHideElementsLoggedIn();
 
 
-	$('#registerBtn').button();
+  $('#registerBtn').button();
 
 	// $('#registerForm').submit(function(){
 	// 	$.each($('#registerForm').serializeArray(), function(i, field) {
@@ -43,14 +43,14 @@ $( "#registerBtn" ).click(function( event ) {
     $.ajax({
     	type: "POST",
     	url: url,
-         xhrFields: {
+     xhrFields: {
       withCredentials: true
-      },
-    	data: formData, 
-    	success: function(data, status, xhr) {
+    },
+    data: formData, 
+    success: function(data, status, xhr) {
     	
-              if (data!="Incorrect Username or password") {
-                xhr.getResponseHeader('Set-Cookie');
+      if (data!="Incorrect Username or password") {
+        xhr.getResponseHeader('Set-Cookie');
                 // document.cookie="authenticated_session_id=" + data + 
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
@@ -60,20 +60,20 @@ $( "#registerBtn" ).click(function( event ) {
                 toastr.success('Registered and logged in.')
                 
                 showHideElementsLoggedIn();
-               } else {
+              } else {
 
                 toastr.error('Incorrect username or password')
-               }
+              }
 
-               console.log(document.cookie);
+              console.log(document.cookie);
 
-           }
-       });
+            }
+          });
 
 
 
     event.preventDefault();
-});
+  });
 
 
 $( "#signinBtn" ).click(function( event ) {
@@ -95,12 +95,12 @@ $( "#signinBtn" ).click(function( event ) {
     $.ajax({
     	type: "POST",
     	url: url,
-    	 xhrFields: {
-     	withCredentials: true
-   		},
-    	data: formData,
-    	success: function(data, status, xhr) {
-    			
+      xhrFields: {
+        withCredentials: true
+      },
+      data: formData,
+      success: function(data, status, xhr) {
+
        //    console.log(xhr);
     			// console.log(asdf);
     			// console.log(xhr.getAllResponseHeaders()); 
@@ -108,7 +108,7 @@ $( "#signinBtn" ).click(function( event ) {
                // alert(data); // show response from the php script.
                if (data!="Incorrect Username or password") {
                 xhr.getResponseHeader('Set-Cookie');
-               	
+
                 // old way
                	// document.cookie="authenticated_session_id=" + data + 
                	// "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
@@ -119,20 +119,25 @@ $( "#signinBtn" ).click(function( event ) {
                 toastr.success('Logged in.');
                 
                 showHideElementsLoggedIn();
-               } else {
+              } else {
                 delete_cookie("authenticated_session_id");
-                toastr.error('Incorrect username or password')
-               }
+                toastr.error('Incorrect username or password');
+              }
 
-               console.log(document.cookie);
-               console.log(formData.username);
-           }
+              console.log(document.cookie);
+              console.log(formData.username);
+            },
+            error: function (request, status, error) {
+        alert(request.responseText);
+    }
 
-       });
+           
 
-  $("#signinBtn").button('reset');
-    event.preventDefault();
-    return false;
+          });
+
+$("#signinBtn").button('reset');
+event.preventDefault();
+return false;
 });
 
 

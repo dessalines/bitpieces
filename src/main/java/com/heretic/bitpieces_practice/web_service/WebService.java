@@ -115,7 +115,10 @@ public class WebService {
 
 			// log the user in
 			String userId = Actions.userLogin(req.body());
+			
+			dbClose();
 
+			if (userId != null) {
 			String authSession = verifyLogin(userId, Tools.generateSecureRandom());
 
 			// Set some cookies for that users login
@@ -123,11 +126,15 @@ public class WebService {
 			res.cookie("authenticated_session_id", authSession, COOKIE_EXPIRE_SECONDS, false);
 
 
-			dbClose();
+			
 
 			System.out.println(GSON.toJson(SESSION_TO_USER_MAP));
 
 			return "user logged in";
+			} else {
+				res.status(600);
+				return "Sorry wrong user idjit";
+			}
 
 		});
 
