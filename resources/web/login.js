@@ -106,8 +106,8 @@ $( "#signinBtn" ).click(function( event ) {
     			// console.log(xhr.getAllResponseHeaders()); 
 
                // alert(data); // show response from the php script.
-               if (data!="Incorrect Username or password") {
-                xhr.getResponseHeader('Set-Cookie');
+               
+               xhr.getResponseHeader('Set-Cookie');
 
                 // old way
                	// document.cookie="authenticated_session_id=" + data + 
@@ -119,21 +119,25 @@ $( "#signinBtn" ).click(function( event ) {
                 toastr.success('Logged in.');
                 
                 showHideElementsLoggedIn();
-              } else {
+
+
+
+                console.log(document.cookie);
+                console.log(formData.username);
+                
+                // GO to the dashboard
+                window.location.replace("http://localhost/dashboard");
+
+
+              },
+              error: function (request, status, error) {
                 delete_cookie("authenticated_session_id");
-                toastr.error('Incorrect username or password');
+                toastr.error(request.responseText);
               }
 
-              console.log(document.cookie);
-              console.log(formData.username);
-            },
-            error: function (request, status, error) {
-        alert(request.responseText);
-    }
 
-           
 
-          });
+            });
 
 $("#signinBtn").button('reset');
 event.preventDefault();

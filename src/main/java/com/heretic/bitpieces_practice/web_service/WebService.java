@@ -64,7 +64,7 @@ public class WebService {
 
 			String json = Actions.getPiecesOwnedTotal(userId);
 			
-			json = "{\"list\": " + json + "}";
+//			json = "{\"list\": " + json + "}";
 
 			dbClose();
 
@@ -132,7 +132,7 @@ public class WebService {
 
 			return "user logged in";
 			} else {
-				res.status(600);
+				res.status(666);
 				return "Sorry wrong user idjit";
 			}
 

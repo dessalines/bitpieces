@@ -267,7 +267,7 @@ on sales_from_users.creators_id = asks.creators_id
 ;
 CREATE VIEW worth AS
 SELECT
-prices.creators_id, prices.time_, price_per_piece*pieces_issued
+prices.creators_id, prices.time_, price_per_piece*pieces_issued as worth
 FROM prices
 inner join
 pieces_issued
