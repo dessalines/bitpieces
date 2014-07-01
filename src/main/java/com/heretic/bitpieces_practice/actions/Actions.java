@@ -26,6 +26,8 @@ import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Users_required_fields;
 import com.heretic.bitpieces_practice.tools.Tools;
+import com.heretic.bitpieces_practice.tools.Tools.Type;
+import com.heretic.bitpieces_practice.tools.UserTypeAndId;
 
 public class Actions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -312,7 +314,7 @@ public class Actions {
 		return sale;
 	}
 
-	public static String createUserFromAjax(String reqBody) {
+	public static UserTypeAndId createUserFromAjax(String reqBody) {
 
 		// Create a user
 		User user = new User();
@@ -333,10 +335,11 @@ public class Actions {
 			return null;
 		}
 
-		return user.getIdName();
+		UserTypeAndId uid = new UserTypeAndId(Type.User, user.getIdName());
+		return uid;
 	}
 	
-	public static String createCreatorFromAjax(String reqBody) {
+	public static UserTypeAndId createCreatorFromAjax(String reqBody) {
 
 		// Create a user
 		Creator creator = new Creator();
@@ -357,10 +360,11 @@ public class Actions {
 		
 		// TODO Create the static html5 page for that creator
 
-		return creator.getIdName();
+		UserTypeAndId uid = new UserTypeAndId(Type.Creator, creator.getIdName());
+		return uid;
 	}
 
-	public static String userLogin(String reqBody) {
+	public static UserTypeAndId userLogin(String reqBody) {
 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
@@ -374,8 +378,28 @@ public class Actions {
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
-		String returnVal = (correctPass == true) ? user.getString("users_id") : null;
+		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(Type.User, user.getString("users_id")) : null;
+		
+		return returnVal;
 
+	}
+	
+	public static UserTypeAndId creatorLogin(String reqBody) {
+
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+
+		// fetch the required fields
+		Creators_required_fields user = Creators_required_fields.findFirst("username = '" + postMap.get("username") + "'");
+		if (user==null) {
+			return null;
+		}
+
+		String encryptedPassword = user.getString("password_encrypted");
+
+		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
+
+		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(Type.Creator, user.getString("users_id")) : null;
+		
 		return returnVal;
 
 

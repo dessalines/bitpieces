@@ -16,6 +16,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tools.Tools;
+import com.heretic.bitpieces_practice.tools.UserTypeAndId;
 
 public class WebService {
 
@@ -25,7 +26,7 @@ public class WebService {
 
 
 	// Use an expiring map to store the authenticated sessions
-	public static final Cache<String, String> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
+	public static final Cache<String, UserTypeAndId> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
 			.maximumSize(10000)
 			.expireAfterWrite(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS)
 			.build();
@@ -62,7 +63,7 @@ public class WebService {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			dbInit(prop);
 			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth"));
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
 			
 			String json = Actions.getPiecesOwnedTotal(userId);
 			
@@ -82,13 +83,13 @@ public class WebService {
 			dbInit(prop);
 
 			// Create the user
-			String userId = Actions.createUserFromAjax(req.body());
-
+			UserTypeAndId uid = Actions.createUserFromAjax(req.body());
+			
 			dbClose();
 
 			// Its null if it couldn't create the user, usually cause of constraints
-			if (userId != null) {
-				verifyLoginAndSetCookies(userId, res);
+			if (uid != null) {
+				verifyLoginAndSetCookies(uid, res);
 
 				return "user registered";
 			} else {
@@ -105,13 +106,13 @@ public class WebService {
 			dbInit(prop);
 
 			// Create the user
-			String creatorId = Actions.createCreatorFromAjax(req.body());
+			UserTypeAndId uid = Actions.createCreatorFromAjax(req.body());
 
 			dbClose();
 
 			// Its null if it couldn't create the user, usually cause of constraints
-			if (creatorId != null) {
-				verifyLoginAndSetCookies(creatorId, res);
+			if (uid != null) {
+				verifyLoginAndSetCookies(uid, res);
 
 				return "creator registered";
 			} else {
@@ -129,12 +130,30 @@ public class WebService {
 			dbInit(prop);
 
 			// log the user in
-			String userId = Actions.userLogin(req.body());
+			UserTypeAndId uid = Actions.userLogin(req.body());
 			
 			dbClose();
 
 			
-			String message = verifyLoginAndSetCookies(userId, res);
+			String message = verifyLoginAndSetCookies(uid, res);
+
+			return message;
+
+		});
+		
+		post("/creatorlogin", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+
+			dbInit(prop);
+
+			// log the user in
+			UserTypeAndId uid = Actions.creatorLogin(req.body());
+			
+			dbClose();
+
+			
+			String message = verifyLoginAndSetCookies(uid, res);
 
 			return message;
 
@@ -143,14 +162,14 @@ public class WebService {
 
 	}
 
-	private static String verifyLoginAndSetCookies(String userId, Response res) {
-		if (userId != null) {
+	private static String verifyLoginAndSetCookies(UserTypeAndId uid, Response res) {
+		if (uid.getId() != null) {
 			String authenticatedSession = Tools.generateSecureRandom();
 			// Put the users ID in the session
 			//				req.session().attribute("userId", userId); // put the user id in the session data
 
 			// Store the users Id in a static map, give them a session id
-			SESSION_TO_USER_MAP.put(authenticatedSession, userId);
+			SESSION_TO_USER_MAP.put(authenticatedSession, uid);
 
 			
 			// Set some cookies for that users login

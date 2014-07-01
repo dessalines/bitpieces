@@ -58,7 +58,10 @@ public class Tools {
 		return postMap;
 
 	}
-
+	
+	public static enum Type {
+	    User, Creator
+	}
 
 	public static String generateSecureRandom() {
 		return new BigInteger(256, RANDOM).toString(32);
