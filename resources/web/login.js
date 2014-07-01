@@ -126,7 +126,7 @@ $( "#signinBtn" ).click(function( event ) {
                 console.log(formData.username);
                 
                 // GO to the dashboard
-                window.location.replace("http://localhost/dashboard");
+                window.location.replace("http://localhost/userdashboard");
 
 
               },

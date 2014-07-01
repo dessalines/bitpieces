@@ -343,7 +343,6 @@ public class Actions {
 		creator.saveIt();
 
 
-		// create user 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// Create the required fields 
@@ -355,6 +354,8 @@ public class Actions {
 		} catch (org.javalite.activejdbc.DBException e) {
 			return null;
 		}
+		
+		// TODO Create the static html5 page for that creator
 
 		return creator.getIdName();
 	}
