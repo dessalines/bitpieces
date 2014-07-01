@@ -67,6 +67,9 @@ public class Tables {
 	
 	@Table("ask_bid_accept_checker")
 	public static class Ask_bid_accept_checker extends Model {}
+	
+	@Table("creators_page_fields")
+	public static class Creators_page_fields extends Model {}
 
 }
 

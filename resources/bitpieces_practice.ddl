@@ -68,6 +68,20 @@ CREATE TABLE creators_required_fields
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
+CREATE TABLE creators_page_fields
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   creators_id int(11) NOT NULL,
+   FOREIGN KEY (creators_id) REFERENCES creators(id),
+   username VARCHAR(56) UNIQUE NOT NULL,
+   main_body TEXT NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
 CREATE TABLE users_btc_addresses
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,

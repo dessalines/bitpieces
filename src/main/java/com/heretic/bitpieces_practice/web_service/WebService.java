@@ -7,8 +7,10 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.server.UserIdentity;
 import org.javalite.activejdbc.Base;
 
+import spark.Request;
 import spark.Response;
 
 import com.google.common.cache.Cache;
@@ -160,10 +162,39 @@ public class WebService {
 		});
 
 
+	
+	
+	post("/savecreatorpage", (req, res) -> {
+		res.header("Access-Control-Allow-Origin", "http://localhost");
+		res.header("Access-Control-Allow-Credentials", "true");
+
+		dbInit(prop);
+
+		// get the creator id from the token
+		UserTypeAndId uid = getUserFromCookie(req);
+		
+		String message = Actions.saveCreatorPage(uid.getId(), req.body());
+		
+		dbClose();
+
+
+		return message;
+
+	});
+
+
+}
+	
+	private static UserTypeAndId getUserFromCookie(Request req) {
+		String authId = req.cookie("authenticated_session_id");
+		
+		UserTypeAndId uid = SESSION_TO_USER_MAP.getIfPresent(authId);
+		
+		return uid;
 	}
 
 	private static String verifyLoginAndSetCookies(UserTypeAndId uid, Response res) {
-		if (uid.getId() != null) {
+		if (uid != null) {
 			String authenticatedSession = Tools.generateSecureRandom();
 			// Put the users ID in the session
 			//				req.session().attribute("userId", userId); // put the user id in the session data

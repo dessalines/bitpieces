@@ -85,7 +85,16 @@ $( "#signinBtn" ).click(function( event ) {
 	// Loading
 	$(this).button('loading');
 
-  var url = "http://localhost:4567/userlogin"; // the script where you handle the form input.
+
+  var url;
+  // Decide if its a creator or not
+  var isCreator = $("#creatorCheckbox").is(':checked')
+  console.log(isCreator);
+  if (isCreator) {
+    url = "http://localhost:4567/creatorlogin";
+  } else {
+    url = "http://localhost:4567/userlogin";
+  }
 
     // username = $('#userLoginDiv').find('input[name="username"]').val();
     // // = $("#inputUsername3").val();
@@ -124,9 +133,13 @@ $( "#signinBtn" ).click(function( event ) {
 
                 console.log(document.cookie);
                 console.log(formData.username);
-                
+
                 // GO to the dashboard
-                window.location.replace("http://localhost/userdashboard");
+                if (!isCreator) {
+                  window.location.replace("http://localhost/userdashboard");
+                } else {
+                  window.location.replace("http://localhost/creatordashboard");
+                }
 
 
               },

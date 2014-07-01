@@ -213,7 +213,7 @@ public class InitializeTables {
 		creator2.saveIt();
 
 		Creators_required_fields.createIt("creators_id", creator1.getId(), "username", "Leonardo_Davinci",
-				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("cat"),
+				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 				"email", "asdf@gmail.com");
 		Creators_required_fields.createIt("creators_id", creator2.getId(), "username", "Dusty_Springfield",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),

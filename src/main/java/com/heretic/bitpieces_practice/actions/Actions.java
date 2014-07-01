@@ -14,6 +14,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Ask_bid_accept_checker;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_required_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Fees;
 import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
@@ -398,7 +399,7 @@ public class Actions {
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
-		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(Type.Creator, user.getString("users_id")) : null;
+		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(Type.Creator, user.getString("creators_id")) : null;
 		
 		return returnVal;
 
@@ -414,6 +415,17 @@ public class Actions {
 //		return GSON.toJson(pieces_owned_total.toMaps());
 
 
+	}
+
+	public static String saveCreatorPage(String id, String reqBody) {
+		
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+		
+		Creators_page_fields page = Creators_page_fields.createIt("creators_id", id,
+				"main_body", postMap.get("main_body"));
+		
+		return "Successful";
+		
 	}
 
 
