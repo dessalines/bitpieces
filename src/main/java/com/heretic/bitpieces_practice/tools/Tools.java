@@ -1,6 +1,9 @@
 package com.heretic.bitpieces_practice.tools;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -13,13 +16,33 @@ import java.util.Properties;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 public class Tools {
-
+	public static final String ROOT_DIR = "/home/tyler/git/bitpieces_practice/";
+	
 	public static final StrongPasswordEncryptor PASS_ENCRYPT = new StrongPasswordEncryptor();
 	
 	// Instead of using session ids, use a java secure random ID
 	private static final SecureRandom RANDOM = new SecureRandom();
 
+	public static void writeFile(String path, String content) {
+		 
+		try {
+		File file = new File(path);
 	
+		// if file doesnt exists, then create it
+		if (!file.exists()) {
+			file.getParentFile().mkdirs();
+			file.createNewFile();
+		}
+
+		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(content);
+		bw.close();
+
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static Properties loadProperties(String propertiesFileLocation) {
 
@@ -40,8 +63,6 @@ public class Tools {
 
 	public static final Map<String, String> createMapFromAjaxPost(String reqBody) {
 
-		
-
 		Map<String, String> postMap = new HashMap<String, String>();
 		String[] split = reqBody.split("&");
 		for (int i = 0; i < split.length; i++) {
@@ -59,7 +80,7 @@ public class Tools {
 
 	}
 	
-	public static enum Type {
+	public static enum UserType {
 	    User, Creator
 	}
 

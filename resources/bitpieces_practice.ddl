@@ -37,7 +37,7 @@ CREATE TABLE users
 CREATE TABLE users_required_fields
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   users_id int(11) NOT NULL,
+   users_id int(11) UNIQUE NOT NULL,
    FOREIGN KEY (users_id) REFERENCES users(id),
    username VARCHAR(56) UNIQUE NOT NULL,
    password_encrypted TINYTEXT NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE creators
 CREATE TABLE creators_required_fields
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   creators_id int(11) NOT NULL,
+   creators_id int(11) UNIQUE NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    username VARCHAR(56) UNIQUE NOT NULL,
    password_encrypted TINYTEXT NOT NULL,
@@ -72,9 +72,8 @@ CREATE TABLE creators_required_fields
 CREATE TABLE creators_page_fields
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   creators_id int(11) NOT NULL,
+   creators_id int(11) UNIQUE NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
-   username VARCHAR(56) UNIQUE NOT NULL,
    main_body TEXT NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON

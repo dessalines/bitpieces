@@ -7,8 +7,9 @@ $( "#saveBtn" ).click(function( event ) {
   var formData = $("#customizeForm").serializeArray();
   console.log(formData);
 
+  var btn = $(this);
   // Loading
-  $(this).button('loading');
+  btn.button('loading');
 
     var url = "http://localhost:4567/savecreatorpage"; // the script where you handle the form input.
 
@@ -27,7 +28,8 @@ $( "#saveBtn" ).click(function( event ) {
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
 
-
+                  // Loading
+                btn.button('reset');
                 
                 toastr.success('Page saved')
                 

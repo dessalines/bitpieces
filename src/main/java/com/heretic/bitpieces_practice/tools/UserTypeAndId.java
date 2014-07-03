@@ -1,18 +1,18 @@
 package com.heretic.bitpieces_practice.tools;
 
-import com.heretic.bitpieces_practice.tools.Tools.Type;
+import com.heretic.bitpieces_practice.tools.Tools.UserType;
 
 public class UserTypeAndId {
-	Type type;
+	UserType type;
 	String id;
 	
-	public UserTypeAndId(Type type, String id) {
+	public UserTypeAndId(UserType type, String id) {
 		super();
 		this.type = type;
 		this.id = id;
 	}
 
-	public Type getType() {
+	public UserType getType() {
 		return type;
 	}
 
