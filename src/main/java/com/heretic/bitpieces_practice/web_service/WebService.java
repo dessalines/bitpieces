@@ -175,7 +175,7 @@ public class WebService {
 		// get the creator id from the token
 		UserTypeAndId uid = getUserFromCookie(req);
 		
-		String message = Actions.saveCreatorPage(uid.getId(), req.body());
+		String message = WebTools.saveCreatorPage(uid.getId(), req.body());
 		
 		dbClose();
 
@@ -196,7 +196,7 @@ public class WebService {
 		// get the creator id from the token
 		UserTypeAndId uid = getUserFromCookie(req);
 		
-		String message = Actions.placeBid(uid.getId(), req.body());
+		String message = WebTools.placeBid(uid.getId(), req.body());
 		
 		dbClose();
 
@@ -215,7 +215,7 @@ public class WebService {
 		UserTypeAndId uid = getUserFromCookie(req);
 		String message = null;
 		try {
-			message = Actions.placeAsk(uid.getId(), req.body());
+			message = WebTools.placeAsk(uid.getId(), req.body());
 		} catch (NoSuchElementException e) {
 			res.status(666);
 			return e.getMessage();
