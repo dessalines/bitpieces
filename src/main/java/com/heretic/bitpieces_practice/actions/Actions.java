@@ -447,6 +447,8 @@ public class Actions {
 
 	public static void saveCreatorHTMLPage(String id, Creators_page_fields page) {
 		
+		String mainBody = page.getString("main_body");
+		
 		String path = Tools.ROOT_DIR + "resources/web/creators_pages/" + id + ".html";
 		
 		String html = "&lt;!DOCTYPE html&gt;\n"+
@@ -536,20 +538,57 @@ public class Actions {
 				" &lt;/div&gt;\n"+
 				"\n"+
 				"\n"+
+				// Here's the container
 				" &lt;div class=&quot;container&quot;&gt;\n"+
 				"\n"+
 				" &lt;div class=&quot;starter-template&quot;&gt;\n"+
 				" &lt;h1&gt;Creator # " + id + " Page &lt;/h1&gt;\n"+
-				" &lt;p class=&quot;lead&quot;&gt;Creators have a special page for some explanations. First they have to register creator_name, email and pass, \n"+
-				" then they gotta basically make their page from form data&lt;/p&gt;\n"+
+				" &lt;p class=&quot;lead&quot;&gt;" + mainBody + "&lt;/p&gt;\n"+
 				" &lt;/div&gt;\n"+
-				"\n"+
-				"\n"+
-				"\n"+
-				" &lt;/div&gt;\n"+
-				"\n"+
-				"\n"+
+	 	
+	 			"&lt;div class=&quot;row&quot;&gt;\n"+
+	 			"	&lt;div class=&quot;col-md-12&quot;&gt;\n"+
+	 			"<button id=\"bidBtn\" type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#bidModal\">Bid</button>\n"+
+	 				"&lt;/div&gt;\n"+
+	 			"&lt;/div&gt;\n" +
+	 		"&lt;/div&gt;\n" + 
 				" &lt;/div&gt;&lt;!-- /.container --&gt;\n"+
+				
+				// End of the container
+				
+				// Start of modal
+				"<!-- Modals -->\n"+
+				" \t<div id=\"bidModal\" class=\"modal fade bs-example-modal-sm\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\n"+
+				" \t\t<div class=\"modal-dialog modal-sm\">\n"+
+				"\n"+
+				" \t\t\t<div class=\"modal-content\">\n"+
+				" \t\t\t\t<div class=\"modal-header\">\n"+
+				" \t\t\t\t\t<h4 class=\"modal-title\">Bid</h4>\n"+
+				" \t\t\t\t</div>\n"+
+				" \t\t\t\t<div class=\"modal-body\">\n"+
+				" \t\t\t\t\t<form id=\"bidForm\" class=\"form-horizontal\" role=\"form\">\n"+
+				" \t\t\t\t\t\t<div class=\"form-group form-group-lg\">\n"+
+				" \t\t\t\t\t\t\t<label class=\"col-sm-2 control-label\" for=\"formGroupInputLarge\">Price</label>\n"+
+				" \t\t\t\t\t\t\t<div class=\"col-sm-10\">\n"+
+				" \t\t\t\t\t\t\t\t<input name=\"bid\" class=\"form-control\" type=\"text\" id=\"formGroupInputLarge\" placeholder=\"Last price\"\n"+
+				"\t\t\t\t\t\t\t\tdata-bv-greaterthan=\"true\"\n"+
+				"\t\t\t\t\t\t\t\tdata-bv-greaterthan-value=\".01\"\n"+
+				"\t\t\t\t\t\t\t\tdata-bv-greaterthan-message=\"Must be > .01\"\n"+
+				"\n"+
+				" \t\t\t\t\t\t\t\t>\n"+
+				" \t\t\t\t\t\t\t</div>\n"+
+				" \t\t\t\t\t\t</div>\n"+
+				" \t\t\t\t\t\t<button id=\"placebidBtn\" type=\"submit\" class=\"btn btn-primary\">Place Bid</button>\n"+
+				" \t\t\t\t\t</form>\n"+
+				"\n"+
+				" \t\t\t\t</div>\n"+
+				" \t\t\t\t\n"+
+				" \t\t\t</div>\n"+
+				" \t\t</div>\n"+
+				" \t</div>\n"+
+
+				
+				
 				"\n"+
 				"\n"+
 				" &lt;!-- Bootstrap core JavaScript\n"+
@@ -568,11 +607,21 @@ public class Actions {
 				" &lt;script src=&quot;../tools.js&quot;&gt;&lt;/script&gt;\n"+
 				" &lt;script src=&quot;../login.js&quot;&gt;&lt;/script&gt;\n"+
 				" &lt;script src=&quot;../creators.js&quot;&gt;&lt;/script&gt;\n"+
+				" &lt;script src=&quot;creatorpage.js&quot;&gt;&lt;/script&gt;\n"+
 				" &lt;/body&gt;\n"+
 				" &lt;/html&gt;\n"+
 				"";
 		
 			Tools.writeFile(path, StringEscapeUtils.unescapeHtml4(html));
+	}
+
+	public static String placeBid(String userId, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+//		createBid(userId, postMap.get("creatorid"), pieces, bid_amount, validUntil, partial)`
+				
+		
+		return body;
 	}
 
 

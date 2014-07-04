@@ -183,12 +183,39 @@ public class WebService {
 	});
 
 
+
+	
+	post("/placebid", (req, res) -> {
+		res.header("Access-Control-Allow-Origin", "http://localhost");
+		res.header("Access-Control-Allow-Credentials", "true");
+
+		dbInit(prop);
+
+		// get the creator id from the token
+		UserTypeAndId uid = getUserFromCookie(req);
+		
+		String message = Actions.placeBid(uid.getId(), req.body());
+		
+		dbClose();
+
+
+		return message;
+
+	});
+
+
 }
 	
 	private static UserTypeAndId getUserFromCookie(Request req) {
 		String authId = req.cookie("authenticated_session_id");
 		
-		UserTypeAndId uid = SESSION_TO_USER_MAP.getIfPresent(authId);
+		UserTypeAndId uid = null;
+		try {
+		uid = SESSION_TO_USER_MAP.getIfPresent(authId);
+		} catch(NullPointerException e) {
+			System.err.println("No such user logged in");
+			e.printStackTrace();
+		}
 		
 		return uid;
 	}
