@@ -25,6 +25,9 @@
  <!-- toastr css -->
  <link href="../toastr/toastr.css" rel="stylesheet"/>
 
+	<!-- Pickadate -->
+	<link href="../pickadate/lib/themes/default.css" rel="stylesheet"/>
+	<link href="../pickadate/lib/themes/default.date.css" rel="stylesheet"/>
  <!-- This main css -->
  <link href="../creators.css" rel="stylesheet">
 
@@ -94,6 +97,7 @@
 <div class="row">
 	<div class="col-md-12">
 <button id="bidBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#bidModal">Bid</button>
+<button id="askBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#askModal">Ask</button>
 </div>
 </div>
 </div>
@@ -112,14 +116,82 @@
  							<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
  							<div class="col-sm-10">
  								<input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-								data-bv-greaterthan="true"
-								data-bv-greaterthan-value=".01"
-								data-bv-greaterthan-message="Must be > .01"
+ 								data-bv-greaterthan="true"
+ 								data-bv-greaterthan-value=".01"
+ 								data-bv-greaterthan-message="Must be > .01"
 
  								>
  							</div>
  						</div>
+
+ 						<div class="form-group form-group-lg">
+ 							<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+ 							<div class="col-sm-10">
+ 								<input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+ 								type="text" 
+								data-bv-integer="true"
+ 								data-bv-integer-message="Must be a whole number"
+
+ 								>
+ 							</div>
+ 						</div>
+
+ 						<div class="form-group form-group-lg">
+ 							<label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+ 							<div class="col-sm-10">
+ 								<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+ 							</div>
+ 						</div>
+
  						<button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+ 					</form>
+
+ 				</div>
+ 				
+ 			</div>
+ 		</div>
+ 	</div>
+ 	<div id="askModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+ 		<div class="modal-dialog modal-sm">
+
+ 			<div class="modal-content">
+ 				<div class="modal-header">
+ 					<h4 class="modal-title">Ask</h4>
+ 				</div>
+ 				<div class="modal-body">
+ 					<form id="askForm" class="form-horizontal" role="form">
+ 						<div class="form-group form-group-lg">
+ 							<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+ 							<div class="col-sm-10">
+ 								<input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+ 								data-bv-greaterthan="true"
+ 								data-bv-greaterthan-value=".01"
+ 								data-bv-greaterthan-message="Must be > .01"
+
+ 								>
+ 							</div>
+ 						</div>
+
+ 						<div class="form-group form-group-lg">
+ 							<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+ 							<div class="col-sm-10">
+ 								<input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+ 								type="text" 
+								data-bv-integer="true"
+ 								data-bv-integer-message="Must be a whole number"
+
+ 								>
+ 							</div>
+ 						</div>
+
+ 						<div class="form-group form-group-lg">
+ 							<label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+ 							<div class="col-sm-10">
+ 								<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+ 							</div>
+ 						</div>
+
+ 						<button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
  					</form>
 
  				</div>
@@ -139,6 +211,8 @@
  <script src="../toastr/toastr.js"></script>
  <script src="../mustache/mustache.js"></script>
  <script src="../holder/holder.js"></script>
+ <script src="../pickadate/lib/picker.js"></script>
+ <script src="../pickadate/lib/picker.date.js"></script>
 
 
  <!-- my scripts -->

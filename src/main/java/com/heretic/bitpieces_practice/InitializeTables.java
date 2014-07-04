@@ -135,10 +135,10 @@ public class InitializeTables {
 
 		// TODO don't use the Parent thing, just get the users_id
 		Users_required_fields dick = Users_required_fields.findFirst("username like 'Dick%'");
-		Integer dickUserId = dick.getInteger("users_id");
+		String dickUserId = dick.getString("users_id");
 
 		Creators_required_fields leonardo = Creators_required_fields.findFirst("username like 'Leonardo%'");
-		Integer leonardoCreatorId = leonardo.getInteger("creators_id");
+		String leonardoCreatorId = leonardo.getString("creators_id");
 
 		Actions.createAsk(dickUserId, leonardoCreatorId, 160, 100d,"2014-06-28", true);
 
@@ -150,22 +150,22 @@ public class InitializeTables {
 
 		// Find Bill
 		Users_required_fields bill = Users_required_fields.findFirst("username like 'Bill%'");
-		Integer billUserId = bill.getInteger("users_id");
+		String billUserId = bill.getString("users_id");
 
 		Creators_required_fields leonardo = Creators_required_fields.findFirst("username like 'Leonardo%'");
-		Integer leonardoCreatorId = leonardo.getInteger("creators_id");
+		String leonardoCreatorId = leonardo.getString("creators_id");
 
 		Actions.createBid(billUserId, leonardoCreatorId, 5, 120d, "2014-06-28", true);
 		
 		// Find John, also wants to bid on it, at a higher bid, and more pieces
 		Users_required_fields john = Users_required_fields.findFirst("username like 'John%'");
-		Integer johnUserId = john.getInteger("users_id");
+		String johnUserId = john.getString("users_id");
 		
 		Actions.createBid(johnUserId, leonardoCreatorId, 10, 130d, "2014-06-28", true);
 		
 		// Finally Terry, wants to bid the lowest, but more than the asker has to sell
 		Users_required_fields terry = Users_required_fields.findFirst("username like 'Terry%'");
-		Integer terryUserId = terry.getInteger("users_id");
+		String terryUserId = terry.getString("users_id");
 		
 		Actions.createBid(terryUserId, leonardoCreatorId, 30, 110d, "2014-06-28", true);
 		

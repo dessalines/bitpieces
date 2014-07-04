@@ -3,12 +3,14 @@ package com.heretic.bitpieces_practice.web_service;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.UserIdentity;
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.DBException;
 
 import spark.Request;
 import spark.Response;
@@ -202,6 +204,29 @@ public class WebService {
 		return message;
 
 	});
+	
+	post("/placeask", (req, res) -> {
+		res.header("Access-Control-Allow-Origin", "http://localhost");
+		res.header("Access-Control-Allow-Credentials", "true");
+
+		dbInit(prop);
+
+		// get the creator id from the token
+		UserTypeAndId uid = getUserFromCookie(req);
+		String message = null;
+		try {
+			message = Actions.placeAsk(uid.getId(), req.body());
+		} catch (NoSuchElementException e) {
+			res.status(666);
+			return e.getMessage();
+		}
+		
+		dbClose();
+
+
+		return message;
+
+	});
 
 
 }
@@ -244,10 +269,15 @@ public class WebService {
 
 
 	private static final void dbInit(Properties prop) {
+		try {
 		Base.open("com.mysql.jdbc.Driver", 
 				prop.getProperty("dburl"), 
 				prop.getProperty("dbuser"), 
 				prop.getProperty("dbpassword"));
+		} catch (DBException e) {
+			dbClose();
+			dbInit(prop);
+		}
 	}
 	private static final void dbClose() {
 		Base.close();

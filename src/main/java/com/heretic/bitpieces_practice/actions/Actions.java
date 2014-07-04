@@ -42,7 +42,7 @@ public class Actions {
 	private static final Double SERVICE_FEE_PCT = .05d;
 	private static final Gson GSON = new Gson();
 
-	public static Bid createBid(Object userId, Object creatorId, Integer pieces, Double bid_amount, 
+	public static Bid createBid(String userId, String creatorId, Integer pieces, Double bid_amount, 
 			String validUntil, Boolean partial) {
 
 		// First, verify that the creator has that many pieces available
@@ -68,7 +68,7 @@ public class Actions {
 
 	}
 
-	public static Ask createAsk(Object userId, Object creatorId, Integer pieces, Double ask_amount,
+	public static Ask createAsk(String userId, String creatorId, Integer pieces, Double ask_amount,
 			String validUntil, Boolean partial) {
 
 		// First, verify that you have that many pieces to sell
@@ -343,7 +343,7 @@ public class Actions {
 			return null;
 		}
 
-		UserTypeAndId uid = new UserTypeAndId(UserType.User, user.getIdName());
+		UserTypeAndId uid = new UserTypeAndId(UserType.User, String.valueOf(user.getId()));
 		return uid;
 	}
 	
@@ -368,7 +368,7 @@ public class Actions {
 		
 		// TODO Create the static html5 page for that creator
 
-		UserTypeAndId uid = new UserTypeAndId(UserType.Creator, creator.getIdName());
+		UserTypeAndId uid = new UserTypeAndId(UserType.Creator, String.valueOf(creator.getId()));
 		return uid;
 	}
 
@@ -478,6 +478,10 @@ public class Actions {
 				" &lt;!-- toastr css --&gt;\n"+
 				" &lt;link href=&quot;../toastr/toastr.css&quot; rel=&quot;stylesheet&quot;/&gt;\n"+
 				"\n"+
+				"\t<!-- Pickadate -->\n"+
+				"\t<link href=\"../pickadate/lib/themes/default.css\" rel=\"stylesheet\"/>\n"+
+				"\t<link href=\"../pickadate/lib/themes/default.date.css\" rel=\"stylesheet\"/>"+
+				"\n"+
 				" &lt;!-- This main css --&gt;\n"+
 				" &lt;link href=&quot;../creators.css&quot; rel=&quot;stylesheet&quot;&gt;\n"+
 				"\n"+
@@ -549,6 +553,7 @@ public class Actions {
 	 			"&lt;div class=&quot;row&quot;&gt;\n"+
 	 			"	&lt;div class=&quot;col-md-12&quot;&gt;\n"+
 	 			"<button id=\"bidBtn\" type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#bidModal\">Bid</button>\n"+
+	 			"<button id=\"askBtn\" type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#askModal\">Ask</button>\n"+
 	 				"&lt;/div&gt;\n"+
 	 			"&lt;/div&gt;\n" +
 	 		"&lt;/div&gt;\n" + 
@@ -571,13 +576,33 @@ public class Actions {
 				" \t\t\t\t\t\t\t<label class=\"col-sm-2 control-label\" for=\"formGroupInputLarge\">Price</label>\n"+
 				" \t\t\t\t\t\t\t<div class=\"col-sm-10\">\n"+
 				" \t\t\t\t\t\t\t\t<input name=\"bid\" class=\"form-control\" type=\"text\" id=\"formGroupInputLarge\" placeholder=\"Last price\"\n"+
-				"\t\t\t\t\t\t\t\tdata-bv-greaterthan=\"true\"\n"+
-				"\t\t\t\t\t\t\t\tdata-bv-greaterthan-value=\".01\"\n"+
-				"\t\t\t\t\t\t\t\tdata-bv-greaterthan-message=\"Must be > .01\"\n"+
+				" \t\t\t\t\t\t\t\tdata-bv-greaterthan=\"true\"\n"+
+				" \t\t\t\t\t\t\t\tdata-bv-greaterthan-value=\".01\"\n"+
+				" \t\t\t\t\t\t\t\tdata-bv-greaterthan-message=\"Must be > .01\"\n"+
 				"\n"+
 				" \t\t\t\t\t\t\t\t>\n"+
 				" \t\t\t\t\t\t\t</div>\n"+
 				" \t\t\t\t\t\t</div>\n"+
+				"\n"+
+				" \t\t\t\t\t\t<div class=\"form-group form-group-lg\">\n"+
+				" \t\t\t\t\t\t\t<label class=\"col-sm-2 control-label\" for=\"formGroupInputLarge\">Pieces</label>\n"+
+				" \t\t\t\t\t\t\t<div class=\"col-sm-10\">\n"+
+				" \t\t\t\t\t\t\t\t<input name=\"pieces\" class=\"form-control\" type=\"text\" id=\"formGroupInputLarge\" placeholder=\"Pieces\"\n"+
+				" \t\t\t\t\t\t\t\ttype=\"text\" \n"+
+				"\t\t\t\t\t\t\t\tdata-bv-integer=\"true\"\n"+
+				" \t\t\t\t\t\t\t\tdata-bv-integer-message=\"Must be a whole number\"\n"+
+				"\n"+
+				" \t\t\t\t\t\t\t\t>\n"+
+				" \t\t\t\t\t\t\t</div>\n"+
+				" \t\t\t\t\t\t</div>\n"+
+				"\n"+
+				" \t\t\t\t\t\t<div class=\"form-group form-group-lg\">\n"+
+				" \t\t\t\t\t\t\t<label class=\"col-sm-2 control-label\" for=\"formGroupInputLarge\">Date</label>\n"+
+				" \t\t\t\t\t\t\t<div class=\"col-sm-10\">\n"+
+				" \t\t\t\t\t\t\t\t<input name=\"validUntil\" class=\"form-control datepicker\" type=\"text\" id=\"formGroupInputLarge\" placeholder=\"Valid Until...\">\n"+
+				" \t\t\t\t\t\t\t</div>\n"+
+				" \t\t\t\t\t\t</div>\n"+
+				"\n"+
 				" \t\t\t\t\t\t<button id=\"placebidBtn\" type=\"submit\" class=\"btn btn-primary\">Place Bid</button>\n"+
 				" \t\t\t\t\t</form>\n"+
 				"\n"+
@@ -585,8 +610,56 @@ public class Actions {
 				" \t\t\t\t\n"+
 				" \t\t\t</div>\n"+
 				" \t\t</div>\n"+
+				" \t</div>" + 
+				"\n"+
+				" \t<div id=\"askModal\" class=\"modal fade bs-example-modal-sm\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"mySmallModalLabel\" aria-hidden=\"true\">\n"+
+				" \t\t<div class=\"modal-dialog modal-sm\">\n"+
+				"\n"+
+				" \t\t\t<div class=\"modal-content\">\n"+
+				" \t\t\t\t<div class=\"modal-header\">\n"+
+				" \t\t\t\t\t<h4 class=\"modal-title\">Ask</h4>\n"+
+				" \t\t\t\t</div>\n"+
+				" \t\t\t\t<div class=\"modal-body\">\n"+
+				" \t\t\t\t\t<form id=\"askForm\" class=\"form-horizontal\" role=\"form\">\n"+
+				" \t\t\t\t\t\t<div class=\"form-group form-group-lg\">\n"+
+				" \t\t\t\t\t\t\t<label class=\"col-sm-2 control-label\" for=\"formGroupInputLarge\">Price</label>\n"+
+				" \t\t\t\t\t\t\t<div class=\"col-sm-10\">\n"+
+				" \t\t\t\t\t\t\t\t<input name=\"ask\" class=\"form-control\" type=\"text\" id=\"formGroupInputLarge\" placeholder=\"Last price\"\n"+
+				" \t\t\t\t\t\t\t\tdata-bv-greaterthan=\"true\"\n"+
+				" \t\t\t\t\t\t\t\tdata-bv-greaterthan-value=\".01\"\n"+
+				" \t\t\t\t\t\t\t\tdata-bv-greaterthan-message=\"Must be > .01\"\n"+
+				"\n"+
+				" \t\t\t\t\t\t\t\t>\n"+
+				" \t\t\t\t\t\t\t</div>\n"+
+				" \t\t\t\t\t\t</div>\n"+
+				"\n"+
+				" \t\t\t\t\t\t<div class=\"form-group form-group-lg\">\n"+
+				" \t\t\t\t\t\t\t<label class=\"col-sm-2 control-label\" for=\"formGroupInputLarge\">Pieces</label>\n"+
+				" \t\t\t\t\t\t\t<div class=\"col-sm-10\">\n"+
+				" \t\t\t\t\t\t\t\t<input name=\"pieces\" class=\"form-control\" type=\"text\" id=\"formGroupInputLarge\" placeholder=\"Pieces\"\n"+
+				" \t\t\t\t\t\t\t\ttype=\"text\" \n"+
+				"\t\t\t\t\t\t\t\tdata-bv-integer=\"true\"\n"+
+				" \t\t\t\t\t\t\t\tdata-bv-integer-message=\"Must be a whole number\"\n"+
+				"\n"+
+				" \t\t\t\t\t\t\t\t>\n"+
+				" \t\t\t\t\t\t\t</div>\n"+
+				" \t\t\t\t\t\t</div>\n"+
+				"\n"+
+				" \t\t\t\t\t\t<div class=\"form-group form-group-lg\">\n"+
+				" \t\t\t\t\t\t\t<label class=\"col-sm-2 control-label\" for=\"formGroupInputLarge\">Date</label>\n"+
+				" \t\t\t\t\t\t\t<div class=\"col-sm-10\">\n"+
+				" \t\t\t\t\t\t\t\t<input name=\"validUntil\" class=\"form-control datepicker\" type=\"text\" id=\"formGroupInputLarge\" placeholder=\"Valid Until...\">\n"+
+				" \t\t\t\t\t\t\t</div>\n"+
+				" \t\t\t\t\t\t</div>\n"+
+				"\n"+
+				" \t\t\t\t\t\t<button id=\"placeaskBtn\" type=\"submit\" class=\"btn btn-primary\">Place Ask</button>\n"+
+				" \t\t\t\t\t</form>\n"+
+				"\n"+
+				" \t\t\t\t</div>\n"+
+				" \t\t\t\t\n"+
+				" \t\t\t</div>\n"+
+				" \t\t</div>\n"+
 				" \t</div>\n"+
-
 				
 				
 				"\n"+
@@ -601,6 +674,8 @@ public class Actions {
 				" &lt;script src=&quot;../toastr/toastr.js&quot;&gt;&lt;/script&gt;\n"+
 				" &lt;script src=&quot;../mustache/mustache.js&quot;&gt;&lt;/script&gt;\n"+
 				" &lt;script src=&quot;../holder/holder.js&quot;&gt;&lt;/script&gt;\n"+
+				" <script src=\"../pickadate/lib/picker.js\"></script>\n"+
+				" <script src=\"../pickadate/lib/picker.date.js\"></script>\n"+
 				"\n"+
 				"\n"+
 				" &lt;!-- my scripts --&gt;\n"+
@@ -618,7 +693,26 @@ public class Actions {
 	public static String placeBid(String userId, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		
-//		createBid(userId, postMap.get("creatorid"), pieces, bid_amount, validUntil, partial)`
+		createBid(userId, 
+				postMap.get("creatorid"), 
+				Integer.valueOf(postMap.get("pieces")), 
+				Double.valueOf(postMap.get("bid")), 
+				postMap.get("validUntil"), 
+				true);
+				
+		
+		return body;
+	}
+	
+	public static String placeAsk(String userId, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+		createAsk(userId, 
+				postMap.get("creatorid"), 
+				Integer.valueOf(postMap.get("pieces")), 
+				Double.valueOf(postMap.get("ask")), 
+				postMap.get("validUntil"), 
+				true);
 				
 		
 		return body;
