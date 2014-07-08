@@ -49,7 +49,6 @@ $( "#registerBtn" ).click(function( event ) {
     data: formData, 
     success: function(data, status, xhr) {
     	
-      if (data!="Incorrect Username or password") {
         xhr.getResponseHeader('Set-Cookie');
                 // document.cookie="authenticated_session_id=" + data + 
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
@@ -60,14 +59,15 @@ $( "#registerBtn" ).click(function( event ) {
                 toastr.success('Registered and logged in.')
                 
                 showHideElementsLoggedIn();
-              } else {
-
-                toastr.error('Incorrect username or password')
-              }
+             
 
               console.log(document.cookie);
 
-            }
+            },
+            error: function (request, status, error) {
+                delete_cookie("authenticated_session_id");
+                toastr.error(request.responseText);
+              }
           });
 
 

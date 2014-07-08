@@ -329,6 +329,7 @@ public class Actions {
 			return uid;
 			
 		} catch (org.javalite.activejdbc.DBException e) {
+			e.printStackTrace();
 			return null;
 		}
 
@@ -353,6 +354,7 @@ public class Actions {
 			return uid;
 			
 		} catch (org.javalite.activejdbc.DBException e) {
+			e.printStackTrace();
 			return null;
 		}
 		
