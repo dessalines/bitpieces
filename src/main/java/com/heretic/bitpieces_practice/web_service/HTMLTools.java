@@ -6,11 +6,11 @@ import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tools.Tools;
 
 public class HTMLTools {
-	public static void saveCreatorHTMLPage(String id, Creators_page_fields page) {
+	public static void saveCreatorHTMLPage(String username, Creators_page_fields page) {
 
 		String mainBody = page.getString("main_body");
 
-		String path = Tools.ROOT_DIR + "resources/web/creators_pages/" + id + ".html";
+		String path = Tools.ROOT_DIR + "resources/web/creators_pages/" + username + ".html";
 
 		String html = "&lt;!DOCTYPE html&gt;\n"+
 				"&lt;html lang=&quot;en&quot;&gt;\n"+
@@ -107,7 +107,7 @@ public class HTMLTools {
 				" &lt;div class=&quot;container&quot;&gt;\n"+
 				"\n"+
 				" &lt;div class=&quot;starter-template&quot;&gt;\n"+
-				" &lt;h1&gt;Creator # " + id + " Page &lt;/h1&gt;\n"+
+				" &lt;h1&gt;Creator " + username + " Page &lt;/h1&gt;\n"+
 				" &lt;p class=&quot;lead&quot;&gt;" + mainBody + "&lt;/p&gt;\n"+
 				" &lt;/div&gt;\n"+
 

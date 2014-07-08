@@ -1,18 +1,11 @@
 package com.heretic.bitpieces_practice.actions;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.javalite.activejdbc.LazyList;
 
 import com.google.gson.Gson;
@@ -21,8 +14,6 @@ import com.heretic.bitpieces_practice.tables.Tables.Ask_bid_accept_checker;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
-import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
-import com.heretic.bitpieces_practice.tables.Tables.Creators_required_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Fees;
 import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
@@ -32,7 +23,6 @@ import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
-import com.heretic.bitpieces_practice.tables.Tables.Users_required_fields;
 import com.heretic.bitpieces_practice.tools.Tools;
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
 import com.heretic.bitpieces_practice.tools.UserTypeAndId;
@@ -324,52 +314,49 @@ public class Actions {
 
 	public static UserTypeAndId createUserFromAjax(String reqBody) {
 
-		// Create a user
-		User user = new User();
-		user.saveIt();
-
-		System.out.println("got here");
 
 		// create user 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
-		// Create the required fields 
+		// Create the user 
 		try {
-			Users_required_fields userRequiredFields = Users_required_fields.createIt("users_id", user.getId(),
+			User user = User.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
+			
+			UserTypeAndId uid = new UserTypeAndId(UserType.User, String.valueOf(user.getId()));
+			return uid;
+			
 		} catch (org.javalite.activejdbc.DBException e) {
 			return null;
 		}
 
-		UserTypeAndId uid = new UserTypeAndId(UserType.User, String.valueOf(user.getId()));
-		return uid;
+
 	}
 	
 	public static UserTypeAndId createCreatorFromAjax(String reqBody) {
-
-		// Create a user
-		Creator creator = new Creator();
-		creator.saveIt();
 
 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// Create the required fields 
 		try {
-			Creators_required_fields creatorRequiredFields = Creators_required_fields.createIt("creators_id", creator.getId(),
+			Creator creator = Creator.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
+			
+			// TODO Create the static html5 page for that creator
+
+			UserTypeAndId uid = new UserTypeAndId(UserType.Creator, String.valueOf(creator.getId()));
+			return uid;
+			
 		} catch (org.javalite.activejdbc.DBException e) {
 			return null;
 		}
 		
-		// TODO Create the static html5 page for that creator
 
-		UserTypeAndId uid = new UserTypeAndId(UserType.Creator, String.valueOf(creator.getId()));
-		return uid;
 	}
 
 	public static UserTypeAndId userLogin(String reqBody) {
@@ -377,7 +364,7 @@ public class Actions {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// fetch the required fields
-		Users_required_fields user = Users_required_fields.findFirst("username = '" + postMap.get("username") + "'");
+		User user = User.findFirst("username = '" + postMap.get("username") + "'");
 		if (user==null) {
 			return null;
 		}
@@ -397,7 +384,7 @@ public class Actions {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// fetch the required fields
-		Creators_required_fields user = Creators_required_fields.findFirst("username = '" + postMap.get("username") + "'");
+		Creator user = Creator.findFirst("username = '" + postMap.get("username") + "'");
 		if (user==null) {
 			return null;
 		}
@@ -406,7 +393,7 @@ public class Actions {
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
-		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(UserType.Creator, user.getString("creators_id")) : null;
+		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(UserType.Creator, user.getId().toString()) : null;
 		
 		return returnVal;
 

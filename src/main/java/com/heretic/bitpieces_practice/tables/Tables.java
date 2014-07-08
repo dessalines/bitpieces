@@ -6,19 +6,11 @@ import org.javalite.activejdbc.annotations.Table;
 
 public class Tables {
 
-	@Table("users_required_fields") 
-	@BelongsTo(parent = User.class, foreignKeyName = "users_id")
-	public static class Users_required_fields extends Model {}
-
 	@Table("users") 
 	public static class User extends Model {}
 
 	@Table("creators") 
 	public static class Creator extends Model {}
-
-	@Table("creators_required_fields") 
-	@BelongsTo(parent = Creator.class, foreignKeyName = "creators_id")
-	public static class Creators_required_fields extends Model {}
 
 	@Table("users_btc_addresses") 
 	public static class Users_btc_address extends Model {}

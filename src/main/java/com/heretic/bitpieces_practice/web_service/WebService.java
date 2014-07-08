@@ -8,7 +8,6 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.server.UserIdentity;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 

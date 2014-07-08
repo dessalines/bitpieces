@@ -18,7 +18,8 @@ sales_from_creators,
 rewards,
 rewards_earned,
 host_btc_addresses,
-fees
+fees,
+creators_page_fields
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker
@@ -29,16 +30,6 @@ SET FOREIGN_KEY_CHECKS=1
 CREATE TABLE users
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   created_at TIMESTAMP NOT NULL DEFAULT 0,
-   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
-   UPDATE CURRENT_TIMESTAMP
-)
-;
-CREATE TABLE users_required_fields
-(
-   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   users_id int(11) UNIQUE NOT NULL,
-   FOREIGN KEY (users_id) REFERENCES users(id),
    username VARCHAR(56) UNIQUE NOT NULL,
    password_encrypted TINYTEXT NOT NULL,
    email VARCHAR(56) NOT NULL,
@@ -47,19 +38,10 @@ CREATE TABLE users_required_fields
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
 CREATE TABLE creators
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   created_at TIMESTAMP NOT NULL DEFAULT 0,
-   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
-   UPDATE CURRENT_TIMESTAMP
-)
-;
-CREATE TABLE creators_required_fields
-(
-   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   creators_id int(11) UNIQUE NOT NULL,
-   FOREIGN KEY (creators_id) REFERENCES creators(id),
    username VARCHAR(56) UNIQUE NOT NULL,
    password_encrypted TINYTEXT NOT NULL,
    email VARCHAR(56) NOT NULL,
@@ -68,6 +50,7 @@ CREATE TABLE creators_required_fields
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
 
 CREATE TABLE creators_page_fields
 (
@@ -323,12 +306,6 @@ left join pieces_owned_total on pieces_owned_total.creators_id = pieces_total.cr
 group by creators_id
 ;
 
-CREATE VIEW users_current_view as
-select
-users.id, username
-from users
-left join users_required_fields on users.id = users_required_fields.users_id
-;
 
 CREATE VIEW ask_bid_accept_checker as 
 select 

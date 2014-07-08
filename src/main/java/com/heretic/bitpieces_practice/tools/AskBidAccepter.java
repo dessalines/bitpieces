@@ -3,36 +3,30 @@ package com.heretic.bitpieces_practice.tools;
 import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.DBException;
 
-import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
-import com.heretic.bitpieces_practice.web_service.HTMLTools;
+import com.heretic.bitpieces_practice.actions.Actions;
 
-public class Tester {
+public class AskBidAccepter {
 	public static void main(String[] args) {
-		
-	}
-	public static void main2(String[] args) {
-	
-		
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
-		
 		dbInit(prop);
-		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  1);
-		
+		Actions.askBidAccepter();
 		dbClose();
-		HTMLTools.saveCreatorHTMLPage(page.getString("creators_id"), page);
-		
-		
 	}
 	
 	private static final void dbInit(Properties prop) {
+		try {
 		Base.open("com.mysql.jdbc.Driver", 
 				prop.getProperty("dburl"), 
 				prop.getProperty("dbuser"), 
 				prop.getProperty("dbpassword"));
+		} catch (DBException e) {
+			dbClose();
+			dbInit(prop);
+		}
 	}
 	private static final void dbClose() {
 		Base.close();
 	}
-
 }

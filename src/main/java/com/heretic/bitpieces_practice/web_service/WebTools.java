@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.heretic.bitpieces_practice.actions.Actions;
+import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tools.Tools;
 
@@ -15,6 +16,8 @@ public class WebTools {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 		
 		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
+		Creator creator = Creator.findById(id);
+		String username = creator.getString("username");
 		
 		// The first time filling the page fields
 		if (page == null) {
@@ -25,7 +28,7 @@ public class WebTools {
 		}
 		
 		// Save the html page
-		HTMLTools.saveCreatorHTMLPage(id, page);
+		HTMLTools.saveCreatorHTMLPage(username, page);
 		
 		return "Successful";
 		
