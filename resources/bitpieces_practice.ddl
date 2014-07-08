@@ -22,7 +22,7 @@ fees,
 creators_page_fields
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
-ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value
+ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -343,35 +343,50 @@ GROUP BY a.id,a.owners_id
 ORDER BY a.owners_id, a.creators_id, a.time_
 ;
 
-CREATE VIEW pieces_owned_value as
+CREATE VIEW pieces_owned_value_accum as
 select
-pieces_owned_accum.owners_id, pieces_owned_accum.creators_id, pieces_owned_accum.time_, price_per_piece * pieces_accum as value
+pieces_owned_accum.owners_id,
+pieces_owned_accum.creators_id,
+pieces_owned_accum.time_,
+price_per_piece * pieces_accum as value_accum
 from pieces_owned_accum
 inner join prices on pieces_owned_accum.creators_id = prices.creators_id
 and pieces_owned_accum.time_ = prices.time_
 ;
-
-
-
-
-select * from pieces_owned
-
-select *,
-TIMESTAMPDIFF(SECOND,prices.time_,rewards.time_) as timediff
-
-from prices
-inner join 
-rewards
-on prices.creators_id = rewards.creators_id 
-and prices.time_ >= rewards.time_
-
-
+CREATE VIEW rewards_earned_accum as
+select
+owners_id,
+pieces_owned_value_accum.creators_id,
+pieces_owned_value_accum.time_ as pieces_time,
+value_accum,
+rewards.time_ as reward_time,
+reward_amount,
+TIMESTAMPDIFF(SECOND,pieces_owned_value_accum.time_,rewards.time_) as timediff_seconds,
+value_accum*
+(
+   EXP
+   (
+      -1*reward_amount*TIMESTAMPDIFF
+      (
+         SECOND,pieces_owned_value_accum.time_,rewards.time_
+      )
+      /3.15569e7
+   )
+   -1
+)
+as rewards_earned
+from pieces_owned_value_accum
+inner join rewards on pieces_owned_value_accum.creators_id = rewards.creators_id
+and pieces_owned_value_accum.time_ >= rewards.time_
+;
 /*
+
 select * from pieces_total;
 select * from pieces_available;
-select * from pieces_owned;
+select * from pieces_owned order by owners_id, creators_id, time_;
 select * from pieces_owned_total;
 select * from pieces_owned_accum;
+select * from pieces_owned_value_accum;
 select * from pieces_issued;
 select * from users_current_view;
 select * from worth;
