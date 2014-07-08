@@ -32,7 +32,7 @@ public class Actions {
 	private static final Double SERVICE_FEE_PCT = .05d;
 	private static final Gson GSON = new Gson();
 
-	public static Bid createBid(String userId, String creatorId, Integer pieces, Double bid_amount, 
+	public static Bid createBid(String userId, String creatorId, Integer pieces, Double bid_per_piece, 
 			String validUntil, Boolean partial) {
 
 		// First, verify that the creator has that many pieces available
@@ -50,7 +50,7 @@ public class Actions {
 				"valid_until",validUntil,
 				"partial_fill", partial,
 				"pieces", pieces,
-				"bid", bid_amount);
+				"bid_per_piece", bid_per_piece);
 
 		bid.saveIt();
 
@@ -58,7 +58,7 @@ public class Actions {
 
 	}
 
-	public static Ask createAsk(String userId, String creatorId, Integer pieces, Double ask_amount,
+	public static Ask createAsk(String userId, String creatorId, Integer pieces, Double ask_per_piece,
 			String validUntil, Boolean partial) {
 
 		// First, verify that you have that many pieces to sell
@@ -79,7 +79,7 @@ public class Actions {
 				"valid_until",validUntil,
 				"partial_fill", partial,
 				"pieces", pieces,
-				"ask", ask_amount);
+				"ask_per_piece", ask_per_piece);
 
 		ask.saveIt();
 
@@ -158,8 +158,8 @@ public class Actions {
 			Integer askId = cRow.getInteger("ask_id");
 			Integer bidId = cRow.getInteger("bid_id");
 
-			Double askPrice = cRow.getDouble("ask");
-			Double bidPrice = cRow.getDouble("bid");
+			Double askPerPiece = cRow.getDouble("ask_per_piece");
+			Double bidPerPiece = cRow.getDouble("bid_per_piece");
 
 			String askValidUntil = cRow.getString("ask_valid_until");
 			String bidValidUntil = cRow.getString("bid_valid_until");
@@ -176,7 +176,7 @@ public class Actions {
 
 			String dateOfTransaction = SDF.format(new Date());
 			// Do the sale at the askers price
-			sellFromUser(fromUserBtcAddr, toUserBtcAddr, creatorsId, piecesForTransaction, bidPrice);
+			sellFromUser(fromUserBtcAddr, toUserBtcAddr, creatorsId, piecesForTransaction, bidPerPiece*piecesForTransaction);
 
 
 			if (bidPieces > askPieces) {
@@ -200,7 +200,7 @@ public class Actions {
 						"valid_until", bidValidUntil,
 						"partial_fill", true,
 						"pieces", newPieces,
-						"bid", bidPrice);
+						"bid_per_piece", bidPerPiece);
 
 				rerun = true;
 				break;
@@ -229,7 +229,7 @@ public class Actions {
 							"valid_until", askValidUntil,
 							"partial_fill", true,
 							"pieces", newPieces,
-							"ask", askPrice);
+							"ask_per_piece", askPerPiece);
 				}
 
 				rerun = true;
@@ -255,12 +255,7 @@ public class Actions {
 		}
 
 		if (rerun) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Tools.Sleep(1000L);
 			askBidAccepter();
 		}
 

@@ -44,6 +44,15 @@ public class Tools {
 		}
 	}
 	
+	public static void Sleep(Long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static Properties loadProperties(String propertiesFileLocation) {
 
 		Properties prop = new Properties();

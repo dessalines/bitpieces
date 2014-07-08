@@ -40,26 +40,26 @@ $(document).ready(function(){
     	success: function(data, status, xhr) {
 
     		
-    			xhr.getResponseHeader('Set-Cookie');
+           xhr.getResponseHeader('Set-Cookie');
                 // document.cookie="authenticated_session_id=" + data + 
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
-  
+
                 $('#creatorRegisterForm')[0].reset();
                 
                 toastr.success('Registered and logged in.')
                 
                 
-             
 
-            console.log(document.cookie);
 
-        },
-         error: function (request, status, error) {
+                console.log(document.cookie);
+
+            },
+            error: function (request, status, error) {
                 delete_cookie("authenticated_session_id");
                 toastr.error(request.responseText);
-              }
-    });
+            }
+        });
 
 
 

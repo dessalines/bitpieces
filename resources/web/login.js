@@ -49,7 +49,7 @@ $( "#registerBtn" ).click(function( event ) {
     data: formData, 
     success: function(data, status, xhr) {
     	
-        xhr.getResponseHeader('Set-Cookie');
+      xhr.getResponseHeader('Set-Cookie');
                 // document.cookie="authenticated_session_id=" + data + 
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
@@ -59,16 +59,16 @@ $( "#registerBtn" ).click(function( event ) {
                 toastr.success('Registered and logged in.')
                 
                 showHideElementsLoggedIn();
-             
+                
 
-              console.log(document.cookie);
+                console.log(document.cookie);
 
-            },
-            error: function (request, status, error) {
+              },
+              error: function (request, status, error) {
                 delete_cookie("authenticated_session_id");
                 toastr.error(request.responseText);
               }
-          });
+            });
 
 
 

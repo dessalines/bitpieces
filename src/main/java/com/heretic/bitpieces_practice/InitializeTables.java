@@ -12,11 +12,13 @@ import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Fees;
 import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_total;
+import com.heretic.bitpieces_practice.tables.Tables.Reward;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
@@ -61,8 +63,19 @@ public class InitializeTables {
 		password_checker();
 		
 		ask_bid_acceptor();
+		
+		withdraw_rewards();
+		
+		
 
 
+	}
+
+
+	private static void withdraw_rewards() {
+		
+		
+		
 	}
 
 
@@ -101,8 +114,9 @@ public class InitializeTables {
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 		String leonardoUserId = leonardo.getId().toString();
 
-		Actions.sellFromUser(dickBtcAddr, billBtcAddr, Integer.valueOf(leonardoUserId), 5, 3d);
+		Actions.sellFromUser(dickBtcAddr, billBtcAddr, Integer.valueOf(leonardoUserId), 5, 6d);
 
+		Tools.Sleep(1000L);
 
 	}
 
@@ -117,9 +131,9 @@ public class InitializeTables {
 		String leonardoUserId = leonardo.getId().toString();
 		Creators_btc_address creatorBtcAddr = Creators_btc_address.findFirst("creators_id = ?", leonardoUserId);
 
-		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 165, 10d);
+		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 100, 100d);
 
-
+		Tools.Sleep(1000L);
 
 	}
 
@@ -135,7 +149,8 @@ public class InitializeTables {
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 		String leonardoCreatorId = leonardo.getId().toString();
 
-		Actions.createAsk(dickUserId, leonardoCreatorId, 160, 100d,"2014-06-28", true);
+		Actions.createAsk(dickUserId, leonardoCreatorId, 75, 1d,"2014-12-12", true);
+		Tools.Sleep(1000L);
 
 	}
 
@@ -150,19 +165,22 @@ public class InitializeTables {
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 		String leonardoCreatorId = leonardo.getId().toString();
 
-		Actions.createBid(billUserId, leonardoCreatorId, 5, 120d, "2014-06-28", true);
+		Actions.createBid(billUserId, leonardoCreatorId, 5, 1.2263d, "2014-12-12", true);
+		Tools.Sleep(1000L);
 		
 		// Find John, also wants to bid on it, at a higher bid, and more pieces
 		User john = User.findFirst("username like 'John%'");
 		String johnUserId = john.getId().toString();
 		
-		Actions.createBid(johnUserId, leonardoCreatorId, 10, 130d, "2014-06-28", true);
+		Actions.createBid(johnUserId, leonardoCreatorId, 10, 1.5d, "2014-12-12", true);
+		Tools.Sleep(1000L);
 		
 		// Finally Terry, wants to bid the lowest, but more than the asker has to sell
 		User terry = User.findFirst("username like 'Terry%'");
 		String terryUserId = terry.getId().toString();
 		
-		Actions.createBid(terryUserId, leonardoCreatorId, 30, 110d, "2014-06-28", true);
+		Actions.createBid(terryUserId, leonardoCreatorId, 30, 3d, "2014-12-12", true);
+		Tools.Sleep(1000L);
 		
 	}
 
@@ -174,11 +192,15 @@ public class InitializeTables {
 		Pieces_owned.deleteAll();
 		Pieces_issued.deleteAll();
 		Users_btc_address.deleteAll();
+		Creators_btc_address.deleteAll();
+		Creators_page_fields.deleteAll();
 		Bid.deleteAll();
 		Ask.deleteAll();
+		Reward.deleteAll();
 		User.deleteAll();
-		Creators_btc_address.deleteAll();
 		Creator.deleteAll();
+		
+		
 
 	}
 
@@ -199,6 +221,7 @@ public class InitializeTables {
 
 	private static void setup_creators() {
 
+		String now = SDF.format(new Date());
 		Creator creator1 = Creator.createIt("username", "Leonardo_Davinci",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 				"email", "asdf@gmail.com");
@@ -209,7 +232,14 @@ public class InitializeTables {
 		Creators_btc_address.createIt("creators_id", creator1.getId(), "btc_addr", "fake");
 		Creators_btc_address.createIt("creators_id", creator2.getId(), "btc_addr", "fake");
 
-
+		Reward.createIt("creators_id", creator1.getId(),
+				"time_", now,
+				"reward_amount", 1.0d);
+		
+		Reward.createIt("creators_id", creator2.getId(),
+				"time_", now,
+				"reward_amount", 5.0d);
+				
 
 	}
 
@@ -222,8 +252,6 @@ public class InitializeTables {
 					"email", "asdf@gmail.com");
 			Users_btc_address.createIt("users_id", cUser.getId().toString(), "btc_addr", "fake");
 		}
-
-
 
 	}
 

@@ -22,7 +22,7 @@ fees,
 creators_page_fields
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
-ask_bid_accept_checker
+ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -134,7 +134,7 @@ CREATE TABLE bids
    valid_until DATETIME NOT NULL,
    partial_fill TINYINT(1) NOT NULL,
    pieces BIGINT(8) UNSIGNED NOT NULL,
-   bid DOUBLE UNSIGNED NOT NULL,
+   bid_per_piece DOUBLE UNSIGNED NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -151,7 +151,7 @@ CREATE TABLE asks
    valid_until DATETIME NOT NULL,
    partial_fill TINYINT(1) NOT NULL,
    pieces BIGINT(8) UNSIGNED NOT NULL,
-   ask DOUBLE UNSIGNED NOT NULL,
+   ask_per_piece DOUBLE UNSIGNED NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -245,22 +245,10 @@ creators_id, time_, price/pieces as price_per_piece
 FROM sales_from_creators
 inner join creators_btc_addresses
 on sales_from_creators.from_creators_btc_addr_id = creators_btc_addresses.id
-order by time_
+order by creators_id, time_
 ;
-CREATE VIEW candlestick_prices AS
-SELECT
--- TODO some non-null stuff here
-sales_from_users.creators_id,
-sales_from_users.time_,
-bid/bids.pieces as bid_per_piece,
-ask/asks.pieces as ask_per_piece,
-price/sales_from_users.pieces as price_per_piece
-FROM sales_from_users
-inner join bids
-on sales_from_users.creators_id = bids.creators_id
-inner join asks
-on sales_from_users.creators_id = asks.creators_id
-;
+
+
 CREATE VIEW worth AS
 SELECT
 prices.creators_id, prices.time_, price_per_piece*pieces_issued as worth
@@ -315,30 +303,67 @@ asks.creators_id,
 asks.id as ask_id,
 asks.users_id as askers_id,
 asks.pieces as ask_pieces,
-asks.ask,
+asks.ask_per_piece,
 asks.valid_until as ask_valid_until,
 asks.partial_fill as ask_partial_fill,
 bids.id as bid_id,
 bids.users_id as bidders_id,
 bids.pieces as bid_pieces,
-bids.bid,
+bids.bid_per_piece,
 bids.valid_until as bid_valid_until,
 bids.partial_fill as bid_partial_fill,
-bid-ask as price_difference
+bid_per_piece-ask_per_piece as price_per_piece_difference
 
 from 
 asks
 left join
 bids
 on asks.creators_id = bids.creators_id
-where bid >= ask
+where bid_per_piece >= ask_per_piece
 and NOW() < asks.valid_until
 and NOW() < bids.valid_until
 
 -- ordering by the highest bidder, and when the asker placed his asc (first in line)
-order by asks.id asc,bid-ask desc
+order by asks.id asc,bid_per_piece-ask_per_piece desc
 ;
 
+
+-- need 3 views, pieces_owned_accum, pieces_owned_value, rewards_earned, rewards_earned_accum
+CREATE VIEW pieces_owned_accum as
+select
+a.id,
+a.owners_id,
+a.creators_id,
+a.time_,
+sum(b.pieces_owned) as pieces_accum
+from pieces_owned a, pieces_owned b
+WHERE b.owners_id = a.owners_id
+and b.time_ <= a.time_
+GROUP BY a.id,a.owners_id
+ORDER BY a.owners_id, a.creators_id, a.time_
+;
+
+CREATE VIEW pieces_owned_value as
+select
+pieces_owned_accum.owners_id, pieces_owned_accum.creators_id, pieces_owned_accum.time_, price_per_piece * pieces_accum as value
+from pieces_owned_accum
+inner join prices on pieces_owned_accum.creators_id = prices.creators_id
+and pieces_owned_accum.time_ = prices.time_
+;
+
+
+
+
+select * from pieces_owned
+
+select *,
+TIMESTAMPDIFF(SECOND,prices.time_,rewards.time_) as timediff
+
+from prices
+inner join 
+rewards
+on prices.creators_id = rewards.creators_id 
+and prices.time_ >= rewards.time_
 
 
 /*
@@ -346,11 +371,13 @@ select * from pieces_total;
 select * from pieces_available;
 select * from pieces_owned;
 select * from pieces_owned_total;
+select * from pieces_owned_accum;
 select * from pieces_issued;
 select * from users_current_view;
 select * from worth;
 select * from prices;
 select * from ask_bid_accept_checker
+
 
 select * from pieces_owned order by owners_id, time_ desc
 */
