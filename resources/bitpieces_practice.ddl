@@ -361,6 +361,9 @@ pieces_owned_value_accum.time_ as pieces_time,
 value_accum,
 rewards.time_ as reward_time,
 reward_amount,
+TIMESTAMPDIFF(SECOND, pieces_owned_value_accum.time_, NOW()) as derptime,
+
+
 TIMESTAMPDIFF(SECOND,pieces_owned_value_accum.time_,rewards.time_) as timediff_seconds,
 value_accum*
 (
