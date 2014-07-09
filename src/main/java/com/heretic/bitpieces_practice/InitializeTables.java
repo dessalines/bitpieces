@@ -234,11 +234,11 @@ public class InitializeTables {
 
 		Reward.createIt("creators_id", creator1.getId(),
 				"time_", now,
-				"reward_amount", 1.0d);
+				"reward_pct", 1.0d);
 		
 		Reward.createIt("creators_id", creator2.getId(),
 				"time_", now,
-				"reward_amount", 5.0d);
+				"reward_pct", 5.0d);
 				
 
 	}
