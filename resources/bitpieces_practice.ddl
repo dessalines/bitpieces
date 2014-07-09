@@ -105,6 +105,7 @@ CREATE TABLE pieces_issued
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    time_ DATETIME NOT NULL,
    pieces_issued BIGINT(8) UNSIGNED NOT NULL,
+   price_per_piece DOUBLE UNSIGNED NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -169,7 +170,8 @@ CREATE TABLE sales_from_users
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    time_ DATETIME NOT NULL,
    pieces BIGINT(8) UNSIGNED NOT NULL,
-   price DOUBLE UNSIGNED NOT NULL,
+   price_per_piece DOUBLE UNSIGNED NOT NULL,
+   total DOUBLE UNSIGNED NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -184,7 +186,8 @@ CREATE TABLE sales_from_creators
    FOREIGN KEY (to_users_btc_addr_id) REFERENCES users_btc_addresses(id),
    time_ DATETIME NOT NULL,
    pieces BIGINT(8) UNSIGNED NOT NULL,
-   price DOUBLE UNSIGNED NOT NULL,
+   price_per_piece DOUBLE UNSIGNED NOT NULL,
+   total DOUBLE UNSIGNED NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -355,7 +358,6 @@ from pieces_owned_span a, pieces_owned_span b
 WHERE b.owners_id = a.owners_id
 and b.creators_id = a.creators_id
 and b.start_time_ <= a.start_time_
-
 GROUP BY a.creators_id, a.owners_id, a.start_time_
 --ORDER BY a.owners_id, a.creators_id, a.start_time_
 ;

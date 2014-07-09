@@ -114,7 +114,7 @@ public class InitializeTables {
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 		String leonardoUserId = leonardo.getId().toString();
 
-		Actions.sellFromUser(dickBtcAddr, billBtcAddr, Integer.valueOf(leonardoUserId), 5, 6d);
+		Actions.sellFromUser(dickBtcAddr, billBtcAddr, Integer.valueOf(leonardoUserId), 5, 1.2d);
 
 		Tools.Sleep(1000L);
 
@@ -131,7 +131,7 @@ public class InitializeTables {
 		String leonardoUserId = leonardo.getId().toString();
 		Creators_btc_address creatorBtcAddr = Creators_btc_address.findFirst("creators_id = ?", leonardoUserId);
 
-		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 100, 100d);
+		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 100, 1.0d);
 		
 		Tools.Sleep(1000L);
 		
@@ -144,7 +144,7 @@ public class InitializeTables {
 		String dustyUserId = dusty.getId().toString();
 		Creators_btc_address dustyBtcAddr = Creators_btc_address.findFirst("creators_id = ?", dustyUserId);
 
-		Actions.sellFromCreator(dustyBtcAddr, johnBtcAddr, 50, 100d);
+		Actions.sellFromCreator(dustyBtcAddr, johnBtcAddr, 50, 2.0d);
 			
 
 		Tools.Sleep(1000L);
@@ -235,15 +235,23 @@ public class InitializeTables {
 		//		Creators_required_fields leonardo = Creators_required_fields.findFirst("username = 'Leonardo'");
 		Creator leonardo = Creator.findFirst("username like ?", "Leonardo%");
 
-		Pieces_issued.createIt("creators_id",  leonardo.getId().toString(), "time_", SDF.format(new Date()), "pieces_issued", 200);
+		Pieces_issued.createIt("creators_id",  leonardo.getId().toString(), 
+				"time_", SDF.format(new Date()), 
+				"pieces_issued", 200, 
+				"price_per_piece", 1d);
 		Pieces_issued.createIt("creators_id", leonardo.getId().toString(), 
 				"time_", SDF.format(new Date(new Date().getTime()+86400000)), 
-				"pieces_issued", 300);
+				"pieces_issued", 300,
+				"price_per_piece", 1d);
 
 //		Pieces_total piecesTotal = Pieces_total.findFirst("creators_id = ?", leonardo.getId().toString());
 		
 		Creator dusty = Creator.findFirst("username like ?", "Dusty%");
-		Pieces_issued.createIt("creators_id",  dusty.getId().toString(), "time_", SDF.format(new Date()), "pieces_issued", 50);
+		Pieces_issued.createIt(
+				"creators_id",  dusty.getId().toString(), 
+				"time_", SDF.format(new Date()), 
+				"pieces_issued", 50,
+				"price_per_piece", 2d);
 		
 		
 	}

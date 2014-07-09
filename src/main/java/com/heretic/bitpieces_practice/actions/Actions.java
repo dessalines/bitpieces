@@ -88,7 +88,7 @@ public class Actions {
 	}
 
 	public static Sales_from_creators sellFromCreator(Creators_btc_address creatorsBtcAddr, Users_btc_address userBtcAddr, 
-			Integer pieces, Double price) {
+			Integer pieces, Double price_per_piece) {
 
 		Integer creatorsId = creatorsBtcAddr.getInteger("creators_id");
 		Integer ownersId = userBtcAddr.getInteger("users_id");
@@ -101,8 +101,10 @@ public class Actions {
 					pieces_available + " are available");
 		}
 
-		Double amount_to_host = price*SERVICE_FEE_PCT;
-		Double amount_to_user = price - amount_to_host;
+		Double total = price_per_piece * pieces;
+		Double amount_to_host = total*SERVICE_FEE_PCT;
+		Double amount_to_user = total - amount_to_host;
+		Double price_per_piece_total = amount_to_user/price_per_piece;
 
 
 		String dateOfTransactionStr = SDF.format(new Date());
@@ -111,7 +113,8 @@ public class Actions {
 				"to_users_btc_addr_id", userBtcAddr.getId(),
 				"time_", dateOfTransactionStr,
 				"pieces", pieces,
-				"price", amount_to_user);
+				"price_per_piece", price_per_piece_total,
+				"total", amount_to_user);
 
 		sale.saveIt();
 
@@ -135,6 +138,52 @@ public class Actions {
 
 		return sale;
 
+	}
+
+	public static Sales_from_users sellFromUser(Users_btc_address fromUserBtcAddr,
+			Users_btc_address toUserBtcAddr, Integer creatorsId, Integer pieces,
+			Double price_per_piece) {
+	
+		String dateOfTransactionStr = SDF.format(new Date());
+		Integer sellersId = fromUserBtcAddr.getInteger("users_id");
+		Integer buyersId = toUserBtcAddr.getInteger("users_id");
+	
+	
+		// Make sure that the from user actually has those pieces, and subtract them from pieces owned
+		Pieces_owned_total pieces_owned_total_obj = Pieces_owned_total.findFirst("owners_id = ? and creators_id = ?", sellersId, creatorsId);
+		Integer pieces_owned_total = pieces_owned_total_obj.getInteger("pieces_owned_total");
+	
+	
+		if (pieces_owned_total < pieces) {
+			throw new NoSuchElementException("You are trying to sell " + pieces + " pieces, but you only own " +
+					pieces_owned_total + ".");
+		}
+	
+		Pieces_owned pieces_owned_seller = Pieces_owned.create("owners_id", sellersId,
+				"creators_id", creatorsId,
+				"time_", dateOfTransactionStr,
+				"pieces_owned", -pieces);
+		pieces_owned_seller.saveIt();
+	
+		Pieces_owned pieces_owned_buyer = Pieces_owned.create("owners_id", buyersId,
+				"creators_id", creatorsId,
+				"time_", dateOfTransactionStr,
+				"pieces_owned", pieces);
+		pieces_owned_buyer.saveIt();
+	
+	
+		Sales_from_users sale = Sales_from_users.create("from_users_btc_addr_id", fromUserBtcAddr.getId(),
+				"to_users_btc_addr_id", toUserBtcAddr.getId(),
+				"creators_id", creatorsId,
+				"time_", dateOfTransactionStr,
+				"pieces", pieces,
+				"price_per_piece", price_per_piece,
+				"total", price_per_piece*pieces);
+	
+		sale.saveIt();
+	
+	
+		return sale;
 	}
 
 	public static void askBidAccepter() {
@@ -260,52 +309,6 @@ public class Actions {
 			askBidAccepter();
 		}
 
-	}
-
-	public static Sales_from_users sellFromUser(Users_btc_address fromUserBtcAddr,
-			Users_btc_address toUserBtcAddr, Integer creatorsId, Integer pieces,
-			Double price) {
-
-		String dateOfTransactionStr = SDF.format(new Date());
-		Integer sellersId = fromUserBtcAddr.getInteger("users_id");
-		Integer buyersId = toUserBtcAddr.getInteger("users_id");
-
-
-		// Make sure that the from user actually has those pieces, and subtract them from pieces owned
-		Pieces_owned_total pieces_owned_total_obj = Pieces_owned_total.findFirst("owners_id = ? and creators_id = ?", sellersId, creatorsId);
-		Integer pieces_owned_total = pieces_owned_total_obj.getInteger("pieces_owned_total");
-
-
-		if (pieces_owned_total < pieces) {
-			throw new NoSuchElementException("You are trying to sell " + pieces + " pieces, but you only own " +
-					pieces_owned_total + ".");
-		}
-
-		Pieces_owned pieces_owned_seller = Pieces_owned.create("owners_id", sellersId,
-				"creators_id", creatorsId,
-				"time_", dateOfTransactionStr,
-				"pieces_owned", -pieces);
-		pieces_owned_seller.saveIt();
-
-		Pieces_owned pieces_owned_buyer = Pieces_owned.create("owners_id", buyersId,
-				"creators_id", creatorsId,
-				"time_", dateOfTransactionStr,
-				"pieces_owned", pieces);
-		pieces_owned_buyer.saveIt();
-
-
-		Sales_from_users sale = Sales_from_users.create("from_users_btc_addr_id", fromUserBtcAddr.getId(),
-				"to_users_btc_addr_id", toUserBtcAddr.getId(),
-				"creators_id", creatorsId,
-				"time_", dateOfTransactionStr,
-				"pieces", pieces,
-				"price", price);
-
-		sale.saveIt();
-
-		// Change the pieces owned
-
-		return sale;
 	}
 
 	public static UserTypeAndId createUserFromAjax(String reqBody) {
