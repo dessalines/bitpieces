@@ -13,11 +13,9 @@ import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
-import com.heretic.bitpieces_practice.tables.Tables.Fees;
 import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
-import com.heretic.bitpieces_practice.tables.Tables.Pieces_total;
 import com.heretic.bitpieces_practice.tables.Tables.Reward;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
@@ -51,6 +49,8 @@ public class InitializeTables {
 		setup_creators();
 
 		issue_pieces();
+		
+		deposit_user_funds();
 
 		sell_from_creator();
 
@@ -69,6 +69,12 @@ public class InitializeTables {
 		
 
 
+	}
+
+
+	private static void deposit_user_funds() {
+		// TODO Auto-generated method stub
+		
 	}
 
 
@@ -114,7 +120,7 @@ public class InitializeTables {
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 		String leonardoUserId = leonardo.getId().toString();
 
-		Actions.sellFromUser(dickBtcAddr, billBtcAddr, Integer.valueOf(leonardoUserId), 5, 1.2d);
+		Actions.sellFromUser(dick.getId().toString(), bill.getId().toString(), leonardo.getId().toString(), 5, 1.2d);
 
 		Tools.Sleep(1000L);
 
@@ -123,28 +129,19 @@ public class InitializeTables {
 	private static void sell_from_creator() {
 		// Dick is buying from leonardo, the creator
 		User dick = User.findFirst("username like 'Dick%'");
-		String dickUserId = dick.getId().toString();
-
-		Users_btc_address userBtcAddr = Users_btc_address.findFirst("users_id = ?", dickUserId);
 
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
-		String leonardoUserId = leonardo.getId().toString();
-		Creators_btc_address creatorBtcAddr = Creators_btc_address.findFirst("creators_id = ?", leonardoUserId);
 
-		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 100, 1.0d);
+
+		Actions.sellFromCreator(leonardo.getId().toString(), dick.getId().toString(), 100, 1.0d);
 		
 		Tools.Sleep(1000L);
 		
 		User john = User.findFirst("username like 'John%'");
-		String johnUserId = john.getId().toString();
-
-		Users_btc_address johnBtcAddr = Users_btc_address.findFirst("users_id = ?", johnUserId);
-
 		Creator dusty = Creator.findFirst("username like 'Dusty%'");
-		String dustyUserId = dusty.getId().toString();
-		Creators_btc_address dustyBtcAddr = Creators_btc_address.findFirst("creators_id = ?", dustyUserId);
 
-		Actions.sellFromCreator(dustyBtcAddr, johnBtcAddr, 50, 2.0d);
+
+		Actions.sellFromCreator(dusty.getId().toString(), john.getId().toString(), 50, 2.0d);
 			
 
 		Tools.Sleep(1000L);
@@ -212,7 +209,6 @@ public class InitializeTables {
 	}
 
 	private static final void delete_all() {
-		Fees.deleteAll();
 		Host_btc_addresses.deleteAll();
 		Sales_from_creators.deleteAll();
 		Sales_from_users.deleteAll();

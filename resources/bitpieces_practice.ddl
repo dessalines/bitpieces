@@ -214,10 +214,10 @@ CREATE TABLE asks
 CREATE TABLE sales_from_users
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   from_users_btc_addr_id int(11) NOT NULL,
-   FOREIGN KEY (from_users_btc_addr_id) REFERENCES users_btc_addresses(id),
-   to_users_btc_addr_id int(11) NOT NULL,
-   FOREIGN KEY (to_users_btc_addr_id) REFERENCES users_btc_addresses(id),
+   from_users_id int(11) NOT NULL,
+   FOREIGN KEY (from_users_id) REFERENCES users(id),
+   to_users_id int(11) NOT NULL,
+   FOREIGN KEY (to_users_id) REFERENCES users(id),
    creators_id int(11) NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    time_ DATETIME NOT NULL,
@@ -232,31 +232,21 @@ CREATE TABLE sales_from_users
 CREATE TABLE sales_from_creators
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   from_creators_btc_addr_id int(11) NOT NULL,
-   FOREIGN KEY (from_creators_btc_addr_id) REFERENCES creators_btc_addresses(id),
-   to_users_btc_addr_id int(11) NOT NULL,
-   FOREIGN KEY (to_users_btc_addr_id) REFERENCES users_btc_addresses(id),
+   from_creators_id int(11) NOT NULL,
+   FOREIGN KEY (from_creators_id) REFERENCES creators(id),
+   to_users_id int(11) NOT NULL,
+   FOREIGN KEY (to_users_id) REFERENCES users(id),
    time_ DATETIME NOT NULL,
    pieces BIGINT(8) UNSIGNED NOT NULL,
-   price_per_piece DOUBLE UNSIGNED NOT NULL,
-   total DOUBLE UNSIGNED NOT NULL,
-   created_at TIMESTAMP NOT NULL DEFAULT 0,
-   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
-   UPDATE CURRENT_TIMESTAMP
-)
-;
-CREATE TABLE fees
-(
-   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   sales_from_creators_id int(11) NOT NULL,
-   host_btc_addr_id int(11) NOT NULL,
-   FOREIGN KEY (host_btc_addr_id) REFERENCES host_btc_addresses(id),
    fee DOUBLE UNSIGNED NOT NULL,
+   price_per_piece_after_fee DOUBLE UNSIGNED NOT NULL,
+   total_after_fee DOUBLE UNSIGNED NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
 
 
 
@@ -281,10 +271,9 @@ creators_id, time_, price_per_piece
 FROM sales_from_users
 union
 SELECT
-creators_id, time_, price_per_piece
+from_creators_id as creators_id, time_, price_per_piece
 FROM sales_from_creators
-inner join creators_btc_addresses
-on sales_from_creators.from_creators_btc_addr_id = creators_btc_addresses.id
+
 order by creators_id, time_
 ;
 

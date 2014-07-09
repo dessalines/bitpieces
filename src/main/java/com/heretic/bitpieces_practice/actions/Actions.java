@@ -13,9 +13,6 @@ import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Ask_bid_accept_checker;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
-import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
-import com.heretic.bitpieces_practice.tables.Tables.Fees;
-import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_total;
@@ -87,11 +84,8 @@ public class Actions {
 
 	}
 
-	public static Sales_from_creators sellFromCreator(Creators_btc_address creatorsBtcAddr, Users_btc_address userBtcAddr, 
+	public static Sales_from_creators sellFromCreator(String creatorsId, String ownersId, 
 			Integer pieces, Double price_per_piece) {
-
-		Integer creatorsId = creatorsBtcAddr.getInteger("creators_id");
-		Integer ownersId = userBtcAddr.getInteger("users_id");
 
 		// First, verify that there are that many pieces available from the creator
 		Integer pieces_available = Pieces_available.findFirst("creators_id = ?", creatorsId).getInteger("pieces_available");
@@ -101,30 +95,23 @@ public class Actions {
 					pieces_available + " are available");
 		}
 
-		Double total = price_per_piece * pieces;
-		Double amount_to_host = total*SERVICE_FEE_PCT;
-		Double amount_to_user = total - amount_to_host;
+		Double total_before_fee = price_per_piece * pieces;
+		Double amount_to_host = total_before_fee*SERVICE_FEE_PCT;
+		Double amount_to_user = total_before_fee - amount_to_host;
 		Double price_per_piece_total = amount_to_user/pieces;
 
 
 		String dateOfTransactionStr = SDF.format(new Date());
 		// Do the transaction
-		Sales_from_creators sale = Sales_from_creators.create("from_creators_btc_addr_id", creatorsBtcAddr.getId(),
-				"to_users_btc_addr_id", userBtcAddr.getId(),
+		Sales_from_creators sale = Sales_from_creators.create("from_creators_id", creatorsId,
+				"to_users_id", ownersId,
 				"time_", dateOfTransactionStr,
 				"pieces", pieces,
-				"price_per_piece", price_per_piece_total,
-				"total", amount_to_user);
+				"fee", amount_to_host, 
+				"price_per_piece_after_fee", price_per_piece_total,
+				"total_after_fee", amount_to_user);
 
 		sale.saveIt();
-
-		// Charge the fee
-		Fees fee = Fees.create("sales_from_creators_id", sale.getId(),
-				"host_btc_addr_id", Host_btc_addresses.findFirst("").getId(),
-				"fee", amount_to_host);
-		fee.saveIt();
-
-
 
 
 		// User now owns pieces
@@ -140,14 +127,11 @@ public class Actions {
 
 	}
 
-	public static Sales_from_users sellFromUser(Users_btc_address fromUserBtcAddr,
-			Users_btc_address toUserBtcAddr, Integer creatorsId, Integer pieces,
+	public static Sales_from_users sellFromUser(String sellersId,
+			String buyersId, String creatorsId, Integer pieces,
 			Double price_per_piece) {
 	
 		String dateOfTransactionStr = SDF.format(new Date());
-		Integer sellersId = fromUserBtcAddr.getInteger("users_id");
-		Integer buyersId = toUserBtcAddr.getInteger("users_id");
-	
 	
 	
 		// Make sure that the from user actually has those pieces, and subtract them from pieces owned
@@ -173,8 +157,8 @@ public class Actions {
 		pieces_owned_buyer.saveIt();
 	
 	
-		Sales_from_users sale = Sales_from_users.create("from_users_btc_addr_id", fromUserBtcAddr.getId(),
-				"to_users_btc_addr_id", toUserBtcAddr.getId(),
+		Sales_from_users sale = Sales_from_users.create("from_users_id", sellersId,
+				"to_users_id", buyersId,
 				"creators_id", creatorsId,
 				"time_", dateOfTransactionStr,
 				"pieces", pieces,
@@ -199,9 +183,9 @@ public class Actions {
 
 			// Partial fill options : either create/update the row and do the query again
 			// If it does any updating, then exit the loop, and put a flag to rerun it again
-			Integer askersId = cRow.getInteger("askers_id");
-			Integer biddersId = cRow.getInteger("bidders_id");
-			Integer creatorsId = cRow.getInteger("creators_id");
+			String askersId = cRow.getString("askers_id");
+			String biddersId = cRow.getString("bidders_id");
+			String creatorsId = cRow.getString("creators_id");
 
 			Integer askPieces = cRow.getInteger("ask_pieces");
 			Integer bidPieces = cRow.getInteger("bid_pieces");
@@ -215,9 +199,6 @@ public class Actions {
 			String askValidUntil = cRow.getString("ask_valid_until");
 			String bidValidUntil = cRow.getString("bid_valid_until");
 
-			Users_btc_address fromUserBtcAddr = Users_btc_address.findFirst("users_id = ?", askersId);
-			Users_btc_address toUserBtcAddr = Users_btc_address.findFirst("users_id = ?", biddersId);
-
 			// If the bidder wants more than the asker has:
 			Integer askMinusBidPieces = askPieces - bidPieces;
 			Integer piecesForTransaction = Math.min(askPieces, bidPieces);
@@ -228,7 +209,7 @@ public class Actions {
 
 			String dateOfTransaction = SDF.format(new Date());
 			// Do the sale at the askers price
-			sellFromUser(fromUserBtcAddr, toUserBtcAddr, creatorsId, piecesForTransaction, bidPerPiece);
+			sellFromUser(askersId, biddersId, creatorsId, piecesForTransaction, bidPerPiece);
 
 
 			if (bidPieces > askPieces) {

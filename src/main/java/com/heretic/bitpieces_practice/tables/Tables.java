@@ -54,9 +54,6 @@ public class Tables {
 	@Table("host_btc_addresses")
 	public static class Host_btc_addresses extends Model {}
 	
-	@Table("fees")
-	public static class Fees extends Model {}
-	
 	@Table("ask_bid_accept_checker")
 	public static class Ask_bid_accept_checker extends Model {}
 	
