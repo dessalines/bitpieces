@@ -140,8 +140,6 @@ public class InitializeTables {
 
 	private static void create_ask() {
 
-
-
 		// TODO don't use the Parent thing, just get the users_id
 		User dick = User.findFirst("username like 'Dick%'");
 		String dickUserId = dick.getId().toString();
@@ -179,7 +177,7 @@ public class InitializeTables {
 		User terry = User.findFirst("username like 'Terry%'");
 		String terryUserId = terry.getId().toString();
 		
-		Actions.createBid(terryUserId, leonardoCreatorId, 30, 3d, "2014-12-12", true);
+		Actions.createBid(terryUserId, leonardoCreatorId, 30, 1.16d, "2014-12-12", true);
 		Tools.Sleep(1000L);
 		
 	}
@@ -200,8 +198,6 @@ public class InitializeTables {
 		User.deleteAll();
 		Creator.deleteAll();
 		
-		
-
 	}
 
 	private static void issue_pieces() {

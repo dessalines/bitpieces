@@ -22,7 +22,8 @@ fees,
 creators_page_fields
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
-ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum
+ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
+rewards_earned_total, rewards_owed
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -244,6 +245,21 @@ on a.creators_id = b.creators_id
 and a.time_ < b.time_
 group by creators_id, a.time_, a.price_per_piece;
 
+CREATE VIEW pieces_owned_span as
+select a.owners_id, a.creators_id, a.time_ as start_time_, 
+IFNULL(b.time_, NOW()) as end_time_, 
+TIMESTAMPDIFF(SECOND,a.time_,IFNULL(b.time_, NOW())) as timediff_seconds,
+a.pieces_owned
+from pieces_owned a
+left join 
+pieces_owned b
+on a.creators_id = b.creators_id
+and a.owners_id = b.owners_id
+and a.time_ < b.time_
+group by a.creators_id, a.owners_id, a.time_, a.pieces_owned;
+
+
+
 
 
 CREATE VIEW worth AS
@@ -328,33 +344,40 @@ order by asks.id asc,bid_per_piece-ask_per_piece desc
 -- need 3 views, pieces_owned_accum, pieces_owned_value, rewards_earned, rewards_earned_accum
 CREATE VIEW pieces_owned_accum as
 select
-a.id,
 a.owners_id,
 a.creators_id,
-a.time_,
+a.start_time_,
+a.end_time_, 
 sum(b.pieces_owned) as pieces_accum
-from pieces_owned a, pieces_owned b
+from pieces_owned_span a, pieces_owned_span b
 WHERE b.owners_id = a.owners_id
-and b.time_ <= a.time_
-GROUP BY a.id,a.owners_id
-ORDER BY a.owners_id, a.creators_id, a.time_
+and b.start_time_ <= a.start_time_
+GROUP BY a.owners_id, a.creators_id, a.start_time_
+ORDER BY a.owners_id, a.creators_id, a.start_time_
 ;
+
+
 
 CREATE VIEW pieces_owned_value_accum as
 select
 pieces_owned_accum.owners_id,
 pieces_owned_accum.creators_id,
-pieces_owned_accum.time_,
+pieces_owned_accum.start_time_,
+pieces_owned_accum.end_time_,
 prices_span.time_ as price_time_,
-prices_span.end_time_,
+prices_span.end_time_ as price_end_time_,
 prices_span.timediff_seconds,
+price_per_piece,
+pieces_accum,
 price_per_piece * pieces_accum as value_accum
 from pieces_owned_accum
 inner join prices_span on pieces_owned_accum.creators_id = prices_span.creators_id
-and prices_span.time_ >= pieces_owned_accum.time_
-group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, price_time_, end_time_
+and (prices_span.time_ >= pieces_owned_accum.start_time_ and prices_span.end_time_ <= pieces_owned_accum.end_time_)
+--and (prices_span.time_ >= pieces_owned_accum.time_ and prices_span.end_time_ >= pieces_owned_accum.time_)
+--and prices_span.end_time_ >= pieces_owned_accum.time_
+--group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, pieces_accum
+--group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, pieces_owned_accum.time_
 ;
-
 
 
 
@@ -363,7 +386,21 @@ select pieces_owned_value_accum.owners_id, pieces_owned_value_accum.creators_id,
 value_accum*(EXP(reward_pct*timediff_seconds/3.15569E7)-1) as reward_earned
 from pieces_owned_value_accum
 inner join rewards on pieces_owned_value_accum.creators_id = rewards.creators_id
-and pieces_owned_value_accum.price_time_ >= rewards.time_
+and pieces_owned_value_accum.price_time_ >= rewards.time_;
+
+CREATE VIEW rewards_earned_total as
+select owners_id, creators_id, sum(reward_earned) as reward_earned_total
+from rewards_earned
+group by owners_id, creators_id;
+
+CREATE VIEW rewards_owed as
+select creators_id, sum(reward_earned) as total_owed
+from rewards_earned
+group by creators_id;
+
+
+
+
 
 
 
@@ -373,6 +410,8 @@ and pieces_owned_value_accum.price_time_ >= rewards.time_
 select * from pieces_total;
 select * from pieces_available;
 select * from pieces_owned order by owners_id, creators_id, time_;
+select * from pieces_owned_span
+select * from prices_span
 select * from pieces_owned_total;
 select * from pieces_owned_accum;
 select * from pieces_owned_value_accum;
