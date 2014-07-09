@@ -413,6 +413,9 @@ price_per_piece * pieces_accum as value_accum
 from pieces_owned_accum
 inner join prices_span on pieces_owned_accum.creators_id = prices_span.creators_id
 and (prices_span.time_ >= pieces_owned_accum.start_time_ and prices_span.end_time_ <= pieces_owned_accum.end_time_)
+order by pieces_owned_accum.owners_id,
+pieces_owned_accum.creators_id,
+prices_span.time_
 --and (prices_span.time_ >= pieces_owned_accum.time_ and prices_span.end_time_ >= pieces_owned_accum.time_)
 --and prices_span.end_time_ >= pieces_owned_accum.time_
 --group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, pieces_accum
@@ -438,15 +441,15 @@ select creators_id, sum(reward_earned) as total_owed
 from rewards_earned
 group by creators_id;
 
-
+-- This is deposits - withdrawals + rewards earned - purchases from creator - purchases from user + buys from user
 CREATE VIEW users_funds as 
 select to_users_id as users_id, time_, -1*total_after_fee as funds from 
 sales_from_creators
 union 
-select from_users_id, time_, -1*total from 
+select from_users_id, time_, total from 
 sales_from_users
 union
-select to_users_id, time_, total from 
+select to_users_id, time_, -1*total from 
 sales_from_users
 union
 select owners_id, price_time_, reward_earned as funds from 
