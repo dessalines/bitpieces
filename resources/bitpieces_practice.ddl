@@ -19,7 +19,10 @@ rewards,
 rewards_earned,
 host_btc_addresses,
 fees,
-creators_page_fields
+creators_page_fields,
+users_deposits,
+users_withdrawals,
+creators_withdrawals
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
@@ -98,6 +101,55 @@ CREATE TABLE creators_btc_addresses
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
+CREATE TABLE users_deposits
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   users_id int(11) NOT NULL,
+   FOREIGN KEY (users_id) REFERENCES users(id),
+   cb_tid VARCHAR(56) NOT NULL,
+   time_ DATETIME NOT NULL,
+   btc_amount DOUBLE UNSIGNED NOT NULL,
+   status VARCHAR(56) NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+
+CREATE TABLE users_withdrawals
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   users_id int(11) NOT NULL,
+   FOREIGN KEY (users_id) REFERENCES users(id),
+   cb_tid VARCHAR(56) NOT NULL,
+   time_ DATETIME NOT NULL,
+   btc_amount DOUBLE UNSIGNED NOT NULL,
+   status VARCHAR(56) NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+CREATE TABLE creators_withdrawals
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   creators_id int(11) NOT NULL,
+   FOREIGN KEY (creators_id) REFERENCES creators(id),
+   cb_tid VARCHAR(56) NOT NULL,
+   time_ DATETIME NOT NULL,
+   btc_amount DOUBLE UNSIGNED NOT NULL,
+   status VARCHAR(56) NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+
+
 CREATE TABLE pieces_issued
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
@@ -225,11 +277,11 @@ CREATE TABLE rewards
 
 CREATE VIEW prices AS
 SELECT
-creators_id, time_, price/pieces as price_per_piece
+creators_id, time_, price_per_piece
 FROM sales_from_users
 union
 SELECT
-creators_id, time_, price/pieces as price_per_piece
+creators_id, time_, price_per_piece
 FROM sales_from_creators
 inner join creators_btc_addresses
 on sales_from_creators.from_creators_btc_addr_id = creators_btc_addresses.id
@@ -267,7 +319,7 @@ group by a.creators_id, a.owners_id, a.time_, a.pieces_owned;
 
 CREATE VIEW worth AS
 SELECT
-prices.creators_id, prices.time_, price_per_piece*pieces_issued as worth
+prices.creators_id, prices.time_, prices.price_per_piece*pieces_issued as worth
 FROM prices
 inner join
 pieces_issued
@@ -276,13 +328,6 @@ where pieces_issued.time_ <= prices.time_
 order by time_
 ;
 
--- TODO this should be done within the correct time frame
-CREATE VIEW rewards_annualized_pct AS
-SELECT
-rewards.time_, rewards.creators_id, reward_pct*12*100/price_per_piece as rewards_annualized_pct
-from rewards
-inner join prices
-on prices.creators_id = rewards.creators_id;
 
 CREATE VIEW pieces_total as
 select 

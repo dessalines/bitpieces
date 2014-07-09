@@ -15,10 +15,16 @@ import java.util.Properties;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class Tools {
 	public static final String ROOT_DIR = "/home/tyler/git/bitpieces_practice/";
 	
 	public static final StrongPasswordEncryptor PASS_ENCRYPT = new StrongPasswordEncryptor();
+	
+	public static final Gson GSON = new Gson();
+	public static final Gson GSON2 = new GsonBuilder().setPrettyPrinting().create();
 	
 	// Instead of using session ids, use a java secure random ID
 	private static final SecureRandom RANDOM = new SecureRandom();

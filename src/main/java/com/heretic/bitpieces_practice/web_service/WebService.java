@@ -39,7 +39,7 @@ public class WebService {
 	public static void main(String[] args) {
 
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
-
+		
 
 
 		get("/session", (req,res) -> {
