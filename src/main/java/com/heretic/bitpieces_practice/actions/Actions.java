@@ -20,6 +20,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
+import com.heretic.bitpieces_practice.tables.Tables.Users_funds_current;
 import com.heretic.bitpieces_practice.tools.Tools;
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
 import com.heretic.bitpieces_practice.tools.UserTypeAndId;
@@ -32,14 +33,19 @@ public class Actions {
 	public static Bid createBid(String userId, String creatorId, Integer pieces, Double bid_per_piece, 
 			String validUntil, Boolean partial) {
 
-		// First, verify that the creator has that many pieces available
-//		Pieces_available pieces_available_obj = Pieces_available.findFirst("creators_id = ?", creatorId);
-//		Integer pieces_available = pieces_available_obj.getInteger("pieces_owned_total");
-//
-//		if (pieces > pieces_available) {
-//			throw new NoSuchElementException("You are bidding for " + pieces + " pieces, but only " +
-//					pieces_available + " are available");
-//		}
+		Double amount = bid_per_piece * pieces;
+		
+		// First verify that the user has the funds to buy that amount
+		try {
+			Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
+
+			if (userFunds < amount) {
+				throw new NoSuchElementException("The user has only " + userFunds + " $, but is trying to buy " +
+						amount);
+			}
+		} catch(NullPointerException e) {
+			throw new NoSuchElementException("the user has no funds");
+		}
 
 		Bid bid = Bid.create("users_id", userId, 
 				"creators_id", creatorId,
@@ -84,7 +90,7 @@ public class Actions {
 
 	}
 
-	public static Sales_from_creators sellFromCreator(String creatorsId, String ownersId, 
+	public static Sales_from_creators sellFromCreator(String creatorsId, String usersId, 
 			Integer pieces, Double price_per_piece) {
 
 		// First, verify that there are that many pieces available from the creator
@@ -95,16 +101,33 @@ public class Actions {
 					pieces_available + " are available");
 		}
 
+
+
 		Double total_before_fee = price_per_piece * pieces;
 		Double amount_to_host = total_before_fee*SERVICE_FEE_PCT;
 		Double amount_to_user = total_before_fee - amount_to_host;
 		Double price_per_piece_total = amount_to_user/pieces;
 
+		// Also verify that the user has the funds to buy that amount
+		try {
+			Double userFunds = Users_funds_current.findFirst("users_id = ?", usersId).getDouble("current_funds");
+
+			if (userFunds < amount_to_user) {
+				throw new NoSuchElementException("The user has only " + userFunds + " $, but is trying to buy " +
+						amount_to_user);
+			}
+		} catch(NullPointerException e) {
+			throw new NoSuchElementException("the user has no funds");
+		}
+
+
+
+
 
 		String dateOfTransactionStr = SDF.format(new Date());
 		// Do the transaction
 		Sales_from_creators sale = Sales_from_creators.create("from_creators_id", creatorsId,
-				"to_users_id", ownersId,
+				"to_users_id", usersId,
 				"time_", dateOfTransactionStr,
 				"pieces", pieces,
 				"fee", amount_to_host, 
@@ -115,7 +138,7 @@ public class Actions {
 
 
 		// User now owns pieces
-		Pieces_owned pieces_owned = Pieces_owned.create("owners_id", ownersId,
+		Pieces_owned pieces_owned = Pieces_owned.create("owners_id", usersId,
 				"creators_id", creatorsId,
 				"time_", dateOfTransactionStr,
 				"pieces_owned", pieces);
@@ -130,44 +153,58 @@ public class Actions {
 	public static Sales_from_users sellFromUser(String sellersId,
 			String buyersId, String creatorsId, Integer pieces,
 			Double price_per_piece) {
-	
+
 		String dateOfTransactionStr = SDF.format(new Date());
-	
-	
+
+
 		// Make sure that the from user actually has those pieces, and subtract them from pieces owned
 		Pieces_owned_total pieces_owned_total_obj = Pieces_owned_total.findFirst("owners_id = ? and creators_id = ?", sellersId, creatorsId);
 		Integer pieces_owned_total = pieces_owned_total_obj.getInteger("pieces_owned_total");
-	
-	
+		Double amount = price_per_piece*pieces;
+		
+		
+		// Make sure the buyer has enough to cover the buy
+		try {
+			Double userFunds = Users_funds_current.findFirst("users_id = ?", buyersId).getDouble("current_funds");
+
+			if (userFunds < amount) {
+				throw new NoSuchElementException("The buyer has only " + userFunds + " $, but is trying to buy " +
+						amount);
+			}
+		} catch(NullPointerException e) {
+			throw new NoSuchElementException("the user has no funds");
+		}
+		
+
 		if (pieces_owned_total < pieces) {
 			throw new NoSuchElementException("You are trying to sell " + pieces + " pieces, but you only own " +
 					pieces_owned_total + ".");
 		}
-	
+
 		Pieces_owned pieces_owned_seller = Pieces_owned.create("owners_id", sellersId,
 				"creators_id", creatorsId,
 				"time_", dateOfTransactionStr,
 				"pieces_owned", -pieces);
 		pieces_owned_seller.saveIt();
-	
+
 		Pieces_owned pieces_owned_buyer = Pieces_owned.create("owners_id", buyersId,
 				"creators_id", creatorsId,
 				"time_", dateOfTransactionStr,
 				"pieces_owned", pieces);
 		pieces_owned_buyer.saveIt();
-	
-	
+
+
 		Sales_from_users sale = Sales_from_users.create("from_users_id", sellersId,
 				"to_users_id", buyersId,
 				"creators_id", creatorsId,
 				"time_", dateOfTransactionStr,
 				"pieces", pieces,
 				"price_per_piece", price_per_piece,
-				"total", price_per_piece*pieces);
-	
+				"total", amount);
+
 		sale.saveIt();
-	
-	
+
+
 		return sale;
 	}
 
@@ -202,11 +239,10 @@ public class Actions {
 			// If the bidder wants more than the asker has:
 			Integer askMinusBidPieces = askPieces - bidPieces;
 			Integer piecesForTransaction = Math.min(askPieces, bidPieces);
-			System.out.println("\ncreators id = " + creatorsId);
+			System.out.println("\ncreators id = " + creatorsId + " bidders id = " + biddersId + " askers id = " + askersId);
 			System.out.println("ask minus bid pieces = " + askMinusBidPieces);
 			System.out.println("pieces for transaction = " + piecesForTransaction);
-
-
+			
 			String dateOfTransaction = SDF.format(new Date());
 			// Do the sale at the askers price
 			sellFromUser(askersId, biddersId, creatorsId, piecesForTransaction, bidPerPiece);
@@ -308,10 +344,10 @@ public class Actions {
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
-			
+
 			UserTypeAndId uid = new UserTypeAndId(UserType.User, String.valueOf(user.getId()));
 			return uid;
-			
+
 		} catch (org.javalite.activejdbc.DBException e) {
 			e.printStackTrace();
 			return null;
@@ -319,7 +355,7 @@ public class Actions {
 
 
 	}
-	
+
 	public static UserTypeAndId createCreatorFromAjax(String reqBody) {
 
 
@@ -331,17 +367,17 @@ public class Actions {
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
-			
+
 			// TODO Create the static html5 page for that creator
 
 			UserTypeAndId uid = new UserTypeAndId(UserType.Creator, String.valueOf(creator.getId()));
 			return uid;
-			
+
 		} catch (org.javalite.activejdbc.DBException e) {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 
 	}
 
@@ -360,11 +396,11 @@ public class Actions {
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
 		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(UserType.User, user.getString("users_id")) : null;
-		
+
 		return returnVal;
 
 	}
-	
+
 	public static UserTypeAndId creatorLogin(String reqBody) {
 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
@@ -380,7 +416,7 @@ public class Actions {
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
 		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(UserType.Creator, user.getId().toString()) : null;
-		
+
 		return returnVal;
 
 
@@ -391,8 +427,8 @@ public class Actions {
 		LazyList<Pieces_owned_total> pieces_owned_total = Pieces_owned_total.where("owners_id = ?", userId);
 
 		return pieces_owned_total.toJson(true, "creators_id", "pieces_owned_total");
-		
-//		return GSON.toJson(pieces_owned_total.toMaps());
+
+		//		return GSON.toJson(pieces_owned_total.toMaps());
 
 
 	}

@@ -26,7 +26,7 @@ creators_withdrawals
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
-rewards_earned_total, rewards_owed
+rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -271,7 +271,7 @@ creators_id, time_, price_per_piece
 FROM sales_from_users
 union
 SELECT
-from_creators_id as creators_id, time_, price_per_piece
+from_creators_id as creators_id, time_, price_per_piece_after_fee as price_per_piece
 FROM sales_from_creators
 
 order by creators_id, time_
@@ -437,6 +437,33 @@ CREATE VIEW rewards_owed as
 select creators_id, sum(reward_earned) as total_owed
 from rewards_earned
 group by creators_id;
+
+
+CREATE VIEW users_funds as 
+select to_users_id as users_id, time_, -1*total_after_fee as funds from 
+sales_from_creators
+union 
+select from_users_id, time_, -1*total from 
+sales_from_users
+union
+select to_users_id, time_, total from 
+sales_from_users
+union
+select owners_id, price_time_, reward_earned as funds from 
+rewards_earned
+union
+select users_id, time_, btc_amount as funds from 
+users_deposits
+union
+select users_id, time_, -1*btc_amount as funds from 
+users_withdrawals
+order by users_id, time_, funds;
+
+CREATE VIEW users_funds_current as
+select users_id, sum(funds) as current_funds from 
+users_funds
+group by users_id;
+
 
 
 

@@ -59,6 +59,20 @@ public class Tables {
 	
 	@Table("creators_page_fields")
 	public static class Creators_page_fields extends Model {}
+	
+	@Table("users_deposits")
+	public static class Users_deposits extends Model {}
+	
+	@Table("users_withdrawals")
+	public static class Users_withdrawals extends Model {}
+	
+	@Table("creators_withdrawals")
+	public static class Creators_withdrawals extends Model {}
+	
+	@Table("users_funds_current")
+	public static class Users_funds_current extends Model {}
+	
+	
 
 }
 

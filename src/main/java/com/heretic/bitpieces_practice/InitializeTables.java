@@ -21,9 +21,17 @@ import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
+import com.heretic.bitpieces_practice.tables.Tables.Users_deposits;
 import com.heretic.bitpieces_practice.tools.Tools;
 
-
+/**
+ * TODO
+ * 1) Do a deposit / withdrawal check
+ * 2) Before buying anything, do a users funds check
+ * 3) Before buying creators pieces, make sure users have deposited
+ * @author tyler
+ *
+ */
 public class InitializeTables {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -50,7 +58,7 @@ public class InitializeTables {
 
 		issue_pieces();
 		
-		deposit_user_funds();
+		user_deposit();
 
 		sell_from_creator();
 
@@ -72,8 +80,39 @@ public class InitializeTables {
 	}
 
 
-	private static void deposit_user_funds() {
-		// TODO Auto-generated method stub
+	private static void user_deposit() {
+		
+		User dick = User.findFirst("username like 'Dick%'");
+		User john = User.findFirst("username like 'John%'");
+		User bill = User.findFirst("username like 'Bill%'");
+		User terry = User.findFirst("username like 'Terry%'");
+		
+		
+		Users_deposits dickDep = Users_deposits.createIt("users_id", dick.getId().toString(),
+				"cb_tid", "fake",
+				"time_", SDF.format(new Date()),
+				"btc_amount", 150d, 
+				"status", "completed");
+		
+		// an exact amount, or a straight up pieces buy
+		Users_deposits johnDep = Users_deposits.createIt("users_id", john.getId().toString(),
+				"cb_tid", "fake",
+				"time_", SDF.format(new Date()),
+				"btc_amount", 170d, 
+				"status", "completed");
+		
+		Users_deposits billDep = Users_deposits.createIt("users_id", bill.getId().toString(),
+				"cb_tid", "fake",
+				"time_", SDF.format(new Date()),
+				"btc_amount", 15d, 
+				"status", "completed");
+		
+		Users_deposits terryDep = Users_deposits.createIt("users_id", terry.getId().toString(),
+				"cb_tid", "fake",
+				"time_", SDF.format(new Date()),
+				"btc_amount", 300d, 
+				"status", "completed");
+				
 		
 	}
 
@@ -110,18 +149,13 @@ public class InitializeTables {
 
 		// Bill is buying some from dick
 		User bill = User.findFirst("username like 'Bill%'");
-		String billUserId = bill.getId().toString();
-		Users_btc_address billBtcAddr = Users_btc_address.findFirst("users_id = ?", billUserId);
 
 		User dick = User.findFirst("username like 'Dick%'");
-		String dickUserId = dick.getId().toString();
-		Users_btc_address dickBtcAddr = Users_btc_address.findFirst("users_id = ?", dickUserId);
 
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
-		String leonardoUserId = leonardo.getId().toString();
 
 		Actions.sellFromUser(dick.getId().toString(), bill.getId().toString(), leonardo.getId().toString(), 5, 1.2d);
-
+		
 		Tools.Sleep(1000L);
 
 	}
@@ -133,7 +167,7 @@ public class InitializeTables {
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 
 
-		Actions.sellFromCreator(leonardo.getId().toString(), dick.getId().toString(), 100, 1.0d);
+		Actions.sellFromCreator(leonardo.getId().toString(), dick.getId().toString(), 101, 1.0d);
 		
 		Tools.Sleep(1000L);
 		
@@ -210,6 +244,7 @@ public class InitializeTables {
 
 	private static final void delete_all() {
 		Host_btc_addresses.deleteAll();
+		Users_deposits.deleteAll();
 		Sales_from_creators.deleteAll();
 		Sales_from_users.deleteAll();
 		Pieces_owned.deleteAll();
