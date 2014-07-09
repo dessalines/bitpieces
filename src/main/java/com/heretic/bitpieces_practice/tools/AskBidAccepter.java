@@ -4,10 +4,13 @@ import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 import com.heretic.bitpieces_practice.actions.Actions;
 
-public class AskBidAccepter {
+public class AskBidAccepter implements Job {
 	public static void main(String[] args) {
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 		dbInit(prop);
@@ -28,5 +31,10 @@ public class AskBidAccepter {
 	}
 	private static final void dbClose() {
 		Base.close();
+	}
+
+	@Override
+	public void execute(JobExecutionContext arg0) throws JobExecutionException {
+		main(null);
 	}
 }

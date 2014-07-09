@@ -189,6 +189,7 @@ public class Actions {
 
 	public static void askBidAccepter() {
 
+		System.out.println("Starting ask bid acceptor ...");
 		Boolean rerun = false;
 		// Look at the view, and get the list of rows
 		List<Ask_bid_accept_checker> rows = Ask_bid_accept_checker.findAll();
@@ -308,6 +309,8 @@ public class Actions {
 		if (rerun) {
 			Tools.Sleep(1000L);
 			askBidAccepter();
+		} else {
+			System.out.println("Finished.");
 		}
 
 	}
