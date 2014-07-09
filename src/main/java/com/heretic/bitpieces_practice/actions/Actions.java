@@ -104,7 +104,7 @@ public class Actions {
 		Double total = price_per_piece * pieces;
 		Double amount_to_host = total*SERVICE_FEE_PCT;
 		Double amount_to_user = total - amount_to_host;
-		Double price_per_piece_total = amount_to_user/price_per_piece;
+		Double price_per_piece_total = amount_to_user/pieces;
 
 
 		String dateOfTransactionStr = SDF.format(new Date());
@@ -147,6 +147,7 @@ public class Actions {
 		String dateOfTransactionStr = SDF.format(new Date());
 		Integer sellersId = fromUserBtcAddr.getInteger("users_id");
 		Integer buyersId = toUserBtcAddr.getInteger("users_id");
+	
 	
 	
 		// Make sure that the from user actually has those pieces, and subtract them from pieces owned
@@ -226,7 +227,7 @@ public class Actions {
 
 			String dateOfTransaction = SDF.format(new Date());
 			// Do the sale at the askers price
-			sellFromUser(fromUserBtcAddr, toUserBtcAddr, creatorsId, piecesForTransaction, bidPerPiece*piecesForTransaction);
+			sellFromUser(fromUserBtcAddr, toUserBtcAddr, creatorsId, piecesForTransaction, bidPerPiece);
 
 
 			if (bidPieces > askPieces) {
