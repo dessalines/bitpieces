@@ -22,7 +22,7 @@ fees,
 creators_page_fields
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
-ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span
+ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -216,22 +216,6 @@ CREATE TABLE rewards
    UPDATE CURRENT_TIMESTAMP
 )
 ;
-CREATE TABLE rewards_earned
-(
-   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   users_id int(11) NOT NULL,
-   FOREIGN KEY (users_id) REFERENCES users(id),
-   creators_id int(11) NOT NULL,
-   FOREIGN KEY (creators_id) REFERENCES creators(id),
-   time_ DATETIME NOT NULL,
-   amount DOUBLE UNSIGNED NOT NULL,
-   created_at TIMESTAMP NOT NULL DEFAULT 0,
-   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
-   UPDATE CURRENT_TIMESTAMP
-)
-;
-
-
 
 -- Views
 
@@ -368,12 +352,13 @@ price_per_piece * pieces_accum as value_accum
 from pieces_owned_accum
 inner join prices_span on pieces_owned_accum.creators_id = prices_span.creators_id
 and prices_span.time_ >= pieces_owned_accum.time_
+group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, price_time_, end_time_
 ;
 
 
 
 
-CREATE VIEW rewards_earned_accum as
+CREATE VIEW rewards_earned as
 select pieces_owned_value_accum.owners_id, pieces_owned_value_accum.creators_id, price_time_, end_time_, timediff_seconds, value_accum, rewards.time_ as div_start_time_, reward_pct, 
 value_accum*(EXP(reward_pct*timediff_seconds/3.15569E7)-1) as reward_earned
 from pieces_owned_value_accum
