@@ -36,13 +36,13 @@ public class Actions {
 			String validUntil, Boolean partial) {
 
 		// First, verify that the creator has that many pieces available
-		Pieces_available pieces_available_obj = Pieces_available.findFirst("creators_id = ?", creatorId);
-		Integer pieces_available = pieces_available_obj.getInteger("pieces_available");
-
-		if (pieces > pieces_available) {
-			throw new NoSuchElementException("You are bidding for " + pieces + " pieces, but only " +
-					pieces_available + " are available");
-		}
+//		Pieces_available pieces_available_obj = Pieces_available.findFirst("creators_id = ?", creatorId);
+//		Integer pieces_available = pieces_available_obj.getInteger("pieces_owned_total");
+//
+//		if (pieces > pieces_available) {
+//			throw new NoSuchElementException("You are bidding for " + pieces + " pieces, but only " +
+//					pieces_available + " are available");
+//		}
 
 		Bid bid = Bid.create("users_id", userId, 
 				"creators_id", creatorId,
@@ -170,6 +170,7 @@ public class Actions {
 			// If the bidder wants more than the asker has:
 			Integer askMinusBidPieces = askPieces - bidPieces;
 			Integer piecesForTransaction = Math.min(askPieces, bidPieces);
+			System.out.println("\ncreators id = " + creatorsId);
 			System.out.println("ask minus bid pieces = " + askMinusBidPieces);
 			System.out.println("pieces for transaction = " + piecesForTransaction);
 

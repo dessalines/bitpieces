@@ -132,6 +132,20 @@ public class InitializeTables {
 		Creators_btc_address creatorBtcAddr = Creators_btc_address.findFirst("creators_id = ?", leonardoUserId);
 
 		Actions.sellFromCreator(creatorBtcAddr, userBtcAddr, 100, 100d);
+		
+		Tools.Sleep(1000L);
+		
+		User john = User.findFirst("username like 'John%'");
+		String johnUserId = john.getId().toString();
+
+		Users_btc_address johnBtcAddr = Users_btc_address.findFirst("users_id = ?", johnUserId);
+
+		Creator dusty = Creator.findFirst("username like 'Dusty%'");
+		String dustyUserId = dusty.getId().toString();
+		Creators_btc_address dustyBtcAddr = Creators_btc_address.findFirst("creators_id = ?", dustyUserId);
+
+		Actions.sellFromCreator(dustyBtcAddr, johnBtcAddr, 50, 100d);
+			
 
 		Tools.Sleep(1000L);
 
@@ -146,8 +160,17 @@ public class InitializeTables {
 
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 		String leonardoCreatorId = leonardo.getId().toString();
+		
+		Creator dusty = Creator.findFirst("username like 'Dusty%'");
+		String dustyCreatorId = dusty.getId().toString();
 
 		Actions.createAsk(dickUserId, leonardoCreatorId, 75, 1d,"2014-12-12", true);
+		Tools.Sleep(1000L);
+		
+		User john = User.findFirst("username like 'John%'");
+		String johnUserId = john.getId().toString();
+		
+		Actions.createAsk(johnUserId, dustyCreatorId, 50, 2.05d,"2014-12-12", true);
 		Tools.Sleep(1000L);
 
 	}
@@ -162,6 +185,9 @@ public class InitializeTables {
 
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 		String leonardoCreatorId = leonardo.getId().toString();
+		
+		Creator dusty = Creator.findFirst("username like 'Dusty%'");
+		String dustyCreatorId = dusty.getId().toString();
 
 		Actions.createBid(billUserId, leonardoCreatorId, 5, 1.2263d, "2014-12-12", true);
 		Tools.Sleep(1000L);
@@ -178,6 +204,9 @@ public class InitializeTables {
 		String terryUserId = terry.getId().toString();
 		
 		Actions.createBid(terryUserId, leonardoCreatorId, 30, 1.16d, "2014-12-12", true);
+		Tools.Sleep(1000L);
+		
+		Actions.createBid(terryUserId, dustyCreatorId, 60, 2.5d, "2014-12-12", true);
 		Tools.Sleep(1000L);
 		
 	}
@@ -211,8 +240,12 @@ public class InitializeTables {
 				"time_", SDF.format(new Date(new Date().getTime()+86400000)), 
 				"pieces_issued", 300);
 
-		Pieces_total piecesTotal = Pieces_total.findFirst("creators_id = ?", leonardo.getId().toString());
-		System.out.println(piecesTotal);
+//		Pieces_total piecesTotal = Pieces_total.findFirst("creators_id = ?", leonardo.getId().toString());
+		
+		Creator dusty = Creator.findFirst("username like ?", "Dusty%");
+		Pieces_issued.createIt("creators_id",  dusty.getId().toString(), "time_", SDF.format(new Date()), "pieces_issued", 50);
+		
+		
 	}
 
 	private static void setup_creators() {

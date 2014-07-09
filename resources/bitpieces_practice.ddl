@@ -348,12 +348,16 @@ a.owners_id,
 a.creators_id,
 a.start_time_,
 a.end_time_, 
+--a.pieces_owned,
+--b.pieces_owned,
 sum(b.pieces_owned) as pieces_accum
 from pieces_owned_span a, pieces_owned_span b
 WHERE b.owners_id = a.owners_id
+and b.creators_id = a.creators_id
 and b.start_time_ <= a.start_time_
-GROUP BY a.owners_id, a.creators_id, a.start_time_
-ORDER BY a.owners_id, a.creators_id, a.start_time_
+
+GROUP BY a.creators_id, a.owners_id, a.start_time_
+--ORDER BY a.owners_id, a.creators_id, a.start_time_
 ;
 
 
