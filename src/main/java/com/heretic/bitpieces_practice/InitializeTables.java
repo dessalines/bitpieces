@@ -122,7 +122,7 @@ public class InitializeTables {
 		User terry = User.findFirst("username like 'Terry%'");
 		
 		Actions.userWithdrawal(terry.getId().toString(), 900d);
-		
+		//okay
 		
 		
 	}
