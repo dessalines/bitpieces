@@ -553,8 +553,12 @@ creators_funds
 group by creators_id;
 
 CREATE VIEW rewards_current as 
-select max(id), creators_id, reward_pct from rewards
-group by creators_id
+select rewards.creators_id, rewards.time_, rewards.reward_pct from (
+select max(id) as id, creators_id from rewards
+group by creators_id ) a
+inner join rewards
+on rewards.id = a.id
+order by rewards.creators_id, rewards.time_;
 
 
 

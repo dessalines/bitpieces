@@ -39,7 +39,7 @@ public class Actions {
 			String validUntil, Boolean partial) {
 
 		Double amount = bid_per_piece * pieces;
-		
+
 		// First verify that the user has the funds to buy that amount
 		try {
 			Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
@@ -166,8 +166,8 @@ public class Actions {
 		Pieces_owned_total pieces_owned_total_obj = Pieces_owned_total.findFirst("owners_id = ? and creators_id = ?", sellersId, creatorsId);
 		Integer pieces_owned_total = pieces_owned_total_obj.getInteger("pieces_owned_total");
 		Double amount = price_per_piece*pieces;
-		
-		
+
+
 		// Make sure the buyer has enough to cover the buy
 		try {
 			Double userFunds = Users_funds_current.findFirst("users_id = ?", buyersId).getDouble("current_funds");
@@ -179,7 +179,7 @@ public class Actions {
 		} catch(NullPointerException e) {
 			throw new NoSuchElementException("the user has no funds");
 		}
-		
+
 
 		if (pieces_owned_total < pieces) {
 			throw new NoSuchElementException("You are trying to sell " + pieces + " pieces, but you only own " +
@@ -247,7 +247,7 @@ public class Actions {
 			System.out.println("\ncreators id = " + creatorsId + " bidders id = " + biddersId + " askers id = " + askersId);
 			System.out.println("ask minus bid pieces = " + askMinusBidPieces);
 			System.out.println("pieces for transaction = " + piecesForTransaction);
-			
+
 			String dateOfTransaction = SDF.format(new Date());
 			// Do the sale at the askers price
 			sellFromUser(askersId, biddersId, creatorsId, piecesForTransaction, bidPerPiece);
@@ -439,7 +439,7 @@ public class Actions {
 	}
 
 	public static void userWithdrawal(String userId, Double amount) {
-		
+
 		// Make sure the user has enough to cover the withdraw
 		try {
 			Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
@@ -457,41 +457,40 @@ public class Actions {
 				"time_", SDF.format(new Date()),
 				"btc_amount", amount, 
 				"status", "completed");
-		
+
 	}
 
 	public static void creatorWithdrawal(String creatorId, Double amount) {
-		
+
 		// Make sure the creator has enough to cover the withdraw
 		try {
 			Double creatorsFunds = Creators_funds_current.findFirst("creators_id = ?", creatorId).getDouble("current_funds");
 			Double rewardPct = Rewards_current.findFirst("creators_id = ?", creatorId).getDouble("reward_pct")/100d;
 
-			// This is incorrect, its not the creators funds, but based on the value of the current pieces
-//			Double rewardsOwedForOneYear = creatorsFunds*(Math.exp(rewardPct)-1.0d);
+			// This is based on the value of the current pieces
 			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
 					getDouble("value_total");
-			
+
 			Double rewardsOwedForOneYear = creatorsValue*(Math.exp(rewardPct)-1.0d);
-			
-			
+
 			Double availableFunds = creatorsFunds - rewardsOwedForOneYear;
-			
+
 			if (availableFunds < amount) {
 				throw new NoSuchElementException("The creator has only " + availableFunds + " available, but is trying to withdraw " +
-						amount +"\nNote: For users safety, a years worth of rewards can't be withdrawn.");
+						amount +"\nNote: For users safety, a years worth of rewards can't be withdrawn, which is $" 
+						+ rewardsOwedForOneYear);
 			}
 
 		} catch(NullPointerException e) {
 			throw new NoSuchElementException("the user has no funds");
 		}
-		
+
 		Creators_withdrawals.createIt("creators_id",creatorId,
 				"cb_tid", "fake",
 				"time_", SDF.format(new Date()),
 				"btc_amount", amount, 
 				"status", "completed");
-		
+
 	}
 
 
