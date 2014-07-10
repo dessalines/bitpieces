@@ -19,7 +19,6 @@ import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_total;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_by_creator;
-import com.heretic.bitpieces_practice.tables.Tables.Reward;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_current;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;

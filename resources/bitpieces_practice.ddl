@@ -28,7 +28,7 @@ DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, p
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
 rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
-rewards_span
+rewards_span, pieces_owned_value_current
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -428,25 +428,28 @@ and (prices_span.time_ >= pieces_owned_span.start_time_ and prices_span.end_time
 order by pieces_owned_span.owners_id,
 pieces_owned_span.creators_id,prices_span.time_;
 
+CREATE VIEW pieces_owned_value_current as 
+select pieces_owned_total.owners_id,
+pieces_owned_total.creators_id,
+sum(pieces_owned_total * price_per_piece) as value_total
+from pieces_owned_total
+inner join prices_span
+on pieces_owned_total.creators_id = prices_span.creators_id
+and prices_span.end_time_ = NOW()
+group by pieces_owned_total.owners_id, pieces_owned_total.creators_id;
+
 
 CREATE VIEW pieces_owned_value_current_by_creator as 
-select pieces_owned_total.creators_id,
-sum(pieces_owned_total * price_per_piece) as value_total
-from pieces_owned_total
-inner join prices_span
-on pieces_owned_total.creators_id = prices_span.creators_id
-and prices_span.end_time_ = NOW()
-group by pieces_owned_total.creators_id;
+select creators_id,
+sum(value_total) as value_total
+from pieces_owned_value_current
+group by creators_id;
 
 CREATE VIEW pieces_owned_value_current_by_owner as 
-select pieces_owned_total.owners_id,
-sum(pieces_owned_total * price_per_piece) as value_total
-from pieces_owned_total
-inner join prices_span
-on pieces_owned_total.creators_id = prices_span.creators_id
-and prices_span.end_time_ = NOW()
-group by pieces_owned_total.owners_id;
-
+select owners_id,
+sum(value_total) as value_total
+from pieces_owned_value_current
+group by owners_id;
 
 
 
@@ -542,7 +545,7 @@ union
 select from_creators_id as creators_id, time_, total_after_fee as funds from 
 sales_from_creators
 union
-select creators_id, time_, btc_amount
+select creators_id, time_, -1*btc_amount
 from creators_withdrawals
 order by creators_id, time_, funds;
 
@@ -552,16 +555,37 @@ select creators_id, sum(funds) as current_funds from
 creators_funds
 group by creators_id;
 
+
+
 CREATE VIEW rewards_current as 
-select rewards.creators_id, rewards.time_, rewards.reward_pct from (
-select max(id) as id, creators_id from rewards
-group by creators_id ) a
-inner join rewards
-on rewards.id = a.id
-order by rewards.creators_id, rewards.time_;
+select * from rewards_span
+where end_time_ = NOW();
 
+CREATE VIEW pieces_owned_value_first as
+select owners_id, creators_id, min(price_time_) as price_time_, value_accum
+from pieces_owned_value_accum
+group by owners_id, creators_id;
 
+/*
+CREATE VIEW annualized_return as
+select pieces_owned_value_first.owners_id, pieces_owned_value_first.creators_id,
+value_accum as beg_val,
+price_time_ as start_time_, 
+value_total as current_value,
+reward_earned_total as current_reward,
+reward_earned_total + value_total as end_val,
+TIMESTAMPDIFF(SECOND,price_time_,NOW())/3.15569E7 as timediff_in_years,
+(11.6051628446/value_accum) as derp,
+POW(11.6051628446/value_accum as decimal(11,5)),1.0/.0003255706)-1 as ret
+from pieces_owned_value_first
+inner join pieces_owned_value_current
+on pieces_owned_value_first.creators_id = pieces_owned_value_current.creators_id
+and pieces_owned_value_first.owners_id = pieces_owned_value_current.owners_id
+inner join rewards_earned_total
+on pieces_owned_value_first.creators_id = rewards_earned_total.creators_id
+and pieces_owned_value_first.owners_id = rewards_earned_total.owners_id
 
+*/
 
 
 

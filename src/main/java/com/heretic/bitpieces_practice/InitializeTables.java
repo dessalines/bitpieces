@@ -100,7 +100,7 @@ public class InitializeTables {
 	private static void creator_withdrawal() {
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
 		
-		Actions.creatorWithdrawal(leo.getId().toString(), 900d);
+		Actions.creatorWithdrawal(leo.getId().toString(), 80d);
 	
 		
 	}
