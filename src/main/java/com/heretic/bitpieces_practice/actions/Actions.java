@@ -19,8 +19,8 @@ import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_total;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
-import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_current;
+import com.heretic.bitpieces_practice.tables.Tables.Users_withdrawals;
 import com.heretic.bitpieces_practice.tools.Tools;
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
 import com.heretic.bitpieces_practice.tools.UserTypeAndId;
@@ -431,6 +431,28 @@ public class Actions {
 		//		return GSON.toJson(pieces_owned_total.toMaps());
 
 
+	}
+
+	public static void userWithdrawal(String userId, Double amount) {
+		
+		// Make sure the user has enough to cover the withdraw
+		try {
+			Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
+
+			if (userFunds < amount) {
+				throw new NoSuchElementException("The user has only " + userFunds + " $, but is trying to withdraw " +
+						amount);
+			}
+		} catch(NullPointerException e) {
+			throw new NoSuchElementException("the user has no funds");
+		}
+
+		Users_withdrawals terryDep = Users_withdrawals.createIt("users_id",userId,
+				"cb_tid", "fake",
+				"time_", SDF.format(new Date()),
+				"btc_amount", amount, 
+				"status", "completed");
+		
 	}
 
 

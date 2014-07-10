@@ -26,7 +26,7 @@ creators_withdrawals
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
-rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current
+rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -385,14 +385,14 @@ a.owners_id,
 a.creators_id,
 a.start_time_,
 a.end_time_, 
---a.pieces_owned,
+a.pieces_owned,
 --b.pieces_owned,
 sum(b.pieces_owned) as pieces_accum
 from pieces_owned_span a, pieces_owned_span b
 WHERE b.owners_id = a.owners_id
 and b.creators_id = a.creators_id
 and b.start_time_ <= a.start_time_
-GROUP BY a.creators_id, a.owners_id, a.start_time_
+GROUP BY a.creators_id, a.owners_id, a.start_time_, a.pieces_owned
 --ORDER BY a.owners_id, a.creators_id, a.start_time_
 ;
 
@@ -452,7 +452,8 @@ union
 select to_users_id, time_, -1*total from 
 sales_from_users
 union
-select owners_id, price_time_, reward_earned as funds from 
+-- use end time, because it shows the last time of rewards
+select owners_id, end_time_, reward_earned as funds from 
 rewards_earned
 union
 select users_id, time_, btc_amount as funds from 
@@ -461,6 +462,15 @@ union
 select users_id, time_, -1*btc_amount as funds from 
 users_withdrawals
 order by users_id, time_, funds;
+
+CREATE VIEW users_funds_accum as 
+select a.users_id, a.time_, a.funds, 
+sum(b.funds) as funds_accum
+from users_funds a, users_funds b
+WHERE b.users_id = a.users_id
+and b.time_ <= a.time_
+GROUP BY a.users_id, a.time_, a.funds;
+
 
 CREATE VIEW users_funds_current as
 select users_id, sum(funds) as current_funds from 

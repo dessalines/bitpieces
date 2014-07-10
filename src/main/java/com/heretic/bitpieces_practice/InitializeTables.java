@@ -72,7 +72,7 @@ public class InitializeTables {
 		
 		ask_bid_acceptor();
 		
-		withdraw_rewards();
+		user_withdrawal();
 		
 		
 
@@ -117,7 +117,11 @@ public class InitializeTables {
 	}
 
 
-	private static void withdraw_rewards() {
+	private static void user_withdrawal() {
+		
+		User terry = User.findFirst("username like 'Terry%'");
+		
+		Actions.userWithdrawal(terry.getId().toString(), 900d);
 		
 		
 		
