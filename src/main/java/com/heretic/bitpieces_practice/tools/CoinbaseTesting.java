@@ -15,10 +15,11 @@ public class CoinbaseTesting {
 
 		Properties prop = Tools.loadProperties("/home/tyler/coinbase.properties");
 		String acct = "bitpieces_test_wallet";
-	
+		String acctId = "53bd87d57cb6032d4600000b";
 
 		Coinbase cb = new CoinbaseBuilder()
 		.withApiKey(prop.getProperty("apiKey"), prop.getProperty("apiSecret"))
+		.withAccountId(acctId)
 		.build();
 		
 		System.out.println(cb.getUser());
