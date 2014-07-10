@@ -13,9 +13,14 @@ import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Ask_bid_accept_checker;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_current;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_withdrawals;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_total;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_by_creator;
+import com.heretic.bitpieces_practice.tables.Tables.Reward;
+import com.heretic.bitpieces_practice.tables.Tables.Rewards_current;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
@@ -447,7 +452,41 @@ public class Actions {
 			throw new NoSuchElementException("the user has no funds");
 		}
 
-		Users_withdrawals terryDep = Users_withdrawals.createIt("users_id",userId,
+		Users_withdrawals.createIt("users_id",userId,
+				"cb_tid", "fake",
+				"time_", SDF.format(new Date()),
+				"btc_amount", amount, 
+				"status", "completed");
+		
+	}
+
+	public static void creatorWithdrawal(String creatorId, Double amount) {
+		
+		// Make sure the creator has enough to cover the withdraw
+		try {
+			Double creatorsFunds = Creators_funds_current.findFirst("creators_id = ?", creatorId).getDouble("current_funds");
+			Double rewardPct = Rewards_current.findFirst("creators_id = ?", creatorId).getDouble("reward_pct")/100d;
+
+			// This is incorrect, its not the creators funds, but based on the value of the current pieces
+//			Double rewardsOwedForOneYear = creatorsFunds*(Math.exp(rewardPct)-1.0d);
+			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
+					getDouble("value_total");
+			
+			Double rewardsOwedForOneYear = creatorsValue*(Math.exp(rewardPct)-1.0d);
+			
+			
+			Double availableFunds = creatorsFunds - rewardsOwedForOneYear;
+			
+			if (availableFunds < amount) {
+				throw new NoSuchElementException("The creator has only " + availableFunds + " available, but is trying to withdraw " +
+						amount +"\nNote: For users safety, a years worth of rewards can't be withdrawn.");
+			}
+
+		} catch(NullPointerException e) {
+			throw new NoSuchElementException("the user has no funds");
+		}
+		
+		Creators_withdrawals.createIt("creators_id",creatorId,
 				"cb_tid", "fake",
 				"time_", SDF.format(new Date()),
 				"btc_amount", amount, 

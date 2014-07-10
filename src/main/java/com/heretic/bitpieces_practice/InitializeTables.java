@@ -13,6 +13,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_withdrawals;
 import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
@@ -22,6 +23,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Users_deposits;
+import com.heretic.bitpieces_practice.tables.Tables.Users_withdrawals;
 import com.heretic.bitpieces_practice.tools.Tools;
 
 /**
@@ -29,6 +31,7 @@ import com.heretic.bitpieces_practice.tools.Tools;
  * 1) Do a deposit / withdrawal check
  * 2) Before buying anything, do a users funds check
  * 3) Before buying creators pieces, make sure users have deposited
+ * 4) implement recaptcha
  * @author tyler
  *
  */
@@ -39,8 +42,6 @@ public class InitializeTables {
 
 	public static void main(String[] args) {
 
-		System.out.println( "Hello World!" );
-
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 
 		Base.open("com.mysql.jdbc.Driver", 
@@ -48,6 +49,7 @@ public class InitializeTables {
 				prop.getProperty("dbuser"), 
 				prop.getProperty("dbpassword"));
 
+		System.out.println("Initializing tables...");
 		delete_all();
 
 		setup_users();
@@ -67,6 +69,8 @@ public class InitializeTables {
 		create_bid();
 
 		create_ask();
+		
+		issue_new_reward();
 
 		password_checker();
 		
@@ -74,9 +78,31 @@ public class InitializeTables {
 		
 		user_withdrawal();
 		
+		creator_withdrawal();
+		
 		
 
 
+	}
+
+
+	private static void issue_new_reward() {
+		String now = SDF.format(new Date());
+		
+		Creator leo = Creator.findFirst("username like 'Leonardo%'");
+		Reward.createIt("creators_id", leo.getId(),
+				"time_", now,
+				"reward_pct", 1.4d);
+		
+	}
+
+
+	private static void creator_withdrawal() {
+		Creator leo = Creator.findFirst("username like 'Leonardo%'");
+		
+		Actions.creatorWithdrawal(leo.getId().toString(), 900d);
+	
+		
 	}
 
 
@@ -121,8 +147,8 @@ public class InitializeTables {
 		
 		User terry = User.findFirst("username like 'Terry%'");
 		
-		Actions.userWithdrawal(terry.getId().toString(), 900d);
-		//okay
+		Actions.userWithdrawal(terry.getId().toString(), 140d);
+		
 		
 		
 	}
@@ -254,6 +280,8 @@ public class InitializeTables {
 		Pieces_owned.deleteAll();
 		Pieces_issued.deleteAll();
 		Users_btc_address.deleteAll();
+		Users_withdrawals.deleteAll();
+		Creators_withdrawals.deleteAll();
 		Creators_btc_address.deleteAll();
 		Creators_page_fields.deleteAll();
 		Bid.deleteAll();

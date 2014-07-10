@@ -41,6 +41,9 @@ public class Tables {
 
 	@Table("rewards") 
 	public static class Reward extends Model {}
+	
+	@Table("rewards_current") 
+	public static class Rewards_current extends Model {}
 
 	@Table("rewards_earned") 
 	public static class Rewards_earned extends Model {}
@@ -72,6 +75,11 @@ public class Tables {
 	@Table("users_funds_current")
 	public static class Users_funds_current extends Model {}
 	
+	@Table("creators_funds_current")
+	public static class Creators_funds_current extends Model {}
+	
+	@Table("pieces_owned_value_current_by_creator")
+	public static class Pieces_owned_value_current_by_creator extends Model {}
 	
 
 }

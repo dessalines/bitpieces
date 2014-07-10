@@ -26,7 +26,9 @@ creators_withdrawals
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
-rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum
+rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
+pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
+rewards_span
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -300,7 +302,20 @@ pieces_owned b
 on a.creators_id = b.creators_id
 and a.owners_id = b.owners_id
 and a.time_ < b.time_
-group by a.creators_id, a.owners_id, a.time_, a.pieces_owned;
+group by a.creators_id, a.owners_id, a.time_, a.pieces_owned
+order by a.owners_id, a.creators_id, a.time_;
+
+CREATE VIEW rewards_span as
+select a.creators_id, a.time_, 
+IFNULL(b.time_, NOW()) as end_time_, 
+TIMESTAMPDIFF(SECOND,a.time_,IFNULL(b.time_, NOW())) as timediff_seconds,
+a.reward_pct
+from rewards a
+left join 
+rewards b
+on a.creators_id = b.creators_id
+and a.time_ < b.time_
+group by creators_id, a.time_, a.reward_pct;
 
 
 
@@ -314,7 +329,7 @@ inner join
 pieces_issued
 on prices.creators_id = pieces_issued.creators_id
 where pieces_issued.time_ <= prices.time_
-order by time_
+order by creators_id, time_
 ;
 
 
@@ -328,7 +343,8 @@ CREATE VIEW pieces_owned_total as
 select 
 pieces_owned.owners_id, pieces_owned.creators_id, sum(pieces_owned.pieces_owned) as pieces_owned_total
 from pieces_owned
-group by owners_id, creators_id;
+group by owners_id, creators_id
+order by owners_id, creators_id;
 
 
 
@@ -393,8 +409,45 @@ WHERE b.owners_id = a.owners_id
 and b.creators_id = a.creators_id
 and b.start_time_ <= a.start_time_
 GROUP BY a.creators_id, a.owners_id, a.start_time_, a.pieces_owned
---ORDER BY a.owners_id, a.creators_id, a.start_time_
+ORDER BY a.owners_id, a.creators_id, a.start_time_
 ;
+
+CREATE VIEW pieces_owned_value as 
+select
+pieces_owned_span.owners_id,
+pieces_owned_span.creators_id,
+pieces_owned_span.start_time_,
+pieces_owned_span.end_time_,
+prices_span.time_ as price_time_,
+price_per_piece,
+pieces_owned,
+price_per_piece * pieces_owned as value
+from pieces_owned_span
+inner join prices_span on pieces_owned_span.creators_id = prices_span.creators_id
+and (prices_span.time_ >= pieces_owned_span.start_time_ and prices_span.end_time_ <= pieces_owned_span.end_time_)
+order by pieces_owned_span.owners_id,
+pieces_owned_span.creators_id,prices_span.time_;
+
+
+CREATE VIEW pieces_owned_value_current_by_creator as 
+select pieces_owned_total.creators_id,
+sum(pieces_owned_total * price_per_piece) as value_total
+from pieces_owned_total
+inner join prices_span
+on pieces_owned_total.creators_id = prices_span.creators_id
+and prices_span.end_time_ = NOW()
+group by pieces_owned_total.creators_id;
+
+CREATE VIEW pieces_owned_value_current_by_owner as 
+select pieces_owned_total.owners_id,
+sum(pieces_owned_total * price_per_piece) as value_total
+from pieces_owned_total
+inner join prices_span
+on pieces_owned_total.creators_id = prices_span.creators_id
+and prices_span.end_time_ = NOW()
+group by pieces_owned_total.owners_id;
+
+
 
 
 
@@ -425,11 +478,15 @@ prices_span.time_
 
 
 CREATE VIEW rewards_earned as
-select pieces_owned_value_accum.owners_id, pieces_owned_value_accum.creators_id, price_time_, end_time_, timediff_seconds, value_accum, rewards.time_ as div_start_time_, reward_pct, 
-value_accum*(EXP(reward_pct*timediff_seconds/3.15569E7)-1) as reward_earned
+select pieces_owned_value_accum.owners_id, pieces_owned_value_accum.creators_id, price_time_, pieces_owned_value_accum.end_time_, pieces_owned_value_accum.timediff_seconds, value_accum, 
+rewards_span.time_ as rewards_start_time_, 
+rewards_span.end_time_ as rewards_end_time_,
+reward_pct, 
+value_accum*(EXP(reward_pct*pieces_owned_value_accum.timediff_seconds/3.15569E7)-1) as reward_earned
 from pieces_owned_value_accum
-inner join rewards on pieces_owned_value_accum.creators_id = rewards.creators_id
-and pieces_owned_value_accum.price_time_ >= rewards.time_;
+inner join rewards_span on pieces_owned_value_accum.creators_id = rewards_span.creators_id
+and (pieces_owned_value_accum.price_time_ >= rewards_span.time_ and pieces_owned_value_accum.end_time_ <= rewards_span.end_time_)
+;
 
 CREATE VIEW rewards_earned_total as
 select owners_id, creators_id, sum(reward_earned) as reward_earned_total
@@ -477,7 +534,27 @@ select users_id, sum(funds) as current_funds from
 users_funds
 group by users_id;
 
+CREATE VIEW creators_funds as 
+select creators_id, end_time_ as time_, -1*sum(reward_earned) as funds from 
+rewards_earned
+group by creators_id, end_time_
+union
+select from_creators_id as creators_id, time_, total_after_fee as funds from 
+sales_from_creators
+union
+select creators_id, time_, btc_amount
+from creators_withdrawals
+order by creators_id, time_, funds;
 
+
+CREATE VIEW creators_funds_current as
+select creators_id, sum(funds) as current_funds from 
+creators_funds
+group by creators_id;
+
+CREATE VIEW rewards_current as 
+select max(id), creators_id, reward_pct from rewards
+group by creators_id
 
 
 
