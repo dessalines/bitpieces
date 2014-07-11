@@ -84,6 +84,10 @@ public class Tables {
 	@Table("pieces_owned_value_accum")
 	public static class Pieces_owned_value_accum extends Model {}
 	
+	@Table("prices_for_user")
+	public static class Prices_for_user extends Model {}
+	
+	
 
 }
 

@@ -28,7 +28,7 @@ DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, p
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
 rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
-rewards_span, pieces_owned_value_current
+rewards_span, pieces_owned_value_current, prices_for_user
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -565,6 +565,22 @@ CREATE VIEW pieces_owned_value_first as
 select owners_id, creators_id, min(price_time_) as price_time_, value_accum
 from pieces_owned_value_accum
 group by owners_id, creators_id;
+
+CREATE VIEW prices_for_user as 
+select pieces_owned_value_current.owners_id, 
+pieces_owned_value_current.creators_id,
+prices.time_,
+prices.price_per_piece
+from pieces_owned_value_current
+inner join
+prices
+on pieces_owned_value_current.creators_id = prices.creators_id
+where value_total > 0
+order by owners_id, creators_id, time_;
+
+
+
+
 
 /*
 CREATE VIEW annualized_return as
