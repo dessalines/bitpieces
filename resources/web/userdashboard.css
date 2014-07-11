@@ -97,3 +97,7 @@ body {
   border-radius: 50%;
 }
 
+.fullscreen-chart {
+  height: 80vh;
+}
+

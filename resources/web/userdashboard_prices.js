@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 
 
@@ -6,7 +5,7 @@ $(document).ready(function(){
     console.log(sessionId);
 
 
-    var url = "http://localhost:4567/" + sessionId + "/get_pieces_owned_value_accum"// the script where you handle the form input.
+    var url = "http://localhost:4567/" + sessionId + "/get_prices_for_user"// the script where you handle the form input.
     $.ajax({
         type: "GET",
         url: url,

@@ -16,6 +16,7 @@ import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
+import com.heretic.bitpieces_practice.tables.Tables.Prices_for_user;
 import com.heretic.bitpieces_practice.tools.Tools;
 
 public class WebTools {
@@ -75,32 +76,27 @@ public class WebTools {
 		return body;
 	}
 
-
-
-	public static String getPiecesOwnedValueAccumSeriesJson(String userId, String body) {
-//		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+	public static String createHighchartsJSONForMultipleCreators(List<Model> list, String dateColName,
+			String valueColName, String creatorsIdentifier) {
 		
-		// First fetch from the table
-		List<Pieces_owned_value_accum> list = Pieces_owned_value_accum.find("owners_id=?", userId);
-		
-		List<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
+List<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
 		
 		List<String[]> oneCreatorsData = new ArrayList<String[]>();
 		
 		for (int i = 0; i < list.size(); i++) {
-			Pieces_owned_value_accum p = list.get(i);
+			Model p = list.get(i);
 
 		
 			System.out.println(p);
-			String UTCTime = p.getString("price_time_");
+			String UTCTime = p.getString(dateColName);
 //			String highchartsDate = convertDateStrToHighchartsDateUTCString(UTCTime);
 			String millis = convertDateStrToMillis(UTCTime);
-			String val = p.getString("value_accum");
+			String val = p.getString(valueColName);
 			
 			String[] pair = {millis, val};
 			oneCreatorsData.add(pair);
 			
-			String cCreatorsId = p.getString("creators_id");
+			String cCreatorsId = p.getString(creatorsIdentifier);
 			
 			// If its the last one, add it to the map
 			if (i == list.size() -1) {
@@ -113,7 +109,7 @@ public class WebTools {
 				
 				listOfMaps.add(map);
 			} else {
-				String nextCreatorsId = list.get(i+1).getString("creators_id");
+				String nextCreatorsId = list.get(i+1).getString(creatorsIdentifier);
 				
 				if (!cCreatorsId.equals(nextCreatorsId)) {
 					String oneCreatorsDataStr = Tools.GSON.toJson(oneCreatorsData).replaceAll("\"", "");
@@ -138,10 +134,34 @@ public class WebTools {
 		
 		
 		return listOfMapsStr;
+		
+	}
+
+	public static String getPiecesOwnedValueAccumSeriesJson(String userId, String body) {
+//		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+		// First fetch from the table
+		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", userId);
+		
+		return createHighchartsJSONForMultipleCreators(list, "price_time_", "value_accum", "creators_id");
+		
+		
 	}
 	
 	
 	
+	public static String getPricesForUserSeriesJson(String userId, String body) {
+		
+		// First fetch from the table
+		List<Model> list = Prices_for_user.find("owners_id=?", userId);
+		
+		return createHighchartsJSONForMultipleCreators(list, "time_", "price_per_piece", "creators_id");
+		
+		
+	}
+
+
+
 	// Sample highcharts data
 	// http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/series/data-array-of-arrays-datetime/
 	// [Date.UTC(2010, 5, 1), 71.5], 
