@@ -40,7 +40,7 @@ $(document).ready(function(){
     	success: function(data, status, xhr) {
 
     		
-           xhr.getResponseHeader('Set-Cookie');
+         xhr.getResponseHeader('Set-Cookie');
                 // document.cookie="authenticated_session_id=" + data + 
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful

@@ -81,6 +81,9 @@ public class Tables {
 	@Table("pieces_owned_value_current_by_creator")
 	public static class Pieces_owned_value_current_by_creator extends Model {}
 	
+	@Table("pieces_owned_value_accum")
+	public static class Pieces_owned_value_accum extends Model {}
+	
 
 }
 

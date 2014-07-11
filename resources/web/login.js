@@ -59,7 +59,7 @@ $( "#registerBtn" ).click(function( event ) {
                 toastr.success('Registered and logged in.')
                 
                 showHideElementsLoggedIn();
-                
+
 
                 console.log(document.cookie);
 
@@ -136,7 +136,7 @@ $( "#signinBtn" ).click(function( event ) {
 
                 // GO to the dashboard
                 if (!isCreator) {
-                  window.location.replace("http://localhost/userdashboard");
+                  window.location.replace("http://localhost/userdashboard_overview");
                 } else {
                   window.location.replace("http://localhost/creatordashboard");
                 }

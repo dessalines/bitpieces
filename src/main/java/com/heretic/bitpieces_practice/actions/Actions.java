@@ -399,7 +399,7 @@ public class Actions {
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
-		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(UserType.User, user.getString("users_id")) : null;
+		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(UserType.User, user.getId().toString()) : null;
 
 		return returnVal;
 

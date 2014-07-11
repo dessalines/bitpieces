@@ -62,8 +62,16 @@ public class WebService {
 			res.redirect("/hello");
 			return null;
 		});
+		
+		get("/:auth/testauth", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			return "Heyyy u!";
+			
+		});
+		
 		get("/:auth/getpiecesownedtotal", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
 			dbInit(prop);
 			
 			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
@@ -78,6 +86,27 @@ public class WebService {
 
 
 		});
+		
+		get("/:auth/get_pieces_owned_value_accum", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			
+			String json = WebTools.getPiecesOwnedValueAccumSeriesJson(userId, req.body());
+			
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
 
 
 		post("/registeruser", (req, res) -> {
