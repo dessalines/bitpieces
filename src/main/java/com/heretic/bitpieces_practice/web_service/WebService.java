@@ -24,7 +24,7 @@ import com.heretic.bitpieces_practice.tools.UserTypeAndId;
 public class WebService {
 
 	// How long to keep the cookies
-	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(30);
+	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(900);
 
 
 
