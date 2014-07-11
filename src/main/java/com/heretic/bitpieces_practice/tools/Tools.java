@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLConnection;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -29,6 +30,8 @@ public class Tools {
 
 	public static final Gson GSON = new Gson();
 	public static final Gson GSON2 = new GsonBuilder().setPrettyPrinting().create();
+	
+	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	// Instead of using session ids, use a java secure random ID
 	private static final SecureRandom RANDOM = new SecureRandom();
@@ -119,7 +122,7 @@ public class Tools {
 			String inputLine;
 
 			while ((inputLine = in.readLine()) != null) 
-				res += inputLine;
+				res+="\n" + inputLine;
 			in.close();
 			
 			return res;
