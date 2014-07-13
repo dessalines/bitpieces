@@ -17,7 +17,8 @@ public class Tester {
 		dbInit(prop);
 //		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
 //		WebTools.getPiecesOwnedValueCurrentSeriesJson("3", null);
-		WebTools.getUsersFundsAccumSeriesJson("3", null);
+//		WebTools.getUsersFundsAccumSeriesJson("3", null);
+		WebTools.getUsersDataJson("3", null);
 		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", "3");
 		
 //		SeriesFetcher sf = new SeriesFetcher();
