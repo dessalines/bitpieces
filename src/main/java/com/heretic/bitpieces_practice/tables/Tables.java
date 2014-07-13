@@ -78,6 +78,9 @@ public class Tables {
 	@Table("users_funds_accum")
 	public static class Users_funds_accum extends Model {}
 	
+	@Table("users_transactions")
+	public static class Users_transactions extends Model {}
+	
 	@Table("creators_funds_current")
 	public static class Creators_funds_current extends Model {}
 	
@@ -95,6 +98,8 @@ public class Tables {
 	
 	@Table("prices_for_user")
 	public static class Prices_for_user extends Model {}
+	
+	
 	
 	
 

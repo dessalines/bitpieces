@@ -226,6 +226,26 @@ public class WebService {
 
 		});
 		
+		get("/:auth/get_users_transactions", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			
+			String json = WebTools.getUsersTransactionsJson(userId, req.body());
+			
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
 
 
 		post("/registeruser", (req, res) -> {
