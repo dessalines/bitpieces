@@ -22,6 +22,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Prices_for_user;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned;
 import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_accum;
+import com.heretic.bitpieces_practice.tables.Tables.Users_transactions;
 import com.heretic.bitpieces_practice.tools.Tools;
 
 public class WebTools {
@@ -273,6 +274,26 @@ public class WebTools {
 		System.out.println(json);
 		
 		return json;
+	}
+	
+	public static String getUsersTransactionsJson(String userId, String body) {
+		
+		List<Users_transactions> list = Users_transactions.find("users_id=?",  userId);
+	
+		String json = "[";
+		for (int i = 0; i < list.size(); i++) {
+			json += list.get(i).toJson(false);
+			if (i < list.size()-1) {
+				json += ",";
+			}
+		}
+		json += "]";
+		
+		System.out.println(json);
+		
+		return json;
+
+		
 	}
 
 

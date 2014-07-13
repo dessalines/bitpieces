@@ -28,7 +28,7 @@ DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, p
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
 rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
-rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped
+rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -604,6 +604,56 @@ inner join creators
 on pieces_owned_value_current.creators_id = creators.id
 where value_total > 0
 order by owners_id, creators_id, time_;
+
+CREATE VIEW users_transactions as 
+select to_users_id as users_id, 
+time_, 
+'buy' as type,
+username as recipient,
+-1*total_after_fee as funds
+from 
+sales_from_creators
+inner join creators
+on sales_from_creators.from_creators_id = creators.id
+union
+ 
+select from_users_id, 
+time_, 
+'sell' as type,
+username as recipient, 
+total 
+from 
+sales_from_users
+inner join
+users 
+on sales_from_users.to_users_id = users.id
+union
+
+select to_users_id, 
+time_, 
+'buy' as type,
+username as recipient, 
+-1*total from 
+sales_from_users
+inner join
+users 
+on sales_from_users.from_users_id = users.id
+union
+
+select users_id, 
+time_, 
+'deposit' as type,
+'Self' as recipient, 
+btc_amount as funds 
+from 
+users_deposits
+union
+select users_id, time_,
+'withdrawal' as type, 
+'Self' as recipient, 
+-1*btc_amount as funds from 
+users_withdrawals
+order by users_id, time_
 
 
 
