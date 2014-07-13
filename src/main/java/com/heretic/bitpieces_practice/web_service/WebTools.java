@@ -20,6 +20,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current;
 import com.heretic.bitpieces_practice.tables.Tables.Prices_for_user;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned;
+import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_accum;
 import com.heretic.bitpieces_practice.tools.Tools;
 
@@ -216,7 +217,7 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", userId);
 
-		return createHighChartsJSONForMultipleCreators(list, "price_time_", "value_accum", "creators_id");
+		return createHighChartsJSONForMultipleCreators(list, "price_time_", "value_accum", "creators_username");
 
 	}
 
@@ -226,7 +227,7 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Pieces_owned_accum.find("owners_id=?", userId);
 
-		return createHighChartsJSONForMultipleCreators(list, "start_time_", "pieces_accum", "creators_id");
+		return createHighChartsJSONForMultipleCreators(list, "start_time_", "pieces_accum", "creators_username");
 	}
 
 
@@ -236,7 +237,7 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Prices_for_user.find("owners_id=?", userId);
 
-		return createHighChartsJSONForMultipleCreators(list, "time_", "price_per_piece", "creators_id");
+		return createHighChartsJSONForMultipleCreators(list, "time_", "price_per_piece", "creators_username");
 
 
 	}
@@ -247,7 +248,7 @@ public class WebTools {
 		List<Model> list = Pieces_owned_value_current.find("owners_id=?", userId);
 
 
-		return createHighChartsJSONForCurrent(list, "value_total", "creators_id");
+		return createHighChartsJSONForCurrent(list, "value_total", "creators_username");
 
 	}
 	
@@ -255,7 +256,7 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Rewards_earned.find("owners_id=?", userId);
 
-		return createHighChartsJSONForMultipleCreators(list, "price_time_", "reward_earned", "creators_id");
+		return createHighChartsJSONForMultipleCreators(list, "price_time_", "reward_earned", "creators_username");
 	}
 	
 	public static String getUsersFundsAccumSeriesJson(String userId, String body) {
@@ -263,6 +264,15 @@ public class WebTools {
 		List<Model> list = Users_funds_accum.find("users_id=?", userId);
 
 		return createHighChartsJSONForSingleCreator(list, "time_", "funds_accum", "Funds");
+	}
+	
+	public static String getUsersDataJson(String userId, String body) {
+		User user  = User.findById(userId);
+		
+		String json = user.toJson(false, "email", "username");
+		System.out.println(json);
+		
+		return json;
 	}
 
 
@@ -293,6 +303,10 @@ public class WebTools {
 		}
 		return null;
 	}
+
+
+
+
 
 
 

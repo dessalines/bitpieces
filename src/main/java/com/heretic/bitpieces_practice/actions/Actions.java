@@ -349,7 +349,9 @@ public class Actions {
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
 
-			UserTypeAndId uid = new UserTypeAndId(UserType.User, String.valueOf(user.getId()));
+			UserTypeAndId uid = new UserTypeAndId(UserType.User, 
+					String.valueOf(user.getId()),
+					user.getString("username"));
 			return uid;
 
 		} catch (org.javalite.activejdbc.DBException e) {
@@ -374,7 +376,9 @@ public class Actions {
 
 			// TODO Create the static html5 page for that creator
 
-			UserTypeAndId uid = new UserTypeAndId(UserType.Creator, String.valueOf(creator.getId()));
+			UserTypeAndId uid = new UserTypeAndId(UserType.Creator, 
+					String.valueOf(creator.getId()), 
+					creator.getString("username"));
 			return uid;
 
 		} catch (org.javalite.activejdbc.DBException e) {
@@ -399,7 +403,10 @@ public class Actions {
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
-		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(UserType.User, user.getId().toString()) : null;
+		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(
+				UserType.User, 
+				user.getId().toString(),
+				user.getString("username")) : null;
 
 		return returnVal;
 
@@ -419,7 +426,10 @@ public class Actions {
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
-		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(UserType.Creator, user.getId().toString()) : null;
+		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(
+				UserType.Creator, 
+				user.getId().toString(),
+				user.getString("username")) : null;
 
 		return returnVal;
 

@@ -124,6 +124,11 @@ function testTemplate(id, seriesData) {
 }
 
 function standardTemplate(id, seriesData) {
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
     $(id).highcharts({
         chart: {
             type: 'spline'
@@ -148,37 +153,37 @@ function standardTemplate(id, seriesData) {
             minorGridLineWidth: 0,
             gridLineWidth: 0,
             alternateGridColor: null,
-               
-            },
-            tooltip: {
-                valuePrefix: '$'
-            },
-            plotOptions: {
-                spline: {
-                    lineWidth: 4,
-                    states: {
-                        hover: {
-                            lineWidth: 5
-                        }
-                    },
-                    marker: {
-                        enabled: true,
-                        radius: 2
+            
+        },
+        tooltip: {
+            valuePrefix: '$'
+        },
+        plotOptions: {
+            spline: {
+                lineWidth: 4,
+                states: {
+                    hover: {
+                        lineWidth: 5
                     }
-                }
-            },
-            series: seriesData
-            ,
-            navigation: {
-                menuItemStyle: {
-                    fontSize: '10px'
+                },
+                marker: {
+                    enabled: true,
+                    radius: 2
                 }
             }
-        });
+        },
+        series: seriesData
+        ,
+        navigation: {
+            menuItemStyle: {
+                fontSize: '10px'
+            }
+        }
+    });
 }
 
 function pieChartTemplate(id, seriesData) {
-$(id).highcharts({
+    $(id).highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: 1,//null,

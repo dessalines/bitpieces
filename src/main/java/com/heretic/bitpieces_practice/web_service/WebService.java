@@ -205,6 +205,27 @@ public class WebService {
 
 
 		});
+		
+		get("/:auth/get_user_data", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			
+			String json = WebTools.getUsersDataJson(userId, req.body());
+			
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
 
 
 		post("/registeruser", (req, res) -> {
@@ -263,7 +284,6 @@ public class WebService {
 			UserTypeAndId uid = Actions.userLogin(req.body());
 			
 			dbClose();
-
 			
 			String message = verifyLoginAndSetCookies(uid, res);
 
@@ -383,6 +403,7 @@ public class WebService {
 			
 			// Set some cookies for that users login
 			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
+			res.cookie("username", uid.getUsername(), COOKIE_EXPIRE_SECONDS, false);
 			System.out.println(GSON.toJson(SESSION_TO_USER_MAP));
 
 			return authenticatedSession;

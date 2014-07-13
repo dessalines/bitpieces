@@ -1,9 +1,15 @@
 $(document).ready(function() {
 
+  sessionId = getCookie("authenticated_session_id");
+  console.log(sessionId);
 
-	$( "#helloBtn" ).click(function() {
-		var btn = $(this)
-		btn.button('loading')
+  fillUserInfoMustache('get_user_data');
+
+
+
+  $( "#helloBtn" ).click(function() {
+    var btn = $(this)
+    btn.button('loading')
 	// serializes the form's elements.
 	console.log("clicked hello button");
 
@@ -24,9 +30,9 @@ $(document).ready(function() {
   });
 
 
-	$( "#piecesownedtotalBtn" ).click(function() {
-		var btn = $(this)
-		btn.button('loading')
+  $( "#piecesownedtotalBtn" ).click(function() {
+    var btn = $(this)
+    btn.button('loading')
 	// serializes the form's elements.
 	sessionId = getCookie("authenticated_session_id");
 	console.log(sessionId);
@@ -42,12 +48,12 @@ $(document).ready(function() {
     		
                // arr = $.extend({}, data);
                // var obj = JSON.parse("arr: " + data);
-               var template = $('#piecesownedTemplate').html();
-             dataObject = jQuery.parseJSON(data);
-                // $.mustache.parse(template);   // optional, speeds up future uses
-                 Mustache.parse(template);   // optional, speeds up future uses
 
-              var rendered = Mustache.render(template,dataObject );
+               dataObject = jQuery.parseJSON(data);
+                // $.mustache.parse(template);   // optional, speeds up future uses
+                var template = $('#piecesownedTemplate').html();
+                 Mustache.parse(template);   // optional, speeds up future uses
+                 var rendered = Mustache.render(template,dataObject);
               // var rendered = Mustache.render(template, {name : "LUKE"});
               
               console.log(data);
@@ -59,10 +65,43 @@ $(document).ready(function() {
               $('#piecesownedDiv').html(rendered);
 
 
-    btn.button('reset');
-  }
-});
+              btn.button('reset');
+            }
+          });
     event.preventDefault();
   });
 
 });
+
+function fillUserInfoMustache(url) {
+       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+       $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            // var jsonObj = JSON.parse(data);
+            var jsonObj = jQuery.parseJSON(data);
+            
+            var template = $('#usernameTemplate').html();
+            Mustache.parse(template);   // optional, speeds up future uses
+            var rendered = Mustache.render(template,jsonObj);
+            $('#userDropdown').html(rendered);
+
+            console.log(jsonObj);              
+            console.log(template);
+            console.log(rendered);
+            
+
+          },
+          error: function (request, status, error) {
+
+            toastr.error(request.responseText);
+          }
+        });
+
+     }
