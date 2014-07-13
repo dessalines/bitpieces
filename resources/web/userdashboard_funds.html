@@ -164,25 +164,33 @@
                   <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Transactions</h3>
                 </div>
                 <div id="transactions" class="panel-body">
-                  <script id="transactions_template" type="x-tmpl-mustache">  
-                    <table class="table table-hover table-striped">
-                      <tr>
-                      <th>Time</th>
-                        <th>Type</th>
-                        <th>Recipient</th>
-                        <th>Funds</th>
-                      </tr>
-                      {{#.}}
-                      <tr> 
-                        <td>{{time_}}</td>
-                        <td>{{type}}</td>
-                        <td>{{recipient}}</td>
-                        <td>{{funds}}</td>
-                      </tr>
-                      {{/.}}
+                  <script id="transactions_template" type="x-tmpl-mustache"> 
+                    <table id="transactions_table" class="table table-hover table-striped tablesorter">
+                      <thead> 
+                        <tr>
+                          <th>Time <i class="fa fa-sort"></i></th>
+                          <th>Type <i class="fa fa-sort"></th>
+                          <th>Recipient <i class="fa fa-sort"></th>
+                          <th>Funds <i class="fa fa-sort"></th>
+                        </tr>
+                      </thead>
 
-                    </table>
-                  </script>
+                      <tbody>
+
+                        {{#.}}
+
+                        <tr> 
+                          <td>{{time_}}</td>
+                          <td>{{type}}</td>
+                          <td>{{recipient}}</td>
+                          <td>{{funds}}</td>
+                        </tr>
+                        {{/.}}
+
+                      </tbody>
+                    </script>
+                  </table>
+
                 </div>
               </div>
             </div>
@@ -207,6 +215,8 @@
       <script src="highcharts/js/highcharts.js"></script>
       <script src="highcharts/js//modules/exporting.js"></script>
       <script src="highcharts/js/themes/dark-unica.js"></script>
+      <script src="json.date-extensions.js"></script>
+      <script src="tablesorter/jquery.tablesorter.js"></script> 
 
 
       <!-- my scripts -->
