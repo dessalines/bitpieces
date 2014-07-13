@@ -32,10 +32,17 @@ public class Tools {
 
 	public static final Gson GSON = new Gson();
 	public static final Gson GSON2 = new GsonBuilder().setPrettyPrinting().create();
-	
-	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	public static final DateTimeFormatter DTF = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
+	public static final ThreadLocal<SimpleDateFormat> SDF = new ThreadLocal<SimpleDateFormat>(){
+		@Override
+		protected SimpleDateFormat initialValue() {
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		}
+	};
+
+
+	public static final DateTimeFormatter DTF = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+	
 	// Instead of using session ids, use a java secure random ID
 	private static final SecureRandom RANDOM = new SecureRandom();
 
@@ -127,7 +134,7 @@ public class Tools {
 			while ((inputLine = in.readLine()) != null) 
 				res+="\n" + inputLine;
 			in.close();
-			
+
 			return res;
 		} catch(IOException e) {}
 		return res;

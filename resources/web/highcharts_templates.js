@@ -129,11 +129,11 @@ function standardTemplate(id, seriesData) {
             type: 'spline'
         },
         title: {
-            text: 'ARGP'
+            text: ''
         },
-        subtitle: {
-            text: 'mmmmk'
-        },
+        // subtitle: {
+        //     text: '$/piece'
+        // },
         xAxis: {
             type: 'datetime',
             labels: {
@@ -142,7 +142,7 @@ function standardTemplate(id, seriesData) {
         },
         yAxis: {
             title: {
-                text: 'Wind speed (m/s)'
+                text: 'Price ($/piece)'
             },
             min: 0,
             minorGridLineWidth: 0,
@@ -151,7 +151,7 @@ function standardTemplate(id, seriesData) {
                
             },
             tooltip: {
-                valueSuffix: ' m/s'
+                valuePrefix: '$'
             },
             plotOptions: {
                 spline: {
@@ -162,7 +162,8 @@ function standardTemplate(id, seriesData) {
                         }
                     },
                     marker: {
-                        enabled: false
+                        enabled: true,
+                        radius: 2
                     }
                 }
             },
@@ -174,4 +175,40 @@ function standardTemplate(id, seriesData) {
                 }
             }
         });
+}
+
+function pieChartTemplate(id, seriesData) {
+$(id).highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> <br>${point.y}'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Share',
+            data: seriesData
+        }]
+    });
+
+
 }

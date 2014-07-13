@@ -28,7 +28,7 @@ DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, p
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
 rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
-rewards_span, pieces_owned_value_current, prices_for_user
+rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -436,6 +436,7 @@ from pieces_owned_total
 inner join prices_span
 on pieces_owned_total.creators_id = prices_span.creators_id
 and prices_span.end_time_ = NOW()
+where pieces_owned_total >0
 group by pieces_owned_total.owners_id, pieces_owned_total.creators_id;
 
 
@@ -523,13 +524,22 @@ select users_id, time_, -1*btc_amount as funds from
 users_withdrawals
 order by users_id, time_, funds;
 
+
+CREATE VIEW users_funds_grouped as
+select 
+users_id, time_, sum(funds) as funds
+from users_funds
+group by users_id, time_;
+
 CREATE VIEW users_funds_accum as 
-select a.users_id, a.time_, a.funds, 
+select a.users_id, a.time_, 
+--a.funds, 
 sum(b.funds) as funds_accum
-from users_funds a, users_funds b
+from users_funds_grouped a, users_funds_grouped b
 WHERE b.users_id = a.users_id
 and b.time_ <= a.time_
 GROUP BY a.users_id, a.time_, a.funds;
+
 
 
 CREATE VIEW users_funds_current as
@@ -621,6 +631,7 @@ select * from users_current_view;
 select * from worth;
 select * from prices;
 select * from ask_bid_accept_checker
+select * from rewards_earned
 
 
 select * from pieces_owned order by owners_id, time_ desc
