@@ -1,12 +1,10 @@
 package com.heretic.bitpieces_practice.tools;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
-import org.joda.time.DateTime;
 
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
@@ -17,8 +15,9 @@ public class Tester {
 	public static void main(String[] args) {
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 		dbInit(prop);
-		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
-		
+//		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
+//		WebTools.getPiecesOwnedValueCurrentSeriesJson("3", null);
+		WebTools.getUsersFundsAccumSeriesJson("3", null);
 		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", "3");
 		
 //		SeriesFetcher sf = new SeriesFetcher();

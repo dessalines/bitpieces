@@ -47,8 +47,8 @@
         <!-- Sidebar -->
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
-            <li><a href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a></li>
+            <li><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
+            <li class="active"><a href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a></li>
             <li><a href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a></li>
             <li><a href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a></li>
           </ul>
@@ -58,27 +58,27 @@
         <!-- Top Bar -->
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 
-              <ul class="nav navbar-nav navbar-user navbar-left">
-                <li><a class="navbar-brand" href="#">BitPieces</a></li>
-                <li><a href="/carousel">Home</a></li>
-                <li><a href="#discover">Discover</a></li>
-                <li><a href="/creators">Creators</a></li>
-                <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
-                <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
-                <li><a href="#logout" id="logouthref" class="hide">Log Out</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
+          <ul class="nav navbar-nav navbar-user navbar-left">
+            <li><a class="navbar-brand" href="#">BitPieces</a></li>
+            <li><a href="/carousel">Home</a></li>
+            <li><a href="#discover">Discover</a></li>
+            <li><a href="/creators">Creators</a></li>
+            <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+            <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+            <li><a href="#logout" id="logouthref" class="hide">Log Out</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
               </ul>
+            </li>
+          </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown messages-dropdown">
@@ -141,8 +141,28 @@
           </ul>
         </div><!-- /.navbar-collapse -->
 
-      <!-- end of wrapper -->
-    </div>
+
+        <!-- The Page -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+          <!-- a 6 wide  chart -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Pieces owned value</h3>
+                </div>
+                <div class="panel-body">
+                  <div class = "small-chart" id="users_funds"></div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /.row -->
+        </div>
+
+        <!-- end of wrapper -->
+      </div>
 
 
       <!-- Bootstrap core JavaScript
@@ -155,13 +175,17 @@
       <script src="toastr/toastr.js"></script>
       <script src="mustache/mustache.js"></script>
       <script src="holder/holder.js"></script>
+      <script src="highcharts/js/highcharts.js"></script>
+      <script src="highcharts/js//modules/exporting.js"></script>
+      <script src="highcharts/js/themes/dark-unica.js"></script>
 
 
       <!-- my scripts -->
       <script src="tools.js"></script>
+      <script src="highcharts_templates.js"></script>
       <script src="userdashboard.js"></script>
-      <script src="userdashboard_funds.js"></script>
       <script src="login.js"></script>
+      <script src="userdashboard_funds.js"></script>
 
     </body>
     </html>

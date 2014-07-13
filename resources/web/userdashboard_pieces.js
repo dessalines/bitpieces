@@ -5,32 +5,10 @@ $(document).ready(function(){
     sessionId = getCookie("authenticated_session_id");
     console.log(sessionId);
 
-
-    var url = "http://localhost:4567/" + sessionId + "/get_pieces_owned_value_accum"// the script where you handle the form input.
-    $.ajax({
-        type: "GET",
-        url: url,
-        xhrFields: {
-          withCredentials: true
-      },
-      // data: seriesData, 
-      success: function(data, status, xhr) {
-            console.log(data);
-            // var jsonObj = JSON.parse(data);
-            var jsonObj = jQuery.parseJSON(data);
-            // var jsonObj = JSON.stringify(data);
-            console.log(jsonObj);
-            standardTemplate("#highcharts-chart-area", jsonObj);
-
-            },
-            error: function (request, status, error) {
-                
-                toastr.error(request.responseText);
-            }
-        });
-
-
-
-
-
+    fillUserHighChartStandardTemplate('get_pieces_owned_value_accum', "#pieces_owned_value");
+    fillUserHighChartStandardTemplate('get_pieces_owned_accum', '#pieces_owned');
+    fillUserHighChartPieChartTemplate('get_pieces_owned_value_current', '#pieces_owned_value_current');
+    fillUserHighChartStandardTemplate('get_rewards_earned', '#rewards_earned');
 });
+
+

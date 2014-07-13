@@ -52,3 +52,55 @@ function showHideElementsLoggedIn() {
 
   }
 }
+
+function fillUserHighChartStandardTemplate(url, id) {
+       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+        $.ajax({
+            type: "GET",
+            url: url,
+            xhrFields: {
+              withCredentials: true
+          },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            // var jsonObj = JSON.parse(data);
+            var jsonObj = jQuery.parseJSON(data);
+            // var jsonObj = JSON.stringify(data);
+            // console.log(jsonObj);
+            standardTemplate(id, jsonObj);
+
+        },
+        error: function (request, status, error) {
+
+            toastr.error(request.responseText);
+        }
+    });
+
+}
+
+function fillUserHighChartPieChartTemplate(url, id) {
+       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+        $.ajax({
+            type: "GET",
+            url: url,
+            xhrFields: {
+              withCredentials: true
+          },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            // var jsonObj = JSON.parse(data);
+            var jsonObj = jQuery.parseJSON(data);
+            // var jsonObj = JSON.stringify(data);
+            // console.log(jsonObj);
+            pieChartTemplate(id, jsonObj);
+
+        },
+        error: function (request, status, error) {
+
+            toastr.error(request.responseText);
+        }
+    });
+
+}

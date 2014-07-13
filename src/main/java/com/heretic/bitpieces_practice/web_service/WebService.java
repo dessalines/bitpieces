@@ -107,6 +107,26 @@ public class WebService {
 
 		});
 		
+		get("/:auth/get_pieces_owned_value_current", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			
+			String json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userId, req.body());
+			
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
 		get("/:auth/get_prices_for_user", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
@@ -127,6 +147,64 @@ public class WebService {
 
 		});
 		
+		get("/:auth/get_rewards_earned", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			
+			String json = WebTools.getRewardsEarnedSeriesJson(userId, req.body());
+			
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
+		get("/:auth/get_pieces_owned_accum", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			
+			String json = WebTools.getPiecesOwnedAccumSeriesJson(userId, req.body());
+			
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		get("/:auth/get_users_funds_accum", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			
+			String json = WebTools.getUsersFundsAccumSeriesJson(userId, req.body());
+			
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
 
 
 		post("/registeruser", (req, res) -> {
