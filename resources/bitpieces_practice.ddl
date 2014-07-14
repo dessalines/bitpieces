@@ -511,6 +511,13 @@ select owners_id, creators_id, sum(reward_earned) as reward_earned_total
 from rewards_earned
 group by owners_id, creators_id;
 
+CREATE VIEW rewards_earned_total_by_user as
+select owners_id, sum(reward_earned) as reward_earned_total
+from rewards_earned
+group by owners_id;
+
+select * from rewards_owed
+
 CREATE VIEW rewards_owed as
 select creators_id, sum(reward_earned) as total_owed
 from rewards_earned
@@ -643,19 +650,43 @@ union
 select users_id, 
 time_, 
 'deposit' as type,
-'Self' as recipient, 
+'' as recipient, 
 btc_amount as funds 
 from 
 users_deposits
 union
 select users_id, time_,
 'withdrawal' as type, 
-'Self' as recipient, 
+'' as recipient, 
 -1*btc_amount as funds from 
 users_withdrawals
 order by users_id, time_
 
+CREATE VIEW users_activity as 
+select * from users_transactions
+union 
+select users_id, time_, 
+'bid' as type,
+creators.username as recipient,
+CONCAT(pieces, ' pieces at $',bid_per_piece, '/piece') as funds
+from bids
+inner join creators
+on bids.creators_id = creators.id
+union
+select users_id, time_, 
+'ask' as type,
+creators.username as recipient,
+CONCAT(pieces, ' pieces at $',ask_per_piece, '/piece') as funds
+from asks
+inner join creators
+on asks.creators_id = creators.id
+order by users_id, time_
 
+
+
+
+
+select * from pieces_owned_value_current
 
 
 
@@ -700,7 +731,7 @@ select * from worth;
 select * from prices;
 select * from ask_bid_accept_checker
 select * from rewards_earned
-
+select * from users_transactions
 
 select * from pieces_owned order by owners_id, time_ desc
 */

@@ -48,11 +48,17 @@ public class Tables {
 	@Table("rewards_earned") 
 	public static class Rewards_earned extends Model {}
 	
+	@Table("rewards_earned_total_by_user") 
+	public static class Rewards_earned_total_by_user extends Model {}
+	
 	@Table("pieces_available")
 	public static class Pieces_available extends Model {}
 	
 	@Table("pieces_owned_total")
 	public static class Pieces_owned_total extends Model {}
+	
+	@Table("pieces_owned_value_current_by_owner")
+	public static class Pieces_owned_value_current_by_owner extends Model {}
 	
 	@Table("host_btc_addresses")
 	public static class Host_btc_addresses extends Model {}
@@ -80,6 +86,9 @@ public class Tables {
 	
 	@Table("users_transactions")
 	public static class Users_transactions extends Model {}
+	
+	@Table("users_activity")
+	public static class Users_activity extends Model {}
 	
 	@Table("creators_funds_current")
 	public static class Creators_funds_current extends Model {}

@@ -55,12 +55,12 @@ function showHideElementsLoggedIn() {
 
 function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
        var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
-        $.ajax({
-            type: "GET",
-            url: url,
-            xhrFields: {
-              withCredentials: true
-          },
+       $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
       // data: seriesData, 
       success: function(data, status, xhr) {
         console.log(data);
@@ -70,23 +70,23 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             // console.log(jsonObj);
             standardTemplate(id, jsonObj, yAxisLabel, symbol);
 
-        },
-        error: function (request, status, error) {
+          },
+          error: function (request, status, error) {
 
             toastr.error(request.responseText);
-        }
-    });
+          }
+        });
 
-}
+     }
 
-function fillUserHighChartPieChartTemplate(url, id) {
+     function fillUserHighChartPieChartTemplate(url, id) {
        var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
-        $.ajax({
-            type: "GET",
-            url: url,
-            xhrFields: {
-              withCredentials: true
-          },
+       $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
       // data: seriesData, 
       success: function(data, status, xhr) {
         console.log(data);
@@ -96,17 +96,17 @@ function fillUserHighChartPieChartTemplate(url, id) {
             // console.log(jsonObj);
             pieChartTemplate(id, jsonObj);
 
-        },
-        error: function (request, status, error) {
+          },
+          error: function (request, status, error) {
 
             toastr.error(request.responseText);
-        }
-    });
+          }
+        });
 
 
-}
+     }
 
-function fillUserInfoMustache(url) {
+     function fillUserInfoMustache(url) {
        var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
@@ -138,3 +138,96 @@ function fillUserInfoMustache(url) {
         });
 
      }
+
+     function fillUserInfoMustacheFromCookie() {
+
+            // var jsonObj = JSON.parse(data);
+            // var jsonObj = jQuery.parseJSON(data);
+            jsonObj = getCookie('username');
+            
+            var template = $('#usernameTemplate').html();
+            Mustache.parse(template);   // optional, speeds up future uses
+            var rendered = Mustache.render(template,jsonObj);
+            $('#userDropdown').html(rendered);
+
+            console.log(jsonObj);              
+            console.log(template);
+            console.log(rendered);
+            
+
+          } 
+
+
+
+          function fillTableFromMustache(url, templateId, divId, tableId) {
+       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+       $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            // var jsonObj = JSON.parse(data);
+            // JSON.useDateParser();
+            // var jsonObj = jQuery.parseJSON(data);
+            JSON.useDateParser();
+            var jsonObj = JSON.parse(data);
+            
+            var template = $(templateId).html();
+            Mustache.parse(template);   // optional, speeds up future uses
+            var rendered = Mustache.render(template,jsonObj);
+            $(divId).html(rendered);
+            $(tableId).tablesorter({debug: true}); 
+            console.log(jsonObj);              
+            console.log(template);
+            console.log(rendered);
+            
+
+          },
+          error: function (request, status, error) {
+
+           toastr.error(request.responseText);
+         }
+       });
+
+     }
+
+     function fillFieldFromMustache(url, templateId, divId) {
+       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+       $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            // var jsonObj = JSON.parse(data);
+            // JSON.useDateParser();
+            // var jsonObj = jQuery.parseJSON(data);
+            // JSON.useDateParser();
+            var jsonObj = JSON.parse(data);
+            if (jsonObj > 0) {
+              jsonObj = jsonObj.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            var template = $(templateId).html();
+            Mustache.parse(template);   // optional, speeds up future uses
+            var rendered = Mustache.render(template,jsonObj);
+            $(divId).html(rendered);
+            console.log(jsonObj);              
+            console.log(template);
+            console.log(rendered);
+            
+
+          },
+          error: function (request, status, error) {
+
+           toastr.error(request.responseText);
+         }
+       });
+
+}
