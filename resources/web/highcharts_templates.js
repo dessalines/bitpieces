@@ -1,3 +1,100 @@
+
+
+function standardTemplate(id, seriesData, yAxisLabel, symbol) {
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+    $(id).highcharts({
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: ''
+        },
+        // subtitle: {
+        //     text: '$/piece'
+        // },
+        xAxis: {
+            type: 'datetime',
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        yAxis: {
+            title: {
+                text: yAxisLabel
+            },
+            min: 0,
+            minorGridLineWidth: 0,
+            gridLineWidth: 0,
+            alternateGridColor: null,
+            
+        },
+        tooltip: {
+            valuePrefix: symbol
+        },
+        plotOptions: {
+            spline: {
+                lineWidth: 4,
+                states: {
+                    hover: {
+                        lineWidth: 5
+                    }
+                },
+                marker: {
+                    enabled: true,
+                    radius: 2
+                }
+            }
+        },
+        series: seriesData
+        ,
+        navigation: {
+            menuItemStyle: {
+                fontSize: '10px'
+            }
+        }
+    });
+}
+
+function pieChartTemplate(id, seriesData) {
+    $(id).highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> <br>${point.y}'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Share',
+            data: seriesData
+        }]
+    });
+
+
+}
+
 function testTemplate(id, seriesData) {
     $(id).highcharts({
         chart: {
@@ -121,99 +218,4 @@ function testTemplate(id, seriesData) {
                 }
             }
         });
-}
-
-function standardTemplate(id, seriesData) {
-    Highcharts.setOptions({
-        global: {
-            useUTC: false
-        }
-    });
-    $(id).highcharts({
-        chart: {
-            type: 'spline'
-        },
-        title: {
-            text: ''
-        },
-        // subtitle: {
-        //     text: '$/piece'
-        // },
-        xAxis: {
-            type: 'datetime',
-            labels: {
-                overflow: 'justify'
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Price ($/piece)'
-            },
-            min: 0,
-            minorGridLineWidth: 0,
-            gridLineWidth: 0,
-            alternateGridColor: null,
-            
-        },
-        tooltip: {
-            valuePrefix: '$'
-        },
-        plotOptions: {
-            spline: {
-                lineWidth: 4,
-                states: {
-                    hover: {
-                        lineWidth: 5
-                    }
-                },
-                marker: {
-                    enabled: true,
-                    radius: 2
-                }
-            }
-        },
-        series: seriesData
-        ,
-        navigation: {
-            menuItemStyle: {
-                fontSize: '10px'
-            }
-        }
-    });
-}
-
-function pieChartTemplate(id, seriesData) {
-    $(id).highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: 1,//null,
-            plotShadow: false
-        },
-        title: {
-            text: ''
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> <br>${point.y}'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Share',
-            data: seriesData
-        }]
-    });
-
-
 }
