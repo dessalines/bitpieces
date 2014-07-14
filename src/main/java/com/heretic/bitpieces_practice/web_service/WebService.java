@@ -77,7 +77,6 @@ public class WebService {
 			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
 			
 			String json = Actions.getPiecesOwnedTotal(userId);
-			
 
 			dbClose();
 
@@ -246,6 +245,76 @@ public class WebService {
 
 		});
 		
+		get("/:auth/get_users_activity", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			String json = WebTools.getUsersActivityJson(userId, req.body());
+			
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+		});
+		
+		get("/:auth/get_users_funds_current", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			String json = WebTools.getUsersFundsCurrentJson(userId, req.body());
+			
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+		});
+		
+		get("/:auth/get_rewards_earned_total_by_user", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			String json = WebTools.getRewardsEarnedTotalByUserJson(userId, req.body());
+			
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+		});
+		
+		get("/:auth/get_pieces_value_current_by_owner", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			String json = WebTools.getPiecesValueCurrentByOwnerJson(userId, req.body());
+			
+			dbClose();
+
+			System.out.println(json);
+			return json;
+			
+
+		});
+		
 
 
 		post("/registeruser", (req, res) -> {
@@ -396,6 +465,8 @@ public class WebService {
 
 
 }
+	
+	
 	
 	private static UserTypeAndId getUserFromCookie(Request req) {
 		String authId = req.cookie("authenticated_session_id");
