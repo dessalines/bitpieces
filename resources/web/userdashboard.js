@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   fillUserInfoMustacheFromCookie();
 
-
+  setupCreatorSearch();
 
   $( "#helloBtn" ).click(function() {
     var btn = $(this)
@@ -74,4 +74,6 @@ $(document).ready(function() {
   });
 
 });
+
+
 

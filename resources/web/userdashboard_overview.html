@@ -25,6 +25,9 @@
   <!--   toastr css -->
   <link href="toastr/toastr.css" rel="stylesheet"/>
 
+   <!--   typeahead css -->
+  <link href="typeaheadjs.css" rel="stylesheet"/>
+
   <!-- This main css -->
   <link href="userdashboard.css" rel="stylesheet">
 
@@ -80,7 +83,16 @@
             </li>
           </ul>
 
+
+          <!-- Sidebar -->
+
+
           <ul class="nav navbar-nav navbar-right navbar-user">
+            <li>
+              <form id="creator_search" class="navbar-form">
+                <input type="text" class="form-control typeahead" placeholder="Search for Creator...">
+              </form>
+            </li>
             <li class="dropdown messages-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
               <ul class="dropdown-menu">
@@ -162,7 +174,7 @@
                   <div id ="funds_current" class="col-xs-8 text-right">
                     <script id="funds_current_template" type="x-tmpl-mustache"> 
                     <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
-                     
+
                     <p class="announcement-text">Funds</p>
                     </script>
                   </div>
@@ -323,7 +335,7 @@
       <script src="highcharts/js/highcharts.js"></script>
       <script src="highcharts/js//modules/exporting.js"></script>
       <script src="highcharts/js/themes/dark-unica.js"></script>
-
+      <script src="typeahead.js/typeahead.bundle.js"></script>
 
       <!-- my scripts -->
       <script src="tools.js"></script>

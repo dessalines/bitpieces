@@ -315,6 +315,23 @@ public class WebService {
 
 		});
 		
+		get("/creators_search/:query", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String query = req.params(":query");
+			
+			String json = WebTools.creatorsSearchJson(query);
+			
+			dbClose();
+
+			System.out.println(json);
+			return json;
+			
+
+		});
+		
 
 
 		post("/registeruser", (req, res) -> {
