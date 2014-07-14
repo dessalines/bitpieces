@@ -193,11 +193,28 @@ public class WebTools {
 
 	}
 	
+public static String creatorsSearchJson(String query) {
+	List<Model> list = Creator.find("username like '%" + query + "%'");
 	
-	public static String createTableJSON(List<Model> list) {
+	String json = createTableJSON(list, "id", "username");
+	
+	return json;
+	
+	
+}
+	
+	
+	public static String createTableJSON(List<Model> list, String... params) {
+		
+
+		
 		String json = "[";
 		for (int i = 0; i < list.size(); i++) {
-			json += list.get(i).toJson(false);
+			if (params != null) {
+				json += list.get(i).toJson(false, params); 
+			} else {
+				json += list.get(i).toJson(false);
+			}
 			if (i < list.size()-1) {
 				json += ",";
 			}
@@ -207,6 +224,10 @@ public class WebTools {
 		System.out.println(json);
 		
 		return json;
+	}
+	
+	public static String createTableJSON(List<Model> list) {
+		return createTableJSON(list, null);
 	}
 
 

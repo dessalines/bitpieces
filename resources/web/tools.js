@@ -231,3 +231,22 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
        });
 
 }
+
+function setupCreatorSearch() {
+
+  remoteURL = 'http://localhost:4567/creators_search/%QUERY';
+  var creatorsList = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('username'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    // prefetch: '../data/films/post_1960.json',
+    remote: remoteURL
+  });
+
+  creatorsList.initialize();
+
+  $('#creator_search .typeahead').typeahead(null, {
+    name: 'creators_list',
+    displayKey: 'username',
+    source: creatorsList.ttAdapter()
+  });
+}

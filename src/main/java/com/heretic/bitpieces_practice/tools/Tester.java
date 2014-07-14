@@ -18,7 +18,8 @@ public class Tester {
 //		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
 //		WebTools.getPiecesOwnedValueCurrentSeriesJson("3", null);
 //		WebTools.getUsersFundsAccumSeriesJson("3", null);
-		WebTools.getUsersTransactionsJson("3", null);
+//		WebTools.getUsersTransactionsJson("3", null);
+		WebTools.creatorsSearchJson("leo");
 		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", "3");
 		
 //		SeriesFetcher sf = new SeriesFetcher();
