@@ -53,7 +53,7 @@ function showHideElementsLoggedIn() {
   }
 }
 
-function fillUserHighChartStandardTemplate(url, id) {
+function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
        var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
         $.ajax({
             type: "GET",
@@ -68,7 +68,7 @@ function fillUserHighChartStandardTemplate(url, id) {
             var jsonObj = jQuery.parseJSON(data);
             // var jsonObj = JSON.stringify(data);
             // console.log(jsonObj);
-            standardTemplate(id, jsonObj);
+            standardTemplate(id, jsonObj, yAxisLabel, symbol);
 
         },
         error: function (request, status, error) {

@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice;
+package com.heretic.bitpieces_practice.tables;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -139,7 +139,7 @@ public class InitializeTables {
 				"btc_amount", 300d, 
 				"status", "completed");
 				
-		
+		Tools.Sleep(1000L);
 	}
 
 
