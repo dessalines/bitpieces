@@ -25,7 +25,7 @@
   <!--   toastr css -->
   <link href="toastr/toastr.css" rel="stylesheet"/>
 
-   <!--   typeahead css -->
+  <!--   typeahead css -->
   <link href="typeaheadjs.css" rel="stylesheet"/>
 
   <!-- This main css -->
@@ -47,53 +47,53 @@
       <!-- Start using sb admin stuff -->
       <div id="wrapper">
 
-        <!-- Sidebar -->
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
-            <li><a href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a></li>
-            <li><a href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a></li>
-            <li><a href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a></li>
-          </ul>
+        <!-- plug into here -->
+        <nav class="navbar navbar-default" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">BitPieces</a>
+            </div>
 
-        </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+               <li><a class="navbar-brand" href="#">BitPieces</a></li>
+               <li><a href="/carousel">Home</a></li>
+               <li><a href="#discover">Discover</a></li>
+               <li><a href="/creators">Creators</a></li>
+               <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+               <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+               <li><a href="#logout" id="logouthref" class="hide">Log Out</a></li>
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form id="creator_search" class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+               <input type="text" class="form-control typeahead" placeholder="Search for Creator...">
+             </div>
+             <button type="submit" class="btn btn-default">Submit</button>
+           </form>
 
-        <!-- Top Bar -->
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
 
-          <ul class="nav navbar-nav navbar-user navbar-left">
-            <li><a class="navbar-brand" href="#">BitPieces</a></li>
-            <li><a href="/carousel">Home</a></li>
-            <li><a href="#discover">Discover</a></li>
-            <li><a href="/creators">Creators</a></li>
-            <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
-            <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
-            <li><a href="#logout" id="logouthref" class="hide">Log Out</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
-          </ul>
-
-
-          <!-- Sidebar -->
-
-
-          <ul class="nav navbar-nav navbar-right navbar-user">
-            <li>
-              <form id="creator_search" class="navbar-form">
-                <input type="text" class="form-control typeahead" placeholder="Search for Creator...">
-              </form>
-            </li>
-            <li class="dropdown messages-dropdown">
+           <ul class="nav navbar-nav navbar-right">
+             <li class="dropdown messages-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li class="dropdown-header">7 New Messages</li>
@@ -145,180 +145,233 @@
              </ul>
              </script>
            </li>
-
          </ul>
        </div><!-- /.navbar-collapse -->
+     </div><!-- /.container-fluid -->
+   </nav>
 
-       <!-- The Page -->
-       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+   <div class="container-fluid">
+     <div class="row">
 
-        <div class="row">
-          <div class="col-md-12">
-            <h1>Overview <small> Your overview</small></h1>
-            <ol class="breadcrumb">
-              <li><i class="fa fa-dashboard"></i> Overview</a></li>
-            </ol>
-          </div>
 
+      <div class="col-md-2 sidebar">
+
+        <div class="mini-submenu">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
         </div>
+        <div class="list-group">
+          <span href="#" class="list-group-item active">
+            Submenu
+            <span class="pull-right" id="slide-submenu">
+              <i class="fa fa-times"></i>
+            </span>
+          </span>
 
-        <!-- The boxes -->
-        <div class="row">
-          <div class="col-lg-3">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-4">
-                    <i class="fa fa-bank fa-5x"></i>
-                  </div>
-                  <div id ="funds_current" class="col-xs-8 text-right">
-                    <script id="funds_current_template" type="x-tmpl-mustache"> 
-                    <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+          <a class="list-group-item" href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a>
+          <a class="list-group-item" href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a>
+          <a class="list-group-item" href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a>
+          <a class="list-group-item" href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a>
 
-                    <p class="announcement-text">Funds</p>
-                    </script>
-                  </div>
-                </div>
-              </div>
-              <a href="userdashboard_funds">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                      View Funds
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3">
-            <div class="panel panel-success">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-4">
-                    <i class="fa fa-money fa-5x"></i>
-                  </div>
-                  <div id = "rewards_earned_total_by_user" class="col-xs-8 text-right">
-                    <script id="rewards_earned_total_by_user_template" type="x-tmpl-mustache"> 
-                    <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
-                    
-                    <p class="announcement-text">Rewards Earned</p>
-                    </script>
-                  </div>
-                </div>
-              </div>
-              <a href="#">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                      View Rewards
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <div class="col-lg-3">
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-xs-4">
-                    <i class="fa fa-cubes fa-5x"></i>
-                  </div>
-                  <div id="pieces_owned_current" class="col-xs-8 text-right">
-                    <script id="pieces_owned_current_template" type="x-tmpl-mustache"> 
-                    <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
-                    
-                    <p class="announcement-text">Pieces Value</p>
-                    </script>
-                  </div>
-                </div>
-              </div>
-              <a href="userdashboard_pieces">
-                <div class="panel-footer announcement-bottom">
-                  <div class="row">
-                    <div class="col-xs-6">
-                      View Pieces
-                    </div>
-                    <div class="col-xs-6 text-right">
-                      <i class="fa fa-arrow-circle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <!-- End of the boxes -->
-        </div>
-
-        <div class="row"> 
-          <div class="col-md-6">
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
-              </div>
-              <div id="recent_activity" class="panel-body">
-                <script id="recent_activity_template" type="x-tmpl-mustache"> 
-                <table id="recent_activity_table" class="table table-hover table-striped tablesorter">
-                <thead> 
-                <tr>
-                <th>Time <i class="fa fa-sort"></i></th>
-                <th>Type <i class="fa fa-sort"></th>
-                <th>Recipient <i class="fa fa-sort"></th>
-                <th>Funds <i class="fa fa-sort"></th>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                {{#.}}
-
-                <tr> 
-                <td>{{time_}}</td>
-                <td>{{type}}</td>
-                <td>{{recipient}}</td>
-                <td>{{funds}}</td>
-                </tr>
-                {{/.}}
-
-                </tbody>
-                </script>
-              </table>
-
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Current Pieces owned value</h3>
-            </div>
-            <div class="panel-body">
-              <div class = "small-chart" id="pieces_owned_value_current"></div>
-            </div>
-          </div>
-        </div>
-
+        </div>        
       </div>
 
-      <!-- a big ass chart -->
-      <div class="row">
-        <div class="col-lg-12">
+      <!-- stop plugging in -->
+
+
+      <!-- Sidebar -->
+<!--   <div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+      <li class="active"><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
+      <li><a href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a></li>
+      <li><a href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a></li>
+      <li><a href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a></li>
+    </ul>
+
+  </div> -->
+
+
+
+  <!-- The Page -->
+  <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+
+    <div class="row">
+      <div class='col-md-12'>
+        <h1>Overview <small> Your overview</small></h1>
+        <ol class="breadcrumb">
+          <li><i class="fa fa-dashboard"></i> Overview</a></li>
+        </ol>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- The boxes -->
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-bank fa-5x"></i>
+              </div>
+              <div id ="funds_current" class="col-xs-8 text-right">
+                <script id="funds_current_template" type="x-tmpl-mustache"> 
+                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+
+                <p class="announcement-text">Funds</p>
+                </script>
+              </div>
+            </div>
+          </div>
+          <a href="userdashboard_funds">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6">
+                  View Funds
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-money fa-5x"></i>
+              </div>
+              <div id = "rewards_earned_total_by_user" class="col-xs-8 text-right">
+                <script id="rewards_earned_total_by_user_template" type="x-tmpl-mustache"> 
+                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+
+                <p class="announcement-text">Rewards Earned</p>
+                </script>
+              </div>
+            </div>
+          </div>
+          <a href="#">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6">
+                  View Rewards
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="panel panel-warning">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-cubes fa-5x"></i>
+              </div>
+              <div id="pieces_owned_current" class="col-xs-8 text-right">
+                <script id="pieces_owned_current_template" type="x-tmpl-mustache"> 
+                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+
+                <p class="announcement-text">Pieces Value</p>
+                </script>
+              </div>
+            </div>
+          </div>
+          <a href="userdashboard_pieces">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6">
+                  View Pieces
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- End of the boxes -->
+    </div>
+
+
+
+    <div class="row"> 
+      <div class="col-md-6">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
+          </div>
+          <div id="recent_activity" class="panel-body">
+            <script id="recent_activity_template" type="x-tmpl-mustache"> 
+            <table id="recent_activity_table" class="table table-hover table-striped tablesorter">
+            <thead> 
+            <tr>
+            <th>Time <i class="fa fa-sort"></i></th>
+            <th>Type <i class="fa fa-sort"></th>
+            <th>Recipient <i class="fa fa-sort"></th>
+            <th>Funds <i class="fa fa-sort"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            {{#.}}
+
+            <tr> 
+            <td>{{time_}}</td>
+            <td>{{type}}</td>
+            <td>{{recipient}}</td>
+            <td>{{funds}}</td>
+            </tr>
+            {{/.}}
+
+            </tbody>
+            </script>
+          </table>
 
         </div>
       </div>
     </div>
-    <!-- end of wrapper -->
+    <div class="col-md-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Current Pieces owned value</h3>
+        </div>
+        <div class="panel-body">
+          <div class = "small-chart" id="pieces_owned_value_current"></div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- a big ass chart -->
+    <div class="row">
+      <div class="col-lg-12">
+
+      </div>
+    </div>
+
   </div>
+  <!-- end of wrapper -->
+</div>
+</div>
+
+
 
 
       <!-- Bootstrap core JavaScript
