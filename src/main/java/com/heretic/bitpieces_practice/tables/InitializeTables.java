@@ -1,6 +1,5 @@
 package com.heretic.bitpieces_practice.tables;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;

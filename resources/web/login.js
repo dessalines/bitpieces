@@ -160,12 +160,7 @@ return false;
 
 
 // Logging out
-$('#logouthref').click(function(){ 
-  delete_cookie("authenticated_session_id");
-  showHideElementsLoggedIn();
-  toastr.success('Logged out.')
 
-});
 
 });
 

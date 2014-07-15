@@ -4,6 +4,7 @@ $(document).ready(function(){
 	sessionId = getCookie("authenticated_session_id");
 	console.log(sessionId);
 
+  
 	// fillUserHighChartStandardTemplate('get_users_funds_accum', '#users_funds', 'Funds ($)', '$');
 	fillTableFromMustache('get_users_activity', '#recent_activity_template', '#recent_activity', '#recent_activity_table');
 	fillUserHighChartPieChartTemplate('get_pieces_owned_value_current', '#pieces_owned_value_current');
