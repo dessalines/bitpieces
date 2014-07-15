@@ -1,5 +1,17 @@
 $(document).ready(function() {
 
+  $('#slide-submenu').on('click',function() {             
+        $(this).closest('.list-group').fadeOut('slide',function(){
+          $('.mini-submenu').fadeIn();  
+        });
+        
+      });
+
+  $('.mini-submenu').on('click',function(){   
+        $(this).next('.list-group').toggle('slide');
+        $('.mini-submenu').hide();
+  })
+
   sessionId = getCookie("authenticated_session_id");
   console.log(sessionId);
 
