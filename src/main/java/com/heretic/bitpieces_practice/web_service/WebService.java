@@ -75,11 +75,7 @@ public class WebService {
 		});
 		
 		get("/:auth/getpiecesownedtotal", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			String json = Actions.getPiecesOwnedTotal(userId);
 
@@ -92,11 +88,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_pieces_owned_value_accum", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			
@@ -112,11 +104,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_pieces_owned_value_current", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			
@@ -132,11 +120,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_prices_for_user", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			
@@ -152,11 +136,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_rewards_earned", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			
@@ -172,11 +152,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_pieces_owned_accum", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			
@@ -191,11 +167,7 @@ public class WebService {
 
 		});
 		get("/:auth/get_users_funds_accum", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			
@@ -211,11 +183,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_user_data", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			
@@ -231,11 +199,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_users_transactions", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			
@@ -251,11 +215,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_users_activity", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			String json = WebTools.getUsersActivityJson(userId, req.body());
@@ -269,11 +229,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_users_funds_current", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			String json = WebTools.getUsersFundsCurrentJson(userId, req.body());
@@ -286,11 +242,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_rewards_earned_total_by_user", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			String json = WebTools.getRewardsEarnedTotalByUserJson(userId, req.body());
@@ -303,11 +255,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_pieces_value_current_by_owner", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			String json = WebTools.getPiecesValueCurrentByOwnerJson(userId, req.body());
@@ -320,11 +268,7 @@ public class WebService {
 		});
 		
 		get("/:auth/get_users_reputation", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-			dbInit(prop);
-			
-			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			String userId = standardInit(prop, res, req);
 			
 			// get currency if one exists
 			String json = WebTools.getUsersReputationJson(userId, req.body());
@@ -565,6 +509,28 @@ public class WebService {
 			dbInit(prop);
 		}
 	}
+	
+	private static final String standardInit(Properties prop, Response res, Request req) {
+		try {
+		Base.open("com.mysql.jdbc.Driver", 
+				prop.getProperty("dburl"), 
+				prop.getProperty("dbuser"), 
+				prop.getProperty("dbpassword"));
+		} catch (DBException e) {
+			dbClose();
+			dbInit(prop);
+		}
+		
+		res.header("Access-Control-Allow-Origin", "http://localhost");
+		res.header("Access-Control-Allow-Credentials", "true");
+		
+		String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+		
+		return userId;
+	}
+	
+	
+	
 	private static final void dbClose() {
 		Base.close();
 	}
