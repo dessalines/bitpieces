@@ -36,6 +36,7 @@ import com.heretic.bitpieces_practice.tools.Tools;
  * 2) Before buying anything, do a users funds check
  * 3) Before buying creators pieces, make sure users have deposited
  * 4) implement recaptcha
+ * 5) Start using jsoup to write creators and users pages
  * @author tyler
  *
  */

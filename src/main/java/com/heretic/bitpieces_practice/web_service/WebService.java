@@ -3,10 +3,6 @@ package com.heretic.bitpieces_practice.web_service;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -31,7 +27,8 @@ public class WebService {
 
 	// How long to keep the cookies
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(60);
-	public static final String SESSION_FILE_LOC = "session.cache";
+	public static final String SESSION_FILE_LOC = System.getProperty( "user.home" ) + "/session.cache";
+	public static final String PROP_LOC = System.getProperty( "user.home" ) + "/db.properties";
 
 
 	// Use an expiring map to store the authenticated sessions
@@ -44,7 +41,7 @@ public class WebService {
 	private static Logger log = Logger.getLogger(WebService.class.getName());
 	public static void main(String[] args) {
 
-		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
+		Properties prop = Tools.loadProperties(PROP_LOC);
 		
 		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(SESSION_FILE_LOC));
 	
