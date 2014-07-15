@@ -154,7 +154,7 @@
      <div class="row">
 
       <!-- The sidebar -->
-      <div class="col-md-2 sidebar">
+      <div id="side_col" class="col-md-2 sidebar">
 
         <div class="mini-submenu">
           <span class="icon-bar"></span>
@@ -162,25 +162,22 @@
           <span class="icon-bar"></span>
         </div>
         <div class="list-group">
-          <span href="#" class="list-group-item active">
+          <li class="list-group-item">
             <a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a>
-            <span class="pull-right" id="slide-submenu">
-              <i class="fa fa-times"></i>
-            </span>
-          </span>
+            <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
+          </li>
 
-          
-          <a class="list-group-item" href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a>
-          <a class="list-group-item" href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a>
+         <a class="list-group-item" href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a>
+         <a class="list-group-item" href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a>
           <a class="list-group-item" href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a>
+        </div>
+      </div>        
+    </div>
 
-        </div>        
-      </div>
-
-      <!-- stop plugging in -->
+    <!-- stop plugging in -->
 
 
-      <!-- Sidebar -->
+    <!-- Sidebar -->
 <!--   <div class="col-sm-3 col-md-2 sidebar">
     <ul class="nav nav-sidebar">
       <li class="active"><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
@@ -194,10 +191,10 @@
 
 
   <!-- The Page -->
-  <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
 
     <div class="row">
-      <div class='col-md-12'>
+      <div class="col-md-12">
         <h1>Overview <small> Your overview</small></h1>
         <ol class="breadcrumb">
           <li><i class="fa fa-dashboard"></i> Overview</a></li>
