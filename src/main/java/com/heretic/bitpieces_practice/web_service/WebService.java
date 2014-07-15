@@ -3,6 +3,12 @@ package com.heretic.bitpieces_practice.web_service;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -24,14 +30,14 @@ import com.heretic.bitpieces_practice.tools.UserTypeAndId;
 public class WebService {
 
 	// How long to keep the cookies
-	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(900);
-
+	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(2);
+	public static final String SESSION_FILE_LOC = "session.cache";
 
 
 	// Use an expiring map to store the authenticated sessions
-	public static final Cache<String, UserTypeAndId> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
+	public static Cache<String, UserTypeAndId> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
 			.maximumSize(10000)
-			.expireAfterWrite(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS)
+			.expireAfterAccess(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
 			.build();
 	
 	private static final Gson GSON = new Gson();
@@ -40,7 +46,8 @@ public class WebService {
 
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 		
-
+		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(SESSION_FILE_LOC));
+	
 
 		get("/session", (req,res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
@@ -312,8 +319,25 @@ public class WebService {
 			System.out.println(json);
 			return json;
 			
-
 		});
+		
+		get("/:auth/get_users_reputation", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			dbInit(prop);
+			
+			String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
+			
+			// get currency if one exists
+			String json = WebTools.getUsersReputationJson(userId, req.body());
+			
+			dbClose();
+
+			System.out.println(json);
+			return json;
+			
+		});
+		
 		
 		get("/creators_search/:query", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
@@ -507,13 +531,22 @@ public class WebService {
 
 			// Store the users Id in a static map, give them a session id
 			SESSION_TO_USER_MAP.put(authenticatedSession, uid);
-
+			
+			// Persist it
+			// Put all the keys in a hashmap
+			Map<String, UserTypeAndId> derp = new HashMap<String, UserTypeAndId>(SESSION_TO_USER_MAP.asMap());
+			Tools.writeObjectToFile(derp, SESSION_FILE_LOC);
+//			System.out.println(Tools.GSON2.toJson(SESSION_TO_USER_MAP));
 			
 			// Set some cookies for that users login
 			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
 			res.cookie("username", uid.getUsername(), COOKIE_EXPIRE_SECONDS, false);
-			System.out.println(GSON.toJson(SESSION_TO_USER_MAP));
-
+			
+			String json = GSON.toJson(SESSION_TO_USER_MAP);
+			System.out.println(json);
+	
+			
+		
 			return authenticatedSession;
 		} else {
 			res.status(666);

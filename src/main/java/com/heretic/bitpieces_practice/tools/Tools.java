@@ -4,10 +4,14 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URL;
@@ -22,6 +26,7 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import com.google.common.cache.Cache;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -42,7 +47,7 @@ public class Tools {
 
 
 	public static final DateTimeFormatter DTF = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
-	
+
 	// Instead of using session ids, use a java secure random ID
 	private static final SecureRandom RANDOM = new SecureRandom();
 
@@ -138,6 +143,56 @@ public class Tools {
 			return res;
 		} catch(IOException e) {}
 		return res;
+	}
+
+	public static final void writeObjectToFile(Object obj, String fileLoc) {
+		FileOutputStream out;
+		try {
+			out = new FileOutputStream(fileLoc);
+
+			ObjectOutputStream os = new ObjectOutputStream(out);
+
+			os.writeObject(obj); 
+
+			os.flush(); 
+			
+			os.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static final <X, Y> Map<X, Y> readObjectFromFile(String fileLoc) {
+		// Load the session cache that's been persisted
+		FileInputStream in;
+		Map<X, Y> retObj = new HashMap<>();
+		try {
+			in = new FileInputStream(fileLoc);
+
+			// Step 2. Create an object input stream 
+			ObjectInputStream ins = new ObjectInputStream(in); 
+			retObj = (Map) ins.readObject();
+			
+
+			in.close();
+			ins.close();
+
+		} catch (IOException | ClassNotFoundException e1) {
+			e1.printStackTrace();
+			File file = new File(fileLoc);
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			System.out.println("Wrote a new file @ " + file.getAbsolutePath());
+			
+			
+		}
+		return retObj;
 	}
 
 }

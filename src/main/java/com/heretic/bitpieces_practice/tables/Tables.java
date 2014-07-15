@@ -108,7 +108,17 @@ public class Tables {
 	@Table("prices_for_user")
 	public static class Prices_for_user extends Model {}
 	
+	@Table("badges")
+	public static class Badge extends Model {}
 	
+	@Table("users_badges")
+	public static class Users_badges extends Model {}
+	
+	@Table("creators_badges")
+	public static class Creators_badges extends Model {}
+	
+	@Table("users_reputation")
+	public static class Users_reputation extends Model {}
 	
 	
 

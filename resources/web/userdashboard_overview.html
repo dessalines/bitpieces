@@ -85,9 +85,9 @@
             </ul>
             <form id="creator_search" class="navbar-form navbar-left" role="search">
               <div class="form-group">
-               <input type="text" class="form-control typeahead" placeholder="Search for Creator...">
+               <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
              </div>
-             <button type="submit" class="btn btn-default">Submit</button>
+             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
            </form>
 
 
@@ -167,8 +167,8 @@
             <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
           </li>
 
-         <a class="list-group-item" href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a>
-         <a class="list-group-item" href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a>
+          <a class="list-group-item" href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a>
+          <a class="list-group-item" href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a>
           <a class="list-group-item" href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a>
         </div>
       </div>        
@@ -291,6 +291,38 @@
               <div class="row">
                 <div class="col-xs-6">
                   View Pieces
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-4">
+                <i class="fa fa-empire fa-5x"></i>
+              </div>
+              <div id="users_reputation" class="col-xs-8 text-right">
+
+                <script id="users_reputation_template" type="x-tmpl-mustache">
+                <p class="announcement-heading">{{.}}</p>
+
+                <p class="announcement-text">Reputation</p>
+                </script> 
+              </div>
+            </div>
+          </div>
+          <a href="userdashboard_pieces">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6">
+                  View Badges
                 </div>
                 <div class="col-xs-6 text-right">
                   <i class="fa fa-arrow-circle-right"></i>

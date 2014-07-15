@@ -26,6 +26,7 @@ import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_current;
+import com.heretic.bitpieces_practice.tables.Tables.Users_reputation;
 import com.heretic.bitpieces_practice.tables.Tables.Users_transactions;
 import com.heretic.bitpieces_practice.tools.Tools;
 
@@ -192,6 +193,17 @@ public class WebTools {
 		return json;
 
 	}
+	
+	public static String getUsersReputationJson(String userId, String body) {
+		
+		Users_reputation value = Users_reputation.findFirst("users_id=?",  userId);
+	
+		String json = value.getString("reputation");
+		System.out.println(json);
+		return json;
+
+	}
+	
 	
 public static String creatorsSearchJson(String query) {
 	List<Model> list = Creator.find("username like '%" + query + "%'");

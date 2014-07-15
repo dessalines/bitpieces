@@ -1,8 +1,14 @@
 package com.heretic.bitpieces_practice.tools;
 
+import java.io.Serializable;
+
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
 
-public class UserTypeAndId {
+public class UserTypeAndId implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3691315536173530059L;
 	UserType type;
 	String id;
 	String username;
