@@ -195,7 +195,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
 
      }
 
-     function fillFieldFromMustache(url, templateId, divId) {
+     function fillFieldFromMustache(url, templateId, divId, isMoney) {
        var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
@@ -211,7 +211,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             // var jsonObj = jQuery.parseJSON(data);
             // JSON.useDateParser();
             var jsonObj = JSON.parse(data);
-            if (jsonObj > 0) {
+            if (jsonObj > 0 && isMoney) {
               jsonObj = jsonObj.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
             }
             var template = $(templateId).html();
@@ -248,5 +248,34 @@ function setupCreatorSearch() {
     name: 'creators_list',
     displayKey: 'username',
     source: creatorsList.ttAdapter()
+  });
+
+  $( "#creator_search" ).submit(function( event ) {
+   var formData = $("#creator_search").serializeArray();
+   console.log(formData);
+   var searchString = formData[0].value;
+
+   console.log(searchString);
+   var url = "http://localhost/creators_pages/" + searchString;
+   window.location.replace(url);
+
+   event.preventDefault();
+ });
+}
+
+function setupMiniSubmenu() {
+   $('#slide-submenu').on('click',function() {             
+    $(this).closest('.list-group').fadeOut('slide',function(){
+      $('.mini-submenu').fadeIn();  
+    });
+    $('#main_col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
+    // $('#side_col').toggleClass('span0 span3');
+
+  });
+
+  $('.mini-submenu').on('click',function(){   
+    $(this).next('.list-group').toggle('slide');
+    $('.mini-submenu').hide();
+    $('#main_col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
   });
 }

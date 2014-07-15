@@ -1,14 +1,17 @@
 package com.heretic.bitpieces_practice.tables;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
+import com.heretic.bitpieces_practice.tables.Tables.Badge;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
@@ -21,6 +24,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Reward;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
+import com.heretic.bitpieces_practice.tables.Tables.Users_badges;
 import com.heretic.bitpieces_practice.tables.Tables.Users_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Users_deposits;
 import com.heretic.bitpieces_practice.tables.Tables.Users_withdrawals;
@@ -53,6 +57,8 @@ public class InitializeTables {
 		delete_all();
 
 		setup_users();
+		
+		setup_badges();
 
 		setup_host_btc_address();
 
@@ -83,6 +89,30 @@ public class InitializeTables {
 		
 
 
+	}
+
+
+	private static void setup_badges() {
+		
+
+		
+
+			Badge.createIt("name", "Padawan Learner", "description", "Created an account");
+		
+		
+		Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
+		
+		User bill = User.findFirst("username like 'Bill%'");
+		
+		// Give bill a padawan badge for registering
+		
+		Users_badges.createIt("users_id", bill.getId().toString(), "badges_id", padawanBadge.getId().toString());
+		
+		
+		
+		
+		
+		
 	}
 
 

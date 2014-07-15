@@ -1,92 +1,18 @@
 $(document).ready(function() {
 
-  $('#slide-submenu').on('click',function() {             
-        $(this).closest('.list-group').fadeOut('slide',function(){
-          $('.mini-submenu').fadeIn();  
-        });
-    $('#main_col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
-    // $('#side_col').toggleClass('span0 span3');
-        
-      });
 
-  $('.mini-submenu').on('click',function(){   
-        $(this).next('.list-group').toggle('slide');
-        $('.mini-submenu').hide();
-        $('#main_col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
-  })
-
+  
+ 
   sessionId = getCookie("authenticated_session_id");
   console.log(sessionId);
 
   // fillUserInfoMustache('get_user_data');
 
+  setupMiniSubmenu();
   fillUserInfoMustacheFromCookie();
 
   setupCreatorSearch();
 
-  $( "#helloBtn" ).click(function() {
-    var btn = $(this)
-    btn.button('loading')
-	// serializes the form's elements.
-	console.log("clicked hello button");
-
-
-    var url = "http://localhost:4567/session"; // the script where you handle the form input.
-
-    $.ajax({
-    	type: "GET",
-    	url: url,
-    	success: function(data, status, xhr) {
-    		
-    		
-               alert(data); // show response from the php script.
-               btn.button('reset');
-             }
-           });
-    event.preventDefault();
-  });
-
-
-  $( "#piecesownedtotalBtn" ).click(function() {
-    var btn = $(this)
-    btn.button('loading')
-	// serializes the form's elements.
-	sessionId = getCookie("authenticated_session_id");
-	console.log(sessionId);
-
-
-    var url = "http://localhost:4567/" + sessionId + "/getpiecesownedtotal"// the script where you handle the form input.
-
-    $.ajax({
-    	type: "GET",
-    	url: url,
-    	success: function(data, status, xhr) {
-    		
-    		
-               // arr = $.extend({}, data);
-               // var obj = JSON.parse("arr: " + data);
-
-               dataObject = jQuery.parseJSON(data);
-                // $.mustache.parse(template);   // optional, speeds up future uses
-                var template = $('#piecesownedTemplate').html();
-                 Mustache.parse(template);   // optional, speeds up future uses
-                 var rendered = Mustache.render(template,dataObject);
-              // var rendered = Mustache.render(template, {name : "LUKE"});
-              
-              console.log(data);
-              // console.log(obj);
-              
-              console.log(template);
-              console.log(rendered);
-
-              $('#piecesownedDiv').html(rendered);
-
-
-              btn.button('reset');
-            }
-          });
-    event.preventDefault();
-  });
 
 });
 

@@ -22,13 +22,17 @@ fees,
 creators_page_fields,
 users_deposits,
 users_withdrawals,
-creators_withdrawals
+creators_withdrawals,
+badges,
+users_badges,
+creators_badges
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
 rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
-rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions
+rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
+users_reputation
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -264,6 +268,48 @@ CREATE TABLE rewards
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
+CREATE TABLE badges
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   name VARCHAR(56) NOT NULL,
+   points int(11) NOT NULL DEFAULT 10,
+   description TINYTEXT NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+
+CREATE TABLE users_badges
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   users_id int(11) NOT NULL,
+   FOREIGN KEY (users_id) REFERENCES users(id),
+   badges_id int(11) NOT NULL,
+   FOREIGN KEY (badges_id) REFERENCES badges(id),
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+CREATE TABLE creators_badges
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   creators_id int(11) NOT NULL,
+   FOREIGN KEY (creators_id) REFERENCES creators(id),
+   badges_id int(11) NOT NULL,
+   FOREIGN KEY (badges_id) REFERENCES badges(id),
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+
+
 
 -- Views
 
@@ -516,7 +562,7 @@ select owners_id, sum(reward_earned) as reward_earned_total
 from rewards_earned
 group by owners_id;
 
-select * from rewards_owed
+
 
 CREATE VIEW rewards_owed as
 select creators_id, sum(reward_earned) as total_owed
@@ -612,6 +658,7 @@ on pieces_owned_value_current.creators_id = creators.id
 where value_total > 0
 order by owners_id, creators_id, time_;
 
+
 CREATE VIEW users_transactions as 
 select to_users_id as users_id, 
 time_, 
@@ -660,7 +707,7 @@ select users_id, time_,
 '' as recipient, 
 -1*btc_amount as funds from 
 users_withdrawals
-order by users_id, time_
+order by users_id, time_;
 
 CREATE VIEW users_activity as 
 select * from users_transactions
@@ -680,13 +727,17 @@ CONCAT(pieces, ' pieces at $',ask_per_piece, '/piece') as funds
 from asks
 inner join creators
 on asks.creators_id = creators.id
-order by users_id, time_
+order by users_id, time_;
+
+CREATE VIEW users_reputation as
+select users_id, 
+sum(points) as reputation
+from users_badges
+inner join badges
+on users_badges.badges_id = badges.id
+group by users_id;
 
 
-
-
-
-select * from pieces_owned_value_current
 
 
 
