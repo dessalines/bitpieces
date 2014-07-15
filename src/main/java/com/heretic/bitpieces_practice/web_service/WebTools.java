@@ -127,99 +127,109 @@ public class WebTools {
 		return createHighChartsJSONForCurrent(list, "value_total", "creators_username");
 
 	}
-	
+
 	public static String getRewardsEarnedSeriesJson(String userId, String body) {
 		// First fetch from the table
 		List<Model> list = Rewards_earned.find("owners_id=?", userId);
 
 		return createHighChartsJSONForMultipleCreators(list, "price_time_", "reward_earned", "creators_username");
 	}
-	
+
 	public static String getUsersFundsAccumSeriesJson(String userId, String body) {
 		// First fetch from the table
 		List<Model> list = Users_funds_accum.find("users_id=?", userId);
 
 		return createHighChartsJSONForSingleCreator(list, "time_", "funds_accum", "Funds");
 	}
-	
+
 	public static String getUsersDataJson(String userId, String body) {
 		User user  = User.findById(userId);
-		
+
 		String json = user.toJson(false, "email", "username");
 		System.out.println(json);
-		
+
 		return json;
 	}
-	
+
 	public static String getUsersTransactionsJson(String userId, String body) {
-		
+
 		List<Model> list = Users_transactions.find("users_id=?",  userId);
-	
+
 		return createTableJSON(list);
 
 	}
-	
+
 	public static String getUsersActivityJson(String userId, String body) {
-		
+
 		List<Model> list = Users_activity.find("users_id=?",  userId);
-	
+
 		return createTableJSON(list);
 
 	}
-	
+
 	public static String getUsersFundsCurrentJson(String userId, String body) {
-		
+
 		Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("users_id=?",  userId);
-	
+
 		String json = usersFundsCurrent.getString("current_funds");
 		return json;
 
 	}
-	
+
 	public static String getRewardsEarnedTotalByUserJson(String userId, String body) {
-		
+
 		Rewards_earned_total_by_user rewardsEarned = Rewards_earned_total_by_user.findFirst("owners_id=?",  userId);
-	
+
 		String json = rewardsEarned.getString("reward_earned_total");
 		return json;
 
 	}
-	
+
 	public static String getPiecesValueCurrentByOwnerJson(String userId, String body) {
-		
+
 		Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  userId);
-	
+
 		String json = value.getString("value_total");
 		return json;
 
 	}
-	
+
 	public static String getUsersReputationJson(String userId, String body) {
+
+
+		String json = null;
 		
-		Users_reputation value = Users_reputation.findFirst("users_id=?",  userId);
-	
-		String json = value.getString("reputation");
+		try {
+			Users_reputation value = Users_reputation.findFirst("users_id=?",  userId);
+
+			json = value.getString("reputation");
+
+			// If they have no reputation, then return a 0
+		} catch (NullPointerException e) {
+			return "0";
+		}
+
 		System.out.println(json);
 		return json;
 
 	}
-	
-	
-public static String creatorsSearchJson(String query) {
-	List<Model> list = Creator.find("username like '%" + query + "%'");
-	
-	String json = createTableJSON(list, "id", "username");
-	
-	return json;
-	
-	
-}
-	
-	
-	public static String createTableJSON(List<Model> list, String... params) {
-		
 
-		
+
+	public static String creatorsSearchJson(String query) {
+		List<Model> list = Creator.find("username like '%" + query + "%'");
+
+		String json = createTableJSON(list, "id", "username");
+
+		return json;
+
+
+	}
+
+
+	public static String createTableJSON(List<Model> list, String... params) {
+
+
+
 		String json = "[";
 		for (int i = 0; i < list.size(); i++) {
 			if (params != null) {
@@ -232,12 +242,12 @@ public static String creatorsSearchJson(String query) {
 			}
 		}
 		json += "]";
-		
+
 		System.out.println(json);
-		
+
 		return json;
 	}
-	
+
 	public static String createTableJSON(List<Model> list) {
 		return createTableJSON(list, null);
 	}
@@ -247,39 +257,39 @@ public static String creatorsSearchJson(String query) {
 
 	public static String createHighChartsJSONForMultipleCreators(List<Model> list, String dateColName,
 			String valueColName, String creatorsIdentifier) {
-	
+
 		List<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
-	
+
 		List<String[]> oneCreatorsData = new ArrayList<String[]>();
-	
+
 		for (int i = 0; i < list.size(); i++) {
 			Model p = list.get(i);
-	
-	
+
+
 			System.out.println(p);
 			String UTCTime = p.getString(dateColName);
 			//			String highchartsDate = convertDateStrToHighchartsDateUTCString(UTCTime);
 			String millis = convertDateStrToMillis(UTCTime);
 			String val = p.getString(valueColName);
-	
+
 			String[] pair = {millis, val};
 			oneCreatorsData.add(pair);
-	
+
 			String cCreatorsId = p.getString(creatorsIdentifier);
-	
+
 			// If its the last one, add it to the map
 			if (i == list.size() -1) {
 				String oneCreatorsDataStr = Tools.GSON.toJson(oneCreatorsData).replaceAll("\"", "");
-	
+
 				Map<String, String> map = new LinkedHashMap<String, String>();
 				System.out.println(cCreatorsId);
 				map.put("name", cCreatorsId);
 				map.put("data", oneCreatorsDataStr);
-	
+
 				listOfMaps.add(map);
 			} else {
 				String nextCreatorsId = list.get(i+1).getString(creatorsIdentifier);
-	
+
 				if (!cCreatorsId.equals(nextCreatorsId)) {
 					String oneCreatorsDataStr = Tools.GSON.toJson(oneCreatorsData).replaceAll("\"", "");
 					//					String oneCreatorsDataStr = Arrays.toString(oneCreatorsData.toArray());
@@ -287,95 +297,95 @@ public static String creatorsSearchJson(String query) {
 					System.out.println(cCreatorsId);
 					map.put("name", cCreatorsId);
 					map.put("data", oneCreatorsDataStr);
-	
+
 					listOfMaps.add(map);
 					oneCreatorsData.clear();
 				}
-	
+
 			}
-	
+
 		}
-	
+
 		String listOfMapsStr = Tools.GSON.toJson(listOfMaps).replaceAll("\"\\[", "[").replaceAll("\\]\"", "]");
-	
+
 		System.out.println(listOfMapsStr);
-	
-	
-	
+
+
+
 		return listOfMapsStr;
-	
+
 	}
 
 
 
 	public static String createHighChartsJSONForSingleCreator(List<Model> list, String dateColName,
 			String valueColName, String seriesName) {
-	
+
 		List<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
-	
+
 		List<String[]> oneCreatorsData = new ArrayList<String[]>();
-	
+
 		for (int i = 0; i < list.size(); i++) {
 			Model p = list.get(i);
-	
-	
+
+
 			System.out.println(p);
 			String UTCTime = p.getString(dateColName);
 			//			String highchartsDate = convertDateStrToHighchartsDateUTCString(UTCTime);
 			String millis = convertDateStrToMillis(UTCTime);
 			String val = p.getString(valueColName);
-	
+
 			String[] pair = {millis, val};
 			oneCreatorsData.add(pair);
-	
-	
+
+
 			// If its the last one, add it to the map
 			if (i == list.size() -1) {
 				String oneCreatorsDataStr = Tools.GSON.toJson(oneCreatorsData).replaceAll("\"", "");
-	
+
 				Map<String, String> map = new LinkedHashMap<String, String>();
 				map.put("name", seriesName);
 				map.put("data", oneCreatorsDataStr);
-	
+
 				listOfMaps.add(map);
 			} 
-	
+
 		}
-	
+
 		String listOfMapsStr = Tools.GSON.toJson(listOfMaps).replaceAll("\"\\[", "[").replaceAll("\\]\"", "]");
-	
+
 		System.out.println(listOfMapsStr);
-	
-	
-	
+
+
+
 		return listOfMapsStr;
-	
+
 	}
 
 
 
 	public static String createHighChartsJSONForCurrent(List<Model> list, 
 			String valueColName, String creatorsIdentifier) {
-	
+
 		List<String[]> data = new ArrayList<String[]>();
-	
+
 		for (int i = 0; i < list.size(); i++) {
 			Model p = list.get(i);
 			System.out.println(p);
-	
+
 			String val = p.getString(valueColName);
 			String cCreatorsId = p.getString(creatorsIdentifier);
 			String[] pair = {cCreatorsId, val};
 			data.add(pair);
 		}
-	
-	
+
+
 		String arrayStr = Tools.GSON.toJson(data).replaceAll(",\"", ",").replaceAll("\"]","]");
-	
+
 		System.out.println(arrayStr);
-	
+
 		return arrayStr;
-	
+
 	}
 
 
