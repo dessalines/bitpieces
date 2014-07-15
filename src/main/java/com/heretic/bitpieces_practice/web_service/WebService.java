@@ -298,6 +298,23 @@ public class WebService {
 
 		});
 		
+		post("/:auth/user_logout", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			
+			
+			String auth = req.params(":auth");
+			
+			// remove the key, and save the map
+			SESSION_TO_USER_MAP.invalidate(auth);
+			writeCacheToFile();
+			
+			
+
+			return "Logged out....2";
+			
+		});
+		
 
 
 		post("/registeruser", (req, res) -> {
@@ -473,12 +490,8 @@ public class WebService {
 
 			// Store the users Id in a static map, give them a session id
 			SESSION_TO_USER_MAP.put(authenticatedSession, uid);
-			
-			// Persist it
-			// Put all the keys in a hashmap
-			Map<String, UserTypeAndId> derp = new HashMap<String, UserTypeAndId>(SESSION_TO_USER_MAP.asMap());
-			Tools.writeObjectToFile(derp, SESSION_FILE_LOC);
-//			System.out.println(Tools.GSON2.toJson(SESSION_TO_USER_MAP));
+			writeCacheToFile();
+
 			
 			// Set some cookies for that users login
 			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
@@ -495,6 +508,11 @@ public class WebService {
 			return "Incorrect Username or password";
 		}
 
+	}
+
+	private static void writeCacheToFile() {
+		Map<String, UserTypeAndId> serializableMap = new HashMap<String, UserTypeAndId>(SESSION_TO_USER_MAP.asMap());
+		Tools.writeObjectToFile(serializableMap, SESSION_FILE_LOC);
 	}
 
 
