@@ -281,18 +281,45 @@ function setupMiniSubmenu() {
 }
 
 function setupLogout() {
+  var url = "http://localhost:4567/" + sessionId + "/user_logout"
   $('#logouthref').click(function(){ 
-    delete_cookie("authenticated_session_id");
-    showHideElementsLoggedIn();
-    toastr.success('Logged out.');
-    console.log('got here');
-    setTimeout(
-      function() 
-      {
-        var url = "http://localhost/carousel";
-        window.location.replace(url);
+   $.ajax({
+    type: "POST",
+    url: url,
+    xhrFields: {
+      withCredentials: true
+    },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            // var jsonObj = JSON.parse(data);
+            // JSON.useDateParser();
+            // var jsonObj = jQuery.parseJSON(data);
+            // JSON.useDateParser();
+           
+            
+            toastr.success(data);
+            console.log('got here');
+            setTimeout(
+              function() 
+              {
+                var url = "http://localhost/carousel";
+                window.location.replace(url);
 
-      }, 2000);
+              }, 2000);
+            
+
+          },
+          error: function (request, status, error) {
+
+           toastr.error(request.responseText);
+         }
+       });
+
+
+   delete_cookie("authenticated_session_id");
+    // showHideElementsLoggedIn();
+    
 
 
 
