@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.DB;
 import org.javalite.activejdbc.DBException;
 
 import spark.Request;
@@ -28,7 +29,7 @@ public class WebService {
 	// How long to keep the cookies
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(60);
 	public static final String SESSION_FILE_LOC = System.getProperty( "user.home" ) + "/session.cache";
-	public static final String PROP_LOC = System.getProperty( "user.home" ) + "/db.properties";
+	public static final String DB_PROP_LOC = System.getProperty( "user.home" ) + "/db.properties";
 
 
 	// Use an expiring map to store the authenticated sessions
@@ -41,11 +42,11 @@ public class WebService {
 	private static Logger log = Logger.getLogger(WebService.class.getName());
 	public static void main(String[] args) {
 
-		Properties prop = Tools.loadProperties(PROP_LOC);
+		Properties prop = Tools.loadProperties(DB_PROP_LOC);
 		
 		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(SESSION_FILE_LOC));
 	
-
+	
 		get("/session", (req,res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 
