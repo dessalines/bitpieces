@@ -264,18 +264,37 @@ function setupCreatorSearch() {
 }
 
 function setupMiniSubmenu() {
-   $('#slide-submenu').on('click',function() {             
-    $(this).closest('.list-group').fadeOut('slide',function(){
-      $('.mini-submenu').fadeIn();  
-    });
-    $('#main_col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
+ $('#slide-submenu').on('click',function() {             
+  $(this).closest('.list-group').fadeOut('slide',function(){
+    $('.mini-submenu').fadeIn();  
+  });
+  $('#main_col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
     // $('#side_col').toggleClass('span0 span3');
 
   });
 
-  $('.mini-submenu').on('click',function(){   
-    $(this).next('.list-group').toggle('slide');
-    $('.mini-submenu').hide();
-    $('#main_col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
+ $('.mini-submenu').on('click',function(){
+  $(this).next('.list-group').toggle('slide');
+  $('.mini-submenu').hide();
+  $('#main_col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
+});
+}
+
+function setupLogout() {
+  $('#logouthref').click(function(){ 
+    delete_cookie("authenticated_session_id");
+    showHideElementsLoggedIn();
+    toastr.success('Logged out.');
+    console.log('got here');
+    setTimeout(
+      function() 
+      {
+        var url = "http://localhost/carousel";
+        window.location.replace(url);
+
+      }, 2000);
+
+
+
   });
 }
