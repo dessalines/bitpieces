@@ -2,9 +2,10 @@ $(document).ready(function(){
 
   // fillFieldFromMustache('getcreatorpage', '#main_body_template', '#main_body', false);
 
-  setupSummerNote('getcreatorpage', '#main_body', 'main_body');
+  sessionId = getCookie("authenticated_session_id");
 
-  saveSummerNote('savecreatorpage', '#saveBtn', '#main_body');
+  setupSummerNote(sessionId + '/getcreatorpage', '#main_body', 'main_body');
 
+  saveSummerNote(sessionId + '/savecreatorpage', '#saveBtn', '#main_body');
 
 });

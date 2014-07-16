@@ -54,7 +54,7 @@ function showHideElementsLoggedIn() {
 }
 
 function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
-       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+       var url = "http://localhost:4567/" + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -80,7 +80,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
      }
 
      function fillUserHighChartPieChartTemplate(url, id) {
-       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+       var url = "http://localhost:4567/" + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -107,7 +107,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
      }
 
      function fillUserInfoMustache(url) {
-       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+       var url = "http://localhost:4567/" + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -160,7 +160,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
 
 
           function fillTableFromMustache(url, templateId, divId, tableId) {
-       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+       var url = "http://localhost:4567/" + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -196,7 +196,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
      }
 
      function fillFieldFromMustache(url, templateId, divId, isMoney) {
-       var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+       var url = "http://localhost:4567/" + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -328,7 +328,7 @@ function setupLogout() {
 
 function setupSummerNote(url, id, sqlColName) {
 
-var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+var url = "http://localhost:4567/" + url// the script where you handle the form input.
 $.ajax({
   type: "GET",
   url: url,
@@ -389,7 +389,7 @@ function saveSummerNote(shortUrl, btn, id) {
   // Loading
   btn.button('loading');
 
-    var url = "http://localhost:4567/" + sessionId + "/" + shortUrl ; // the script where you handle the form input.
+    var url = "http://localhost:4567/" + shortUrl ; // the script where you handle the form input.
 
     $.ajax({
       type: "POST",

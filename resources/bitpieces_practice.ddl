@@ -32,7 +32,7 @@ ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_val
 rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
-users_reputation
+users_reputation, backers_current, backers_current_count
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -315,15 +315,20 @@ CREATE TABLE creators_badges
 
 CREATE VIEW prices AS
 SELECT
-creators_id, time_, price_per_piece
+creators_id, creators.username as creators_name, time_, price_per_piece
 FROM sales_from_users
+inner join creators
+on sales_from_users.creators_id = creators.id
 union
 SELECT
-from_creators_id as creators_id, time_, price_per_piece_after_fee as price_per_piece
+from_creators_id as creators_id, creators.username as creators_name, time_, price_per_piece_after_fee as price_per_piece
 FROM sales_from_creators
+inner join creators
+on sales_from_creators.from_creators_id = creators.id
 
 order by creators_id, time_
 ;
+
 
 CREATE VIEW prices_span as
 select a.creators_id, a.time_, 
@@ -377,6 +382,7 @@ on prices.creators_id = pieces_issued.creators_id
 where pieces_issued.time_ <= prices.time_
 order by creators_id, time_
 ;
+
 
 
 CREATE VIEW pieces_total as
@@ -493,9 +499,14 @@ group by pieces_owned_total.owners_id, pieces_owned_total.creators_id;
 
 CREATE VIEW pieces_owned_value_current_by_creator as 
 select creators_id,
+username, 
 sum(value_total) as value_total
 from pieces_owned_value_current
+inner join creators
+on pieces_owned_value_current.creators_id = creators.id
 group by creators_id;
+
+
 
 CREATE VIEW pieces_owned_value_current_by_owner as 
 select owners_id,
@@ -563,11 +574,12 @@ from rewards_earned
 group by owners_id;
 
 
-
 CREATE VIEW rewards_owed as
-select creators_id, sum(reward_earned) as total_owed
+select creators_id, creators_username, sum(reward_earned) as total_owed
 from rewards_earned
-group by creators_id;
+group by creators_id, creators_username;
+
+
 
 -- This is deposits - withdrawals + rewards earned - purchases from creator - purchases from user + buys from user
 CREATE VIEW users_funds as 
@@ -736,6 +748,21 @@ from users_badges
 inner join badges
 on users_badges.badges_id = badges.id
 group by users_id;
+
+
+CREATE VIEW backers_current as
+select owners_id, users.username as users_username, creators_id, creators_username, value_total
+from pieces_owned_value_current
+inner join users 
+on pieces_owned_value_current.owners_id = users.id
+order by creators_id, value_total desc;
+
+CREATE VIEW backers_current_count as 
+select creators_username, count(*) as number_of_backers 
+from backers_current
+group by creators_id, creators_username;
+
+
 
 
 
