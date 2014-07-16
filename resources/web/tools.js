@@ -256,7 +256,7 @@ function setupCreatorSearch() {
    var searchString = formData[0].value;
 
    console.log(searchString);
-   var url = "http://localhost/creators_pages/" + searchString;
+   var url = "http://localhost/creator_overview?creator=" + searchString;
    window.location.replace(url);
 
    event.preventDefault();
