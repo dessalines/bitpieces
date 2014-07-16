@@ -13,15 +13,19 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 
 import com.heretic.bitpieces_practice.actions.Actions;
+import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_by_creator;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_by_owner;
+import com.heretic.bitpieces_practice.tables.Tables.Prices;
 import com.heretic.bitpieces_practice.tables.Tables.Prices_for_user;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned_total_by_user;
+import com.heretic.bitpieces_practice.tables.Tables.Rewards_owed;
 import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_accum;
@@ -240,6 +244,48 @@ public class WebTools {
 
 	}
 
+
+	public static String getPiecesOwnedValueCurrentByCreatorJson(
+			String creatorName, String body) {
+		
+		Pieces_owned_value_current_by_creator p = 
+				Pieces_owned_value_current_by_creator.findFirst("username = ?", creatorName);
+		
+		String json = p.getString("value_total");
+		return json;
+		
+	}
+	
+	public static String getPricePerPieceCurrentJson(
+			String creatorName, String body) {
+		
+		
+		LazyList<Prices> prices = Prices.where("creators_name = ?", creatorName).orderBy("time_ desc").limit(1);
+		Prices p = prices.get(0);
+		String json = p.getString("price_per_piece");
+		return json;
+		
+	}
+	
+	public static String getRewardsOwedJson(
+			String creatorName, String body) {
+		
+		Rewards_owed r = Rewards_owed.findFirst("creators_username = ?", creatorName);
+		String json = r.getString("total_owed");
+		
+		return json;
+		
+	}
+	
+	public static String getBackersCurrentCountJson(
+			String creatorName, String body) {
+		
+		Backers_current_count r = Backers_current_count.findFirst("creators_username = ?", creatorName);
+		String json = r.getString("number_of_backers");
+		
+		return json;
+		
+	}
 
 	public static String createTableJSON(List<Model> list, String... params) {
 

@@ -28,7 +28,7 @@ import com.heretic.bitpieces_practice.tools.UserTypeAndId;
 public class WebService {
 
 	// How long to keep the cookies
-	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(60);
+	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(180);
 	public static final String SESSION_FILE_LOC = System.getProperty( "user.home" ) + "/session.cache";
 	public static final String DB_PROP_LOC = System.getProperty( "user.home" ) + "/db.properties";
 
@@ -538,6 +538,91 @@ public class WebService {
 			return json;
 
 		});
+		
+		get("/:creator/get_pieces_owned_value_current_by_creator", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+
+				// get the creator id from the token		
+				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_price_per_piece_current", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getPricePerPieceCurrentJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_rewards_owed", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getRewardsOwedJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_backers_current_count", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getBackersCurrentCountJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
 
 
 

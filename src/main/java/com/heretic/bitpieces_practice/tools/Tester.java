@@ -12,14 +12,18 @@ import com.heretic.bitpieces_practice.web_service.HTMLTools;
 import com.heretic.bitpieces_practice.web_service.WebTools;
 
 public class Tester {
-	public static void main2(String[] args) {
+	public static void main(String[] args) {
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 		dbInit(prop);
 //		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
 //		WebTools.getPiecesOwnedValueCurrentSeriesJson("3", null);
 //		WebTools.getUsersFundsAccumSeriesJson("3", null);
 //		WebTools.getUsersTransactionsJson("3", null);
-		WebTools.getUsersReputationJson("1", null);
+//		WebTools.getUsersReputationJson("1", null);
+//		System.out.println(WebTools.getPiecesOwnedValueCurrentByCreatorJson("Leonardo_Davinci", null));
+//		System.out.println(WebTools.getPricePerPieceCurrentJson("Leonardo_Davinci", null));
+//		System.out.println(WebTools.getRewardsOwedJson("Leonardo_Davinci", null));
+		System.out.println(WebTools.getBackersCurrentCountJson("Leonardo_Davinci", null));
 		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", "3");
 		
 //		SeriesFetcher sf = new SeriesFetcher();
@@ -29,7 +33,7 @@ public class Tester {
 		dbClose();
 		
 	}
-	public static void main(String[] args) {
+	public static void main2(String[] args) {
 	
 		
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");

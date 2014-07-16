@@ -1,21 +1,32 @@
 $(document).ready(function(){
 
+    var creatorName = window.location.pathname.split('/').pop();
+    setupMiniSubmenu();
 
-	console.log(document.cookie);
+    fillFieldFromMustache(creatorName + '/get_pieces_owned_value_current_by_creator', 
+        '#worth_current_template' , '#worth_current', true);
+    fillFieldFromMustache(creatorName + '/get_price_per_piece_current', 
+        '#price_per_piece_current_template' , '#price_per_piece_current', true);
+    fillFieldFromMustache(creatorName + '/get_rewards_owed', 
+        '#rewards_paid_template' , '#rewards_paid', true);
+    fillFieldFromMustache(creatorName + '/get_backers_current_count', 
+        '#backers_current_count_template' , '#backers_current_count', false);
+    
+    console.log(document.cookie);
 
-	$('#bidForm').bootstrapValidator({
-		message: 'This value is not valid',
-		excluded: [':disabled'],
+    $('#bidForm').bootstrapValidator({
+      message: 'This value is not valid',
+      excluded: [':disabled'],
 
-	});
+  });
 
 	// The date picker
 	$('.datepicker').pickadate({
 		format:'yyyy-mm-dd'
 	});
 
-	creatorId = window.location.pathname.split('/').pop();
-	console.log(creatorId);
+	
+	console.log(creatorName);
 
  // Placing the bid
  $( "#placebidBtn" ).click(function( event ) {
@@ -24,14 +35,13 @@ $(document).ready(function(){
 	var formData = $("#bidForm").serializeArray();
 
 	// Set the creator id
-	var creator = {name:"creatorid", value:creatorId};
+	var creator = {name:"creatorName", value:creatorName};
 	formData.push(creator);
 
 	console.log(formData);
 
 	// Loading
 	$(this).button('loading');
-
 
 	var url = "http://localhost:4567/placebid";
 
@@ -84,13 +94,13 @@ $(document).ready(function(){
 });
 
 // Placing the Ask
- $( "#placeaskBtn" ).click(function( event ) {
+$( "#placeaskBtn" ).click(function( event ) {
 
 	// serializes the form's elements.
 	var formData = $("#askForm").serializeArray();
 
 	// Set the creator id
-	var creator = {name:"creatorid", value:creatorId};
+	var creator = {name:"creatorName", value:creatorName};
 	formData.push(creator);
 
 	console.log(formData);
