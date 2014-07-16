@@ -372,6 +372,9 @@ public class InitializeTables {
 		Reward.createIt("creators_id", creator2.getId(),
 				"time_", now,
 				"reward_pct", 5.0d);
+		
+		Creators_page_fields.createIt("creators_id", creator1.getId(),
+				"main_body", "The main body of leo's page");
 
 
 	}

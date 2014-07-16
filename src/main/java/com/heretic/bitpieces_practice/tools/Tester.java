@@ -12,7 +12,7 @@ import com.heretic.bitpieces_practice.web_service.HTMLTools;
 import com.heretic.bitpieces_practice.web_service.WebTools;
 
 public class Tester {
-	public static void main(String[] args) {
+	public static void main2(String[] args) {
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 		dbInit(prop);
 //		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
@@ -29,13 +29,13 @@ public class Tester {
 		dbClose();
 		
 	}
-	public static void main2(String[] args) {
+	public static void main(String[] args) {
 	
 		
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 		
 		dbInit(prop);
-		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  3);
+		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  1);
 		
 		dbClose();
 		HTMLTools.saveCreatorHTMLPage(page.getString("creators_id"), page);
