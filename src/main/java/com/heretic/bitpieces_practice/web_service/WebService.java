@@ -401,21 +401,29 @@ public class WebService {
 
 	
 	
-	post("/savecreatorpage", (req, res) -> {
-		res.header("Access-Control-Allow-Origin", "http://localhost");
-		res.header("Access-Control-Allow-Credentials", "true");
+	post("/:auth/savecreatorpage", (req, res) -> {
+		String creatorsId = standardInit(prop, res, req);
 
-		dbInit(prop);
-
-		// get the creator id from the token
-		UserTypeAndId uid = getUserFromCookie(req);
-		
-		String message = WebTools.saveCreatorPage(uid.getId(), req.body());
+		// get the creator id from the token		
+		String message = WebTools.saveCreatorPage(creatorsId, req.body());
 		
 		dbClose();
 
 
 		return message;
+
+	});
+	
+	get("/:auth/getcreatorpage", (req, res) -> {
+		String creatorsId = standardInit(prop, res, req);
+
+		// get the creator id from the token		
+		String json = WebTools.getCreatorPageJson(creatorsId, req.body());
+		
+		dbClose();
+
+
+		return json;
 
 	});
 

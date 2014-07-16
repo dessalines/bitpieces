@@ -36,7 +36,8 @@ public class WebTools {
 
 	public static String saveCreatorPage(String id, String reqBody) {
 
-		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+		System.out.println(reqBody);
+//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
 		Creator creator = Creator.findById(id);
@@ -45,15 +46,29 @@ public class WebTools {
 		// The first time filling the page fields
 		if (page == null) {
 			page = Creators_page_fields.createIt("creators_id", id,
-					"main_body", postMap.get("main_body"));
+					"main_body", reqBody);
 		} else {
-			page.set("main_body", postMap.get("main_body")).saveIt();
+			page.set("main_body", reqBody).saveIt();
 		}
 
 		// Save the html page
 		HTMLTools.saveCreatorHTMLPage(username, page);
 
 		return "Successful";
+
+	}
+	
+	public static String getCreatorPageJson(String id, String reqBody) {
+
+		System.out.println(reqBody);
+//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+
+		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
+		
+		String json = page.toJson(false, "main_body");
+
+
+		return json;
 
 	}
 

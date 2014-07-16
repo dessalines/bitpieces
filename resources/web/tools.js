@@ -296,7 +296,7 @@ function setupLogout() {
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
             // JSON.useDateParser();
-           
+
             
             toastr.success(data);
             console.log('got here');
@@ -323,5 +323,107 @@ function setupLogout() {
 
 
 
+  });
+}
+
+function setupSummerNote(url, id, sqlColName) {
+
+var url = "http://localhost:4567/" + sessionId + "/" + url// the script where you handle the form input.
+$.ajax({
+  type: "GET",
+  url: url,
+  xhrFields: {
+    withCredentials: true
+  },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            // var jsonObj = JSON.parse(data);
+            // JSON.useDateParser();
+            // var jsonObj = jQuery.parseJSON(data);
+            // JSON.useDateParser();
+            var jsonObj = JSON.parse(data);
+
+
+
+                       
+            var mainBody = jsonObj[sqlColName];
+            console.log(jsonObj);   
+            console.log(mainBody);
+
+            $(id).summernote({
+                height: 300,                 // set editor height
+
+                minHeight: null,             // set minimum height of editor
+                maxHeight: null,             // set maximum height of editor
+
+                focus: true,                 // set focus to editable area after initializing summernote
+              });
+            $(id).code(mainBody);
+            
+
+          },
+          error: function (request, status, error) {
+
+           toastr.error(request.responseText);
+         }
+       });
+
+
+
+
+
+
+
+}
+
+function saveSummerNote(shortUrl, btn, id) {
+  // !!!!!!They must have names unfortunately
+  $( btn ).click(function( event ) {
+
+
+    var sHTML = $(id).code();
+    console.log(sHTML);
+
+    var btn = $(this);
+  // Loading
+  btn.button('loading');
+
+    var url = "http://localhost:4567/" + sessionId + "/" + shortUrl ; // the script where you handle the form input.
+
+    $.ajax({
+      type: "POST",
+      url: url,
+      xhrFields: {
+        withCredentials: true
+      },
+      data: sHTML, 
+      success: function(data, status, xhr) {
+
+
+        xhr.getResponseHeader('Set-Cookie');
+                // document.cookie="authenticated_session_id=" + data + 
+                // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
+                // Hide the modal, reset the form, show successful
+
+                  // Loading
+                  btn.button('reset');
+
+                  toastr.success('Page saved')
+
+
+
+                  console.log(document.cookie);
+
+                },
+                error: function (request, status, error) {
+
+                  toastr.error(request.responseText);
+                }
+              });
+
+
+
+    event.preventDefault();
   });
 }
