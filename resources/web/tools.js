@@ -428,6 +428,28 @@ function saveSummerNote(shortUrl, btn, id) {
   });
 }
 
+function fillSimpleText(url, divId) {
+     var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            $(divId).html(data);
+
+
+          },
+          error: function (request, status, error) {
+
+           toastr.error(request.responseText);
+         }
+       });
+}
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

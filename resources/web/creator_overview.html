@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+	<title>Dashboard Template for Bootstrap</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="../darkly.bootstrap.min.css" rel="stylesheet">
+
+	<!-- Link to font awesome -->
+	<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+
+	<!-- Bootstrap social css -->
+	<link href="../bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
+
+	<!--   Bootstrap validator -->
+	<link rel="stylesheet" href="../bootstrap-validator/dist/css/bootstrapValidator.min.css"/>
+
+	<!--   toastr css -->
+	<link href="../toastr/toastr.css" rel="stylesheet"/>
+
+	<!--   typeahead css -->
+	<link href="../typeaheadjs.css" rel="stylesheet"/>
+
+	<!-- Pickadate -->
+	<link href="../pickadate/lib/themes/default.css" rel="stylesheet"/>
+	<link href="../pickadate/lib/themes/default.date.css" rel="stylesheet"/>
+
+	<!-- This main css -->
+	<link href="../userdashboard.css" rel="stylesheet">
+
+
+
+	<!-- Just for debugging purposes. Don't actually copy this line! -->
+	<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+     <!-- Navbars -->
+
+     <!-- the start of the doc -->
+     <div id="wrapper">
+
+      <!-- plug into here -->
+      <nav class="navbar navbar-default" role="navigation">
+       <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">BitPieces</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <ul class="nav navbar-nav">
+        <li><a href="/carousel">Home</a></li>
+        <li><a href="#discover">Discover</a></li>
+        <li><a href="/creators">Creators</a></li>
+        <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+               <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+               <li><a href="#logout" class="hide">Log Out</a></li> -->
+               <li class="dropdown">
+               	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+               	<ul class="dropdown-menu">
+               		<li><a href="#">Action</a></li>
+               		<li><a href="#">Another action</a></li>
+               		<li><a href="#">Something else here</a></li>
+               		<li class="divider"></li>
+               		<li class="dropdown-header">Nav header</li>
+               		<li><a href="#">Separated link</a></li>
+               		<li><a href="#">One more separated link</a></li>
+               	</ul>
+               </li>
+             </ul>
+             <form id="creator_search" class="navbar-form navbar-left" role="search">
+              <div class="form-group">
+               <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
+             </div>
+             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+           </form>
+
+
+           <ul class="nav navbar-nav navbar-right">
+           	<li class="dropdown messages-dropdown">
+           		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
+           		<ul class="dropdown-menu">
+           			<li class="dropdown-header">7 New Messages</li>
+           			<li class="message-preview">
+           				<a href="#">
+           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
+           					<span class="name">John Smith:</span>
+           					<span class="message">Hey there, I wanted to ask you something...</span>
+           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+           				</a>
+           			</li>
+           			<li class="divider"></li>
+           			<li class="message-preview">
+           				<a href="#">
+           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
+           					<span class="name">John Smith:</span>
+           					<span class="message">Hey there, I wanted to ask you something...</span>
+           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+           				</a>
+           			</li>
+           			<li class="divider"></li>
+           			<li class="message-preview">
+           				<a href="#">
+           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
+           					<span class="name">John Smith:</span>
+           					<span class="message">Hey there, I wanted to ask you something...</span>
+           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+           				</a>
+           			</li>
+           			<li class="divider"></li>
+           			<li><a href="#">View Inbox <span class="badge">7</span></a></li>
+           		</ul>
+           	</li>
+
+
+           	<li id="userDropdown" class="dropdown user-dropdown">
+
+           		<script id="usernameTemplate" type="x-tmpl-mustache">  
+           		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+
+
+           		<ul class="dropdown-menu">
+           		<li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+           		<li class="divider"></li>
+           		<li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+
+           		</ul>
+           		</script>
+           	</li>
+           </ul>
+         </div><!-- /.navbar-collapse -->
+       </div><!-- /.container-fluid -->
+     </nav>
+
+     <!-- The full page with teh sidebar -->
+     <div class="container-fluid">
+       <div class="row">
+
+        <!-- The sidebar -->
+        <div id="side_col" class="col-md-2 sidebar">
+
+         <div class="mini-submenu">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </div>
+        <div class="list-group">
+          <li class="list-group-item">
+           <a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a>
+           <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
+         </li>
+
+         <a class="list-group-item" href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Price</a>
+         <a class="list-group-item" href="userdashboard_pieces.html"><i class="fa fa-table"></i> Worth</a>
+         <a class="list-group-item" href="userdashboard_prices.html"><i class="fa fa-edit"></i> Rewards</a>
+         <a class="list-group-item" href="userdashboard_prices.html"><i class="fa fa-edit"></i> Backers</a>
+         <a class="list-group-item" href="userdashboard_prices.html"><i class="fa fa-edit"></i> Badges</a>
+       </div>
+     </div>        
+   </div>
+
+   <!-- stop plugging in -->
+
+
+   <!-- Sidebar -->
+<!--   <div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+      <li class="active"><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
+      <li><a href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a></li>
+      <li><a href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a></li>
+      <li><a href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a></li>
+    </ul>
+
+  </div> -->
+
+
+
+  <!-- The Page -->
+  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+
+   <div class="row">
+    <div class="col-md-12">
+
+      <h1 id="page_title"> <small> Your overview</small></h1>
+      <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> Overview</a></li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Buy, bid and ask buttons -->
+  <div class="row">
+    <div class="col-md-12">
+     <button id="bidBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#bidModal">Bid</button>
+     <button id="askBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#askModal">Ask</button>
+   </div>
+ </div>
+ <br>
+
+ <!-- The boxes -->
+ <div class="row">
+  <div class="col-lg-3">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-4">
+            <i class="fa fa-bank fa-5x"></i>
+          </div>
+          <div id ="worth_current" class="col-xs-8 text-right">
+            <script id="worth_current_template" type="x-tmpl-mustache"> 
+            <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+
+            <p class="announcement-text">Worth</p>
+            </script>
+          </div>
+        </div>
+      </div>
+      <a href="userdashboard_funds">
+        <div class="panel-footer announcement-bottom">
+          <div class="row">
+            <div class="col-xs-6">
+              View Worth
+            </div>
+            <div class="col-xs-6 text-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-4">
+            <i class="fa fa-money fa-5x"></i>
+          </div>
+          <div id="price_per_piece_current" class="col-xs-8 text-right">
+            <script id="price_per_piece_current_template" type="x-tmpl-mustache"> 
+            <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+
+            <p class="announcement-text">Price per piece</p>
+            </script>
+          </div>
+        </div>
+      </div>
+      <a href="#">
+        <div class="panel-footer announcement-bottom">
+          <div class="row">
+            <div class="col-xs-6">
+              View Pricing
+            </div>
+            <div class="col-xs-6 text-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-4">
+            <i class="fa fa-cubes fa-5x"></i>
+          </div>
+          <div id="rewards_paid" class="col-xs-8 text-right">
+            <script id="rewards_paid_template" type="x-tmpl-mustache"> 
+            <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+
+            <p class="announcement-text">Rewards Paid</p>
+            </script>
+          </div>
+        </div>
+      </div>
+      <a href="userdashboard_pieces">
+        <div class="panel-footer announcement-bottom">
+          <div class="row">
+            <div class="col-xs-6">
+              View Rewards
+            </div>
+            <div class="col-xs-6 text-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-4">
+            <i class="fa fa-empire fa-5x"></i>
+          </div>
+          <div id="backers_current_count" class="col-xs-8 text-right">
+
+            <script id="backers_current_count_template" type="x-tmpl-mustache">
+            <p class="announcement-heading">{{.}}</p>
+
+            <p class="announcement-text"># of Backers</p>
+            </script> 
+          </div>
+        </div>
+      </div>
+      <a href="userdashboard_pieces">
+        <div class="panel-footer announcement-bottom">
+          <div class="row">
+            <div class="col-xs-6">
+              View Backers
+            </div>
+            <div class="col-xs-6 text-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- End of the boxes -->
+</div>
+
+<!-- The main body -->
+<div class="row">
+  <div id="main_body" class="col-md-12">
+    <script id="main_body_template" type="x-tmpl-mustache">
+    <p class="lead">{{.}}</p>
+    </script>
+  </div>
+</div>
+
+
+
+
+
+</div>
+
+<!-- Modals -->
+<div id="bidModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Bid</h4>
+			</div>
+			<div class="modal-body">
+				<form id="bidForm" class="form-horizontal" role="form">
+					<div class="form-group form-group-lg">
+						<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+						<div class="col-sm-10">
+							<input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+							data-bv-greaterthan="true"
+							data-bv-greaterthan-value=".01"
+							data-bv-greaterthan-message="Must be > .01"
+
+							>
+						</div>
+					</div>
+
+					<div class="form-group form-group-lg">
+						<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+						<div class="col-sm-10">
+							<input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+							type="text" 
+							data-bv-integer="true"
+							data-bv-integer-message="Must be a whole number"
+
+							>
+						</div>
+					</div>
+
+					<div class="form-group form-group-lg">
+						<label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+						<div class="col-sm-10">
+							<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+						</div>
+					</div>
+
+					<button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+<div id="askModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Ask</h4>
+			</div>
+			<div class="modal-body">
+				<form id="askForm" class="form-horizontal" role="form">
+					<div class="form-group form-group-lg">
+						<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+						<div class="col-sm-10">
+							<input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+							data-bv-greaterthan="true"
+							data-bv-greaterthan-value=".01"
+							data-bv-greaterthan-message="Must be > .01"
+
+							>
+						</div>
+					</div>
+
+					<div class="form-group form-group-lg">
+						<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+						<div class="col-sm-10">
+							<input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+							type="text" 
+							data-bv-integer="true"
+							data-bv-integer-message="Must be a whole number"
+
+							>
+						</div>
+					</div>
+
+					<div class="form-group form-group-lg">
+						<label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+						<div class="col-sm-10">
+							<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+						</div>
+					</div>
+
+					<button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+				</form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<!-- end of wrapper -->
+</div>
+
+
+</div>
+
+
+
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="../jquery-1.11.1.min.js"></script>
+      <script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="../bootstrap-validator/dist/js/bootstrapValidator.js"></script>
+      <script src="../toastr/toastr.js"></script>
+      <script src="../mustache/mustache.js"></script>
+      <script src="../holder/holder.js"></script>
+      <script src="../json.date-extensions.js"></script>
+      <script src="../tablesorter/jquery.tablesorter.js"></script> 
+      <script src="../highcharts/js/highcharts.js"></script>
+      <script src="../highcharts/js//modules/exporting.js"></script>
+      <script src="../highcharts/js/themes/dark-unica.js"></script>
+      <script src="../typeahead.js/typeahead.bundle.js"></script>
+      <script src="../pickadate/lib/picker.js"></script>
+      <script src="../pickadate/lib/picker.date.js"></script>
+
+      <!-- my scripts -->
+      <script src="../tools.js"></script>
+      <script src="../highcharts_templates.js"></script>
+      <script src="../creatorpage.js"></script>
+      <script src="../login.js"></script>
+
+
+    </body>
+    </html>
+
