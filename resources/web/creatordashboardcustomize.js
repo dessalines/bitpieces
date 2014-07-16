@@ -8,9 +8,3 @@ $(document).ready(function(){
 
 
 });
-
-function loadSavedData(shortUrl, id) {
-
-
-
-}

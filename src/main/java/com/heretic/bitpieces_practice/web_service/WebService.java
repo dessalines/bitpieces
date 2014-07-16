@@ -22,6 +22,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tools.Tools;
+import com.heretic.bitpieces_practice.tools.Tools.UserType;
 import com.heretic.bitpieces_practice.tools.UserTypeAndId;
 
 public class WebService {
@@ -37,16 +38,16 @@ public class WebService {
 			.maximumSize(10000)
 			.expireAfterAccess(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
 			.build();
-	
+
 	private static final Gson GSON = new Gson();
 	private static Logger log = Logger.getLogger(WebService.class.getName());
 	public static void main(String[] args) {
 
 		Properties prop = Tools.loadProperties(DB_PROP_LOC);
-		
+
 		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(SESSION_FILE_LOC));
-	
-	
+
+
 		get("/session", (req,res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 
@@ -67,254 +68,352 @@ public class WebService {
 			res.redirect("/hello");
 			return null;
 		});
-		
+
 		get("/:auth/testauth", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			return "Heyyy u!";
-			
+
 		});
-		
+
 		get("/:auth/getpiecesownedtotal", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			String json = Actions.getPiecesOwnedTotal(userId);
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+				json = Actions.getPiecesOwnedTotal(uid.getId());
 
-			dbClose();
+				dbClose();
 
-			System.out.println(json);
+				System.out.println(json);
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
-		
+
 		get("/:auth/get_pieces_owned_value_accum", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			
-			String json = WebTools.getPiecesOwnedValueAccumSeriesJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
 
-			System.out.println(json);
+				json = WebTools.getPiecesOwnedValueAccumSeriesJson(uid.getId(), req.body());
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
-		
+
 		get("/:auth/get_pieces_owned_value_current", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			
-			String json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
 
-			System.out.println(json);
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), req.body());
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
-		
+
 		get("/:auth/get_prices_for_user", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			
-			String json = WebTools.getPricesForUserSeriesJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
 
-			System.out.println(json);
+				json = WebTools.getPricesForUserSeriesJson(uid.getId(), req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
-		
+
 		get("/:auth/get_rewards_earned", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			
-			String json = WebTools.getRewardsEarnedSeriesJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
 
-			System.out.println(json);
+				json = WebTools.getRewardsEarnedSeriesJson(uid.getId(), req.body());
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
-		
+
 		get("/:auth/get_pieces_owned_accum", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			
-			String json = WebTools.getPiecesOwnedAccumSeriesJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
 
-			System.out.println(json);
+				json = WebTools.getPiecesOwnedAccumSeriesJson(uid.getId(), req.body());
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
 		get("/:auth/get_users_funds_accum", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			
-			String json = WebTools.getUsersFundsAccumSeriesJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
 
-			System.out.println(json);
+				json = WebTools.getUsersFundsAccumSeriesJson(uid.getId(), req.body());
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
-		
+
 		get("/:auth/get_user_data", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			
-			String json = WebTools.getUsersDataJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
 
-			System.out.println(json);
+				json = WebTools.getUsersDataJson(uid.getId(), req.body());
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
-		
+
 		get("/:auth/get_users_transactions", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			
-			String json = WebTools.getUsersTransactionsJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
 
-			System.out.println(json);
+				json = WebTools.getUsersTransactionsJson(uid.getId(), req.body());
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 
 		});
-		
+
 		get("/:auth/get_users_activity", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			String json = WebTools.getUsersActivityJson(userId, req.body());
-			
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			dbClose();
+				// get currency if one exists
+				json = WebTools.getUsersActivityJson(uid.getId(), req.body());
 
-			System.out.println(json);
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 		});
-		
+
 		get("/:auth/get_users_funds_current", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			String json = WebTools.getUsersFundsCurrentJson(userId, req.body());
-			
-			dbClose();
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			System.out.println(json);
+				// get currency if one exists
+				json = WebTools.getUsersFundsCurrentJson(uid.getId(), req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 		});
-		
+
 		get("/:auth/get_rewards_earned_total_by_user", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			String json = WebTools.getRewardsEarnedTotalByUserJson(userId, req.body());
-			
-			dbClose();
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			System.out.println(json);
+				// get currency if one exists
+				json = WebTools.getRewardsEarnedTotalByUserJson(uid.getId(), req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
 
 		});
-		
+
 		get("/:auth/get_pieces_value_current_by_owner", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			String json = WebTools.getPiecesValueCurrentByOwnerJson(userId, req.body());
-			
-			dbClose();
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			System.out.println(json);
+				// get currency if one exists
+				json = WebTools.getPiecesValueCurrentByOwnerJson(uid.getId(), req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
-			
+
 		});
-		
+
 		get("/:auth/get_users_reputation", (req, res) -> {
-			String userId = standardInit(prop, res, req);
-			
-			// get currency if one exists
-			String json = WebTools.getUsersReputationJson(userId, req.body());
-			
-			dbClose();
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
 
-			System.out.println(json);
+				// get currency if one exists
+				json = WebTools.getUsersReputationJson(uid.getId(), req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return json;
-			
+
 		});
-		
-		
+
+
 		get("/creators_search/:query", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			dbInit(prop);
-			
+
 			String query = req.params(":query");
-			
+
 			String json = WebTools.creatorsSearchJson(query);
-			
+
 			dbClose();
 
 			System.out.println(json);
 			return json;
-			
+
 
 		});
-		
+
 		post("/:auth/user_logout", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
-			
-			
+
+
 			String auth = req.params(":auth");
-			
+
+
 			// remove the key, and save the map
 			SESSION_TO_USER_MAP.invalidate(auth);
 			writeCacheToFile();
-			
-			
+
+
 
 			return "Logged out";
-			
+
 		});
-		
+
 
 
 		post("/registeruser", (req, res) -> {
@@ -324,7 +423,7 @@ public class WebService {
 
 			// Create the user
 			UserTypeAndId uid = Actions.createUserFromAjax(req.body());
-			
+
 			dbClose();
 
 			// Its null if it couldn't create the user, usually cause of constraints
@@ -333,13 +432,13 @@ public class WebService {
 
 				return "user registered";
 			} else {
-				
+
 				res.status(666);
 				return "User already exists";
 			}
 
 		});
-		
+
 		post("/registercreator", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
@@ -356,7 +455,7 @@ public class WebService {
 
 				return "creator registered";
 			} else {
-				
+
 				res.status(666);
 				return "Creator already exists";
 			}
@@ -371,15 +470,15 @@ public class WebService {
 
 			// log the user in
 			UserTypeAndId uid = Actions.userLogin(req.body());
-			
+
 			dbClose();
-			
+
 			String message = verifyLoginAndSetCookies(uid, res);
 
 			return message;
 
 		});
-		
+
 		post("/creatorlogin", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
@@ -388,10 +487,10 @@ public class WebService {
 
 			// log the user in
 			UserTypeAndId uid = Actions.creatorLogin(req.body());
-			
+
 			dbClose();
 
-			
+
 			String message = verifyLoginAndSetCookies(uid, res);
 
 			return message;
@@ -399,94 +498,123 @@ public class WebService {
 		});
 
 
-	
-	
-	post("/:auth/savecreatorpage", (req, res) -> {
-		String creatorsId = standardInit(prop, res, req);
-
-		// get the creator id from the token		
-		String message = WebTools.saveCreatorPage(creatorsId, req.body());
-		
-		dbClose();
 
 
-		return message;
-
-	});
-	
-	get("/:auth/getcreatorpage", (req, res) -> {
-		String creatorsId = standardInit(prop, res, req);
-
-		// get the creator id from the token		
-		String json = WebTools.getCreatorPageJson(creatorsId, req.body());
-		
-		dbClose();
-
-
-		return json;
-
-	});
+		post("/:auth/savecreatorpage", (req, res) -> {
+			String message = null;
+			try {			
+				UserTypeAndId cid = standardInit(prop, res, req);
+				verifyCreator(cid);
 
 
 
-	
-	post("/placebid", (req, res) -> {
-		res.header("Access-Control-Allow-Origin", "http://localhost");
-		res.header("Access-Control-Allow-Credentials", "true");
+				// get the creator id from the token		
+				message = WebTools.saveCreatorPage(cid.getId(), req.body());
 
-		dbInit(prop);
-
-		// get the creator id from the token
-		UserTypeAndId uid = getUserFromCookie(req);
-		
-		String message = WebTools.placeBid(uid.getId(), req.body());
-		
-		dbClose();
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
 
 
-		return message;
+			return message;
 
-	});
-	
-	post("/placeask", (req, res) -> {
-		res.header("Access-Control-Allow-Origin", "http://localhost");
-		res.header("Access-Control-Allow-Credentials", "true");
+		});
 
-		dbInit(prop);
+		get("/:auth/getcreatorpage", (req, res) -> {
+			String json = null;
+			try {			
+				UserTypeAndId cid = standardInit(prop, res, req);
+				verifyCreator(cid);
 
-		// get the creator id from the token
-		UserTypeAndId uid = getUserFromCookie(req);
-		String message = null;
-		try {
-			message = WebTools.placeAsk(uid.getId(), req.body());
-		} catch (NoSuchElementException e) {
-			res.status(666);
-			return e.getMessage();
+				// get the creator id from the token		
+				json = WebTools.getCreatorPageJson(cid.getId(), req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+
+
+
+
+		post("/placebid", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+
+			dbInit(prop);
+
+			// get the creator id from the token
+			UserTypeAndId uid = getUserFromCookie(req);
+
+			String message = WebTools.placeBid(uid.getId(), req.body());
+
+			dbClose();
+
+
+			return message;
+
+		});
+
+		post("/placeask", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+
+			dbInit(prop);
+
+			// get the creator id from the token
+			UserTypeAndId uid = getUserFromCookie(req);
+			String message = null;
+			try {
+				message = WebTools.placeAsk(uid.getId(), req.body());
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+
+			dbClose();
+
+
+			return message;
+
+		});
+
+
+	}
+
+
+
+	private static void verifyUser(UserTypeAndId uid) throws Exception {
+		if (uid.getType() != UserType.User) {
+			throw new Exception("Sorry, not a user");
 		}
-		
-		dbClose();
+
+	}
+
+	private static void verifyCreator(UserTypeAndId uid) throws Exception {
+		if (uid.getType() != UserType.Creator) {
+			throw new Exception("Sorry, not a creator");
+		}
+
+	}
 
 
-		return message;
 
-	});
-
-
-}
-	
-	
-	
 	private static UserTypeAndId getUserFromCookie(Request req) {
 		String authId = req.cookie("authenticated_session_id");
-		
+
 		UserTypeAndId uid = null;
 		try {
-		uid = SESSION_TO_USER_MAP.getIfPresent(authId);
+			uid = SESSION_TO_USER_MAP.getIfPresent(authId);
 		} catch(NullPointerException e) {
 			System.err.println("No such user logged in");
 			e.printStackTrace();
 		}
-		
+
 		return uid;
 	}
 
@@ -500,16 +628,16 @@ public class WebService {
 			SESSION_TO_USER_MAP.put(authenticatedSession, uid);
 			writeCacheToFile();
 
-			
+
 			// Set some cookies for that users login
 			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
 			res.cookie("username", uid.getUsername(), COOKIE_EXPIRE_SECONDS, false);
-			
+
 			String json = GSON.toJson(SESSION_TO_USER_MAP);
 			System.out.println(json);
-	
-			
-		
+
+
+
 			return authenticatedSession;
 		} else {
 			res.status(666);
@@ -526,37 +654,37 @@ public class WebService {
 
 	private static final void dbInit(Properties prop) {
 		try {
-		Base.open("com.mysql.jdbc.Driver", 
-				prop.getProperty("dburl"), 
-				prop.getProperty("dbuser"), 
-				prop.getProperty("dbpassword"));
+			Base.open("com.mysql.jdbc.Driver", 
+					prop.getProperty("dburl"), 
+					prop.getProperty("dbuser"), 
+					prop.getProperty("dbpassword"));
 		} catch (DBException e) {
 			dbClose();
 			dbInit(prop);
 		}
 	}
-	
-	private static final String standardInit(Properties prop, Response res, Request req) {
+
+	private static final UserTypeAndId standardInit(Properties prop, Response res, Request req) {
 		try {
-		Base.open("com.mysql.jdbc.Driver", 
-				prop.getProperty("dburl"), 
-				prop.getProperty("dbuser"), 
-				prop.getProperty("dbpassword"));
+			Base.open("com.mysql.jdbc.Driver", 
+					prop.getProperty("dburl"), 
+					prop.getProperty("dbuser"), 
+					prop.getProperty("dbpassword"));
 		} catch (DBException e) {
 			dbClose();
 			dbInit(prop);
 		}
-		
+
 		res.header("Access-Control-Allow-Origin", "http://localhost");
 		res.header("Access-Control-Allow-Credentials", "true");
-		
-		String userId = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth")).getId();
-		
-		return userId;
+
+		UserTypeAndId uid = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth"));
+
+		return uid;
 	}
-	
-	
-	
+
+
+
 	private static final void dbClose() {
 		Base.close();
 	}
