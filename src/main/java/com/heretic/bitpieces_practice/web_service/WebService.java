@@ -311,7 +311,7 @@ public class WebService {
 			
 			
 
-			return "Logged out....2";
+			return "Logged out";
 			
 		});
 		
