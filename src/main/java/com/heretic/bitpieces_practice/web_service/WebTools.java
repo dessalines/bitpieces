@@ -16,6 +16,7 @@ import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current;
@@ -282,6 +283,16 @@ public class WebTools {
 		
 		Backers_current_count r = Backers_current_count.findFirst("creators_username = ?", creatorName);
 		String json = r.getString("number_of_backers");
+		
+		return json;
+		
+	}
+	
+	public static String getMainBodyJson(
+			String creatorName, String body) {
+		
+		Creators_page_fields_view p = Creators_page_fields_view.findFirst("username = ?", creatorName);
+		String json = p.getString("main_body");
 		
 		return json;
 		

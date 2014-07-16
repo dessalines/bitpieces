@@ -622,6 +622,27 @@ public class WebService {
 			return json;
 
 		});
+		
+		get("/:creator/get_main_body", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getMainBodyJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
 
 
 
