@@ -32,7 +32,7 @@ ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_val
 rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
-users_reputation, backers_current, backers_current_count
+users_reputation, backers_current, backers_current_count, creators_page_fields_view
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -761,6 +761,12 @@ CREATE VIEW backers_current_count as
 select creators_username, count(*) as number_of_backers 
 from backers_current
 group by creators_id, creators_username;
+
+CREATE VIEW creators_page_fields_view as
+select creators_id, username, main_body from creators_page_fields
+inner join 
+creators
+on creators_page_fields.creators_id = creators.id
 
 
 

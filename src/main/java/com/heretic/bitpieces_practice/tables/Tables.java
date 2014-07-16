@@ -72,6 +72,9 @@ public class Tables {
 	@Table("creators_page_fields")
 	public static class Creators_page_fields extends Model {}
 	
+	@Table("creators_page_fields_view")
+	public static class Creators_page_fields_view extends Model {}
+	
 	@Table("users_deposits")
 	public static class Users_deposits extends Model {}
 	

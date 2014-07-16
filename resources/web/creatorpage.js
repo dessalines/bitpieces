@@ -1,7 +1,25 @@
 $(document).ready(function(){
 
-    var creatorName = window.location.pathname.split('/').pop();
     setupMiniSubmenu();
+
+    // var creatorName = window.location.pathname.split('/').pop();
+    var creatorName = getParameterByName('creator');
+    
+    $('#page_title').text(creatorName);
+
+    fillSimpleText(creatorName + '/get_main_body', '#main_body');
+
+    // fillFieldFromMustache(creatorName + '/get_main_body', 
+    //     '#worth_current_template' , '#worth_current', true);
+
+
+
+    // fillFieldFromMustache(creatorName + '/get_pieces_owned_value_current_by_creator', 
+    //     '#worth_current_template' , '#worth_current', true);
+
+    // fillFieldFromMustache(creatorName + '/get_main_body_by_creator', 
+    //     '#worth_current_template' , '#worth_current', true);
+
 
     fillFieldFromMustache(creatorName + '/get_pieces_owned_value_current_by_creator', 
         '#worth_current_template' , '#worth_current', true);
@@ -158,5 +176,29 @@ $( "#placeaskBtn" ).click(function( event ) {
     event.preventDefault();
     return false;
 });
+
+
+function fillSimpleText(url, divId) {
+     var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log(data);
+            $(divId).html(data);
+
+
+          },
+          error: function (request, status, error) {
+
+           toastr.error(request.responseText);
+         }
+       });
+}
+
 
 });
