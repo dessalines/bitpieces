@@ -300,8 +300,6 @@ public class WebTools {
 
 	public static String createTableJSON(List<Model> list, String... params) {
 
-
-
 		String json = "[";
 		for (int i = 0; i < list.size(); i++) {
 			if (params != null) {
