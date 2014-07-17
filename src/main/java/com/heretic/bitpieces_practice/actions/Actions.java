@@ -11,6 +11,7 @@ import org.javalite.activejdbc.LazyList;
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Ask_bid_accept_checker;
+import com.heretic.bitpieces_practice.tables.Tables.Badge;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_current;
@@ -23,6 +24,8 @@ import com.heretic.bitpieces_practice.tables.Tables.Rewards_current;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
 import com.heretic.bitpieces_practice.tables.Tables.User;
+import com.heretic.bitpieces_practice.tables.Tables.Users_badges;
+import com.heretic.bitpieces_practice.tables.Tables.Users_deposits;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_current;
 import com.heretic.bitpieces_practice.tables.Tables.Users_withdrawals;
 import com.heretic.bitpieces_practice.tools.Tools;
@@ -354,11 +357,11 @@ public class Actions {
 					"email", postMap.get("email"));
 			
 			// Give them the padowan badge
-			
+			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
+			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
 			
 			// Give them $100BTC in play money
-			
-			
+			makeDepositFake(user.getId().toString(), 100d);
 			
 
 			UserTypeAndId uid = new UserTypeAndId(UserType.User, 
@@ -373,6 +376,18 @@ public class Actions {
 
 
 	}
+	
+	public static Users_deposits makeDepositFake(String usersId, Double btc_amount) {
+		
+		String timeStr = SDF.format(new Date());
+		return Users_deposits.createIt("users_id", usersId,
+				"cb_tid", "fake", 
+				"time_", timeStr, 
+				"btc_amount", btc_amount, 
+				"status", "completed");
+		
+	}
+	
 	
 
 

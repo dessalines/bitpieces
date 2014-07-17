@@ -57,11 +57,18 @@ $( "#registerBtn" ).click(function( event ) {
                 $('#registerForm')[0].reset();
                 
                 toastr.success('Registered and logged in.')
-                
                 showHideElementsLoggedIn();
 
 
                 console.log(document.cookie);
+                setTimeout(
+                  function() 
+                  {
+                    var url = "http://localhost/userdashboard_overview";
+                    window.location.replace(url);
+
+                  }, 1000);
+
 
               },
               error: function (request, status, error) {
@@ -72,8 +79,8 @@ $( "#registerBtn" ).click(function( event ) {
 
 
 
-    event.preventDefault();
-  });
+event.preventDefault();
+});
 
 
 $( "#signinBtn" ).click(function( event ) {
