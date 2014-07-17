@@ -20,6 +20,8 @@ import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_available_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
@@ -166,6 +168,20 @@ public class WebTools {
 
 	}
 
+	public static String getPiecesOwnedValueCurrentSeriesJson(String userId, String creatorName, String body) {
+		String val = null;
+		try {
+			// First fetch from the table
+			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?", userId, creatorName);
+
+			val = p.getString("pieces_total");
+		} catch(NullPointerException e) {
+			return "0";
+		}
+		return val;
+
+	}
+
 	public static String getRewardsEarnedSeriesJson(String userId, String body) {
 		// First fetch from the table
 		List<Model> list = Rewards_earned.find("owners_id=?", userId);
@@ -208,9 +224,9 @@ public class WebTools {
 	public static String getUsersFundsCurrentJson(String userId, String body) {
 		String json = null;
 		try {
-		Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("users_id=?",  userId);
+			Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("users_id=?",  userId);
 
-		json = usersFundsCurrent.getString("current_funds");
+			json = usersFundsCurrent.getString("current_funds");
 		} catch(NullPointerException e) {
 			return "0";
 		}
@@ -234,9 +250,9 @@ public class WebTools {
 	public static String getPiecesValueCurrentByOwnerJson(String userId, String body) {
 		String json = null;
 		try {
-		Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  userId);
+			Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  userId);
 
-		json = value.getString("value_total");
+			json = value.getString("value_total");
 		} catch(NullPointerException e) {
 			return "0";
 		}
@@ -398,6 +414,26 @@ public class WebTools {
 			Creators_reputation value = Creators_reputation.findFirst("creators_name=?",  creatorName);
 
 			json = value.getString("reputation");
+
+			// If they have no reputation, then return a 0
+		} catch (NullPointerException e) {
+			return "0";
+		}
+
+		System.out.println(json);
+		return json;
+
+	}
+
+	public static String getPiecesAvailableJson(String creatorName, String body) {
+
+
+		String json = null;
+
+		try {
+			Pieces_available_view value = Pieces_available_view.findFirst("creators_name=?",  creatorName);
+
+			json = value.getString("pieces_available");
 
 			// If they have no reputation, then return a 0
 		} catch (NullPointerException e) {

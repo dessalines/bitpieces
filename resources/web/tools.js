@@ -53,6 +53,11 @@ function showHideElementsLoggedIn() {
   }
 }
 
+function showHideBidAskBuyButtons() {
+
+
+}
+
 function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
        var url = "http://localhost:4567/" + url// the script where you handle the form input.
        $.ajax({
@@ -310,7 +315,7 @@ function setupLogout() {
                 var url = "http://localhost/carousel";
                 window.location.replace(url);
 
-              }, 2000);
+              }, 1000);
             
 
           },
@@ -446,6 +451,28 @@ function fillSimpleText(url, divId) {
       success: function(data, status, xhr) {
         console.log(data);
             $(divId).html(data);
+
+
+          },
+          error: function (request, status, error) {
+
+           toastr.error(request.responseText);
+         }
+       });
+}
+
+function simpleFetch(url) {
+     var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       return $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        console.log('data = ' + data);
+            // return data;
 
 
           },

@@ -23,7 +23,8 @@ public class Tester {
 //		System.out.println(WebTools.getPiecesOwnedValueCurrentByCreatorJson("Leonardo_Davinci", null));
 //		System.out.println(WebTools.getPricePerPieceCurrentJson("Leonardo_Davinci", null));
 //		System.out.println(WebTools.getRewardsOwedJson("Leonardo_Davinci", null));
-		System.out.println(WebTools.getBackersCurrentCountJson("Leonardo_Davinci", null));
+//		System.out.println(WebTools.getBackersCurrentCountJson("Leonardo_Davinci", null));
+		System.out.println(WebTools.getPiecesOwnedValueCurrentSeriesJson("2", "Leonardo_Davinci", null));
 		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", "3");
 		
 //		SeriesFetcher sf = new SeriesFetcher();
