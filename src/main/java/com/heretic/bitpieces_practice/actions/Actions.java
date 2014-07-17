@@ -173,7 +173,7 @@ public class Actions {
 
 			if (userFunds < amount) {
 				throw new NoSuchElementException("The buyer has only " + userFunds + " $, but is trying to buy " +
-						amount);
+						amount +  " worth of pieces");
 			}
 		} catch(NullPointerException e) {
 			throw new NoSuchElementException("the user has no funds");
@@ -352,6 +352,14 @@ public class Actions {
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
+			
+			// Give them the padowan badge
+			
+			
+			// Give them $100BTC in play money
+			
+			
+			
 
 			UserTypeAndId uid = new UserTypeAndId(UserType.User, 
 					String.valueOf(user.getId()),
@@ -365,6 +373,8 @@ public class Actions {
 
 
 	}
+	
+
 
 	public static UserTypeAndId createCreatorFromAjax(String reqBody) {
 
