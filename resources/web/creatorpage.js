@@ -2,12 +2,24 @@ $(document).ready(function(){
 
     setupMiniSubmenu();
 
+
     // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = getParameterByName('creator');
     
     $('#page_title').text(creatorName);
 
-    fillSimpleText(creatorName + '/get_main_body', '#main_body');
+    // all <a> tags containing a certain rel=""
+    $("a[rel~='keep-params']").click(function(e) {
+        e.preventDefault();
+
+        var params = window.location.search,
+        dest = $(this).attr('href') + params;
+
+    // in my experience, a short timeout has helped overcome browser bugs
+    window.setTimeout(function() {
+        window.location.href = dest;
+    }, 100);
+    });
 
     // fillFieldFromMustache(creatorName + '/get_main_body', 
     //     '#worth_current_template' , '#worth_current', true);
@@ -20,23 +32,11 @@ $(document).ready(function(){
     // fillFieldFromMustache(creatorName + '/get_main_body_by_creator', 
     //     '#worth_current_template' , '#worth_current', true);
 
+$('#bidForm').bootstrapValidator({
+  message: 'This value is not valid',
+  excluded: [':disabled'],
 
-    fillFieldFromMustache(creatorName + '/get_pieces_owned_value_current_by_creator', 
-        '#worth_current_template' , '#worth_current', true);
-    fillFieldFromMustache(creatorName + '/get_price_per_piece_current', 
-        '#price_per_piece_current_template' , '#price_per_piece_current', true);
-    fillFieldFromMustache(creatorName + '/get_rewards_owed', 
-        '#rewards_paid_template' , '#rewards_paid', true);
-    fillFieldFromMustache(creatorName + '/get_backers_current_count', 
-        '#backers_current_count_template' , '#backers_current_count', false);
-    
-    console.log(document.cookie);
-
-    $('#bidForm').bootstrapValidator({
-      message: 'This value is not valid',
-      excluded: [':disabled'],
-
-  });
+});
 
 	// The date picker
 	$('.datepicker').pickadate({
@@ -178,27 +178,7 @@ $( "#placeaskBtn" ).click(function( event ) {
 });
 
 
-function fillSimpleText(url, divId) {
-     var url = "http://localhost:4567/" + url// the script where you handle the form input.
-       $.ajax({
-        type: "GET",
-        url: url,
-        xhrFields: {
-          withCredentials: true
-        },
-      // data: seriesData, 
-      success: function(data, status, xhr) {
-        console.log(data);
-            $(divId).html(data);
 
-
-          },
-          error: function (request, status, error) {
-
-           toastr.error(request.responseText);
-         }
-       });
-}
 
 
 });

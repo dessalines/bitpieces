@@ -32,9 +32,9 @@ ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_val
 rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_funds_current, users_funds_accum, pieces_owned_value_sum_by_owner, 
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
-users_reputation, backers_current, backers_current_count, creators_page_fields_view
+users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user
 ;
-SET FOREIGN_KEY_CHECKS=1
+SET FOREIGN_KEY_CHECKS=1tin
 ;
 -- The Table creates and indexes
 CREATE TABLE users
@@ -73,6 +73,8 @@ CREATE TABLE creators_page_fields
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
+
 
 CREATE TABLE users_btc_addresses
 (
@@ -356,6 +358,8 @@ and a.time_ < b.time_
 group by a.creators_id, a.owners_id, a.time_, a.pieces_owned
 order by a.owners_id, a.creators_id, a.time_;
 
+
+
 CREATE VIEW rewards_span as
 select a.creators_id, a.time_, 
 IFNULL(b.time_, NOW()) as end_time_, 
@@ -367,21 +371,6 @@ rewards b
 on a.creators_id = b.creators_id
 and a.time_ < b.time_
 group by creators_id, a.time_, a.reward_pct;
-
-
-
-
-
-CREATE VIEW worth AS
-SELECT
-prices.creators_id, prices.time_, prices.price_per_piece*pieces_issued as worth
-FROM prices
-inner join
-pieces_issued
-on prices.creators_id = pieces_issued.creators_id
-where pieces_issued.time_ <= prices.time_
-order by creators_id, time_
-;
 
 
 
@@ -411,6 +400,7 @@ from pieces_total
 left join pieces_owned_total on pieces_owned_total.creators_id = pieces_total.creators_id
 group by creators_id
 ;
+
 
 
 CREATE VIEW ask_bid_accept_checker as 
@@ -508,6 +498,79 @@ group by creators_id;
 
 
 
+select * from pieces_owned_value_accum
+select creators_id, creators_username, price_time_, sum(value_accum)
+from pieces_owned_value_accum
+group by owners_id, price_time_, creators_id, creators_username
+order by creators_id, price_time_
+
+
+
+
+CREATE VIEW pieces_owned_by_creator as
+select creators_id, start_time_, end_time_, sum(pieces_owned) as pieces_owned_sum
+from pieces_owned_span
+group by creators_id
+having sum(pieces_owned) > 0;
+-- the pieces owned query
+
+CREATE VIEW worth AS
+select creators_id, creators_username, price_time_, sum(value_accum) as worth
+from pieces_owned_value_accum
+group by creators_id, creators_username, price_time_
+order by creators_id, price_time_;
+
+CREATE VIEW bids_asks as
+select creators.username as creators_name,
+time_, 
+users.username as users_name, 
+'bid' as type,
+CONCAT(pieces, ' pieces at $',bid_per_piece, '/piece') as price
+from bids
+inner join creators
+on bids.creators_id = creators.id
+inner join users
+on bids.users_id = users.id
+union
+select creators.username as creators_name,
+time_, 
+users.username as users_name, 
+'ask' as type,
+CONCAT(pieces, ' pieces at $',ask_per_piece, '/piece') as price
+from asks
+inner join creators
+on asks.creators_id = creators.id
+inner join users
+on asks.users_id = users.id
+order by creators_name, time_;
+
+CREATE VIEW rewards_view as 
+select username as creators_name, time_, reward_pct as reward_percentage
+from rewards
+inner join creators
+on rewards.creators_id = creators.id
+order by username, time_;
+
+
+
+
+
+
+
+
+
+
+select creators_id, creators_username, start_time_, end_time_, sum(pieces_accum) 
+from pieces_owned_accum
+group by creators_id, creators_username, start_time_, end_time_
+
+inner join 
+prices_span
+
+
+
+
+
 CREATE VIEW pieces_owned_value_current_by_owner as 
 select owners_id,
 sum(value_total) as value_total
@@ -546,6 +609,8 @@ prices_span.time_
 
 
 
+
+
 CREATE VIEW rewards_earned as
 select pieces_owned_value_accum.owners_id, 
 pieces_owned_value_accum.creators_id, 
@@ -572,6 +637,23 @@ CREATE VIEW rewards_earned_total_by_user as
 select owners_id, sum(reward_earned) as reward_earned_total
 from rewards_earned
 group by owners_id;
+
+CREATE VIEW rewards_owed_to_user as
+select creators_id, creators_username, owners_id, users.username as owners_name, sum(reward_earned) as total_owed
+from rewards_earned
+inner join users
+on owners_id = users.id
+group by creators_id, owners_id, creators_username
+order by creators_id, sum(reward_earned) desc;
+
+CREATE VIEW pieces_issued_view as 
+select creators.username as creators_name, time_, pieces_issued, price_per_piece 
+from pieces_issued
+inner join creators
+on pieces_issued.creators_id = creators.id
+order by creators.username, time_;
+
+
 
 
 CREATE VIEW rewards_owed as
@@ -766,7 +848,7 @@ CREATE VIEW creators_page_fields_view as
 select creators_id, username, main_body from creators_page_fields
 inner join 
 creators
-on creators_page_fields.creators_id = creators.id
+on creators_page_fields.creators_id = creators.id;
 
 
 

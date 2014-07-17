@@ -20,6 +20,9 @@ public class Tables {
 
 	@Table("pieces_issued") 
 	public static class Pieces_issued extends Model {}
+	
+	@Table("pieces_issued_view") 
+	public static class Pieces_issued_view extends Model {}
 
 	@Table("pieces_owned") 
 	public static class Pieces_owned extends Model {}
@@ -42,11 +45,17 @@ public class Tables {
 	@Table("rewards") 
 	public static class Reward extends Model {}
 	
+	@Table("rewards_view") 
+	public static class Rewards_view extends Model {}
+	
 	@Table("rewards_current") 
 	public static class Rewards_current extends Model {}
 	
 	@Table("rewards_owed") 
 	public static class Rewards_owed extends Model {}
+	
+	@Table("rewards_owed_to_user") 
+	public static class Rewards_owed_to_user extends Model {}
 
 	@Table("rewards_earned") 
 	public static class Rewards_earned extends Model {}
@@ -128,6 +137,12 @@ public class Tables {
 	
 	@Table("prices")
 	public static class Prices extends Model {}
+	
+	@Table("worth")
+	public static class Worth extends Model {}
+	
+	@Table("bids_asks")
+	public static class Bids_asks extends Model {}
 	
 	@Table("backers_current_count")
 	public static class Backers_current_count extends Model {}
