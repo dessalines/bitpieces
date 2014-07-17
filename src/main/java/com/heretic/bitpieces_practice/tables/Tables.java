@@ -66,6 +66,9 @@ public class Tables {
 	@Table("pieces_available")
 	public static class Pieces_available extends Model {}
 	
+	@Table("pieces_available_view")
+	public static class Pieces_available_view extends Model {}
+	
 	@Table("pieces_owned_total")
 	public static class Pieces_owned_total extends Model {}
 	

@@ -853,9 +853,16 @@ inner join
 creators
 on creators_page_fields.creators_id = creators.id;
 
+CREATE VIEW pieces_available_view as
+select creators.username as creators_name, 
+pieces_total, 
+pieces_owned_total,
+pieces_available 
+from pieces_available
+inner join creators
+on pieces_available.creators_id = creators.id;
 
-
-
+select * from pieces_owned_c
 
 
 

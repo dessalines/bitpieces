@@ -140,6 +140,29 @@ public class WebService {
 
 
 		});
+		
+		get("/:auth/:creator/get_pieces_owned_value_current", (req, res) -> {
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+				String creatorName = req.params(":creator");
+				// get currency if one exists
+				
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), creatorName, req.body());
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+
+		});
 
 		get("/:auth/get_prices_for_user", (req, res) -> {
 			String json = null;
@@ -867,6 +890,27 @@ public class WebService {
 
 				// get the creator id from the token	
 				json = WebTools.getCreatorsReputationJson(creator, req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_pieces_available", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token	
+				json = WebTools.getPiecesAvailableJson(creator, req.body());
 
 				dbClose();
 			}catch (NoSuchElementException e) {

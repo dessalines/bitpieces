@@ -1,14 +1,36 @@
 $(document).ready(function(){
 
-     sessionId = getCookie("authenticated_session_id");
-    setupMiniSubmenu();
-    setupCreatorSearch();
-   
-    fillUserInfoMustacheFromCookie();
-     setupLogout();
+   sessionId = getCookie("authenticated_session_id");
+   setupMiniSubmenu();
+   setupCreatorSearch();
+
+   fillUserInfoMustacheFromCookie();
+   setupLogout();
+
 
     // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = getParameterByName('creator');
+
+    // Showing or hiding the bid/ask/buy buttons
+    simpleFetch(creatorName + "/get_pieces_available").done(function(result) {
+        console.log('result = ' + result);
+        if (result > 0) {
+            $("#buyBtn").removeClass("hide");
+        }
+    });
+
+    simpleFetch(sessionId + "/" + creatorName + "/get_pieces_owned_value_current").done(function(result) {
+        console.log('result = ' + result);
+        if (result > 0) {
+            $("#askBtn").removeClass("hide");
+        }
+    });
+
+
+
+
+
+
     
     $('#page_title').text(creatorName);
 
@@ -23,7 +45,7 @@ $(document).ready(function(){
     window.setTimeout(function() {
         window.location.href = dest;
     }, 100);
-    });
+});
 
     // fillFieldFromMustache(creatorName + '/get_main_body', 
     //     '#worth_current_template' , '#worth_current', true);
