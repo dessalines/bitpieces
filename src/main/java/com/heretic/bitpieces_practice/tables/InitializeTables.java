@@ -11,6 +11,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Badge;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_badges;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_withdrawals;
@@ -61,11 +62,13 @@ public class InitializeTables {
 
 		setup_users();
 
-		setup_badges();
+	
 
 		setup_host_btc_address();
 
 		setup_creators();
+		
+		setup_badges();
 
 		issue_pieces();
 
@@ -101,8 +104,7 @@ public class InitializeTables {
 
 
 		Badge.createIt("name", "Padawan Learner", "description", "Created an account");
-
-
+		
 		Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
 
 		User bill = User.findFirst("username like 'Bill%'");
@@ -110,9 +112,9 @@ public class InitializeTables {
 		// Give bill a padawan badge for registering
 
 		Users_badges.createIt("users_id", bill.getId().toString(), "badges_id", padawanBadge.getId().toString());
-
-
-
+		
+		Creator leo = Creator.findFirst("username like 'Leonardo%'");
+		Creators_badges.createIt("creators_id", leo.getId().toString(), "badges_id", padawanBadge.getId().toString());
 
 
 

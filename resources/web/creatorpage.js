@@ -1,7 +1,11 @@
 $(document).ready(function(){
 
+     sessionId = getCookie("authenticated_session_id");
     setupMiniSubmenu();
-
+    setupCreatorSearch();
+   
+    fillUserInfoMustacheFromCookie();
+     setupLogout();
 
     // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = getParameterByName('creator');
@@ -61,7 +65,7 @@ $('#bidForm').bootstrapValidator({
 	// Loading
 	$(this).button('loading');
 
-	var url = "http://localhost:4567/placebid";
+	var url = "http://localhost:4567/" + sessionId + "/placebid";
 
 
     // username = $('#userLoginDiv').find('input[name="username"]').val();
@@ -127,7 +131,7 @@ $( "#placeaskBtn" ).click(function( event ) {
 	$(this).button('loading');
 
 
-	var url = "http://localhost:4567/placeask";
+	var url = "http://localhost:4567/" + sessionId + "/placeask";
 
 
     // username = $('#userLoginDiv').find('input[name="username"]').val();

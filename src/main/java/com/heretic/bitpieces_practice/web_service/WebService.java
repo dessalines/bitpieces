@@ -86,7 +86,7 @@ public class WebService {
 
 				System.out.println(json);
 
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -109,7 +109,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -132,7 +132,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -154,7 +154,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -177,7 +177,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -200,7 +200,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -222,7 +222,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -245,7 +245,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -268,7 +268,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -290,7 +290,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -310,7 +310,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -330,7 +330,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -350,7 +350,7 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -370,11 +370,53 @@ public class WebService {
 				dbClose();
 
 				System.out.println(json);
-			} catch (Exception e) {
+			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return json;
+
+		});
+
+
+		post("/:auth/placebid", (req, res) -> {
+			String message = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+
+				message = WebTools.placeBid(uid.getId(), req.body());
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+
+		post("/:auth/placeask", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+
+			dbInit(prop);
+
+			// get the creator id from the token
+			UserTypeAndId uid = getUserFromCookie(req);
+			String message = null;
+			try {
+				message = WebTools.placeAsk(uid.getId(), req.body());
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+
+			dbClose();
+
+
+			return message;
 
 		});
 
@@ -413,6 +455,8 @@ public class WebService {
 			return "Logged out";
 
 		});
+
+
 
 
 
@@ -512,7 +556,7 @@ public class WebService {
 				message = WebTools.saveCreatorPage(cid.getId(), req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
@@ -531,259 +575,301 @@ public class WebService {
 				json = WebTools.getCreatorPageJson(cid.getId(), req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_pieces_owned_value_current_by_creator", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
 
 				// get the creator id from the token		
 				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_price_per_piece_current", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getPricePerPieceCurrentJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_rewards_owed", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getRewardsOwedJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_backers_current_count", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getBackersCurrentCountJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_main_body", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getMainBodyJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_pricing", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getPricesJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_pricing", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getPricesJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_worth", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getWorthJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_bids_asks", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getBidsAsksJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_rewards_pct", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getRewardsPctJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_rewards_owed_to_user", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getRewardsOwedToUserJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
 			return json;
 
 		});
-		
+
 		get("/:creator/get_pieces_issued", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
-				
+
 				dbInit(prop);
-				
+
 				// get the creator id from the token	
 				json = WebTools.getPiecesIssuedJson(creator, req.body());
 
 				dbClose();
-			}catch (Exception e) {
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+
+		get("/:creator/get_backers_current", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token	
+				json = WebTools.getBackersCurrentJson(creator, req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+
+		get("/:creator/get_creators_reputation", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token	
+				json = WebTools.getCreatorsReputationJson(creator, req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
@@ -795,62 +881,22 @@ public class WebService {
 
 
 
-		post("/placebid", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-
-			dbInit(prop);
-
-			// get the creator id from the token
-			UserTypeAndId uid = getUserFromCookie(req);
-
-			String message = WebTools.placeBid(uid.getId(), req.body());
-
-			dbClose();
-
-
-			return message;
-
-		});
-
-		post("/placeask", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
-
-			dbInit(prop);
-
-			// get the creator id from the token
-			UserTypeAndId uid = getUserFromCookie(req);
-			String message = null;
-			try {
-				message = WebTools.placeAsk(uid.getId(), req.body());
-			} catch (NoSuchElementException e) {
-				res.status(666);
-				return e.getMessage();
-			}
-
-			dbClose();
-
-
-			return message;
-
-		});
 
 
 	}
 
 
 
-	private static void verifyUser(UserTypeAndId uid) throws Exception {
+	private static void verifyUser(UserTypeAndId uid) throws NoSuchElementException {
 		if (uid.getType() != UserType.User) {
-			throw new Exception("Sorry, not a user");
+			throw new NoSuchElementException("Sorry, not a user");
 		}
 
 	}
 
-	private static void verifyCreator(UserTypeAndId uid) throws Exception {
+	private static void verifyCreator(UserTypeAndId uid) throws NoSuchElementException {
 		if (uid.getType() != UserType.Creator) {
-			throw new Exception("Sorry, not a creator");
+			throw new NoSuchElementException("Sorry, not a creator");
 		}
 
 	}
@@ -863,7 +909,7 @@ public class WebService {
 		UserTypeAndId uid = null;
 		try {
 			uid = SESSION_TO_USER_MAP.getIfPresent(authId);
-		} catch(NullPointerException e) {
+		} catch(NoSuchElementException e) {
 			System.err.println("No such user logged in");
 			e.printStackTrace();
 		}
@@ -885,6 +931,7 @@ public class WebService {
 			// Set some cookies for that users login
 			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
 			res.cookie("username", uid.getUsername(), COOKIE_EXPIRE_SECONDS, false);
+			res.cookie("usertype", uid.getType().toString(), COOKIE_EXPIRE_SECONDS, false);
 
 			String json = GSON.toJson(SESSION_TO_USER_MAP);
 			System.out.println(json);

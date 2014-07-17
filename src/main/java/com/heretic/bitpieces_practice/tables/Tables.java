@@ -135,6 +135,9 @@ public class Tables {
 	@Table("users_reputation")
 	public static class Users_reputation extends Model {}
 	
+	@Table("creators_reputation")
+	public static class Creators_reputation extends Model {}
+	
 	@Table("prices")
 	public static class Prices extends Model {}
 	
@@ -146,6 +149,9 @@ public class Tables {
 	
 	@Table("backers_current_count")
 	public static class Backers_current_count extends Model {}
+	
+	@Table("backers_current")
+	public static class Backers_current extends Model {}
 	
 	
 

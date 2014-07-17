@@ -167,7 +167,7 @@
         </div>
         <div class="list-group">
           <li class="list-group-item">
-           <a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
+            <a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
            <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
          </li>
 
@@ -194,313 +194,148 @@
 
   </div> -->
 
-  <div class="span2 col-md-2" style="position:absolute; right:0">  
-   <!-- The boxes on the right this time-->
+
+
+  <!-- The Page -->
+  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
 
    <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-bank fa-5x"></i>
-            </div>
-            <div id ="worth_current" class="col-xs-8 text-right">
-              <script id="worth_current_template" type="x-tmpl-mustache"> 
-              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+    <div class="col-md-12">
 
-              <p class="announcement-text">Worth</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_funds">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Worth
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
+      <h1 id="page_title"> <small> Pricing</small></h1>
+      <ol class="breadcrumb">
+        <li><a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a></li>
+        <li class="active"><i class="fa fa-table"></i> Worth</li>
+      </ol>
     </div>
   </div>
+  <!-- Buy, bid and ask buttons -->
   <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-money fa-5x"></i>
-            </div>
-            <div id="price_per_piece_current" class="col-xs-8 text-right">
-              <script id="price_per_piece_current_template" type="x-tmpl-mustache"> 
-              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
-
-              <p class="announcement-text">Price per piece</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="#">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Pricing
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-cubes fa-5x"></i>
-            </div>
-            <div id="rewards_paid" class="col-xs-8 text-right">
-              <script id="rewards_paid_template" type="x-tmpl-mustache"> 
-              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
-
-              <p class="announcement-text">Rewards Paid</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_pieces">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Rewards
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-danger">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-empire fa-5x"></i>
-            </div>
-            <div id="backers_current_count" class="col-xs-8 text-right">
-
-              <script id="backers_current_count_template" type="x-tmpl-mustache">
-              <p class="announcement-heading">{{.}}</p>
-
-              <p class="announcement-text"># of Backers</p>
-              </script> 
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_pieces">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Backers
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-   <div class="row">
-    <div class="col-lg-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-empire fa-5x"></i>
-            </div>
-            <div id="creators_reputation" class="col-xs-8 text-right">
-
-              <script id="creators_reputation_template" type="x-tmpl-mustache">
-              <p class="announcement-heading">{{.}}</p>
-
-              <p class="announcement-text">Reputation</p>
-              </script> 
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_pieces">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Backers
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- The Page -->
-<div id="main_col" class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 main">
-
- <div class="row">
-  <div class="col-md-12">
-
-    <h1 id="page_title"> <small> Your overview</small></h1>
-    <ol class="breadcrumb">
-      <li><i class="fa fa-dashboard"></i> Overview</a></li>
-    </ol>
-  </div>
-</div>
-
-<!-- Buy, bid and ask buttons -->
-<div class="row">
-  <div class="col-md-12">
-   <button id="bidBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#bidModal">Bid</button>
-   <button id="askBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#askModal">Ask</button>
+    <div class="col-md-12">
+     <button id="bidBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#bidModal">Bid</button>
+     <button id="askBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#askModal">Ask</button>
+   </div>
  </div>
-</div>
-<br>
-
-
-
-<!-- End of the boxes -->
-
-
-<!-- The main body -->
-<div class="row">
-  <div id="main_body" class="col-md-12">
-    <script id="main_body_template" type="x-tmpl-mustache">
-    <p class="lead">{{.}}</p>
-    </script>
+ <!-- a big ass chart -->
+ <div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Worth</h3>
+      </div>
+      <div class="panel-body">
+        <div class = "fullscreen-chart" id="worth"></div>
+      </div>
+    </div>
   </div>
+</div><!-- /.row -->
+
+
+
+
+
+
+
 </div>
 
-
-
-
-
-</div>
 
 <!-- Modals -->
 <div id="bidModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
+  <div class="modal-dialog modal-sm">
 
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Bid</h4>
-			</div>
-			<div class="modal-body">
-				<form id="bidForm" class="form-horizontal" role="form">
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-						<div class="col-sm-10">
-							<input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-							data-bv-greaterthan="true"
-							data-bv-greaterthan-value=".01"
-							data-bv-greaterthan-message="Must be > .01"
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Bid</h4>
+      </div>
+      <div class="modal-body">
+        <form id="bidForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-value=".01"
+              data-bv-greaterthan-message="Must be > .01"
 
-							>
-						</div>
-					</div>
+              >
+            </div>
+          </div>
 
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-						<div class="col-sm-10">
-							<input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-							type="text" 
-							data-bv-integer="true"
-							data-bv-integer-message="Must be a whole number"
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+              <input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              type="text" 
+              data-bv-integer="true"
+              data-bv-integer-message="Must be a whole number"
 
-							>
-						</div>
-					</div>
+              >
+            </div>
+          </div>
 
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-						<div class="col-sm-10">
-							<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-						</div>
-					</div>
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+            <div class="col-sm-10">
+              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+            </div>
+          </div>
 
-					<button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
-				</form>
+          <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+        </form>
 
-			</div>
+      </div>
 
-		</div>
-	</div>
+    </div>
+  </div>
 </div>
 <div id="askModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
+  <div class="modal-dialog modal-sm">
 
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Ask</h4>
-			</div>
-			<div class="modal-body">
-				<form id="askForm" class="form-horizontal" role="form">
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-						<div class="col-sm-10">
-							<input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-							data-bv-greaterthan="true"
-							data-bv-greaterthan-value=".01"
-							data-bv-greaterthan-message="Must be > .01"
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ask</h4>
+      </div>
+      <div class="modal-body">
+        <form id="askForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-value=".01"
+              data-bv-greaterthan-message="Must be > .01"
 
-							>
-						</div>
-					</div>
+              >
+            </div>
+          </div>
 
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-						<div class="col-sm-10">
-							<input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-							type="text" 
-							data-bv-integer="true"
-							data-bv-integer-message="Must be a whole number"
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+              <input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              type="text" 
+              data-bv-integer="true"
+              data-bv-integer-message="Must be a whole number"
 
-							>
-						</div>
-					</div>
+              >
+            </div>
+          </div>
 
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-						<div class="col-sm-10">
-							<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-						</div>
-					</div>
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+            <div class="col-sm-10">
+              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+            </div>
+          </div>
 
-					<button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
-				</form>
+          <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+        </form>
 
-			</div>
+      </div>
 
-		</div>
-	</div>
+    </div>
+  </div>
 </div>
-
 <!-- end of wrapper -->
 </div>
 
@@ -532,7 +367,7 @@
       <script src="../tools.js"></script>
       <script src="../highcharts_templates.js"></script>
       <script src="../creatorpage.js"></script>
-      <script src="../creator_overview.js"></script>
+      <script src="../creator_worth.js"></script>
       <script src="../login.js"></script>
 
 

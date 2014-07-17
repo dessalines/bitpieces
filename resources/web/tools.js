@@ -107,7 +107,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
      }
 
      function fillUserInfoMustache(url) {
-       var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       var url = "http://localhost:4567/" + url
        $.ajax({
         type: "GET",
         url: url,
@@ -145,15 +145,19 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             // var jsonObj = jQuery.parseJSON(data);
             jsonObj = getCookie('username');
             
+            if (jsonObj != null) {
             var template = $('#usernameTemplate').html();
             Mustache.parse(template);   // optional, speeds up future uses
             var rendered = Mustache.render(template,jsonObj);
             $('#userDropdown').html(rendered);
 
-            console.log(jsonObj);              
+            console.log(jsonObj);
             console.log(template);
             console.log(rendered);
             
+            } else {
+              $('#userDropdown').html('');
+            }
 
           } 
 
@@ -318,6 +322,8 @@ function setupLogout() {
 
 
    delete_cookie("authenticated_session_id");
+   delete_cookie("username");
+   delete_cookie("usertype");
     // showHideElementsLoggedIn();
     
 
