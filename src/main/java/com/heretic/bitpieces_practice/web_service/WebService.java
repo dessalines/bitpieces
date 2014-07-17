@@ -643,6 +643,153 @@ public class WebService {
 			return json;
 
 		});
+		
+		get("/:creator/get_pricing", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getPricesJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_pricing", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getPricesJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_worth", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getWorthJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_bids_asks", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getBidsAsksJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_rewards_pct", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getRewardsPctJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_rewards_owed_to_user", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getRewardsOwedToUserJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_pieces_issued", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+				
+				dbInit(prop);
+				
+				// get the creator id from the token	
+				json = WebTools.getPiecesIssuedJson(creator, req.body());
+
+				dbClose();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
 
 
 

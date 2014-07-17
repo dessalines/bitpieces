@@ -14,9 +14,11 @@ import org.javalite.activejdbc.Model;
 
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
+import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current;
@@ -27,12 +29,15 @@ import com.heretic.bitpieces_practice.tables.Tables.Prices_for_user;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned_total_by_user;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_owed;
+import com.heretic.bitpieces_practice.tables.Tables.Rewards_owed_to_user;
+import com.heretic.bitpieces_practice.tables.Tables.Rewards_view;
 import com.heretic.bitpieces_practice.tables.Tables.User;
 import com.heretic.bitpieces_practice.tables.Tables.Users_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_current;
 import com.heretic.bitpieces_practice.tables.Tables.Users_reputation;
 import com.heretic.bitpieces_practice.tables.Tables.Users_transactions;
+import com.heretic.bitpieces_practice.tables.Tables.Worth;
 import com.heretic.bitpieces_practice.tools.Tools;
 
 public class WebTools {
@@ -42,7 +47,7 @@ public class WebTools {
 	public static String saveCreatorPage(String id, String reqBody) {
 
 		System.out.println(reqBody);
-//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
 		Creator creator = Creator.findById(id);
@@ -62,15 +67,20 @@ public class WebTools {
 		return "Successful";
 
 	}
-	
+
 	public static String getCreatorPageJson(String id, String reqBody) {
 
 		System.out.println(reqBody);
-//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+		String json = null;
+		try {
+			Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
+			json = page.toJson(false, "main_body");
+		} catch (NullPointerException e) {
+			return "{\"main_body\": \"Nothing here yet\"}";
 
-		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
-		
-		String json = page.toJson(false, "main_body");
+		}
+
 
 
 		return json;
@@ -218,7 +228,7 @@ public class WebTools {
 
 
 		String json = null;
-		
+
 		try {
 			Users_reputation value = Users_reputation.findFirst("users_id=?",  userId);
 
@@ -248,54 +258,104 @@ public class WebTools {
 
 	public static String getPiecesOwnedValueCurrentByCreatorJson(
 			String creatorName, String body) {
-		
+
 		Pieces_owned_value_current_by_creator p = 
 				Pieces_owned_value_current_by_creator.findFirst("username = ?", creatorName);
-		
+
 		String json = p.getString("value_total");
 		return json;
-		
+
 	}
-	
+
 	public static String getPricePerPieceCurrentJson(
 			String creatorName, String body) {
-		
-		
+
+
 		LazyList<Prices> prices = Prices.where("creators_name = ?", creatorName).orderBy("time_ desc").limit(1);
 		Prices p = prices.get(0);
 		String json = p.getString("price_per_piece");
 		return json;
-		
+
 	}
-	
+
 	public static String getRewardsOwedJson(
 			String creatorName, String body) {
-		
+
 		Rewards_owed r = Rewards_owed.findFirst("creators_username = ?", creatorName);
 		String json = r.getString("total_owed");
-		
+
 		return json;
-		
+
 	}
-	
+
 	public static String getBackersCurrentCountJson(
 			String creatorName, String body) {
-		
+
 		Backers_current_count r = Backers_current_count.findFirst("creators_username = ?", creatorName);
 		String json = r.getString("number_of_backers");
-		
+
 		return json;
-		
+
 	}
-	
+
 	public static String getMainBodyJson(
 			String creatorName, String body) {
-		
+
 		Creators_page_fields_view p = Creators_page_fields_view.findFirst("username = ?", creatorName);
 		String json = p.getString("main_body");
-		
+
 		return json;
+
+	}
+	
+	public static String getPricesJson(
+			String creatorName, String body) {
+
 		
+		List<Model> list = Prices.find("creators_name=?", creatorName);
+		return createHighChartsJSONForSingleCreator(list, "time_", "price_per_piece", "Pricing");
+
+	}
+	
+	public static String getWorthJson(
+			String creatorName, String body) {
+
+		
+		List<Model> list = Worth.find("creators_username=?", creatorName);
+		return createHighChartsJSONForSingleCreator(list, "price_time_", "worth", "Worth");
+
+	}
+	
+	public static String getBidsAsksJson(String creatorName, String body) {
+
+		List<Model> list = Bids_asks.find("creators_name=?",  creatorName);
+		
+		return createTableJSON(list);
+
+	}
+	
+	public static String getRewardsPctJson(String creatorName, String body) {
+
+		List<Model> list = Rewards_view.find("creators_name=?",  creatorName);
+		
+		return createTableJSON(list);
+
+	}
+	
+	public static String getRewardsOwedToUserJson(String creatorName, String body) {
+
+		List<Model> list = Rewards_owed_to_user.find("creators_username=?",  creatorName);
+		
+		return createTableJSON(list, "creators_username", "owners_name", "total_owed");
+
+	}
+	
+	public static String getPiecesIssuedJson(String creatorName, String body) {
+
+		List<Model> list = Pieces_issued_view.find("creators_name=?",  creatorName);
+		
+		return createTableJSON(list);
+
 	}
 
 	public static String createTableJSON(List<Model> list, String... params) {
