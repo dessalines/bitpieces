@@ -665,9 +665,11 @@ rewards_earned
 union
 select users_id, time_, btc_amount as funds from 
 users_deposits
+where status='completed'
 union
 select users_id, time_, -1*btc_amount as funds from 
 users_withdrawals
+where status='completed'
 order by users_id, time_, funds;
 
 
@@ -775,18 +777,20 @@ union
 
 select users_id, 
 time_, 
-'deposit' as type,
+concat('deposit(', status, ')') as type,
 '' as recipient, 
 btc_amount as funds 
 from 
 users_deposits
 union
 select users_id, time_,
-'withdrawal' as type, 
+concat('withdrawal(', status, ')') as type, 
 '' as recipient, 
 -1*btc_amount as funds from 
 users_withdrawals
 order by users_id, time_ desc;
+
+
 
 CREATE VIEW users_activity as 
 select * from users_transactions
