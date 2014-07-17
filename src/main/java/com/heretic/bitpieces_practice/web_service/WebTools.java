@@ -13,11 +13,13 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 
 import com.heretic.bitpieces_practice.actions.Actions;
+import com.heretic.bitpieces_practice.tables.Tables.Backers_current;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
@@ -92,8 +94,11 @@ public class WebTools {
 	public static String placeBid(String userId, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
+		// You don't have the creators id, so you have to fetch it:
+		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
+		
 		Actions.createBid(userId, 
-				postMap.get("creatorid"), 
+				creator.getId().toString(), 
 				Integer.valueOf(postMap.get("pieces")), 
 				Double.valueOf(postMap.get("bid")), 
 				postMap.get("validUntil"), 
@@ -105,9 +110,12 @@ public class WebTools {
 
 	public static String placeAsk(String userId, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+		// You don't have the creators id, so you have to fetch it:
+		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
 
 		Actions.createAsk(userId, 
-				postMap.get("creatorid"), 
+				creator.getId().toString(), 
 				Integer.valueOf(postMap.get("pieces")), 
 				Double.valueOf(postMap.get("ask")), 
 				postMap.get("validUntil"), 
@@ -298,63 +306,94 @@ public class WebTools {
 
 	}
 
-	public static String getMainBodyJson(
-			String creatorName, String body) {
+	public static String getMainBodyJson(String creatorName, String body) {
+		String json = null;
+		try {
+			Creators_page_fields_view p = Creators_page_fields_view.findFirst("username = ?", creatorName);
 
-		Creators_page_fields_view p = Creators_page_fields_view.findFirst("username = ?", creatorName);
-		String json = p.getString("main_body");
-
+			json = p.getString("main_body");
+		} catch(NullPointerException e) {
+			return "The creator hasn't made a page yet";
+		}
 		return json;
 
 	}
-	
+
 	public static String getPricesJson(
 			String creatorName, String body) {
 
-		
+
 		List<Model> list = Prices.find("creators_name=?", creatorName);
 		return createHighChartsJSONForSingleCreator(list, "time_", "price_per_piece", "Pricing");
 
 	}
-	
+
 	public static String getWorthJson(
 			String creatorName, String body) {
 
-		
+
 		List<Model> list = Worth.find("creators_username=?", creatorName);
 		return createHighChartsJSONForSingleCreator(list, "price_time_", "worth", "Worth");
 
 	}
-	
+
 	public static String getBidsAsksJson(String creatorName, String body) {
 
 		List<Model> list = Bids_asks.find("creators_name=?",  creatorName);
-		
+
 		return createTableJSON(list);
 
 	}
-	
+
 	public static String getRewardsPctJson(String creatorName, String body) {
 
 		List<Model> list = Rewards_view.find("creators_name=?",  creatorName);
-		
+
 		return createTableJSON(list);
 
 	}
-	
+
 	public static String getRewardsOwedToUserJson(String creatorName, String body) {
 
 		List<Model> list = Rewards_owed_to_user.find("creators_username=?",  creatorName);
-		
+
 		return createTableJSON(list, "creators_username", "owners_name", "total_owed");
 
 	}
-	
+
 	public static String getPiecesIssuedJson(String creatorName, String body) {
 
 		List<Model> list = Pieces_issued_view.find("creators_name=?",  creatorName);
-		
+
 		return createTableJSON(list);
+
+	}
+
+	public static String getBackersCurrentJson(String creatorName, String body) {
+
+		List<Model> list = Backers_current.find("creators_username=?",  creatorName);
+
+		return createTableJSON(list, "users_username", "pieces_total", "value_total");
+
+	}
+
+	public static String getCreatorsReputationJson(String creatorName, String body) {
+
+
+		String json = null;
+
+		try {
+			Creators_reputation value = Creators_reputation.findFirst("creators_name=?",  creatorName);
+
+			json = value.getString("reputation");
+
+			// If they have no reputation, then return a 0
+		} catch (NullPointerException e) {
+			return "0";
+		}
+
+		System.out.println(json);
+		return json;
 
 	}
 

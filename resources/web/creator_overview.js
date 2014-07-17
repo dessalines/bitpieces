@@ -24,5 +24,8 @@ fillFieldFromMustache(creatorName + '/get_rewards_owed',
 fillFieldFromMustache(creatorName + '/get_backers_current_count', 
     '#backers_current_count_template' , '#backers_current_count', false);
 
+fillFieldFromMustache(creatorName + '/get_creators_reputation', 
+    '#creators_reputation_template' , '#creators_reputation', false);
+
 
 });

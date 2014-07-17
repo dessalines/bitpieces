@@ -248,7 +248,11 @@ public class Actions {
 			System.out.println("pieces for transaction = " + piecesForTransaction);
 
 			String dateOfTransaction = SDF.format(new Date());
-			// Do the sale at the askers price
+			// Do the sale at the bidders price, or penalize them for overbidding
+				
+		
+			
+			// This method already makes sure the bidder has the money
 			sellFromUser(askersId, biddersId, creatorsId, piecesForTransaction, bidPerPiece);
 
 
