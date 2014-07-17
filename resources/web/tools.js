@@ -173,7 +173,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
-            JSON.useDateParser();
+            // JSON.useDateParser();
             var jsonObj = JSON.parse(data);
             
             var template = $(templateId).html();
