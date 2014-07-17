@@ -96,7 +96,7 @@ public class WebTools {
 
 		// You don't have the creators id, so you have to fetch it:
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
-		
+
 		Actions.createBid(userId, 
 				creator.getId().toString(), 
 				Integer.valueOf(postMap.get("pieces")), 
@@ -110,7 +110,7 @@ public class WebTools {
 
 	public static String placeAsk(String userId, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		
+
 		// You don't have the creators id, so you have to fetch it:
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
 
@@ -206,28 +206,40 @@ public class WebTools {
 	}
 
 	public static String getUsersFundsCurrentJson(String userId, String body) {
-
+		String json = null;
+		try {
 		Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("users_id=?",  userId);
 
-		String json = usersFundsCurrent.getString("current_funds");
+		json = usersFundsCurrent.getString("current_funds");
+		} catch(NullPointerException e) {
+			return "0";
+		}
 		return json;
 
 	}
 
 	public static String getRewardsEarnedTotalByUserJson(String userId, String body) {
+		String json = null;
+		try {
+			Rewards_earned_total_by_user rewardsEarned = Rewards_earned_total_by_user.findFirst("owners_id=?",  userId);
 
-		Rewards_earned_total_by_user rewardsEarned = Rewards_earned_total_by_user.findFirst("owners_id=?",  userId);
-
-		String json = rewardsEarned.getString("reward_earned_total");
+			json = rewardsEarned.getString("reward_earned_total");
+		} catch(NullPointerException e) {
+			return "0";
+		}
 		return json;
 
 	}
 
 	public static String getPiecesValueCurrentByOwnerJson(String userId, String body) {
-
+		String json = null;
+		try {
 		Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  userId);
 
-		String json = value.getString("value_total");
+		json = value.getString("value_total");
+		} catch(NullPointerException e) {
+			return "0";
+		}
 		return json;
 
 	}
