@@ -26,6 +26,10 @@ $(document).ready(function(){
         }
     });
 
+    if (sessionId != null) {
+        $("#bidBtn").removeClass("hide");
+    }
+
 
 
 
