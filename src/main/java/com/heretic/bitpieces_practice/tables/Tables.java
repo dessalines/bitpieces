@@ -156,6 +156,9 @@ public class Tables {
 	@Table("bids_asks")
 	public static class Bids_asks extends Model {}
 	
+	@Table("bids_asks_current")
+	public static class Bids_asks_current extends Model {}
+	
 	@Table("backers_current_count")
 	public static class Backers_current_count extends Model {}
 	

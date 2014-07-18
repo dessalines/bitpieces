@@ -17,6 +17,7 @@ import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
+import com.heretic.bitpieces_practice.tables.Tables.Bids_asks_current;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
@@ -402,9 +403,9 @@ public class WebTools {
 
 	}
 
-	public static String getBidsAsksJson(String creatorName, String body) {
+	public static String getBidsAsksCurrentJson(String creatorName, String body) {
 
-		List<Model> list = Bids_asks.find("creators_name=?",  creatorName);
+		List<Model> list = Bids_asks_current.find("creators_name=?",  creatorName);
 
 		return createTableJSON(list);
 

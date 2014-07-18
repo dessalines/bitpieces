@@ -815,7 +815,7 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_bids_asks", (req, res) -> {
+		get("/:creator/get_bids_asks_current", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");
 			res.header("Access-Control-Allow-Credentials", "true");
 			String json = null;
@@ -825,7 +825,7 @@ public class WebService {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBidsAsksJson(creator, req.body());
+				json = WebTools.getBidsAsksCurrentJson(creator, req.body());
 
 				dbClose();
 			}catch (NoSuchElementException e) {
