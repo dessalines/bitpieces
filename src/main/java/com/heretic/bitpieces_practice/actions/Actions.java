@@ -109,7 +109,6 @@ public class Actions {
 		}
 
 
-
 		Double total_before_fee = price_per_piece * pieces;
 		Double amount_to_host = total_before_fee*SERVICE_FEE_PCT;
 		Double amount_to_user = total_before_fee - amount_to_host;

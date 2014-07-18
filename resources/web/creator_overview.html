@@ -364,13 +364,15 @@
 <!-- The Page -->
 <div id="main_col" class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 main">
 
+
+
  <div class="row">
   <div class="col-md-12">
 
-    <div class="col-md-8">
+    <div class="col-md-6">
       <h1 id="page_title"> </h1>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
       <div class="col-md-12">
            <button id="askBtn" type="button" class="btn btn-warning btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
            <button id="bidBtn" type="button" class="btn btn-info btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
@@ -391,15 +393,58 @@
 </div>
 
 
-<!-- Buy, bid and ask buttons -->
-<div class="row">
+<!-- The two top tables -->
+<div class="row"> 
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
+      </div>
+      <div id="creators_activity" class="panel-body">
+        <script id="creators_activity_template" type="x-tmpl-mustache"> 
+        <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
+        <thead>
+        <tr>
+        <th>Time <i class="fa fa-sort"></i></th>
+        <th>Type <i class="fa fa-sort"></th>
+        <th>Recipient <i class="fa fa-sort"></th>
+        <th>Price <i class="fa fa-sort"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        {{#.}}
+
+        <tr> 
+        <td>{{time_}}</td>
+        <td>{{type}}</td>
+        <td>{{recipient}}</td>
+        <td>{{funds}}</td>
+        </tr>
+        {{/.}}
+
+        </tbody>
+        </script>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+  <div class="col-lg-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Price per piece history</h3>
+      </div>
+      <div class="panel-body">
+        <div class = "small-chart" id="pricing"></div>
+      </div>
+    </div>
+  </div>
 
 </div>
-<br>
-
-
-
-<!-- End of the boxes -->
+<div> <hr></div>
 
 
 <!-- The main body -->
@@ -466,22 +511,19 @@
 		</div>
 	</div>
 </div>
-<div id="askModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div id="buyModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm">
 
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Ask</h4>
+				<h4 class="modal-title">buy</h4>
 			</div>
 			<div class="modal-body">
-				<form id="askForm" class="form-horizontal" role="form">
+				<form id="buyForm" class="form-horizontal" role="form">
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
 						<div class="col-sm-10">
-							<input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-							data-bv-greaterthan="true"
-							data-bv-greaterthan-value=".01"
-							data-bv-greaterthan-message="Must be > .01"
+							<input disabled name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
 
 							>
 						</div>
@@ -490,7 +532,7 @@
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
 						<div class="col-sm-10">
-							<input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+							<input name="pieces_available" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
 							type="text" 
 							data-bv-integer="true"
 							data-bv-integer-message="Must be a whole number"
@@ -499,14 +541,8 @@
 						</div>
 					</div>
 
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-						<div class="col-sm-10">
-							<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-						</div>
-					</div>
 
-					<button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+					<button id="placebuyBtn" type="submit" class="btn btn-primary">Place buy</button>
 				</form>
 
 			</div>
@@ -514,6 +550,56 @@
 		</div>
 	</div>
 </div>
+
+<div id="askModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ask</h4>
+      </div>
+      <div class="modal-body">
+        <form id="askForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-value=".01"
+              data-bv-greaterthan-message="Must be > .01"
+
+              >
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+              <input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              type="text" 
+              data-bv-integer="true"
+              data-bv-integer-message="Must be a whole number"
+
+              >
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+            <div class="col-sm-10">
+              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+            </div>
+          </div>
+
+          <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 <!-- end of wrapper -->
 </div>

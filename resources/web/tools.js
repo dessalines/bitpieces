@@ -489,3 +489,18 @@ function getParameterByName(name) {
         results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+function navigateWithParams() {
+    // all <a> tags containing a certain rel=""
+    $("a[rel~='keep-params']").click(function(e) {
+        e.preventDefault();
+
+        var params = window.location.search,
+        dest = $(this).attr('href') + params;
+
+    // in my experience, a short timeout has helped overcome browser bugs
+    window.setTimeout(function() {
+        window.location.href = dest;
+    }, 100);
+});
+}

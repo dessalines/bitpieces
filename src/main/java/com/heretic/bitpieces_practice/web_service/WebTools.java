@@ -11,15 +11,18 @@ import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.Paginator;
 
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued_view;
@@ -126,6 +129,26 @@ public class WebTools {
 
 		return body;
 	}
+	
+	public static String placeBuy(String userId, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+
+		// You don't have the creators id, so you have to fetch it:
+		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
+
+		// Get the most recent price per piece from the creator:
+		List<Model> p = Pieces_issued_view.find("creators_name=?",  creator.getString("username")).orderBy("time_ desc").limit(1);
+		Double price_per_piece = p.get(0).getDouble("price_per_piece");
+		
+		
+		Actions.sellFromCreator(creator.getId().toString(), 
+				userId, 
+				Integer.valueOf(postMap.get("pieces_available")), 
+				price_per_piece);
+		
+
+		return body;
+	}
 
 	public static String getPiecesOwnedValueAccumSeriesJson(String userId, String body) {
 		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
@@ -169,6 +192,20 @@ public class WebTools {
 	}
 
 	public static String getPiecesOwnedValueCurrentSeriesJson(String userId, String creatorName, String body) {
+		String val = null;
+		try {
+			// First fetch from the table
+			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?", userId, creatorName);
+
+			val = p.getString("value_total");
+		} catch(NullPointerException e) {
+			return "0";
+		}
+		return val;
+
+	}
+	
+	public static String getPiecesOwnedCurrentSeriesJson(String userId, String creatorName, String body) {
 		String val = null;
 		try {
 			// First fetch from the table
@@ -396,6 +433,14 @@ public class WebTools {
 		return createTableJSON(list);
 
 	}
+	
+	public static String getPiecesIssuedMostRecentPriceJson(String creatorName, String body) {
+
+		List<Model> p = Pieces_issued_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
+		String val = p.get(0).getString("price_per_piece");
+		return val;
+
+	}
 
 	public static String getBackersCurrentJson(String creatorName, String body) {
 
@@ -442,6 +487,29 @@ public class WebTools {
 
 		System.out.println(json);
 		return json;
+
+	}
+	
+	public static String getCreatorsActivityJson(String creatorName, String body) {
+
+		List<Model> list = Creators_activity.find("creators_name=?",  creatorName);
+		
+		Paginator p = new Paginator(Creators_activity.class, 5, "creators_name=?", creatorName);
+		
+		List<Model> items = p.getPage(1);
+		
+
+		return createTableJSON(items);
+
+	}
+	
+	public static String getCreatorsTransactionsJson(String creatorName, String body) {
+
+
+		List<Model> list = Creators_transactions.find("creators_name=?",  creatorName);
+				
+
+		return createTableJSON(list);
 
 	}
 
