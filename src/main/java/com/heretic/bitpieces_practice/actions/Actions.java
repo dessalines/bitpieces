@@ -47,7 +47,7 @@ public class Actions {
 			Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
 
 			if (userFunds < amount) {
-				throw new NoSuchElementException("The user has only " + userFunds + " $, but is trying to buy " +
+				throw new NoSuchElementException("You have only " + userFunds + " $, but are trying to buy " +
 						amount);
 			}
 		} catch(NullPointerException e) {
@@ -109,21 +109,18 @@ public class Actions {
 		}
 
 
-		Double total_before_fee = price_per_piece * pieces;
-		Double amount_to_host = total_before_fee*SERVICE_FEE_PCT;
-		Double amount_to_user = total_before_fee - amount_to_host;
-		Double price_per_piece_total = amount_to_user/pieces;
+		Double total = price_per_piece * pieces;
 
 		// Also verify that the user has the funds to buy that amount
 		try {
 			Double userFunds = Users_funds_current.findFirst("users_id = ?", usersId).getDouble("current_funds");
 
-			if (userFunds < amount_to_user) {
-				throw new NoSuchElementException("The user has only " + userFunds + " $, but is trying to buy " +
-						amount_to_user);
+			if (userFunds < total) {
+				throw new NoSuchElementException("You have only " + userFunds + " $, but are trying to buy " +
+						pieces + " pieces worth $" + total);
 			}
 		} catch(NullPointerException e) {
-			throw new NoSuchElementException("the user has no funds");
+			throw new NoSuchElementException("You have no funds");
 		}
 
 
@@ -136,9 +133,8 @@ public class Actions {
 				"to_users_id", usersId,
 				"time_", dateOfTransactionStr,
 				"pieces", pieces,
-				"fee", amount_to_host, 
-				"price_per_piece_after_fee", price_per_piece_total,
-				"total_after_fee", amount_to_user);
+				"price_per_piece", price_per_piece,
+				"total", total);
 
 		sale.saveIt();
 
@@ -178,7 +174,7 @@ public class Actions {
 						amount +  " worth of pieces");
 			}
 		} catch(NullPointerException e) {
-			throw new NoSuchElementException("the user has no funds");
+			throw new NoSuchElementException("You have no funds");
 		}
 
 
@@ -482,11 +478,11 @@ public class Actions {
 			Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
 
 			if (userFunds < amount) {
-				throw new NoSuchElementException("The user has only " + userFunds + " $, but is trying to withdraw " +
+				throw new NoSuchElementException("You have only " + userFunds + " $, but are trying to withdraw " +
 						amount);
 			}
 		} catch(NullPointerException e) {
-			throw new NoSuchElementException("the user has no funds");
+			throw new NoSuchElementException("You have no funds");
 		}
 
 		Users_withdrawals.createIt("users_id",userId,
@@ -513,20 +509,28 @@ public class Actions {
 			Double availableFunds = creatorsFunds - rewardsOwedForOneYear;
 
 			if (availableFunds < amount) {
-				throw new NoSuchElementException("The creator has only " + availableFunds + " available, but is trying to withdraw " +
+				throw new NoSuchElementException("You have only " + availableFunds + " available, but are trying to withdraw " +
 						amount +"\nNote: For users safety, a years worth of rewards can't be withdrawn, which is $" 
 						+ rewardsOwedForOneYear);
 			}
 
+			Double fee = SERVICE_FEE_PCT * amount;
+			
+			Double amountAfterFee = amount - fee;
+			
+			Creators_withdrawals.createIt("creators_id",creatorId,
+					"cb_tid", "fake",
+					"time_", SDF.format(new Date()),
+					"btc_amount_before_fee", amount, 
+					"fee", fee,
+					"btc_amount_after_fee", amountAfterFee,
+					"status", "completed");
+
+			
 		} catch(NullPointerException e) {
-			throw new NoSuchElementException("the user has no funds");
+			throw new NoSuchElementException("You have no funds");
 		}
 
-		Creators_withdrawals.createIt("creators_id",creatorId,
-				"cb_tid", "fake",
-				"time_", SDF.format(new Date()),
-				"btc_amount", amount, 
-				"status", "completed");
 
 	}
 
