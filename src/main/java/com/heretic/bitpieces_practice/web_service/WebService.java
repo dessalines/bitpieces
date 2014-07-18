@@ -423,6 +423,26 @@ public class WebService {
 			return json;
 
 		});
+		
+		get("/:auth/get_users_bids_asks_current", (req, res) -> {
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+
+				// get currency if one exists
+				json = WebTools.getUsersBidsAsksCurrentJson(uid.getId(), req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
 
 
 		post("/:auth/placebid", (req, res) -> {
@@ -473,6 +493,24 @@ public class WebService {
 				verifyUser(uid);
 
 				message = WebTools.placeBuy(uid.getId(), req.body());
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+		
+		post("/:auth/delete_bid_ask", (req, res) -> {
+			String message = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+
+				message = WebTools.deleteBidAsk(uid.getId(), req.body());
 
 				dbClose();
 
@@ -952,6 +990,27 @@ public class WebService {
 
 				// get the creator id from the token	
 				json = WebTools.getPiecesAvailableJson(creator, req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_pieces_owned_total", (req, res) -> {
+			res.header("Access-Control-Allow-Origin", "http://localhost");
+			res.header("Access-Control-Allow-Credentials", "true");
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token	
+				json = WebTools.getPiecesOwnedTotalJson(creator, req.body());
 
 				dbClose();
 			}catch (NoSuchElementException e) {

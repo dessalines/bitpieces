@@ -61,6 +61,12 @@ function showHideButtons(creatorName) {
 
         }
     });
+    simpleFetch(creatorName + "/get_pieces_owned_total").done(function(result) {
+        console.log('result = ' + result);
+        if (result > 0) {
+            $('[name="pieces_owned_total"]').attr('placeholder','There are ' + result + ' pieces left');
+        }
+    });
 
     simpleFetch(sessionId + "/" + creatorName + "/get_pieces_owned_current").done(function(result) {
         console.log('result = ' + result);

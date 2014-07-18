@@ -165,6 +165,9 @@ public class Tables {
 	@Table("backers_current")
 	public static class Backers_current extends Model {}
 	
+	@Table("date_testing")
+	public static class Date_testing extends Model {}
+	
 	
 
 }
