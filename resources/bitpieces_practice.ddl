@@ -812,6 +812,41 @@ inner join creators
 on asks.creators_id = creators.id
 order by users_id, time_ desc;
 
+CREATE VIEW creators_transactions as 
+select creators.username as creators_name,
+time_,
+concat('withdrawal(', status, ')') as type, 
+'' as recipient, 
+-1*btc_amount as funds from 
+creators_withdrawals
+inner join creators
+on creators_withdrawals.creators_id = creators.id
+union
+select creators.username as creators_name, 
+time_, 
+'buy' as type,
+users.username as recipient,
+total_after_fee as funds
+from 
+sales_from_creators
+inner join creators
+on sales_from_creators.from_creators_id = creators.id
+inner join users
+on to_users_id = users.id
+order by creators_name, time_ desc;
+
+
+
+CREATE VIEW creators_activity as
+select creators_name, time_, type, recipient, funds
+from creators_transactions
+union 
+select creators_name, time_, type, users_name, price from bids_asks
+order by creators_name, time_ desc;
+
+
+
+
 
 
 CREATE VIEW users_reputation as

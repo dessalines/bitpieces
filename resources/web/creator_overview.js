@@ -27,7 +27,8 @@ fillFieldFromMustache(creatorName + '/get_backers_current_count',
 fillFieldFromMustache(creatorName + '/get_creators_reputation', 
     '#creators_reputation_template' , '#creators_reputation', false);
 
-
+fillTableFromMustache(creatorName + '/get_creators_activity', '#creators_activity_template', '#creators_activity', '#creators_activity_table');
+fillUserHighChartStandardTemplate(creatorName + '/get_pricing', '#pricing', 'Price ($/piece)', '$');
 
 
 });

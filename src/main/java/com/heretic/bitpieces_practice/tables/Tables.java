@@ -108,6 +108,12 @@ public class Tables {
 	@Table("users_activity")
 	public static class Users_activity extends Model {}
 	
+	@Table("creators_transactions")
+	public static class Creators_transactions extends Model {}
+	
+	@Table("creators_activity")
+	public static class Creators_activity extends Model {}
+	
 	@Table("creators_funds_current")
 	public static class Creators_funds_current extends Model {}
 	
