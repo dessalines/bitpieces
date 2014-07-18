@@ -380,6 +380,7 @@ CREATE VIEW pieces_total as
 select 
 creators_id, sum(pieces_issued) as pieces_total
 from pieces_issued
+where time_ <= NOW()
 group by creators_id;
 
 CREATE VIEW pieces_owned_total as
@@ -521,6 +522,7 @@ select creators.username as creators_name,
 time_, 
 valid_until, 
 users.username as users_name, 
+bids.users_id, 
 'bid' as type,
 CONCAT(pieces, ' pieces at $',bid_per_piece, '/piece') as price
 from bids
@@ -534,6 +536,7 @@ select creators.username as creators_name,
 time_, 
 valid_until, 
 users.username as users_name, 
+asks.users_id,
 'ask' as type,
 CONCAT(pieces, ' pieces at $',ask_per_piece, '/piece') as price
 from asks
@@ -545,10 +548,12 @@ on asks.users_id = users.id
 order by creators_name, time_ desc;
 
 CREATE VIEW bids_asks_current as 
-select creators_name, time_, users_name, type, price
+select creators_name, time_, users_name, users_id, type, price
 from bids_asks
 where valid_until >= NOW()
 order by creators_name, time_ desc;
+
+
 
 
 
@@ -886,6 +891,8 @@ order by creators_name, time_ desc;
 
 
 
+
+
 CREATE VIEW users_reputation as
 select users_id, 
 sum(points) as reputation
@@ -934,7 +941,14 @@ from pieces_available
 inner join creators
 on pieces_available.creators_id = creators.id;
 
+CREATE VIEW date_testing as
+select id, concat('/Date(',UNIX_TIMESTAMP(time_),')/') from bids
 
+
+
+
+select UNIX_TIMESTAMP(time_) from bids
+where UNIX_TIMESTAMP(time_) = FROM_UNIXTIME(1405716372)
 
 
 /*

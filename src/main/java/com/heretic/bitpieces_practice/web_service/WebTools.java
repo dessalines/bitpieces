@@ -1,21 +1,27 @@
 package com.heretic.bitpieces_practice.web_service;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.Paginator;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.heretic.bitpieces_practice.actions.Actions;
+import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
+import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks_current;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
@@ -105,7 +111,7 @@ public class WebTools {
 
 		Actions.createBid(userId, 
 				creator.getId().toString(), 
-				Integer.valueOf(postMap.get("pieces")), 
+				Integer.valueOf(postMap.get("pieces_owned_total")), 
 				Double.valueOf(postMap.get("bid")), 
 				postMap.get("validUntil"), 
 				true);
@@ -130,7 +136,7 @@ public class WebTools {
 
 		return body;
 	}
-	
+
 	public static String placeBuy(String userId, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
@@ -140,13 +146,57 @@ public class WebTools {
 		// Get the most recent price per piece from the creator:
 		List<Model> p = Pieces_issued_view.find("creators_name=?",  creator.getString("username")).orderBy("time_ desc").limit(1);
 		Double price_per_piece = p.get(0).getDouble("price_per_piece");
-		
-		
+
+
 		Actions.sellFromCreator(creator.getId().toString(), 
 				userId, 
 				Integer.valueOf(postMap.get("pieces_available")), 
 				price_per_piece);
+
+
+		return body;
+	}
+
+	public static String deleteBidAsk(String userId, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+
+		String type = postMap.get("type");
+		String time_ = postMap.get("time_");
+		String creatorName = postMap.get("creatorName");
+
+		// First find the creator
+		Creator c = Creator.findFirst("username=?", creatorName);
+
+		// format the time correctly
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+//		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		String dateCorrectFormat = null;
+		try {
+			Date date = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ")).parse(time_.replaceAll("Z$", "+0000"));
+			dateCorrectFormat = Tools.SDF.get().format(date);
+			System.out.println(dateCorrectFormat);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		
+
+		if (type.equals("bid")) {
+			Bid bid = Bid.findFirst("users_id=? and creators_id=? and time_ >= ?", userId, c.getId().toString(), dateCorrectFormat);
+			System.out.println(bid);
+			bid.delete();
+			System.out.println("deleted it");
+			return "Bid deleted";
+			
+		} else if (type.equals("ask")) {
+			Ask ask = Ask.findFirst("users_id=? and creators_id=? and time_ >= ? and valid_until >= ?", 
+					userId, c.getId().toString(), dateCorrectFormat, dateCorrectFormat);
+			System.out.println(ask);
+			ask.delete();
+			System.out.println("deleted it");
+			return "Ask deleted";
+		}
 
 		return body;
 	}
@@ -205,7 +255,7 @@ public class WebTools {
 		return val;
 
 	}
-	
+
 	public static String getPiecesOwnedCurrentSeriesJson(String userId, String creatorName, String body) {
 		String val = null;
 		try {
@@ -254,6 +304,14 @@ public class WebTools {
 	public static String getUsersActivityJson(String userId, String body) {
 
 		List<Model> list = Users_activity.find("users_id=?",  userId);
+
+		return createTableJSON(list);
+
+	}
+
+	public static String getUsersBidsAsksCurrentJson(String userId, String body) {
+
+		List<Model> list = Bids_asks_current.find("users_id=?",  userId).orderBy("time_ desc");
 
 		return createTableJSON(list);
 
@@ -434,7 +492,7 @@ public class WebTools {
 		return createTableJSON(list);
 
 	}
-	
+
 	public static String getPiecesIssuedMostRecentPriceJson(String creatorName, String body) {
 
 		List<Model> p = Pieces_issued_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
@@ -491,24 +549,44 @@ public class WebTools {
 
 	}
 	
+	public static String getPiecesOwnedTotalJson(String creatorName, String body) {
+
+
+		String json = null;
+
+		try {
+			Pieces_available_view value = Pieces_available_view.findFirst("creators_name=?",  creatorName);
+
+			json = value.getString("pieces_owned_total");
+
+			// If they have no reputation, then return a 0
+		} catch (NullPointerException e) {
+			return "0";
+		}
+
+		System.out.println(json);
+		return json;
+
+	}
+
 	public static String getCreatorsActivityJson(String creatorName, String body) {
 
 		List<Model> list = Creators_activity.find("creators_name=?",  creatorName);
-		
+
 		Paginator p = new Paginator(Creators_activity.class, 5, "creators_name=?", creatorName);
-		
+
 		List<Model> items = p.getPage(1);
-		
+
 
 		return createTableJSON(items);
 
 	}
-	
+
 	public static String getCreatorsTransactionsJson(String creatorName, String body) {
 
 
 		List<Model> list = Creators_transactions.find("creators_name=?",  creatorName);
-				
+
 
 		return createTableJSON(list);
 

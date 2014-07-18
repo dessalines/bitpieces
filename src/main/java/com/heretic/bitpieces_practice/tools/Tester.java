@@ -6,7 +6,9 @@ import java.util.Properties;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 
+import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
+import com.heretic.bitpieces_practice.tables.Tables.Date_testing;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
 import com.heretic.bitpieces_practice.web_service.HTMLTools;
 import com.heretic.bitpieces_practice.web_service.WebTools;
@@ -24,8 +26,17 @@ public class Tester {
 //		System.out.println(WebTools.getPricePerPieceCurrentJson("Leonardo_Davinci", null));
 //		System.out.println(WebTools.getRewardsOwedJson("Leonardo_Davinci", null));
 //		System.out.println(WebTools.getBackersCurrentCountJson("Leonardo_Davinci", null));
-		System.out.println(WebTools.getPiecesOwnedValueCurrentSeriesJson("2", "Leonardo_Davinci", null));
-		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", "3");
+//		System.out.println(WebTools.getPiecesOwnedValueCurrentSeriesJson("2", "Leonardo_Davinci", null));
+		// The datetime .toJson shows "2014-07-18T20:46Z"
+		// The timestamp .toJson shows 2014-07-18T20:46Z
+		Date_testing m = Date_testing.findById(1);
+//		Model m = list.get(0);
+		String json = m.toJson(false);
+		System.out.println(json);
+		
+		Bid bid = (Bid)Bid.findById(1);
+		System.out.println(bid.toJson(true));
+//		WebTools.customToJson(list.get(0));
 		
 //		SeriesFetcher sf = new SeriesFetcher();
 //		Map<DateTime, Double> dv = sf.getDateValueMapFromTable(list, "price_time_", "value_accum");
