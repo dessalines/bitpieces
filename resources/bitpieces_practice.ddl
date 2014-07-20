@@ -941,6 +941,10 @@ from pieces_available
 inner join creators
 on pieces_available.creators_id = creators.id;
 
+
+
+
+/*
 CREATE VIEW date_testing as
 select id, concat('/Date(',UNIX_TIMESTAMP(time_),')/') from bids
 
@@ -950,8 +954,6 @@ select id, concat('/Date(',UNIX_TIMESTAMP(time_),')/') from bids
 select UNIX_TIMESTAMP(time_) from bids
 where UNIX_TIMESTAMP(time_) = FROM_UNIXTIME(1405716372)
 
-
-/*
 CREATE VIEW annualized_return as
 select pieces_owned_value_first.owners_id, pieces_owned_value_first.creators_id,
 value_accum as beg_val,
