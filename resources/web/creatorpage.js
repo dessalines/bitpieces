@@ -170,9 +170,13 @@ function showHideButtons(creatorName) {
 
                         if (fundsLeft <= 0) {
                             $('button[href="#depositModal"]').removeClass("hide");
+                            $('#' + e + 'FundsLeft').addClass("text-danger");
+                            $('#' + e + 'FundsLeft').removeClass("text-success");
                             $('#place' + e + 'Btn').addClass("hide");
                         } else {
                             $('button[href="#depositModal"]').addClass("hide");
+                            $('#' + e + 'FundsLeft').addClass("text-success");
+                            $('#' + e + 'FundsLeft').removeClass("text-danger");
                             $('#place' + e + 'Btn').removeClass("hide");
                         }
 
