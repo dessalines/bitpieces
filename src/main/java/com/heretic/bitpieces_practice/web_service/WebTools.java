@@ -106,7 +106,7 @@ public class WebTools {
 	public static String placeBid(String userId, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
-		// You don't have the creators id, so you have to fetch it:s
+		// You don't have the creators id, so you have to fetch it:ss
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
 
 		Actions.createBid(userId, 
