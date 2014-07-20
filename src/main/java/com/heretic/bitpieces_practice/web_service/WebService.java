@@ -3,7 +3,9 @@ package com.heretic.bitpieces_practice.web_service;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
@@ -31,7 +33,7 @@ public class WebService {
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(180);
 	public static final String SESSION_FILE_LOC = System.getProperty( "user.home" ) + "/session.cache";
 	public static final String DB_PROP_LOC = System.getProperty( "user.home" ) + "/db.properties";
-
+	public static final List<String> ALLOW_ACCESS_ADDRESSES = Arrays.asList("http://localhost", "http://68.56.177.238:8080");
 
 	// Use an expiring map to store the authenticated sessions
 	public static Cache<String, UserTypeAndId> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
@@ -49,14 +51,15 @@ public class WebService {
 
 
 		get("/session", (req,res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
+
+			allowResponseHeaders(req, res);
 
 			// Give the session id
 			return "derp";
 		});
 
 		get("/hello", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
+			allowResponseHeaders(req, res);
 			return "hi from the bitpieces web service";
 		});
 		get("/help", (req, res) -> {
@@ -70,7 +73,7 @@ public class WebService {
 		});
 
 		get("/:auth/testauth", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
+			allowResponseHeaders(req, res);
 			return "Heyyy u!";
 
 		});
@@ -140,7 +143,7 @@ public class WebService {
 
 
 		});
-		
+
 		get("/:auth/:creator/get_pieces_owned_value_current", (req, res) -> {
 			String json = null;
 			try {
@@ -148,7 +151,7 @@ public class WebService {
 				verifyUser(uid);
 				String creatorName = req.params(":creator");
 				// get currency if one exists
-				
+
 				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), creatorName, req.body());
 
 
@@ -163,7 +166,7 @@ public class WebService {
 
 
 		});
-		
+
 		get("/:auth/:creator/get_pieces_owned_current", (req, res) -> {
 			String json = null;
 			try {
@@ -171,7 +174,7 @@ public class WebService {
 				verifyUser(uid);
 				String creatorName = req.params(":creator");
 				// get currency if one exists
-				
+
 				json = WebTools.getPiecesOwnedCurrentSeriesJson(uid.getId(), creatorName, req.body());
 
 
@@ -423,7 +426,7 @@ public class WebService {
 			return json;
 
 		});
-		
+
 		get("/:auth/get_users_bids_asks_current", (req, res) -> {
 			String json = null;
 			try {
@@ -464,8 +467,7 @@ public class WebService {
 		});
 
 		post("/:auth/placeask", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 
 			dbInit(prop);
 
@@ -485,7 +487,7 @@ public class WebService {
 			return message;
 
 		});
-		
+
 		post("/:auth/placebuy", (req, res) -> {
 			String message = null;
 			try {
@@ -503,7 +505,7 @@ public class WebService {
 			return message;
 
 		});
-		
+
 		post("/:auth/delete_bid_ask", (req, res) -> {
 			String message = null;
 			try {
@@ -541,8 +543,7 @@ public class WebService {
 		});
 
 		get("/creators_search/:query", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			dbInit(prop);
 
 			String query = req.params(":query");
@@ -558,8 +559,7 @@ public class WebService {
 		});
 
 		post("/:auth/user_logout", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 
 
 			String auth = req.params(":auth");
@@ -580,8 +580,7 @@ public class WebService {
 
 
 		post("/registeruser", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			dbInit(prop);
 
 			// Create the user
@@ -603,8 +602,7 @@ public class WebService {
 		});
 
 		post("/registercreator", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			dbInit(prop);
 
 			// Create the user
@@ -626,8 +624,8 @@ public class WebService {
 		});
 
 		post("/userlogin", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			System.out.println(req.headers("Origin"));
+			allowResponseHeaders(req, res);
 
 			dbInit(prop);
 
@@ -643,8 +641,7 @@ public class WebService {
 		});
 
 		post("/creatorlogin", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 
 			dbInit(prop);
 
@@ -703,8 +700,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_pieces_owned_value_current_by_creator", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -724,8 +720,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_price_per_piece_current", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -745,8 +740,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_rewards_owed", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -766,8 +760,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_backers_current_count", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -787,8 +780,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_main_body", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -808,8 +800,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_pricing", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -829,8 +820,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_pricing", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -850,8 +840,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_worth", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -871,8 +860,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_bids_asks_current", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -892,8 +880,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_rewards_pct", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -913,8 +900,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_rewards_owed_to_user", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -934,8 +920,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_pieces_issued", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -955,8 +940,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_backers_current", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -976,8 +960,7 @@ public class WebService {
 		});
 
 		get("/:creator/get_creators_reputation", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -995,10 +978,9 @@ public class WebService {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_pieces_available", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -1016,10 +998,9 @@ public class WebService {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_pieces_owned_total", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -1037,10 +1018,9 @@ public class WebService {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_creators_activity", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -1058,10 +1038,9 @@ public class WebService {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_creators_transactions", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -1080,9 +1059,28 @@ public class WebService {
 
 		});
 		
+		get("/:creator/get_creators_funds_accum", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token	
+				json = WebTools.getCreatorsFundsAccumJson(creator, req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+
 		get("/:creator/get_pieces_issued_most_recent_price", (req, res) -> {
-			res.header("Access-Control-Allow-Origin", "http://localhost");
-			res.header("Access-Control-Allow-Credentials", "true");
+			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			try {			
@@ -1199,8 +1197,7 @@ public class WebService {
 			dbInit(prop);
 		}
 
-		res.header("Access-Control-Allow-Origin", "http://localhost");
-		res.header("Access-Control-Allow-Credentials", "true");
+		allowResponseHeaders(req, res);
 
 		UserTypeAndId uid = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth"));
 
@@ -1217,4 +1214,13 @@ public class WebService {
 		return minutes*60;
 	}
 
+	public static void allowResponseHeaders(Request req, Response res) {
+		String origin = req.headers("Origin");
+		res.header("Access-Control-Allow-Credentials", "true");
+//		System.out.println(origin);
+		if (ALLOW_ACCESS_ADDRESSES.contains(req.headers("Origin"))) {
+			res.header("Access-Control-Allow-Origin", origin);
+		}
+
+	}
 }

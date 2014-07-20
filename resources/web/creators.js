@@ -28,7 +28,7 @@ $(document).ready(function(){
 	// Loading
 	$(this).button('loading');
 
-    var url = "http://localhost:4567/registercreator"; // the script where you handle the form input.
+    var url = sparkService + "/registercreator"; // the script where you handle the form input.
 
     $.ajax({
     	type: "POST",

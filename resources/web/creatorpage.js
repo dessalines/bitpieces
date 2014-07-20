@@ -57,7 +57,7 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
         // Loading
         btnId.button('loading');
 
-        var url = "http://localhost:4567/" + shortUrl; // the script where you handle the form input.
+        var url = sparkService + shortUrl; // the script where you handle the form input.
 
         $.ajax({
             type: "POST",
@@ -220,7 +220,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId, mess
         // // = $("#inputUsername3").val();
         // document.cookie = "username=" + username ;
 
-        var url = "http://localhost:4567/" + shortUrl;
+        var url = sparkService + shortUrl;
         $.ajax({
             type: "POST",
             url: url,

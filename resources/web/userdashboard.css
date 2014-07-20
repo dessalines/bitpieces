@@ -51,12 +51,17 @@
   }
 
   .announcement-heading {
-    font-size: 50px;
+    font-size: 40px;
     margin: 0;
   }
 
-  .announcement-text {
+  .announcement-text,  {
     margin: 0;
+    font-size: 12px;
+
+  }
+  .announcement-bottom {
+    font-size: 14px;
   }
 
   .sidebar {
@@ -143,5 +148,5 @@
 }
 
 .btn {
-    margin: 3px;
+  margin: 3px;
 }

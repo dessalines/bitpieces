@@ -33,7 +33,7 @@ rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_fund
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
 users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user, pieces_owned_by_creator,
-bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current
+bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -727,6 +727,30 @@ union
 select creators_id, time_, -1*btc_amount_before_fee
 from creators_withdrawals
 order by creators_id, time_, funds;
+
+CREATE VIEW creators_funds_view as
+select creators_id, creators.username as creator_name, time_, funds from creators_funds
+inner join 
+creators on
+creators_funds.creators_id = creators.id
+order by creators_id, time_;
+
+CREATE VIEW creators_funds_grouped as
+select 
+creators_id, time_, sum(funds) as funds
+from creators_funds
+group by creators_id, time_;
+
+CREATE VIEW creators_funds_accum as 
+select a.creators_id, creators.username as creators_name, a.time_, 
+--a.funds, 
+sum(b.funds) as funds_accum
+from creators_funds_grouped a, creators_funds_grouped b, creators
+WHERE b.creators_id = a.creators_id
+and b.time_ <= a.time_
+and a.creators_id = creators.id
+GROUP BY a.creators_id, a.time_, a.funds;
+
 
 
 CREATE VIEW creators_funds_current as
