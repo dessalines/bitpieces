@@ -11,6 +11,9 @@
   ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;    
   }
+  .input-group-addon {
+    background-color: #505050;
+  }
 
   .mini-submenu{
     display:none;  

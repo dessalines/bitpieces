@@ -111,7 +111,7 @@ public class WebTools {
 
 		Actions.createBid(userId, 
 				creator.getId().toString(), 
-				Integer.valueOf(postMap.get("pieces_owned_total")), 
+				Integer.valueOf(postMap.get("bidPieces")), 
 				Double.valueOf(postMap.get("bid")), 
 				postMap.get("validUntil"), 
 				true);
@@ -128,7 +128,7 @@ public class WebTools {
 
 		Actions.createAsk(userId, 
 				creator.getId().toString(), 
-				Integer.valueOf(postMap.get("pieces")), 
+				Integer.valueOf(postMap.get("askPieces")), 
 				Double.valueOf(postMap.get("ask")), 
 				postMap.get("validUntil"), 
 				true);
@@ -150,7 +150,7 @@ public class WebTools {
 
 		Actions.sellFromCreator(creator.getId().toString(), 
 				userId, 
-				Integer.valueOf(postMap.get("pieces_available")), 
+				Integer.valueOf(postMap.get("buyPieces")), 
 				price_per_piece);
 
 
@@ -172,7 +172,7 @@ public class WebTools {
 //		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 		String dateCorrectFormat = null;
 		try {
-			Date date = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ")).parse(time_.replaceAll("Z$", "+0000"));
+			Date date = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")).parse(time_.replaceAll("Z$", "+0000"));
 			dateCorrectFormat = Tools.SDF.get().format(date);
 			System.out.println(dateCorrectFormat);
 		} catch (ParseException e) {
@@ -183,15 +183,15 @@ public class WebTools {
 		
 
 		if (type.equals("bid")) {
-			Bid bid = Bid.findFirst("users_id=? and creators_id=? and time_ >= ?", userId, c.getId().toString(), dateCorrectFormat);
+			Bid bid = Bid.findFirst("users_id=? and creators_id=? and time_ = ?", userId, c.getId().toString(), dateCorrectFormat);
 			System.out.println(bid);
 			bid.delete();
 			System.out.println("deleted it");
 			return "Bid deleted";
 			
 		} else if (type.equals("ask")) {
-			Ask ask = Ask.findFirst("users_id=? and creators_id=? and time_ >= ? and valid_until >= ?", 
-					userId, c.getId().toString(), dateCorrectFormat, dateCorrectFormat);
+			Ask ask = Ask.findFirst("users_id=? and creators_id=? and time_ = ?", 
+					userId, c.getId().toString(), dateCorrectFormat);
 			System.out.println(ask);
 			ask.delete();
 			System.out.println("deleted it");
@@ -199,6 +199,21 @@ public class WebTools {
 		}
 
 		return body;
+	}
+	
+	public static String makeDepositFake(String userId, String body) {
+				Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+
+				Double amount = Double.parseDouble(postMap.get("deposit"));
+		// First fetch from the table
+		Actions.makeDepositFake(userId,amount);
+		
+		return amount + " deposited.";
+		
+		
+
+
+
 	}
 
 	public static String getPiecesOwnedValueAccumSeriesJson(String userId, String body) {

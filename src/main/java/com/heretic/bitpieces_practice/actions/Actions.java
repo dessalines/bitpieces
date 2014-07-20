@@ -104,7 +104,7 @@ public class Actions {
 		Integer pieces_available = Pieces_available.findFirst("creators_id = ?", creatorsId).getInteger("pieces_available");
 
 		if (pieces_available < pieces) {
-			throw new NoSuchElementException("You are trying to sell " + pieces + " pieces, but only " +
+			throw new NoSuchElementException("You are trying to buy " + pieces + " pieces, but only " +
 					pieces_available + " are available");
 		}
 
@@ -375,6 +375,9 @@ public class Actions {
 	public static Users_deposits makeDepositFake(String usersId, Double btc_amount) {
 		
 		String timeStr = SDF.format(new Date());
+		
+		
+		
 		return Users_deposits.createIt("users_id", usersId,
 				"cb_tid", "fake", 
 				"time_", timeStr, 

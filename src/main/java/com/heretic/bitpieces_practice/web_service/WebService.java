@@ -522,6 +522,23 @@ public class WebService {
 
 		});
 
+		post("/:auth/make_deposit_fake", (req, res) -> {
+			String message = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+
+				message = WebTools.makeDepositFake(uid.getId(), req.body());
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
 
 		get("/creators_search/:query", (req, res) -> {
 			res.header("Access-Control-Allow-Origin", "http://localhost");

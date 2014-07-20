@@ -99,7 +99,7 @@ public class Tools {
 
 
 	public static final Map<String, String> createMapFromAjaxPost(String reqBody) {
-
+		System.out.println(reqBody);
 		Map<String, String> postMap = new HashMap<String, String>();
 		String[] split = reqBody.split("&");
 		for (int i = 0; i < split.length; i++) {

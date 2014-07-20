@@ -137,17 +137,17 @@
            	<li id="userDropdown" class="dropdown user-dropdown">
 
            		<script id="usernameTemplate" type="x-tmpl-mustache">  
-           		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
 
 
-           		<ul class="dropdown-menu">
-           		<li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
-           		<li class="divider"></li>
-           		<li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+                 <ul class="dropdown-menu">
+                   <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                   <li class="divider"></li>
+                   <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
 
-           		</ul>
-           		</script>
-           	</li>
+                 </ul>
+               </script>
+             </li>
            </ul>
          </div><!-- /.navbar-collapse -->
        </div><!-- /.container-fluid -->
@@ -207,9 +207,9 @@
             </div>
             <div id ="worth_current" class="col-xs-8 text-right">
               <script id="worth_current_template" type="x-tmpl-mustache"> 
-              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
 
-              <p class="announcement-text">Worth</p>
+                <p class="announcement-text">Worth</p>
               </script>
             </div>
           </div>
@@ -239,9 +239,9 @@
             </div>
             <div id="price_per_piece_current" class="col-xs-8 text-right">
               <script id="price_per_piece_current_template" type="x-tmpl-mustache"> 
-              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
 
-              <p class="announcement-text">Price per piece</p>
+                <p class="announcement-text">Price per piece</p>
               </script>
             </div>
           </div>
@@ -271,9 +271,9 @@
             </div>
             <div id="rewards_paid" class="col-xs-8 text-right">
               <script id="rewards_paid_template" type="x-tmpl-mustache"> 
-              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
 
-              <p class="announcement-text">Rewards Paid</p>
+                <p class="announcement-text">Rewards Paid</p>
               </script>
             </div>
           </div>
@@ -304,9 +304,9 @@
             <div id="backers_current_count" class="col-xs-8 text-right">
 
               <script id="backers_current_count_template" type="x-tmpl-mustache">
-              <p class="announcement-heading">{{.}}</p>
+                <p class="announcement-heading">{{.}}</p>
 
-              <p class="announcement-text"># of Backers</p>
+                <p class="announcement-text"># of Backers</p>
               </script> 
             </div>
           </div>
@@ -337,9 +337,9 @@
             <div id="creators_reputation" class="col-xs-8 text-right">
 
               <script id="creators_reputation_template" type="x-tmpl-mustache">
-              <p class="announcement-heading">{{.}}</p>
+                <p class="announcement-heading">{{.}}</p>
 
-              <p class="announcement-text">Reputation</p>
+                <p class="announcement-text">Reputation</p>
               </script> 
             </div>
           </div>
@@ -374,14 +374,14 @@
     </div>
     <div class="col-md-6">
       <div class="col-md-12">
-           <button id="askBtn" type="button" class="btn btn-warning btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
-           <button id="bidBtn" type="button" class="btn btn-info btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
-        <button id="buyBtn" type="button" class="btn btn-success btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
-        
-     
-      </div>
-    </div>
-  </div>
+       <button id="askBtn" type="button" class="btn btn-warning btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+       <button id="bidBtn" type="button" class="btn btn-info btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+       <button id="buyBtn" type="button" class="btn btn-success btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+
+
+     </div>
+   </div>
+ </div>
 </div>
 <div class="row">
   <div class="col-md-12">
@@ -402,35 +402,35 @@
       </div>
       <div id="creators_activity" class="panel-body">
         <script id="creators_activity_template" type="x-tmpl-mustache"> 
-        <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
-        <thead>
-        <tr>
-        <th>Time <i class="fa fa-sort"></i></th>
-        <th>Type <i class="fa fa-sort"></th>
-        <th>Recipient <i class="fa fa-sort"></th>
-        <th>Price <i class="fa fa-sort"></th>
-        </tr>
-        </thead>
+          <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
+            <thead>
+              <tr>
+                <th>Time <i class="fa fa-sort"></i></th>
+                <th>Type <i class="fa fa-sort"></th>
+                <th>Recipient <i class="fa fa-sort"></th>
+                <th>Price <i class="fa fa-sort"></th>
+              </tr>
+            </thead>
 
-        <tbody>
+            <tbody>
 
-        {{#.}}
+              {{#.}}
 
-        <tr> 
-        <td>{{time_}}</td>
-        <td>{{type}}</td>
-        <td>{{recipient}}</td>
-        <td>{{funds}}</td>
-        </tr>
-        {{/.}}
+              <tr> 
+                <td>{{time_}}</td>
+                <td>{{type}}</td>
+                <td>{{recipient}}</td>
+                <td>{{funds}}</td>
+              </tr>
+              {{/.}}
 
-        </tbody>
-        </script>
-      </table>
+            </tbody>
+          </script>
+        </table>
 
+      </div>
     </div>
   </div>
-</div>
 
   <div class="col-lg-6">
     <div class="panel panel-primary">
@@ -451,7 +451,7 @@
 <div class="row">
   <div id="main_body" class="col-md-12">
     <script id="main_body_template" type="x-tmpl-mustache">
-    <p class="lead">{{.}}</p>
+      <p class="lead">{{.}}</p>
     </script>
   </div>
 </div>
@@ -463,8 +463,8 @@
 </div>
 
 <!-- Modals -->
-<div id="bidModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
+<div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
 
 		<div class="modal-content">
 			<div class="modal-header">
@@ -487,7 +487,7 @@
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
 						<div class="col-sm-10">
-							<input name="pieces_owned_total" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+							<input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
 							type="text" 
 							data-bv-integer="true"
 							data-bv-integer-message="Must be a whole number"
@@ -502,17 +502,39 @@
 							<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
 						</div>
 					</div>
+          <div class="form-group form-group-lg">
 
-					<button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
-				</form>
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="bidTotal" class="col-sm-10 form-control-static">
 
-			</div>
+           </div>
+         </div>
 
-		</div>
-	</div>
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+           <div id="bidFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+         <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
 </div>
-<div id="buyModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
+<div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
 
 		<div class="modal-content">
 			<div class="modal-header">
@@ -522,36 +544,91 @@
 				<form id="buyForm" class="form-horizontal" role="form">
 					<div class="form-group form-group-lg">
 						<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-						<div class="col-sm-10">
-							<input disabled name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+						<div class="col-sm-10 input-group">
+              <span class="input-group-addon">$</span>
+              <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
+              <span class="input-group-addon">per piece</span>
+            </div>
+          </div>
 
-							>
-						</div>
-					</div>
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+             <input name="buyPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+             type="text" 
+             data-bv-integer="true"
+             data-bv-integer-message="Must be a whole number"
 
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-						<div class="col-sm-10">
-							<input name="pieces_available" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-							type="text" 
-							data-bv-integer="true"
-							data-bv-integer-message="Must be a whole number"
+             >
+           </div>
+         </div>
+         <div class="form-group form-group-lg">
 
-							>
-						</div>
-					</div>
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="buyTotal" class="col-sm-10 form-control-static">
 
-					<button id="placebuyBtn" type="submit" class="btn btn-primary">Place buy</button>
-				</form>
+           </div>
+         </div>
 
-			</div>
+         <div class="form-group form-group-lg">
 
-		</div>
-	</div>
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds left</label>
+           <div id="buyFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <button id="placebuyBtn" type="submit" class="btn btn-primary">Place buy</button>
+         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
 </div>
 
-<div id="askModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
+<div id="depositModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Deposit</h4>
+      </div>
+      <div class="modal-body">
+        <form id="depositForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Amount</label>
+            <div class="col-sm-10 input-group">
+              <span class="input-group-addon">$</span>
+              <input name="deposit" class="form-control" type="text" id="formGroupInputLarge" placeholder="Current funds"
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-value=".01"
+              data-bv-greaterthan-message="Must be > .01"
+
+              >
+            </div>
+          </div>
+
+          <button id="placedepositBtn" type="submit" class="btn btn-primary">Place deposit</button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="askModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
 
     <div class="modal-content">
       <div class="modal-header">
@@ -574,7 +651,7 @@
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
             <div class="col-sm-10">
-              <input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
               type="text" 
               data-bv-integer="true"
               data-bv-integer-message="Must be a whole number"
@@ -589,14 +666,36 @@
               <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
             </div>
           </div>
+          <div class="form-group form-group-lg">
 
-          <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
-        </form>
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="askTotal" class="col-sm-10 form-control-static">
 
-      </div>
+           </div>
+         </div>
 
-    </div>
-  </div>
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+           <div id="askFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+         <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
 </div>
 
 
