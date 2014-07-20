@@ -257,6 +257,15 @@ public class WebTools {
 		return createHighChartsJSONForCurrent(list, "value_total", "creators_username");
 
 	}
+	
+	public static String getPiecesOwnedValueCurrentCreatorSeriesJson(String creatorName, String body) {
+
+		// First fetch from the table
+		List<Model> list = Pieces_owned_value_current.find("creators_username=?", creatorName);
+
+		return createHighChartsJSONForCurrent(list, "value_total", "owners_name");
+
+	}
 
 	public static String getPiecesOwnedValueCurrentSeriesJson(String userId, String creatorName, String body) {
 		String val = null;

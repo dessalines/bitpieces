@@ -758,6 +758,26 @@ public class WebService {
 			return json;
 
 		});
+		
+		get("/:creator/get_pieces_owned_value_current_creator", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token	
+				json = WebTools.getPiecesOwnedValueCurrentCreatorSeriesJson(creator, req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
 
 		get("/:creator/get_backers_current_count", (req, res) -> {
 			allowResponseHeaders(req, res);
