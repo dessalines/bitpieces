@@ -196,175 +196,10 @@
 
   </div> -->
 
-  <div class="span2 col-md-2" style="position:absolute; right:0">  
-   <!-- The boxes on the right this time-->
-
-   <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-bank fa-5x"></i>
-            </div>
-            <div id ="worth_current" class="col-xs-8 text-right">
-              <script id="worth_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
-
-                <p class="announcement-text">Worth</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_funds">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Worth
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-money fa-5x"></i>
-            </div>
-            <div id="price_per_piece_current" class="col-xs-8 text-right">
-              <script id="price_per_piece_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
-
-                <p class="announcement-text">Price per piece</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="#">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Pricing
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-cubes fa-5x"></i>
-            </div>
-            <div id="rewards_paid" class="col-xs-8 text-right">
-              <script id="rewards_paid_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
-
-                <p class="announcement-text">Rewards Paid</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_pieces">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Rewards
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-danger">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-empire fa-5x"></i>
-            </div>
-            <div id="backers_current_count" class="col-xs-8 text-right">
-
-              <script id="backers_current_count_template" type="x-tmpl-mustache">
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text"># of Backers</p>
-              </script> 
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_pieces">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Backers
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-empire fa-5x"></i>
-            </div>
-            <div id="creators_reputation" class="col-xs-8 text-right">
-
-              <script id="creators_reputation_template" type="x-tmpl-mustache">
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Reputation</p>
-              </script> 
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_pieces">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Backers
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+ 
 
 <!-- The Page -->
-<div id="main_col" class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 main">
+  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
 
 
 
@@ -388,81 +223,70 @@
 <div class="row">
   <div class="col-md-12">
 
-    <ol class="breadcrumb">
-      <li><i class="fa fa-dashboard"></i> Overview</a></li>
-    </ol>
+      <ol class="breadcrumb">
+        <li><a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a></li>
+        <li class="active"><i class="fa fa-table"></i> Funds</li>
+      </ol>
   </div>
 </div>
 
 
 <!-- The two top tables -->
-<div class="row"> 
-  <div class="col-md-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
-      </div>
-      <div id="creators_activity" class="panel-body">
-        <script id="creators_activity_template" type="x-tmpl-mustache"> 
-          <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
-            <thead>
-              <tr>
-                <th>Time <i class="fa fa-sort"></i></th>
-                <th>Type <i class="fa fa-sort"></th>
-                <th>Recipient <i class="fa fa-sort"></th>
-                <th>Price <i class="fa fa-sort"></th>
-              </tr>
-            </thead>
+     
 
-            <tbody>
+      <!-- a 6 wide  chart -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Funds</h3>
+            </div>
+            <div class="panel-body">
+              <div class = "small-chart" id="creators_funds"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Transactions</h3>
+            </div>
+            <div id="creators_transactions" class="panel-body">
+              <script id="creators_transactions_template" type="x-tmpl-mustache"> 
+              <table id="creators_transactions_table" class="table table-hover table-striped tablesorter">
+              <thead> 
+              <tr>
+              <th>Time <i class="fa fa-sort"></i></th>
+              <th>Type <i class="fa fa-sort"></th>
+              <th>Recipient <i class="fa fa-sort"></th>
+              <th>Funds <i class="fa fa-sort"></th>
+              </tr>
+              </thead>
+
+              <tbody>
 
               {{#.}}
 
               <tr> 
-                <td>{{time_}}</td>
-                <td>{{type}}</td>
-                <td>{{recipient}}</td>
-                <td>{{funds}}</td>
+              <td>{{time_}}</td>
+              <td>{{type}}</td>
+              <td>{{recipient}}</td>
+              <td>{{funds}}</td>
               </tr>
               {{/.}}
 
-            </tbody>
-          </script>
-        </table>
+              </tbody>
+              </script>
+            </table>
 
+          </div>
+        </div>
       </div>
+
+    </div><!-- /.row -->
     </div>
-  </div>
 
-  <div class="col-lg-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Price per piece history</h3>
-      </div>
-      <div class="panel-body">
-        <div class = "small-chart" id="pricing"></div>
-      </div>
-    </div>
-  </div>
-
-</div>
-<div> <hr></div>
-
-
-<!-- The main body -->
-<div class="row">
-  <div id="main_body" class="col-md-12">
-    <script id="main_body_template" type="x-tmpl-mustache">
-      <p class="lead">{{.}}</p>
-    </script>
-  </div>
-</div>
-
-
-
-
-
-</div>
 
 <!-- Modals -->
 <div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -528,7 +352,6 @@
            </div>
          </div>
          <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
-          <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
        </form>
 
      </div>
@@ -693,7 +516,6 @@
            </div>
          </div>
          <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
-
        </form>
 
      </div>
@@ -734,7 +556,7 @@
       <script src="../tools.js"></script>
       <script src="../highcharts_templates.js"></script>
       <script src="../creatorpage.js"></script>
-      <script src="../creator_overview.js"></script>
+      <script src="../creator_funds.js"></script>
       <script src="../login.js"></script>
 
 

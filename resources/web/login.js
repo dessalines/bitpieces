@@ -38,7 +38,7 @@ $( "#registerBtn" ).click(function( event ) {
 	// Loading
 	$(this).button('loading');
 
-    var url = "http://localhost:4567/registeruser"; // the script where you handle the form input.
+    var url = sparkService + "registeruser"; // the script where you handle the form input.
 
     $.ajax({
     	type: "POST",
@@ -64,7 +64,7 @@ $( "#registerBtn" ).click(function( event ) {
                 setTimeout(
                   function() 
                   {
-                    var url = "http://localhost/userdashboard_overview";
+                    var url = "userdashboard_overview";
                     window.location.replace(url);
 
                   }, 1000);
@@ -98,9 +98,9 @@ $( "#signinBtn" ).click(function( event ) {
   var isCreator = $("#creatorCheckbox").is(':checked')
   console.log(isCreator);
   if (isCreator) {
-    url = "http://localhost:4567/creatorlogin";
+    url = sparkService + "creatorlogin";
   } else {
-    url = "http://localhost:4567/userlogin";
+    url = sparkService + "userlogin";
   }
 
     // username = $('#userLoginDiv').find('input[name="username"]').val();
@@ -143,9 +143,9 @@ $( "#signinBtn" ).click(function( event ) {
 
                 // GO to the dashboard
                 if (!isCreator) {
-                  window.location.replace("http://localhost/userdashboard_overview");
+                  window.location.replace("userdashboard_overview");
                 } else {
-                  window.location.replace("http://localhost/creatordashboard");
+                  window.location.replace("creatordashboard");
                 }
 
 

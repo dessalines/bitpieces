@@ -19,7 +19,7 @@ $(document).ready(function(){
 
 
 function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonName, sessionId) {
-       var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       var url = sparkService + url// the script where you handle the form input.
        $.ajax({
        	type: "GET",
        	url: url,
@@ -56,7 +56,7 @@ function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonNam
     			console.log(row );
     			console.log(json);
 
-    			var url = "http://localhost:4567/" + sessionId + "/delete_bid_ask";
+    			var url = sparkService + sessionId + "/delete_bid_ask";
     			$.ajax({
     				type: "POST",
     				url: url,

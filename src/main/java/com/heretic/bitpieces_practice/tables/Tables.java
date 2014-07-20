@@ -165,6 +165,9 @@ public class Tables {
 	@Table("backers_current")
 	public static class Backers_current extends Model {}
 	
+	@Table("creators_funds_accum")
+	public static class Creators_funds_accum extends Model {}
+	
 
 	
 	

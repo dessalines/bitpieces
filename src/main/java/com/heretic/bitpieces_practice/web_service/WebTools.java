@@ -26,6 +26,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks_current;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_activity;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
@@ -168,8 +169,8 @@ public class WebTools {
 		Creator c = Creator.findFirst("username=?", creatorName);
 
 		// format the time correctly
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-//		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+		//		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 		String dateCorrectFormat = null;
 		try {
 			Date date = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")).parse(time_.replaceAll("Z$", "+0000"));
@@ -180,7 +181,7 @@ public class WebTools {
 			e.printStackTrace();
 		}
 
-		
+
 
 		if (type.equals("bid")) {
 			Bid bid = Bid.findFirst("users_id=? and creators_id=? and time_ = ?", userId, c.getId().toString(), dateCorrectFormat);
@@ -188,7 +189,7 @@ public class WebTools {
 			bid.delete();
 			System.out.println("deleted it");
 			return "Bid deleted";
-			
+
 		} else if (type.equals("ask")) {
 			Ask ask = Ask.findFirst("users_id=? and creators_id=? and time_ = ?", 
 					userId, c.getId().toString(), dateCorrectFormat);
@@ -200,17 +201,17 @@ public class WebTools {
 
 		return body;
 	}
-	
-	public static String makeDepositFake(String userId, String body) {
-				Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
-				Double amount = Double.parseDouble(postMap.get("deposit"));
+	public static String makeDepositFake(String userId, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+
+		Double amount = Double.parseDouble(postMap.get("deposit"));
 		// First fetch from the table
 		Actions.makeDepositFake(userId,amount);
-		
+
 		return amount + " deposited.";
-		
-		
+
+
 
 
 
@@ -563,7 +564,7 @@ public class WebTools {
 		return json;
 
 	}
-	
+
 	public static String getPiecesOwnedTotalJson(String creatorName, String body) {
 
 
@@ -604,6 +605,16 @@ public class WebTools {
 
 
 		return createTableJSON(list);
+
+	}
+
+	public static String getCreatorsFundsAccumJson(String creatorName, String body) {
+
+
+		List<Model> list = Creators_funds_accum.find("creators_name=?",  creatorName);
+
+
+		return createHighChartsJSONForSingleCreator(list, "time_", "funds_accum", "Funds");
 
 	}
 

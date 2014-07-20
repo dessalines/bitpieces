@@ -1,3 +1,6 @@
+// var sparkService = "http://localhost:4567/";
+var sparkService = "http://68.56.177.238:4567/"
+
 function expireTimeString(seconds) {
 	var now = new Date();
 	var time = now.getTime();
@@ -59,7 +62,7 @@ function showHideBidAskBuyButtons() {
 }
 
 function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
-       var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       var url = sparkService + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -85,7 +88,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
      }
 
      function fillUserHighChartPieChartTemplate(url, id) {
-       var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       var url = sparkService + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -112,7 +115,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
      }
 
      function fillUserInfoMustache(url) {
-       var url = "http://localhost:4567/" + url
+       var url = sparkService + url
        $.ajax({
         type: "GET",
         url: url,
@@ -169,7 +172,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
 
 
           function fillTableFromMustache(url, templateId, divId, tableId) {
-       var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       var url = sparkService + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -205,7 +208,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
      }
 
      function fillFieldFromMustache(url, templateId, divId, isMoney) {
-       var url = "http://localhost:4567/" + url// the script where you handle the form input.
+       var url = sparkService + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -243,7 +246,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
 
 function setupCreatorSearch() {
 
-  remoteURL = 'http://localhost:4567/creators_search/%QUERY';
+  remoteURL = sparkService + 'creators_search/%QUERY';
   var creatorsList = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('username'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -265,7 +268,7 @@ function setupCreatorSearch() {
    var searchString = formData[0].value;
 
    console.log(searchString);
-   var url = "http://localhost/creator_overview?creator=" + searchString;
+   var url = "creator_overview?creator=" + searchString;
    window.location.replace(url);
 
    event.preventDefault();
@@ -290,7 +293,7 @@ function setupMiniSubmenu() {
 }
 
 function setupLogout() {
-  var url = "http://localhost:4567/" + sessionId + "/user_logout"
+  var url = sparkService + sessionId + "/user_logout"
   $('#logouthref').click(function(){ 
    $.ajax({
     type: "POST",
@@ -312,7 +315,7 @@ function setupLogout() {
             setTimeout(
               function() 
               {
-                var url = "http://localhost/carousel";
+                var url = "carousel";
                 window.location.replace(url);
 
               }, 1000);
@@ -339,7 +342,7 @@ function setupLogout() {
 
 function setupSummerNote(url, id, sqlColName) {
 
-var url = "http://localhost:4567/" + url// the script where you handle the form input.
+var url = sparkService + url// the script where you handle the form input.
 $.ajax({
   type: "GET",
   url: url,
@@ -400,7 +403,7 @@ function saveSummerNote(shortUrl, btn, id) {
   // Loading
   btn.button('loading');
 
-    var url = "http://localhost:4567/" + shortUrl ; // the script where you handle the form input.
+    var url = sparkService + shortUrl ; // the script where you handle the form input.
 
     $.ajax({
       type: "POST",
@@ -440,7 +443,7 @@ function saveSummerNote(shortUrl, btn, id) {
 }
 
 function fillSimpleText(url, divId) {
-     var url = "http://localhost:4567/" + url// the script where you handle the form input.
+     var url = sparkService + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
         url: url,
@@ -462,7 +465,7 @@ function fillSimpleText(url, divId) {
 }
 
 function simpleFetch(url) {
-     var url = "http://localhost:4567/" + url// the script where you handle the form input.
+     var url = sparkService + url// the script where you handle the form input.
        return $.ajax({
         type: "GET",
         url: url,
