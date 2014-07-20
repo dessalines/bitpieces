@@ -478,7 +478,8 @@ order by pieces_owned_span.owners_id,
 pieces_owned_span.creators_id,prices_span.time_;
 
 CREATE VIEW pieces_owned_value_current as 
-select pieces_owned_total.owners_id,
+select pieces_owned_total.owners_id, 
+users.username as owners_name
 pieces_owned_total.creators_id,
 creators.username as creators_username,
 sum(pieces_owned_total) as pieces_total,
@@ -489,6 +490,8 @@ on pieces_owned_total.creators_id = prices_span.creators_id
 and prices_span.end_time_ = NOW()
 inner join creators
 on pieces_owned_total.creators_id = creators.id
+inner join users
+on pieces_owned_total.owners_id = users.id
 where pieces_owned_total >0
 group by pieces_owned_total.owners_id, pieces_owned_total.creators_id;
 
