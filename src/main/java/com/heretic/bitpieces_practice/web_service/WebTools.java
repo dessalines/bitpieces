@@ -254,7 +254,7 @@ public class WebTools {
 
 	public static String getPiecesOwnedValueCurrentSeriesJson(String userId, String body) {
 
-		// First fetch from the table
+		// First fetch from the tabled
 		List<Model> list = Pieces_owned_value_current.find("owners_id=?", userId);
 
 
