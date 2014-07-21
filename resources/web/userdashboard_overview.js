@@ -13,7 +13,5 @@ $(document).ready(function(){
 	fillFieldFromMustache(sessionId + '/get_pieces_value_current_by_owner', '#pieces_owned_current_template' , '#pieces_owned_current', true);
 	fillFieldFromMustache(sessionId + '/get_users_reputation', '#users_reputation_template' , '#users_reputation', false);
 
-	setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
-
 });
 

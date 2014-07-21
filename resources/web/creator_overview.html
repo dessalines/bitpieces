@@ -73,7 +73,7 @@
         <li><a href="/carousel">Home</a></li>
         <li><a href="#discover">Discover</a></li>
         <li><a href="/creators">Creators</a></li>
-        <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+        <li><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
                <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
                <li><a href="#logout" class="hide">Log Out</a></li> -->
                <li class="dropdown">
@@ -98,94 +98,57 @@
 
 
            <ul class="nav navbar-nav navbar-right">
-           	<li class="dropdown messages-dropdown">
-           		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
-           		<ul class="dropdown-menu">
-           			<li class="dropdown-header">7 New Messages</li>
-           			<li class="message-preview">
-           				<a href="#">
-           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
-           					<span class="name">John Smith:</span>
-           					<span class="message">Hey there, I wanted to ask you something...</span>
-           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-           				</a>
-           			</li>
-           			<li class="divider"></li>
-           			<li class="message-preview">
-           				<a href="#">
-           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
-           					<span class="name">John Smith:</span>
-           					<span class="message">Hey there, I wanted to ask you something...</span>
-           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-           				</a>
-           			</li>
-           			<li class="divider"></li>
-           			<li class="message-preview">
-           				<a href="#">
-           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
-           					<span class="name">John Smith:</span>
-           					<span class="message">Hey there, I wanted to ask you something...</span>
-           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-           				</a>
-           			</li>
-           			<li class="divider"></li>
-           			<li><a href="#">View Inbox <span class="badge">7</span></a></li>
-           		</ul>
-           	</li>
+            <li id="userDropdown" class="dropdown user-dropdown">
+
+             <script id="usernameTemplate" type="x-tmpl-mustache">  
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
 
 
-           	<li id="userDropdown" class="dropdown user-dropdown">
+             <ul class="dropdown-menu">
+             <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+             <li class="divider"></li>
+             <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
 
-           		<script id="usernameTemplate" type="x-tmpl-mustache">  
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+             </ul>
+             </script>
+           </li>
+         </ul>
+       </div><!-- /.navbar-collapse -->
+     </div><!-- /.container-fluid -->
+   </nav>
 
+   <!-- The full page with teh sidebar -->
+   <div class="container-fluid">
+     <div class="row">
 
-                 <ul class="dropdown-menu">
-                   <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
-                   <li class="divider"></li>
-                   <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+      <!-- The sidebar -->
+      <div id="side_col" class="col-md-2 sidebar">
 
-                 </ul>
-               </script>
-             </li>
-           </ul>
-         </div><!-- /.navbar-collapse -->
-       </div><!-- /.container-fluid -->
-     </nav>
+       <div class="mini-submenu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </div>
+      <div class="list-group">
+        <li class="list-group-item">
+         <a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
+         <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
+       </li>
 
-     <!-- The full page with teh sidebar -->
-     <div class="container-fluid">
-       <div class="row">
+       <a class="list-group-item" href="creator_pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
+       <a class="list-group-item" href="creator_worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
+       <a class="list-group-item" href="creator_rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
+       <a class="list-group-item" href="creator_funds" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
+       <a class="list-group-item" href="creator_pieces" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Pieces</a>
+       <a class="list-group-item" href="userdashboard_prices.html" rel="keep-params"><i class="fa fa-edit"></i> Badges</a>
+     </div>
+   </div>        
+ </div>
 
-        <!-- The sidebar -->
-        <div id="side_col" class="col-md-2 sidebar">
-
-         <div class="mini-submenu">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </div>
-        <div class="list-group">
-          <li class="list-group-item">
-           <a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
-           <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
-         </li>
-
-         <a class="list-group-item" href="creator_pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
-         <a class="list-group-item" href="creator_worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
-         <a class="list-group-item" href="creator_rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
-         <a class="list-group-item" href="creator_funds" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
-         <a class="list-group-item" href="creator_pieces" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Pieces</a>
-         <a class="list-group-item" href="creator_backers" rel="keep-params"><i class="fa fa-edit"></i> Backers</a>
-         <a class="list-group-item" href="userdashboard_prices.html" rel="keep-params"><i class="fa fa-edit"></i> Badges</a>
-       </div>
-     </div>        
-   </div>
-
-   <!-- stop plugging in -->
+ <!-- stop plugging in -->
 
 
-   <!-- Sidebar -->
+ <!-- Sidebar -->
 <!--   <div class="col-sm-3 col-md-2 sidebar">
     <ul class="nav nav-sidebar">
       <li class="active"><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
@@ -198,73 +161,73 @@
 
   
 
- <!-- The sidebar -->
-<div class="row col-md-10 col-md-offset-2"> 
+  <!-- The sidebar -->
+  <div class="row col-md-10 col-md-offset-2"> 
 
 
-  <!-- The Page -->
-<div id="main_col" class="col-md-12 main">
+    <!-- The Page -->
+    <div id="main_col" class="col-md-12 main">
 
 
 
- <div class="row">
+     <div class="row">
 
 
-    <div class="col-md-6">
-      <h1 id="page_title"> </h1>
-    </div>
-    <div class="col-md-6">
-      <div class="col-md-12">
-       <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
-       <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
-       <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
-
-
-     </div>
- </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-
-    <ol class="breadcrumb">
-      <li><i class="fa fa-dashboard"></i> Overview</a></li>
-    </ol>
-  </div>
-</div>
-
-
-<!-- The two top tables -->
-<div class="row"> 
-  <div class="col-md-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
+      <div class="col-md-6">
+        <h1 id="page_title"> </h1>
       </div>
-      <div id="creators_activity" class="panel-body">
-        <script id="creators_activity_template" type="x-tmpl-mustache"> 
+      <div class="col-md-6">
+        <div class="col-md-12">
+         <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+         <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+         <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+
+
+       </div>
+     </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+
+      <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> Overview</a></li>
+      </ol>
+    </div>
+  </div>
+
+
+  <!-- The two top tables -->
+  <div class="row"> 
+    <div class="col-md-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
+        </div>
+        <div id="creators_activity" class="panel-body">
+          <script id="creators_activity_template" type="x-tmpl-mustache"> 
           <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
-            <thead>
-              <tr>
-                <th>Time <i class="fa fa-sort"></i></th>
-                <th>Type <i class="fa fa-sort"></th>
-                <th>Recipient <i class="fa fa-sort"></th>
-                <th>Price <i class="fa fa-sort"></th>
-              </tr>
-            </thead>
+          <thead>
+          <tr>
+          <th>Time <i class="fa fa-sort"></i></th>
+          <th>Type <i class="fa fa-sort"></th>
+          <th>Recipient <i class="fa fa-sort"></th>
+          <th>Price <i class="fa fa-sort"></th>
+          </tr>
+          </thead>
 
-            <tbody>
+          <tbody>
 
-              {{#.}}
+          {{#.}}
 
-              <tr> 
-                <td>{{time_}}</td>
-                <td>{{type}}</td>
-                <td>{{recipient}}</td>
-                <td>{{funds}}</td>
-              </tr>
-              {{/.}}
+          <tr> 
+          <td>{{time_}}</td>
+          <td>{{type}}</td>
+          <td>{{recipient}}</td>
+          <td>{{funds}}</td>
+          </tr>
+          {{/.}}
 
-            </tbody>
+          </tbody>
           </script>
         </table>
 
@@ -291,19 +254,19 @@
 <div class="row">
   <div id="main_body" class="col-md-10">
     <script id="main_body_template" type="x-tmpl-mustache">
-      <p class="lead">{{.}}</p>
+    <p class="lead">{{.}}</p>
     </script>
   </div>
 </div>
 
 </div>
 
- <div class="col-md-2 col-md-offset-10">  
+<div class="col-md-2 col-md-offset-10">  
 
   <!-- <div class="span2 col-md-2 col-md-offset-10">   -->
-   <!-- The boxes on the right this time-->
+  <!-- The boxes on the right this time-->
 
-   <div class="row">
+  <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-info">
         <div class="panel-heading">
@@ -313,9 +276,9 @@
             </div>
             <div id ="worth_current" class="col-xs-8 text-right">
               <script id="worth_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
 
-                <p class="announcement-text">Worth</p>
+              <p class="announcement-text">Worth</p>
               </script>
             </div>
           </div>
@@ -345,9 +308,9 @@
             </div>
             <div id="price_per_piece_current" class="col-xs-8 text-right">
               <script id="price_per_piece_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
 
-                <p class="announcement-text">Price per piece</p>
+              <p class="announcement-text">Price per piece</p>
               </script>
             </div>
           </div>
@@ -377,9 +340,9 @@
             </div>
             <div id="rewards_paid" class="col-xs-8 text-right">
               <script id="rewards_paid_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
+              <p class="announcement-heading"><i class="fa fa-btc"></i>{{.}}</p>
 
-                <p class="announcement-text">Rewards Paid</p>
+              <p class="announcement-text">Rewards Paid</p>
               </script>
             </div>
           </div>
@@ -410,9 +373,9 @@
             <div id="backers_current_count" class="col-xs-8 text-right">
 
               <script id="backers_current_count_template" type="x-tmpl-mustache">
-                <p class="announcement-heading">{{.}}</p>
+              <p class="announcement-heading">{{.}}</p>
 
-                <p class="announcement-text"># of Backers</p>
+              <p class="announcement-text"># of Backers</p>
               </script> 
             </div>
           </div>
@@ -443,9 +406,9 @@
             <div id="creators_reputation" class="col-xs-8 text-right">
 
               <script id="creators_reputation_template" type="x-tmpl-mustache">
-                <p class="announcement-heading">{{.}}</p>
+              <p class="announcement-heading">{{.}}</p>
 
-                <p class="announcement-text">Reputation</p>
+              <p class="announcement-text">Reputation</p>
               </script> 
             </div>
           </div>
@@ -533,7 +496,7 @@
            </div>
          </div>
          <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
-          <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
        </form>
 
      </div>

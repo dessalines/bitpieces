@@ -73,7 +73,7 @@
         <li><a href="/carousel">Home</a></li>
         <li><a href="#discover">Discover</a></li>
         <li><a href="/creators">Creators</a></li>
-        <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+        <li><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
                <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
                <li><a href="#logout" class="hide">Log Out</a></li> -->
                <li class="dropdown">
@@ -98,42 +98,7 @@
 
 
            <ul class="nav navbar-nav navbar-right">
-           	<li class="dropdown messages-dropdown">
-           		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
-           		<ul class="dropdown-menu">
-           			<li class="dropdown-header">7 New Messages</li>
-           			<li class="message-preview">
-           				<a href="#">
-           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
-           					<span class="name">John Smith:</span>
-           					<span class="message">Hey there, I wanted to ask you something...</span>
-           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-           				</a>
-           			</li>
-           			<li class="divider"></li>
-           			<li class="message-preview">
-           				<a href="#">
-           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
-           					<span class="name">John Smith:</span>
-           					<span class="message">Hey there, I wanted to ask you something...</span>
-           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-           				</a>
-           			</li>
-           			<li class="divider"></li>
-           			<li class="message-preview">
-           				<a href="#">
-           					<span class="avatar"><img src="http://placehold.it/50x50"></span>
-           					<span class="name">John Smith:</span>
-           					<span class="message">Hey there, I wanted to ask you something...</span>
-           					<span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-           				</a>
-           			</li>
-           			<li class="divider"></li>
-           			<li><a href="#">View Inbox <span class="badge">7</span></a></li>
-           		</ul>
-           	</li>
-
-
+           	
            	<li id="userDropdown" class="dropdown user-dropdown">
 
            		<script id="usernameTemplate" type="x-tmpl-mustache">  
@@ -170,12 +135,12 @@
             <a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
            <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
          </li>
-
-         <a class="list-group-item" href="creator_pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
-         <a class="list-group-item" href="creator_worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
-         <a class="list-group-item" href="creator_rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
-         <a class="list-group-item" href="creator_backers" rel="keep-params"><i class="fa fa-edit"></i> Backers</a>
-         <a class="list-group-item" href="userdashboard_prices.html" rel="keep-params"><i class="fa fa-edit"></i> Badges</a>
+       <a class="list-group-item active" href="creator_pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
+       <a class="list-group-item" href="creator_worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
+       <a class="list-group-item" href="creator_rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
+       <a class="list-group-item" href="creator_funds" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
+       <a class="list-group-item" href="creator_pieces" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Pieces</a>
+       <a class="list-group-item" href="userdashboard_prices.html" rel="keep-params"><i class="fa fa-edit"></i> Badges</a>
        </div>
      </div>        
    </div>
@@ -202,20 +167,29 @@
    <div class="row">
     <div class="col-md-12">
 
-      <h1 id="page_title"> <small> Pricing</small></h1>
-      <ol class="breadcrumb">
-        <li><a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a></li>
-        <li class="active"><i class="fa fa-table"></i> Prices</li>
-      </ol>
-    </div>
-  </div>
-  <!-- Buy, bid and ask buttons -->
-  <div class="row">
-    <div class="col-md-12">
-     <button id="bidBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#bidModal">Bid</button>
-     <button id="askBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#askModal">Ask</button>
+      <div class="col-md-6">
+        <h1 id="page_title"> </h1>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12">
+         <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+         <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+         <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+
+
+       </div>
+     </div>
    </div>
  </div>
+ <div class="row">
+  <div class="col-md-12">
+
+    <ol class="breadcrumb">
+      <li><a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a></li>
+      <li class="active"><i class="fa fa-table"></i> Pricing</li>
+    </ol>
+  </div>
+</div>
  <!-- a big ass chart -->
  <div class="row">
   <div class="col-lg-12">
@@ -280,8 +254,8 @@
 
 
 <!-- Modals -->
-<div id="bidModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
+<div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
 
     <div class="modal-content">
       <div class="modal-header">
@@ -304,7 +278,7 @@
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
             <div class="col-sm-10">
-              <input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
               type="text" 
               data-bv-integer="true"
               data-bv-integer-message="Must be a whole number"
@@ -319,8 +293,124 @@
               <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
             </div>
           </div>
+          <div class="form-group form-group-lg">
 
-          <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="bidTotal" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+           <div id="bidFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+         <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
+</div>
+<div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">buy</h4>
+      </div>
+      <div class="modal-body">
+        <form id="buyForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10 input-group">
+              <span class="input-group-addon">$</span>
+              <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
+              <span class="input-group-addon">per piece</span>
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+             <input name="buyPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+             type="text" 
+             data-bv-integer="true"
+             data-bv-integer-message="Must be a whole number"
+
+             >
+           </div>
+         </div>
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="buyTotal" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds left</label>
+           <div id="buyFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <button id="placebuyBtn" type="submit" class="btn btn-primary">Place buy</button>
+         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
+</div>
+
+<div id="depositModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Deposit</h4>
+      </div>
+      <div class="modal-body">
+        <form id="depositForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Amount</label>
+            <div class="col-sm-10 input-group">
+              <span class="input-group-addon">$</span>
+              <input name="deposit" class="form-control" type="text" id="formGroupInputLarge" placeholder="Current funds"
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-value=".01"
+              data-bv-greaterthan-message="Must be > .01"
+
+              >
+            </div>
+          </div>
+
+          <button id="placedepositBtn" type="submit" class="btn btn-primary">Place deposit</button>
         </form>
 
       </div>
@@ -328,8 +418,9 @@
     </div>
   </div>
 </div>
-<div id="askModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
+
+<div id="askModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
 
     <div class="modal-content">
       <div class="modal-header">
@@ -352,7 +443,7 @@
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
             <div class="col-sm-10">
-              <input name="pieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
               type="text" 
               data-bv-integer="true"
               data-bv-integer-message="Must be a whole number"
@@ -367,15 +458,39 @@
               <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
             </div>
           </div>
+          <div class="form-group form-group-lg">
 
-          <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
-        </form>
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="askTotal" class="col-sm-10 form-control-static">
 
-      </div>
+           </div>
+         </div>
 
-    </div>
-  </div>
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+           <div id="askFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+         <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+
+       </form>
+
+     </div>
+
+   </div>
+ </div>
 </div>
+
 <!-- end of wrapper -->
 </div>
 

@@ -63,6 +63,9 @@ public class Tables {
 	@Table("rewards_earned_total_by_user") 
 	public static class Rewards_earned_total_by_user extends Model {}
 	
+	@Table("rewards_earned_total") 
+	public static class Rewards_earned_total extends Model {}
+	
 	@Table("pieces_available")
 	public static class Pieces_available extends Model {}
 	
@@ -168,7 +171,9 @@ public class Tables {
 	@Table("creators_funds_accum")
 	public static class Creators_funds_accum extends Model {}
 	
-
+	@Table("rewards_earned_accum")
+	public static class Rewards_earned_accum extends Model {}
+	
 	
 	
 

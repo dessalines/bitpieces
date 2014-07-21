@@ -42,6 +42,8 @@ import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_b
 import com.heretic.bitpieces_practice.tables.Tables.Prices;
 import com.heretic.bitpieces_practice.tables.Tables.Prices_for_user;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned;
+import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned_accum;
+import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned_total;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned_total_by_user;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_owed;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_owed_to_user;
@@ -258,6 +260,16 @@ public class WebTools {
 
 	}
 	
+	public static String getRewardsEarnedTotalJson(String userId, String body) {
+
+		// First fetch from the table
+		List<Model> list = Rewards_earned_total.find("owners_id=?", userId);
+
+
+		return createHighChartsJSONForCurrent(list, "reward_earned_total", "creators_username");
+
+	}
+	
 	public static String getPiecesOwnedValueCurrentCreatorSeriesJson(String creatorName, String body) {
 
 		// First fetch from the table
@@ -295,11 +307,11 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsEarnedSeriesJson(String userId, String body) {
+	public static String getRewardsEarnedAccumSeriesJson(String userId, String body) {
 		// First fetch from the table
-		List<Model> list = Rewards_earned.find("owners_id=?", userId);
+		List<Model> list = Rewards_earned_accum.find("owners_id=?", userId);
 
-		return createHighChartsJSONForMultipleCreators(list, "price_time_", "reward_earned", "creators_username");
+		return createHighChartsJSONForMultipleCreators(list, "price_time_", "reward_accum", "creators_username");
 	}
 
 	public static String getUsersFundsAccumSeriesJson(String userId, String body) {

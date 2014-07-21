@@ -7,6 +7,8 @@
   padding-top: 50px;
   }*/
 
+
+
   /*dropdown hover*/
   ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;    
@@ -84,6 +86,9 @@
 
  /* Hide for mobile, show later */
  @media (min-width: 768px) {
+  .navbar {
+    height: 60px;
+  }
   .sidebar {
     position: fixed;
     top: 60px;
