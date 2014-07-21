@@ -26,6 +26,9 @@
   <!--   toastr css -->
   <link href="toastr/toastr.css" rel="stylesheet"/>
 
+    <!--   typeahead css -->
+  <link href="typeaheadjs.css" rel="stylesheet"/>
+
   <!-- Just for debugging purposes. Don't actually copy this line! -->
   <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -38,189 +41,246 @@
         <!-- Custom styles for this template -->
         <link href="carousel.css" rel="stylesheet" />
       </head>
+
+
   <!-- NAVBAR
   ================================================== -->
   <body>
-    <div class="navbar-wrapper">
-      <div class="container">
+    <!-- plug into here -->
+    <nav class="navbar navbar-default" role="navigation">
+     <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">BitPieces</a>
+    </div>
 
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">BitPieces</a>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     <ul class="nav navbar-nav">
+      <li><a href="/carousel">Home</a></li>
+      <li><a href="#discover">Discover</a></li>
+      <li><a href="/creators">Creators</a></li>
+      <li><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+      <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+      <li><a href="#logout" id="logouthref" class="hide">Log Out</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li class="dropdown-header">Nav header</li>
+          <li><a href="#">Separated link</a></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+    <form id="creator_search" class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+       <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
+     </div>
+     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+   </form>
+
+
+   <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown messages-dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li class="dropdown-header">7 New Messages</li>
+        <li class="message-preview">
+          <a href="#">
+            <span class="avatar"><img src="http://placehold.it/50x50"></span>
+            <span class="name">John Smith:</span>
+            <span class="message">Hey there, I wanted to ask you something...</span>
+            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li class="message-preview">
+          <a href="#">
+            <span class="avatar"><img src="http://placehold.it/50x50"></span>
+            <span class="name">John Smith:</span>
+            <span class="message">Hey there, I wanted to ask you something...</span>
+            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li class="message-preview">
+          <a href="#">
+            <span class="avatar"><img src="http://placehold.it/50x50"></span>
+            <span class="name">John Smith:</span>
+            <span class="message">Hey there, I wanted to ask you something...</span>
+            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li><a href="#">View Inbox <span class="badge">7</span></a></li>
+      </ul>
+    </li>
+
+
+    <li id="userDropdown" class="dropdown user-dropdown">
+
+      <script id="usernameTemplate" type="x-tmpl-mustache">  
+       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+
+
+       <ul class="dropdown-menu">
+         <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+         <li class="divider"></li>
+         <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+
+       </ul>
+     </script>
+   </li>
+ </ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+
+
+<!-- Login Modal -->
+
+<div class="modal fade bs-example-modal-lg" id="userloginModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="userloginModalLabel">Sign in or Register</h4>
+      </div>
+
+      <div class="modal-body">
+
+        <h3> Sign in </h3>
+        <form id="loginForm" class="form-horizontal" role="form">
+          <div id="userLoginDiv" class="form-group">
+            <label for="inputUsername3" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10">
+              <input name="username" type="Username" class="form-control" id="inputUsername3" placeholder="Username"
+              data-bv-message="The username is not valid"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="The username is required and cannot be empty"
+
+              data-bv-regexp="true"
+              data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+              data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+
+              data-bv-stringlength="true"
+              data-bv-stringlength-min="6"
+              data-bv-stringlength-max="30"
+              data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+
+              >
             </div>
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="/carousel">Home</a></li>
-                <li><a href="#discover">Discover</a></li>
-                <li><a href="/creators">Creators</a></li>
-                <li><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
-                <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
-                <li><a href="#logout" id="logouthref" class="hide">Log Out</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form id="creator_search" class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-              </form>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+              <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="The password is required and cannot be empty"
+
+              data-bv-different="true"
+              data-bv-different-field="username"
+              data-bv-different-message="The password cannot be the same as username" 
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+                <label>
+                  <input name="remember" type="checkbox"> Remember me
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+
+               <label>
+                <input name="creatorCheckbox" type="checkbox" id="creatorCheckbox" value="creator"> I'm a Creator
+              </label>
+
             </div>
           </div>
         </div>
 
-      </div>
-    </div>
 
-
-    <!-- Login Modal -->
-    
-    <div class="modal fade bs-example-modal-lg" id="userloginModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="userloginModalLabel">Sign in or Register</h4>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="signinBtn" type="submit" class="btn btn-default">Sign in</button>
           </div>
-          
-          <div class="modal-body">
+        </div>
+      </form>
 
-            <h3> Sign in </h3>
-            <form id="loginForm" class="form-horizontal" role="form">
-              <div id="userLoginDiv" class="form-group">
-                <label for="inputUsername3" class="col-sm-2 control-label">Username</label>
-                <div class="col-sm-10">
-                  <input name="username" type="Username" class="form-control" id="inputUsername3" placeholder="Username"
-                  data-bv-message="The username is not valid"
-
-                  data-bv-notempty="true"
-                  data-bv-notempty-message="The username is required and cannot be empty"
-
-                  data-bv-regexp="true"
-                  data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
-                  data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
-
-                  data-bv-stringlength="true"
-                  data-bv-stringlength-min="6"
-                  data-bv-stringlength-max="30"
-                  data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
-
-                  >
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                  <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
-
-                  data-bv-notempty="true"
-                  data-bv-notempty-message="The password is required and cannot be empty"
-
-                  data-bv-different="true"
-                  data-bv-different-field="username"
-                  data-bv-different-message="The password cannot be the same as username" 
-                  >
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <div class="checkbox">
-                    <label>
-                      <input name="remember" type="checkbox"> Remember me
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <div class="checkbox">
-
-                   <label>
-                    <input name="creatorCheckbox" type="checkbox" id="creatorCheckbox" value="creator"> I'm a Creator
-                  </label>
-                  
-                </div>
-              </div>
-            </div>
-
-            
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-10">
-                <button id="signinBtn" type="submit" class="btn btn-default">Sign in</button>
-              </div>
-            </div>
-          </form>
-
-          <!-- The different sign ins -->
-          <table style="width:100%">
-            <tr>
-              <td>
-                <a class="btn btn-primary btn-social btn-facebook">
-                  <i class="fa fa-facebook"></i> Sign in with Facebook
-                </a>
-              </td>
-              <td>
-               <a class="btn btn-primary btn-social btn-twitter">
-                <i class="fa fa-twitter"></i> Sign in with Twitter
-              </a>
-            </td>
-            <td>
-             <a class="btn btn-primary btn-social btn-google-plus">
-              <i class="fa fa-google-plus"></i> Sign in with Google
+      <!-- The different sign ins -->
+      <table style="width:100%">
+        <tr>
+          <td>
+            <a class="btn btn-primary btn-social btn-facebook">
+              <i class="fa fa-facebook"></i> Sign in with Facebook
             </a>
           </td>
+          <td>
+           <a class="btn btn-primary btn-social btn-twitter">
+            <i class="fa fa-twitter"></i> Sign in with Twitter
+          </a>
         </td>
         <td>
-         <a class="btn btn-primary btn-social btn-reddit">
-          <i class="fa fa-reddit"></i> Sign in with Reddit
+         <a class="btn btn-primary btn-social btn-google-plus">
+          <i class="fa fa-google-plus"></i> Sign in with Google
         </a>
       </td>
-    </tr>
-  </table>
-  <hr>
-  <h3> Register </h3>
+    </td>
+    <td>
+     <a class="btn btn-primary btn-social btn-reddit">
+      <i class="fa fa-reddit"></i> Sign in with Reddit
+    </a>
+  </td>
+</tr>
+</table>
+<hr>
+<h3> Register </h3>
 
-  <form id="registerForm" class="form-horizontal" role="form"
-  data-bv-message="This value is not valid"
-  data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
-  data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
-  data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
-  
-  <div class="form-group">
-   <label for="inputUsername4" class="col-sm-2 control-label">Username</label>
-   <div class="col-sm-10">
-    <input name="username" type="Username" class="form-control" id="inputUsername4" placeholder="Username"
-    data-bv-message="The username is not valid"
+<form id="registerForm" class="form-horizontal" role="form"
+data-bv-message="This value is not valid"
+data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
 
-    data-bv-notempty="true"
-    data-bv-notempty-message="The username is required and cannot be empty"
+<div class="form-group">
+ <label for="inputUsername4" class="col-sm-2 control-label">Username</label>
+ <div class="col-sm-10">
+  <input name="username" type="Username" class="form-control" id="inputUsername4" placeholder="Username"
+  data-bv-message="The username is not valid"
 
-    data-bv-regexp="true"
-    data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
-    data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+  data-bv-notempty="true"
+  data-bv-notempty-message="The username is required and cannot be empty"
 
-    data-bv-stringlength="true"
-    data-bv-stringlength-min="6"
-    data-bv-stringlength-max="30"
-    data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+  data-bv-regexp="true"
+  data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+  data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
 
-    />
+  data-bv-stringlength="true"
+  data-bv-stringlength-min="6"
+  data-bv-stringlength-max="30"
+  data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
 
-  </div>
+  />
+
+</div>
 </div>
 <div class="form-group">
   <label for="inputEmail3" class="col-sm-2 control-label">Email address</label>
@@ -438,7 +498,15 @@ TODO some kinda captcha thing
       <script src="bootstrap-dist/js/bootstrap.min.js"></script>
       <script type="text/javascript" src="bootstrap-validator/dist/js/bootstrapValidator.js"></script>
       <script src="toastr/toastr.js"></script>
+      <script src="mustache/mustache.js"></script>
       <script src="holder/holder.js"></script>
+      <script src="json.date-extensions.js"></script>
+      <script src="tablesorter/jquery.tablesorter.js"></script> 
+      <script src="highcharts/js/highcharts.js"></script>
+      <script src="highcharts/js//modules/exporting.js"></script>
+      <script src="highcharts/js/themes/dark-unica.js"></script>
+      <script src="typeahead.js/typeahead.bundle.js"></script>
+      
 
       <!--   My scripts -->
       <script src="tools.js"></script>

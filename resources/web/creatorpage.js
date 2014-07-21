@@ -10,15 +10,18 @@ $(document).ready(function() {
 
     // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = getParameterByName('creator');
-
-    showHideButtons(creatorName);
-
-    bidAskOrBuySetup(sessionId + "/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal", "Placed Ask");
-    bidAskOrBuySetup(sessionId + "/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal", "Placed Bid");
-    bidAskOrBuySetup(sessionId + "/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal", "Placed Buy");
-
-    setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
     $('#page_title').text(creatorName);
+    
+
+    if (sessionId != null) {
+        showHideButtons(creatorName);
+        bidAskOrBuySetup(sessionId + "/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal", "Placed Ask");
+        bidAskOrBuySetup(sessionId + "/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal", "Placed Bid");
+        bidAskOrBuySetup(sessionId + "/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal", "Placed Buy");
+
+
+        setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+    }
     navigateWithParams();
 
 
