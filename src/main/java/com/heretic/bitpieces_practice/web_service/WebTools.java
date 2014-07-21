@@ -24,12 +24,14 @@ import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks_current;
+import com.heretic.bitpieces_practice.tables.Tables.Categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_search_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available_view;
@@ -268,6 +270,28 @@ public class WebTools {
 
 		return createHighChartsJSONForCurrent(list, "reward_earned_total", "creators_username");
 
+	}
+	
+	public static String getCategories(String body) {
+		List<Model> list  = Categories.findAll();
+		
+		return createTableJSON(list);
+	}
+	
+	public static String getDiscoverJson(String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+	
+		
+		String category = postMap.get("category");
+		List<Model> list = null;
+		if (category != null && category.equals("All")) {
+			list = Creators_search_view.findAll();
+		} else {
+			list = Creators_search_view.find("category_name=?", category);
+		}
+		
+		return createTableJSON(list, "creators_name","category_name",  "worth_current", "number_of_backers", "reward_pct");
 	}
 	
 	public static String getPiecesOwnedValueCurrentCreatorSeriesJson(String creatorName, String body) {

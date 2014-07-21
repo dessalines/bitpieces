@@ -245,6 +245,7 @@ public class WebService {
 
 				json = WebTools.getRewardsEarnedTotalJson(uid.getId(), req.body());
 
+
 				dbClose();
 
 				System.out.println(json);
@@ -571,6 +572,35 @@ public class WebService {
 			String query = req.params(":query");
 
 			String json = WebTools.creatorsSearchJson(query);
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
+		get("/get_categories", (req, res) -> {
+			allowResponseHeaders(req, res);
+			dbInit(prop);
+
+
+			String json = WebTools.getCategories(req.body());
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
+		post("/discover", (req, res) -> {
+			allowResponseHeaders(req, res);
+			dbInit(prop);
+
+			String json = WebTools.getDiscoverJson(req.body());
 
 			dbClose();
 
