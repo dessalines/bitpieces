@@ -1,12 +1,17 @@
 $(document).ready(function(){
+  sessionId = getCookie("authenticated_session_id");
 
 
-	console.log(document.cookie);
-	$('#registerForm').bootstrapValidator({
-		message: 'This value is not valid',
-		excluded: [':disabled'],
 
-	});
+  fillUserInfoMustacheFromCookie();
+    setupLogout();
+
+  console.log(document.cookie);
+  $('#registerForm').bootstrapValidator({
+    message: 'This value is not valid',
+    excluded: [':disabled'],
+
+  });
   $('#loginForm').bootstrapValidator({
     message: 'This value is not valid',
     excluded: [':disabled'],
