@@ -212,7 +212,7 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_rewards_earned", (req, res) -> {
+		get("/:auth/get_rewards_earned_accum", (req, res) -> {
 			String json = null;
 			try {
 				UserTypeAndId uid = standardInit(prop, res, req);
@@ -220,8 +220,30 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getRewardsEarnedSeriesJson(uid.getId(), req.body());
+				json = WebTools.getRewardsEarnedAccumSeriesJson(uid.getId(), req.body());
 
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+
+		});
+		
+		get("/:auth/get_rewards_earned_total", (req, res) -> {
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+
+				// get currency if one exists
+
+				json = WebTools.getRewardsEarnedTotalJson(uid.getId(), req.body());
 
 				dbClose();
 

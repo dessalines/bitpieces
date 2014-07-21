@@ -2,7 +2,7 @@ $(document).ready(function(){
   sessionId = getCookie("authenticated_session_id");
 
 
-
+setupCreatorSearch();
   fillUserInfoMustacheFromCookie();
     setupLogout();
 

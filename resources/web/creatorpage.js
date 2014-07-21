@@ -2,10 +2,7 @@ $(document).ready(function() {
 
     sessionId = getCookie("authenticated_session_id");
     setupMiniSubmenu();
-    setupCreatorSearch();
 
-    fillUserInfoMustacheFromCookie();
-    setupLogout();
 
 
     // var creatorName = window.location.pathname.split('/').pop();

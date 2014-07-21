@@ -10,9 +10,11 @@ $(document).ready(function(){
 	fillUserHighChartStandardTemplate(sessionId + '/get_pieces_owned_value_accum', "#pieces_owned_value", 'Value ($)', '$');
 	fillUserHighChartStandardTemplate(sessionId + '/get_pieces_owned_accum', '#pieces_owned', '# of Pieces owned', '');
 	fillUserHighChartPieChartTemplate(sessionId + '/get_pieces_owned_value_current', '#pieces_owned_value_current');
-	fillUserHighChartStandardTemplate(sessionId + '/get_rewards_earned', '#rewards_earned', 'Reward ($)', '$');
+	fillUserHighChartStandardTemplate(sessionId + '/get_rewards_earned_accum', '#rewards_earned_accum', 'Reward ($)', '$');
 	fillTableFromMustacheSpecial(sessionId + '/get_users_bids_asks_current', '#users_bids_asks_current_template', '#users_bids_asks_current', '#users_bids_asks_current_table',
 		"#remove_button", sessionId);
+
+    fillUserHighChartPieChartTemplate(sessionId + '/get_rewards_earned_total', '#rewards_earned_total');
 
 	
 });

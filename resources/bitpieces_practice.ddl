@@ -33,7 +33,8 @@ rewards_earned_total, rewards_owed, users_funds, current_users_funds, users_fund
 pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_owned_value_current_by_creator, creators_funds, creators_funds_current, rewards_current,
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
 users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user, pieces_owned_by_creator,
-bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped
+bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped,
+rewards_earned_by_owner_accum
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -970,7 +971,15 @@ from pieces_available
 inner join creators
 on pieces_available.creators_id = creators.id;
 
-
+CREATE VIEW rewards_earned_by_owner_accum as
+select a.owners_id, a.price_time_, a.reward_earned,
+sum(b.reward_earned)
+from rewards_earned a, rewards_earned b
+where b.owners_id = a.owners_id 
+--and b.creators_id = a.creators_id
+and b.price_time_ <= a.price_time_
+GROUP BY a.owners_id, a.price_time_, a.reward_earned
+ORDER BY a.owners_id, a.price_time_
 
 
 /*
