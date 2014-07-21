@@ -196,7 +196,109 @@
 
   </div> -->
 
-  <div class="span2 col-md-2 " style="position:absolute; right:0">  
+  
+
+ <!-- The sidebar -->
+<div class="row col-md-10 col-md-offset-2"> 
+
+
+  <!-- The Page -->
+<div id="main_col" class="col-md-12 main">
+
+
+
+ <div class="row">
+
+
+    <div class="col-md-6">
+      <h1 id="page_title"> </h1>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-12">
+       <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+       <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+       <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+
+
+     </div>
+ </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+
+    <ol class="breadcrumb">
+      <li><i class="fa fa-dashboard"></i> Overview</a></li>
+    </ol>
+  </div>
+</div>
+
+
+<!-- The two top tables -->
+<div class="row"> 
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
+      </div>
+      <div id="creators_activity" class="panel-body">
+        <script id="creators_activity_template" type="x-tmpl-mustache"> 
+          <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
+            <thead>
+              <tr>
+                <th>Time <i class="fa fa-sort"></i></th>
+                <th>Type <i class="fa fa-sort"></th>
+                <th>Recipient <i class="fa fa-sort"></th>
+                <th>Price <i class="fa fa-sort"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {{#.}}
+
+              <tr> 
+                <td>{{time_}}</td>
+                <td>{{type}}</td>
+                <td>{{recipient}}</td>
+                <td>{{funds}}</td>
+              </tr>
+              {{/.}}
+
+            </tbody>
+          </script>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Price per piece history</h3>
+      </div>
+      <div class="panel-body">
+        <div class = "small-chart" id="pricing"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div> <hr></div>
+
+
+<!-- The main body -->
+<div class="row">
+  <div id="main_body" class="col-md-10">
+    <script id="main_body_template" type="x-tmpl-mustache">
+      <p class="lead">{{.}}</p>
+    </script>
+  </div>
+</div>
+
+</div>
+
+ <div class="col-md-2 col-md-offset-10">  
 
   <!-- <div class="span2 col-md-2 col-md-offset-10">   -->
    <!-- The boxes on the right this time-->
@@ -364,104 +466,6 @@
     </div>
   </div>
 </div>
-
-<!-- The Page -->
-<div id="main_col" class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 main">
-
-
-
- <div class="row">
-
-
-    <div class="col-md-6">
-      <h1 id="page_title"> </h1>
-    </div>
-    <div class="col-md-6">
-      <div class="col-md-12">
-       <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
-       <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
-       <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
-
-
-     </div>
- </div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-
-    <ol class="breadcrumb">
-      <li><i class="fa fa-dashboard"></i> Overview</a></li>
-    </ol>
-  </div>
-</div>
-
-
-<!-- The two top tables -->
-<div class="row"> 
-  <div class="col-md-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
-      </div>
-      <div id="creators_activity" class="panel-body">
-        <script id="creators_activity_template" type="x-tmpl-mustache"> 
-          <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
-            <thead>
-              <tr>
-                <th>Time <i class="fa fa-sort"></i></th>
-                <th>Type <i class="fa fa-sort"></th>
-                <th>Recipient <i class="fa fa-sort"></th>
-                <th>Price <i class="fa fa-sort"></th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {{#.}}
-
-              <tr> 
-                <td>{{time_}}</td>
-                <td>{{type}}</td>
-                <td>{{recipient}}</td>
-                <td>{{funds}}</td>
-              </tr>
-              {{/.}}
-
-            </tbody>
-          </script>
-        </table>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Price per piece history</h3>
-      </div>
-      <div class="panel-body">
-        <div class = "small-chart" id="pricing"></div>
-      </div>
-    </div>
-  </div>
-
-</div>
-<div> <hr></div>
-
-
-<!-- The main body -->
-<div class="row">
-  <div id="main_body" class="col-md-12">
-    <script id="main_body_template" type="x-tmpl-mustache">
-      <p class="lead">{{.}}</p>
-    </script>
-  </div>
-</div>
-
-
-
-
 
 </div>
 
