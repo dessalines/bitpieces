@@ -196,60 +196,94 @@
 
   </div> -->
 
- 
+  
 
-<!-- The Page -->
+  <!-- The Page -->
   <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
 
 
 
- <div class="row">
-  <div class="col-md-12">
+   <div class="row">
+    <div class="col-md-12">
 
-    <div class="col-md-6">
-      <h1 id="page_title"> </h1>
-    </div>
-    <div class="col-md-6">
-      <div class="col-md-12">
-       <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
-       <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
-       <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+      <div class="col-md-6">
+        <h1 id="page_title"> </h1>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12">
+         <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+         <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+         <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
 
 
+       </div>
      </div>
    </div>
  </div>
-</div>
-<div class="row">
+ <div class="row">
   <div class="col-md-12">
 
-      <ol class="breadcrumb">
-        <li><a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a></li>
-        <li class="active"><i class="fa fa-table"></i> Pieces</li>
-      </ol>
+    <ol class="breadcrumb">
+      <li><a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a></li>
+      <li class="active"><i class="fa fa-table"></i> Pieces</li>
+    </ol>
   </div>
 </div>
 
 
 <!-- The two top tables -->
-     
-
-      <!-- a 6 wide  chart -->
-      <div class="row">
-        <div class="col-md-6">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Pieces value owned by users</h3>
-            </div>
-            <div class="panel-body">
-              <div class = "small-chart" id="pieces_owned_value_current_creator"></div>
-            </div>
-          </div>
-        </div>
 
 
-    </div><!-- /.row -->
+<!-- a 6 wide  chart -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Pieces value owned by users</h3>
+      </div>
+      <div class="panel-body">
+        <div class = "small-chart" id="pieces_owned_value_current_creator"></div>
+      </div>
     </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Pieces issued</h3>
+      </div>
+      <div id="pieces_issued" class="panel-body">
+        <script id="pieces_issued_template" type="x-tmpl-mustache"> 
+          <table id="pieces_issued_table" class="table table-hover table-striped tablesorter">
+            <thead> 
+              <tr>
+                <th>Time <i class="fa fa-sort"></i></th>
+                <th>Pieces issued <i class="fa fa-sort"></th>
+                <th>Price per piece <i class="fa fa-sort"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {{#.}}
+
+              <tr> 
+                <td>{{time_}}</td>
+                <td>{{pieces_issued}}</td>
+                <td>{{price_per_piece}}</td>
+              </tr>
+              {{/.}}
+
+            </tbody>
+          </script>
+        </table>
+
+      </div>
+    </div>
+  </div>
+
+
+</div><!-- /.row -->
+</div>
 
 
 <!-- Modals -->

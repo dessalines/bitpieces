@@ -66,7 +66,7 @@ function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonNam
     				data: json,
     				success: function(data, status, xhr) {
 
-    					
+    					row.remove();
     					xhr.getResponseHeader('Set-Cookie');
 
 
