@@ -1,6 +1,12 @@
 package com.heretic.bitpieces_practice.tools;
 
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.javalite.activejdbc.Base;
 
@@ -10,6 +16,77 @@ import com.heretic.bitpieces_practice.web_service.HTMLTools;
 
 public class Tester {
 	public static void main(String[] args) {
+		
+		String symbol = "\u00A5";
+//		String symbol = "";
+		Integer precision = 4;
+		String dfPattern = symbol + "###,###.";
+		for (int i = 0; i < precision; i++) {
+			dfPattern +="#";
+		}
+		
+		System.out.println(dfPattern);
+		
+		DecimalFormat df = new DecimalFormat(dfPattern);
+		String sampleJson = "[{\"creators_id\":1,\"reward_pct\":1.4,\"category_names\":\"Design,Visual Arts\","
+				+ "\"number_of_backers\":4,\"worth_current\":117.15643434998,\"creators_name\":\"Leonardo_"
+				+ "Davinci\"},{\"creators_id\":2,\"reward_pct\":5.0,\"category_names\":\"Music\",\"number_of_backers"
+				+ "\":1,\"worth_current\":124445.0,\"creators_name\":\"Dusty_Springfield\"}]";
+		
+		System.out.println("sample Json = " + sampleJson);
+		
+		List<String> monetaryColNames = Arrays.asList("worth_current", "reward_pct");
+		String names = "";
+		
+		Iterator<String> it = monetaryColNames.iterator();
+		while (it.hasNext()) {
+			String cName = it.next();
+			names += "\"" + cName + "\"";
+			if (it.hasNext()) {
+				names += "|";
+			}
+		}
+		
+		String regex = "(" + names + "):[-+]?[0-9]*\\.?[0-9]+";
+		
+		System.out.println(regex);
+		
+
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(sampleJson);
+		
+		while (matcher.find()) {
+		      System.out.print("Start index: " + matcher.start());
+		      System.out.print(" End index: " + matcher.end() + "|");
+		      System.out.println(matcher.group());
+		      
+		      String regex2 = "[-+]?[0-9]*\\.?[0-9]+";
+		      
+				Pattern pattern2 = Pattern.compile(regex2);
+
+				Matcher matcher2= pattern2.matcher(matcher.group());
+				
+				while (matcher2.find()) {
+				      System.out.print("Start index: " + matcher2.start());
+				      System.out.print(" End index: " + matcher2.end() + "|");
+				      System.out.println(matcher2.group());
+				      
+				      // FORMAT THE NUMBER
+				      Double numberBefore = Double.valueOf(matcher2.group());
+				      String formatted = "\"" + df.format(numberBefore) + "\"";
+				      
+				      System.out.println(numberBefore + " after : " + formatted);
+				      sampleJson = sampleJson.replaceAll(matcher2.group(), formatted);
+				}
+		      
+		      
+		    }
+		
+		System.out.println(sampleJson);
+		
+	}
+	public static void main3(String[] args) {
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 		dbInit(prop);
 //		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
