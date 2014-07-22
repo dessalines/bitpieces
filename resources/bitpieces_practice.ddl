@@ -25,7 +25,9 @@ users_withdrawals,
 creators_withdrawals,
 badges,
 users_badges,
-creators_badges
+creators_badges,
+categories,
+creators_categories
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
@@ -75,6 +77,58 @@ CREATE TABLE creators_page_fields
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
+
+CREATE TABLE categories
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   name VARCHAR(56) UNIQUE NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+CREATE TABLE creators_categories
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   creators_id int(11) UNIQUE NOT NULL,
+   FOREIGN KEY (creators_id) REFERENCES creators(id),
+   categories_id int(11) UNIQUE NOT NULL,
+   FOREIGN KEY (categories_id) REFERENCES categories(id),
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+CREATE TABLE cities
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   country VARCHAR(56) NOT NULL,
+   city VARCHAR(56) CHARACTER SET utf8 NOT NULL,
+   region VARCHAR(56) NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+CREATE TABLE creators_cities
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   creators_id int(11) UNIQUE NOT NULL,
+   FOREIGN KEY (creators_id) REFERENCES creators(id),
+   cities_id int(11) UNIQUE NOT NULL,
+   FOREIGN KEY (cities_id) REFERENCES cities(id),
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+drop table creators_cities
+drop table cities
 
 
 
@@ -640,9 +694,13 @@ on pieces_owned_value_accum.creators_id = creators.id
 ;
 
 CREATE VIEW rewards_earned_total as
-select owners_id, creators_id, sum(reward_earned) as reward_earned_total
+select owners_id, creators_id, creators_username, sum(reward_earned) as reward_earned_total
 from rewards_earned
 group by owners_id, creators_id;
+
+
+
+
 
 CREATE VIEW rewards_earned_total_by_user as
 select owners_id, sum(reward_earned) as reward_earned_total
@@ -952,9 +1010,11 @@ order by creators_id, value_total desc;
 
 
 CREATE VIEW backers_current_count as 
-select creators_username, count(*) as number_of_backers 
+select creators_username, creators_id, count(*) as number_of_backers 
 from backers_current
 group by creators_id, creators_username;
+
+
 
 CREATE VIEW creators_page_fields_view as
 select creators_id, username, main_body from creators_page_fields
@@ -971,15 +1031,39 @@ from pieces_available
 inner join creators
 on pieces_available.creators_id = creators.id;
 
-CREATE VIEW rewards_earned_by_owner_accum as
-select a.owners_id, a.price_time_, a.reward_earned,
-sum(b.reward_earned)
+CREATE VIEW rewards_earned_accum as
+select a.owners_id, a.creators_username, a.price_time_, a.reward_earned,
+sum(b.reward_earned) as reward_accum
 from rewards_earned a, rewards_earned b
 where b.owners_id = a.owners_id 
---and b.creators_id = a.creators_id
+and b.creators_username = a.creators_username
 and b.price_time_ <= a.price_time_
-GROUP BY a.owners_id, a.price_time_, a.reward_earned
-ORDER BY a.owners_id, a.price_time_
+GROUP BY a.owners_id, a.creators_userbname, a.price_time_, a.reward_earned
+ORDER BY a.owners_id, a.creators_username, a.price_time_;
+
+
+CREATE VIEW creators_search_view as 
+select creators.id as creators_id,
+creators.username as creators_name, 
+categories.name as category_name, 
+pieces_owned_value_current_by_creator.value_total as worth_current,
+rewards_current.reward_pct,
+backers_current_count.number_of_backers
+from creators
+inner join pieces_owned_value_current_by_creator
+on pieces_owned_value_current_by_creator.creators_id = creators.id
+inner join rewards_current
+on rewards_current.creators_id = creators.id
+inner join backers_current_count
+on backers_current_count.creators_id = creators.id
+inner join creators_categories
+on creators_categories.creators_id = creators.id
+inner join categories on
+creators_categories.categories_id = categories.id;
+
+
+
+
 
 
 /*
