@@ -1038,7 +1038,7 @@ from rewards_earned a, rewards_earned b
 where b.owners_id = a.owners_id 
 and b.creators_username = a.creators_username
 and b.price_time_ <= a.price_time_
-GROUP BY a.owners_id, a.creators_userbname, a.price_time_, a.reward_earned
+GROUP BY a.owners_id, a.creators_username, a.price_time_, a.reward_earned
 ORDER BY a.owners_id, a.creators_username, a.price_time_;
 
 

@@ -7,11 +7,6 @@ $(document).ready(function() {
 
   setupMiniSubmenu();
 
-  fillUserInfoMustacheFromCookie();
-
-  setupCreatorSearch();
-
-  setupLogout();
 
 
 });
