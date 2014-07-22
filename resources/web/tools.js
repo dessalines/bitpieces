@@ -154,7 +154,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             jsonObj = getCookie('username');
             
             if (jsonObj != null) {
-            var template = $('#usernameTemplate').html();
+              var template = $('#usernameTemplate').html();
             Mustache.parse(template);   // optional, speeds up future uses
             var rendered = Mustache.render(template,jsonObj);
             $('#userDropdown').html(rendered);
@@ -163,15 +163,15 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             console.log(template);
             console.log(rendered);
             
-            } else {
-              $('#userDropdown').html('');
-            }
+          } else {
+            $('#userDropdown').html('');
+          }
 
-          } 
+        } 
 
 
 
-          function fillTableFromMustache(url, templateId, divId, tableId) {
+        function fillTableFromMustache(url, templateId, divId, tableId) {
        var url = sparkService + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
@@ -360,7 +360,7 @@ $.ajax({
 
 
 
-                       
+            
             var mainBody = jsonObj[sqlColName];
             console.log(jsonObj);   
             console.log(mainBody);
@@ -439,34 +439,34 @@ function saveSummerNote(shortUrl, btn, id) {
 
 function fillSimpleText(url, divId) {
      var url = sparkService + url// the script where you handle the form input.
-       $.ajax({
-        type: "GET",
-        url: url,
-        xhrFields: {
-          withCredentials: true
-        },
+     $.ajax({
+      type: "GET",
+      url: url,
+      xhrFields: {
+        withCredentials: true
+      },
       // data: seriesData, 
       success: function(data, status, xhr) {
         console.log(data);
-            $(divId).html(data);
+        $(divId).html(data);
 
 
-          },
-          error: function (request, status, error) {
+      },
+      error: function (request, status, error) {
 
-           toastr.error(request.responseText);
-         }
-       });
-}
+       toastr.error(request.responseText);
+     }
+   });
+   }
 
-function simpleFetch(url) {
+   function simpleFetch(url) {
      var url = sparkService + url// the script where you handle the form input.
-       return $.ajax({
-        type: "GET",
-        url: url,
-        xhrFields: {
-          withCredentials: true
-        },
+     return $.ajax({
+      type: "GET",
+      url: url,
+      xhrFields: {
+        withCredentials: true
+      },
       // data: seriesData, 
       success: function(data, status, xhr) {
         console.log('data = ' + data);
@@ -479,55 +479,55 @@ function simpleFetch(url) {
            toastr.error(request.responseText);
          }
        });
-}
+   }
 
-function getParameterByName(name) {
+   function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
+    results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
+  }
 
-function navigateWithParams() {
+  function navigateWithParams() {
     // all <a> tags containing a certain rel=""
     $("a[rel~='keep-params']").click(function(e) {
-        e.preventDefault();
+      e.preventDefault();
 
-        var params = window.location.search,
-        dest = $(this).attr('href') + params;
+      var params = window.location.search,
+      dest = $(this).attr('href') + params;
 
     // in my experience, a short timeout has helped overcome browser bugs
     window.setTimeout(function() {
-        window.location.href = dest;
+      window.location.href = dest;
     }, 100);
-});
-}
-function setupDepositButton(shortUrl, btnId, formId, modalId) {
+  });
+  }
+  function setupDepositButton(shortUrl, btnId, formId, modalId) {
     simpleFetch(sessionId + '/get_users_funds_current').done(function(result) {
-        $('[name="deposit"]').attr('placeholder', 'Current funds:' + result);
+      $('[name="deposit"]').attr('placeholder', 'Current funds:' + result);
     });
 
     // !!!!!!They must have names unfortunately
     $(btnId).click(function(event) {
-        var formData = $(formId).serializeArray();
+      var formData = $(formId).serializeArray();
 
-        var btnId = $(this);
+      var btnId = $(this);
         // Loading
         btnId.button('loading');
 
         var url = sparkService + shortUrl; // the script where you handle the form input.
 
         $.ajax({
-            type: "POST",
-            url: url,
-            xhrFields: {
-                withCredentials: true
-            },
-            data: formData,
-            success: function(data, status, xhr) {
+          type: "POST",
+          url: url,
+          xhrFields: {
+            withCredentials: true
+          },
+          data: formData,
+          success: function(data, status, xhr) {
 
 
-                xhr.getResponseHeader('Set-Cookie');
+            xhr.getResponseHeader('Set-Cookie');
                 // document.cookie="authenticated_session_id=" + data + 
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
@@ -542,15 +542,40 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
 
                 console.log(document.cookie);
 
-            },
-            error: function(request, status, error) {
+              },
+              error: function(request, status, error) {
 
                 toastr.error(request.responseText);
-            }
-        });
+              }
+            });
 
 
 
         event.preventDefault();
-    });
+      });
 }
+
+function getJson(shortUrl) {
+       var url = sparkService + shortUrl// the script where you handle the form input.
+       return $.ajax({
+        type: "GET",
+        url: url,
+        xhrFields: {
+          withCredentials: true
+        },
+      // data: seriesData, 
+      success: function(data, status, xhr) {
+        // console.log(data);
+            // var jsonObj = JSON.parse(data);
+            // JSON.useDateParser();
+            // var jsonObj = jQuery.parseJSON(data);
+            // JSON.useDateParser();
+            // var jsonObj = JSON.parse(data);
+
+          },
+          error: function (request, status, error) {
+
+            toastr.error(request.responseText);
+          }
+        });
+     }

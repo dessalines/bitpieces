@@ -5,16 +5,46 @@ $(document).ready(function(){
 	sessionId = getCookie("authenticated_session_id");
 
 	
+	// fillFieldFromMustacheCustom(sessionId + '/get_users_settings', '#users_settings_template', '#users_settings', false);
 
+	// fillFieldFromMustacheCustom('get_currencies', '#currency_template', '#currency', false);
 
-	fillFieldFromMustacheCustom('get_currencies', '#currency_template', '#currency', false);
-
-	fillFieldFromMustacheCustom(sessionId + '/get_users_settings', '#users_settings_template', '#users_settings', false);
+	full();
 
 	
 });
-function fillFieldFromMustacheCustom(url, templateId, divId, isMoney) {
-	var template = $(templateId).html();
+
+function full() {
+	var template = $('#users_settings_template').html();
+
+	$.when(getJson(sessionId + '/get_users_settings'), 
+		getJson('get_currencies')).done(function(a1, a2){
+    // the code here will be executed when all four ajax requests resolve.
+    // a1, a2, a3 and a4 are lists of length 3 containing the response text,
+    // status, and jqXHR object for each of the four ajax calls respectively.
+
+    var usersSettingsJSON = JSON.parse(a1[0]);
+    var currenciesJSON = JSON.parse(a2[0]);
+    // var jsonObj = $.extend({}, usersSettingsJSON, currenciesJSON);
+    jsonObj = usersSettingsJSON;
+    jsonObj['currencies'] = currenciesJSON;
+    
+
+    var rendered = Mustache.render(template,jsonObj);
+    $('#users_settings').html(rendered);
+    console.log(jsonObj);        
+    console.log(template);
+    console.log(rendered);
+
+    setupSaveSettings(sessionId + '/save_users_settings', '#settingsForm', '#settingsSaveBtn')
+
+     // now do teh mustache
+ });
+	}
+
+
+	 function fillFieldFromMustacheCustom(url, templateId, divId, isMoney) {
+	 	var template = $(templateId).html();
 
        var url = sparkService + url// the script where you handle the form input.
        $.ajax({

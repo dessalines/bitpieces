@@ -67,9 +67,9 @@ public class InitializeTables {
 		System.out.println("Initializing tables...");
 		delete_all();
 
-		setup_users();
-
 		setup_currencies();
+		
+		setup_users();
 
 		setup_host_btc_address();
 		
@@ -102,8 +102,6 @@ public class InitializeTables {
 		creator_withdrawal();
 
 
-
-
 	}
 
 
@@ -131,6 +129,8 @@ public class InitializeTables {
 		 .put( "TRY", "Turkish Lira")
 		 .put( "USD", "United States Dollar")
 		 .put( "ZAR", "South African Rand")
+		 .put("BTC", "Bitcoin")
+		 .put("mBTC", "MilliBits")
 		 .build();
 		
 		for (Entry<String, String> e : currencyMap.entrySet()) {
