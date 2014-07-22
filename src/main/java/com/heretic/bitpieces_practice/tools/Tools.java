@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -105,7 +106,7 @@ public class Tools {
 		for (int i = 0; i < split.length; i++) {
 			String[] keyValue = split[i].split("=");
 			try {
-				postMap.put(keyValue[0], java.net.URLDecoder.decode(keyValue[1], "UTF-8"));
+				postMap.put(URLDecoder.decode(keyValue[0], "UTF-8"),URLDecoder.decode(keyValue[1], "UTF-8"));
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

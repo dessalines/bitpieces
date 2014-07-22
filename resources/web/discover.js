@@ -1,22 +1,29 @@
 $(document).ready(function(){
 
-	fillFieldFromMustache('/get_categories', '#categories_template' , '#categories', false);
+	fillFieldFromMustache('get_categories', '#categories_template' , '#categories', false);
 
-	setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn', 
-		'#discover_creators', '#discover_creators_template', '#discover_creators_table')
-	
+
+   var template = $('#discover_creators_template').html();
+    // initially fill the table
+    setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn', 
+      '#discover_creators', template, '#discover_creators_table')
+
+   
+    $('#categories').on('change', function() {
+        setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn', 
+      '#discover_creators', template, '#discover_creators_table')
+      
+    });
 
 });
 
-function setupDiscoverSearch(shortUrl, formId, btnId, divId, templateId, tableId) {
-	var template = $(templateId).html();
-
-	$(btnId).click(function() {
+function setupDiscoverSearch(shortUrl, formId, btnId, divId, template, tableId) {
+	   
 
 		var formData = $(formId).serializeArray();
         // Loading
-        var btnId = $(this);
-        btnId.button('loading');
+        // var btnId = $(this);
+        // btnId.button('loading');
         console.log(formData);
         var url = sparkService + shortUrl; // the script where you handle the form input.
 
@@ -36,7 +43,7 @@ function setupDiscoverSearch(shortUrl, formId, btnId, divId, templateId, tableId
                 // Hide the modal, reset the form, show successful
 
                 // Loading
-                btnId.button('reset');
+                // btnId.button('reset');
                 // toastr.success(data);
 
                 var jsonObj = JSON.parse(data);
@@ -61,7 +68,7 @@ function setupDiscoverSearch(shortUrl, formId, btnId, divId, templateId, tableId
 
 
 
-event.preventDefault();
-});
+// event.preventDefault();
+
 
 }

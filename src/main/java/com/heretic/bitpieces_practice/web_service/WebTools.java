@@ -24,12 +24,14 @@ import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks_current;
+import com.heretic.bitpieces_practice.tables.Tables.Categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_search_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available_view;
@@ -259,7 +261,7 @@ public class WebTools {
 		return createHighChartsJSONForCurrent(list, "value_total", "creators_username");
 
 	}
-	
+
 	public static String getRewardsEarnedTotalJson(String userId, String body) {
 
 		// First fetch from the table
@@ -269,7 +271,7 @@ public class WebTools {
 		return createHighChartsJSONForCurrent(list, "reward_earned_total", "creators_username");
 
 	}
-	
+
 	public static String getPiecesOwnedValueCurrentCreatorSeriesJson(String creatorName, String body) {
 
 		// First fetch from the table
@@ -418,6 +420,42 @@ public class WebTools {
 		List<Model> list = Creator.find("username like '%" + query + "%'");
 
 		String json = createTableJSON(list, "id", "username");
+
+		return json;
+
+
+	}
+
+	public static String getCategoriesJson(String query) {
+		List<Model> list = Categories.findAll();
+
+		String json = createTableJSON(list, "name");
+
+		return json;
+
+
+	}
+
+	public static String getDiscoverJson(String body) {
+		List<Model> list = null;
+		Long limit = 30L;
+		if (body.equals("")) {
+			list = Creators_search_view.findAll().limit(limit);
+		} else {
+			System.out.println(body);
+			Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+			String category = postMap.get("category");
+			if (category == null || category.equals("All")) {
+				list = Creators_search_view.findAll().limit(limit);
+			} else {
+				list = Creators_search_view.find("category_names like '%" + category + "%'").limit(limit);;
+			}
+		}
+
+
+
+
+		String json = createTableJSON(list);
 
 		return json;
 

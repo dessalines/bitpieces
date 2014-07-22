@@ -579,6 +579,34 @@ public class WebService {
 
 
 		});
+		
+		get("/get_categories", (req, res) -> {
+			allowResponseHeaders(req, res);
+			dbInit(prop);
+
+			String json = WebTools.getCategoriesJson(req.body());
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
+		post("/discover", (req, res) -> {
+			allowResponseHeaders(req, res);
+			dbInit(prop);
+
+			String json = WebTools.getDiscoverJson(req.body());
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
 
 		post("/:auth/user_logout", (req, res) -> {
 			allowResponseHeaders(req, res);

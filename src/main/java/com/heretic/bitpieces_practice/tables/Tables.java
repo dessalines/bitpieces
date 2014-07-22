@@ -174,6 +174,17 @@ public class Tables {
 	@Table("rewards_earned_accum")
 	public static class Rewards_earned_accum extends Model {}
 	
+	@Table("categories")
+	public static class Categories extends Model {}
+	
+	@Table("creators_categories")
+	public static class Creators_categories extends Model {}
+	
+	@Table("creators_search_view")
+	public static class Creators_search_view extends Model {}
+	
+	
+	
 	
 	
 

@@ -2,6 +2,7 @@ package com.heretic.bitpieces_practice.tables;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
@@ -10,9 +11,11 @@ import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Badge;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
+import com.heretic.bitpieces_practice.tables.Tables.Categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_badges;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_withdrawals;
 import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
@@ -65,6 +68,8 @@ public class InitializeTables {
 	
 
 		setup_host_btc_address();
+		
+		setup_categories();
 
 		setup_creators();
 		
@@ -95,6 +100,18 @@ public class InitializeTables {
 
 
 
+	}
+
+
+	private static void setup_categories() {
+		List<String> categories = Arrays.asList("Visual Arts", "Comics", "Design", "Dance", "Education", "Film and Video", 
+				"Environment", "Music", "Fashion", "Tech", "Photography", "Theatre", "Food", "Health", "Writing and Lit", "Sports",
+				"Small Business", "Gaming", "Crafts", "Journalism");
+		
+		for (String e : categories) {
+			Categories.createIt("name", e);
+		}
+		
 	}
 
 
@@ -319,6 +336,8 @@ public class InitializeTables {
 		Creators_withdrawals.deleteAll();
 		Creators_btc_address.deleteAll();
 		Creators_page_fields.deleteAll();
+		Categories.deleteAll();
+		Creators_categories.deleteAll();
 		Bid.deleteAll();
 		Ask.deleteAll();
 		Reward.deleteAll();
@@ -357,27 +376,36 @@ public class InitializeTables {
 	private static void setup_creators() {
 
 		String now = Tools.SDF.get().format(new Date());
-		Creator creator1 = Creator.createIt("username", "Leonardo_Davinci",
+		Creator leo = Creator.createIt("username", "Leonardo_Davinci",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 				"email", "asdf@gmail.com");
-		Creator creator2 = Creator.createIt("username", "Dusty_Springfield",
+		Creator dusty = Creator.createIt("username", "Dusty_Springfield",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 				"email", "asdf@gmail.com");
 
-		Creators_btc_address.createIt("creators_id", creator1.getId(), "btc_addr", "fake");
-		Creators_btc_address.createIt("creators_id", creator2.getId(), "btc_addr", "fake");
+		Creators_btc_address.createIt("creators_id", leo.getId(), "btc_addr", "fake");
+		Creators_btc_address.createIt("creators_id", dusty.getId(), "btc_addr", "fake");
 
-		Reward.createIt("creators_id", creator1.getId(),
+		Reward.createIt("creators_id", leo.getId(),
 				"time_", now,
 				"reward_pct", 1.0d);
 
-		Reward.createIt("creators_id", creator2.getId(),
+		Reward.createIt("creators_id", dusty.getId(),
 				"time_", now,
 				"reward_pct", 5.0d);
 		
-		Creators_page_fields.createIt("creators_id", creator1.getId(),
+		Creators_page_fields.createIt("creators_id", leo.getId(),
 				"main_body", "The main body of leo's page");
+		
+		Categories visualArts = Categories.findFirst("name = ?", "Visual Arts");
+		Categories design = Categories.findFirst("name = ?", "Design");
+		Categories music = Categories.findFirst("name = ?", "Music");
 
+		Creators_categories.createIt("creators_id", leo.getId(), "categories_id", visualArts.getId());
+		Creators_categories.createIt("creators_id", leo.getId(), "categories_id", design.getId());
+		Creators_categories.createIt("creators_id", dusty.getId(), "categories_id", music.getId());
+		
+		
 
 	}
 

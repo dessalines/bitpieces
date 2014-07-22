@@ -27,7 +27,9 @@ badges,
 users_badges,
 creators_badges,
 categories,
-creators_categories
+creators_categories,
+cities,
+creators_cities
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
@@ -36,7 +38,7 @@ pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_o
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
 users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user, pieces_owned_by_creator,
 bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped,
-rewards_earned_by_owner_accum
+rewards_earned_by_owner_accum, creators_funds_view, creators_search_view
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -92,9 +94,9 @@ CREATE TABLE categories
 CREATE TABLE creators_categories
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   creators_id int(11) UNIQUE NOT NULL,
+   creators_id int(11) NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
-   categories_id int(11) UNIQUE NOT NULL,
+   categories_id int(11) NOT NULL,
    FOREIGN KEY (categories_id) REFERENCES categories(id),
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
@@ -126,10 +128,6 @@ CREATE TABLE creators_cities
    UPDATE CURRENT_TIMESTAMP
 )
 ;
-
-drop table creators_cities
-drop table cities
-
 
 
 CREATE TABLE users_btc_addresses
@@ -1045,7 +1043,7 @@ ORDER BY a.owners_id, a.creators_username, a.price_time_;
 CREATE VIEW creators_search_view as 
 select creators.id as creators_id,
 creators.username as creators_name, 
-categories.name as category_name, 
+GROUP_CONCAT(categories.name) as category_names, 
 pieces_owned_value_current_by_creator.value_total as worth_current,
 rewards_current.reward_pct,
 backers_current_count.number_of_backers
@@ -1059,9 +1057,13 @@ on backers_current_count.creators_id = creators.id
 inner join creators_categories
 on creators_categories.creators_id = creators.id
 inner join categories on
-creators_categories.categories_id = categories.id;
+creators_categories.categories_id = categories.id
+group by creators.id
 
 
+
+SELECT GROUP_CONCAT(name) as `Options`
+FROM categories
 
 
 
