@@ -420,8 +420,9 @@ public class Actions {
 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
+		String loginField = postMap.get("username");
 		// fetch the required fields
-		User user = User.findFirst("username = '" + postMap.get("username") + "'");
+		User user = User.findFirst("username = ? OR email = ?", loginField, loginField);
 		if (user==null) {
 			return null;
 		}

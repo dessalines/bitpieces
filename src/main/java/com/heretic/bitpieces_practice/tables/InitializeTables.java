@@ -455,10 +455,14 @@ public class InitializeTables {
 
 	private static void setup_users() {
 
+		// Find BTC currency
+		Currencies btc = Currencies.findFirst("iso=?", "BTC");
+		
 		for (String name : Arrays.asList("Bill_Jeffries", "Dick_Tatum", "John_Himperdinkle", "Terry_Westworth")) {
 			User cUser = User.createIt("username", name, 
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
-					"email", "asdf@gmail.com");
+					"email", name + "22@gmail.com", 
+					"local_currency_id", btc.getId());
 			Users_btc_address.createIt("users_id", cUser.getId().toString(), "btc_addr", "fake");
 		}
 
