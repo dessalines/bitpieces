@@ -186,6 +186,8 @@ public class Tables {
 	@Table("currencies")
 	public static class Currencies extends Model {}
 	
+	@Table("users_settings")
+	public static class Users_settings extends Model {}
 	
 	
 	

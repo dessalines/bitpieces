@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Users_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Users_funds_current;
 import com.heretic.bitpieces_practice.tables.Tables.Users_reputation;
+import com.heretic.bitpieces_practice.tables.Tables.Users_settings;
 import com.heretic.bitpieces_practice.tables.Tables.Users_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Worth;
 import com.heretic.bitpieces_practice.tools.Tools;
@@ -352,19 +354,32 @@ public class WebTools {
 
 	public static String getUsersSettingsJson(String userId, String body) {
 
-		User user =  User.findById(userId);
+		Users_settings user =  Users_settings.findById(userId);
 
-		return user.toJson(false, "email");
+		return user.toJson(false);
 
 	}
 
 	public static String saveUsersSettings(String userId, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		User user =  User.findById(userId);
-		for (Entry<String, String> e : postMap.entrySet()) {
-			if (e.getKey().equals("email")) {
+		
+		String email = postMap.get("email");
+		String currency = postMap.get("currency");
+		String precision = postMap.get("precision");
+		
+		// Find the correct currency id
+		String currId = Currencies.findFirst("iso=?", currency).getId().toString();
+		
+		// Make a map from sql column names to value changes
+		Map<String, String> s= new HashMap<String, String>();
+		s.put("email", email);
+		s.put("local_currency_id", currId);
+		s.put("precision_", precision);
+		
+		
+		for (Entry<String, String> e : s.entrySet()) {
 				user.set(e.getKey(), e.getValue()).saveIt();
-			}
 		}
 
 

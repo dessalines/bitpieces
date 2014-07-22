@@ -30,7 +30,8 @@ categories,
 creators_categories,
 cities,
 creators_cities,
-currencies
+currencies, 
+timezones
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
@@ -44,12 +45,41 @@ rewards_earned_by_owner_accum, creators_funds_view, creators_search_view
 SET FOREIGN_KEY_CHECKS=1
 ;
 -- The Table creates and indexes
+
+CREATE TABLE currencies
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   iso VARCHAR(56) NOT NULL,
+   name VARCHAR(56) NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+--
+--CREATE TABLE timezones
+--(
+--   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+--   name VARCHAR(56) NOT NULL,
+--   offset VARCHAR(56) NOT NULL,
+--   created_at TIMESTAMP NOT NULL DEFAULT 0,
+--   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+--   UPDATE CURRENT_TIMESTAMP
+--)
+--;
+
+
 CREATE TABLE users
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
    username VARCHAR(56) UNIQUE NOT NULL,
    password_encrypted TINYTEXT NOT NULL,
    email VARCHAR(56) NOT NULL,
+   local_currency_id int(11) NOT NULL DEFAULT 1,
+   FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
+   precision_ int(11) NOT NULL DEFAULT 6 ,
+--   local_timezone_id int(11) DEFAULT 1 NOT NULL,
+--   FOREIGN KEY (local_timezone_id) REFERENCES timezones(id),
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -339,16 +369,7 @@ CREATE TABLE badges
 )
 ;
 
-CREATE TABLE currencies
-(
-   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   iso VARCHAR(56) NOT NULL,
-   name VARCHAR(56) NOT NULL,
-   created_at TIMESTAMP NOT NULL DEFAULT 0,
-   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
-   UPDATE CURRENT_TIMESTAMP
-)
-;
+
 
 
 CREATE TABLE users_badges
@@ -1071,6 +1092,18 @@ on creators_categories.creators_id = creators.id
 inner join categories on
 creators_categories.categories_id = categories.id
 group by creators.id
+
+CREATE VIEW users_settings as 
+select users.id, 
+username, 
+email, 
+precision_,
+currencies.iso as curr_iso,
+currencies.name as curr_name 
+from users
+inner join 
+currencies
+on users.local_currency_id = currencies.id;
 
 
 

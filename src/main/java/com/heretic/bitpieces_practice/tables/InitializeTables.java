@@ -68,15 +68,15 @@ public class InitializeTables {
 		delete_all();
 
 		setup_currencies();
-		
+
 		setup_users();
 
 		setup_host_btc_address();
-		
+
 		setup_categories();
 
 		setup_creators();
-		
+
 		setup_badges();
 
 		issue_pieces();
@@ -106,39 +106,39 @@ public class InitializeTables {
 
 
 	private static void setup_currencies() {
-	
+
 		Map<String, String> currencyMap = ImmutableMap.<String, String>builder()
-		 .put("AUD","Australian Dollar")
-		 .put( "BRL", "Brazilian Real")
-		 .put( "CAD", "Canadian Dollar")
-		 .put( "CHF", "Swiss Franc")
-		 .put( "CNY", "Chinese Yuan")
-		 .put( "EUR", "Euro")
-		 .put( "GBP", "British Pound Sterling")
-		 .put( "HKD", "Hong Kong Dollar")
-		 .put( "IDR", "Indonesian Rupiah")
-		 .put( "ILS", "Israeli New Sheqel")
-		 .put( "MXN", "Mexican Peso")
-		 .put( "NOK", "Norwegian Krone")
-		 .put( "NZD", "New Zealand Dollar")
-		 .put( "PLN", "Polish Zloty")
-		 .put( "RON", "Romanian Leu")
-		 .put( "RUB", "Russian Ruble")
-		 .put( "SEK", "Swedish Krona")
-		 .put( "SGD", "Singapore Dollar")
-		 .put( "TRY", "Turkish Lira")
-		 .put( "USD", "United States Dollar")
-		 .put( "ZAR", "South African Rand")
-		 .put("BTC", "Bitcoin")
-		 .put("mBTC", "MilliBits")
-		 .build();
-		
+				.put("BTC", "Bitcoin")
+				.put("mBTC", "MilliBits")
+				.put("AUD","Australian Dollar")
+				.put( "BRL", "Brazilian Real")
+				.put( "CAD", "Canadian Dollar")
+				.put( "CHF", "Swiss Franc")
+				.put( "CNY", "Chinese Yuan")
+				.put( "EUR", "Euro")
+				.put( "GBP", "British Pound Sterling")
+				.put( "HKD", "Hong Kong Dollar")
+				.put( "IDR", "Indonesian Rupiah")
+				.put( "ILS", "Israeli New Sheqel")
+				.put( "MXN", "Mexican Peso")
+				.put( "NOK", "Norwegian Krone")
+				.put( "NZD", "New Zealand Dollar")
+				.put( "PLN", "Polish Zloty")
+				.put( "RON", "Romanian Leu")
+				.put( "RUB", "Russian Ruble")
+				.put( "SEK", "Swedish Krona")
+				.put( "SGD", "Singapore Dollar")
+				.put( "TRY", "Turkish Lira")
+				.put( "USD", "United States Dollar")
+				.put( "ZAR", "South African Rand")
+				.build();
+
 		for (Entry<String, String> e : currencyMap.entrySet()) {
 			Currencies.createIt("iso", e.getKey(), "name", e.getValue());
 		}
-		
-		
-		
+
+
+
 	}
 
 
@@ -146,11 +146,11 @@ public class InitializeTables {
 		List<String> categories = Arrays.asList("Visual Arts", "Comics", "Design", "Dance", "Education", "Film and Video", 
 				"Environment", "Music", "Fashion", "Tech", "Photography", "Theatre", "Food", "Health", "Writing and Lit", "Sports",
 				"Small Business", "Gaming", "Crafts", "Journalism");
-		
+
 		for (String e : categories) {
 			Categories.createIt("name", e);
 		}
-		
+
 	}
 
 
@@ -160,7 +160,7 @@ public class InitializeTables {
 
 
 		Badge.createIt("name", "Padawan Learner", "description", "Created an account");
-		
+
 		Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
 
 		User bill = User.findFirst("username like 'Bill%'");
@@ -168,7 +168,7 @@ public class InitializeTables {
 		// Give bill a padawan badge for registering
 
 		Users_badges.createIt("users_id", bill.getId().toString(), "badges_id", padawanBadge.getId().toString());
-		
+
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
 		Creators_badges.createIt("creators_id", leo.getId().toString(), "badges_id", padawanBadge.getId().toString());
 
@@ -364,6 +364,7 @@ public class InitializeTables {
 	}
 
 	private static final void delete_all() {
+
 		Host_btc_addresses.deleteAll();
 		Users_deposits.deleteAll();
 		Sales_from_creators.deleteAll();
@@ -375,13 +376,17 @@ public class InitializeTables {
 		Creators_withdrawals.deleteAll();
 		Creators_btc_address.deleteAll();
 		Creators_page_fields.deleteAll();
-		Categories.deleteAll();
 		Creators_categories.deleteAll();
+		Categories.deleteAll();
+		Users_badges.deleteAll();
+		Creators_badges.deleteAll();
+		Badge.deleteAll();
 		Bid.deleteAll();
 		Ask.deleteAll();
 		Reward.deleteAll();
 		User.deleteAll();
 		Creator.deleteAll();
+		Currencies.deleteAll();
 
 	}
 
@@ -432,10 +437,10 @@ public class InitializeTables {
 		Reward.createIt("creators_id", dusty.getId(),
 				"time_", now,
 				"reward_pct", 5.0d);
-		
+
 		Creators_page_fields.createIt("creators_id", leo.getId(),
 				"main_body", "The main body of leo's page");
-		
+
 		Categories visualArts = Categories.findFirst("name = ?", "Visual Arts");
 		Categories design = Categories.findFirst("name = ?", "Design");
 		Categories music = Categories.findFirst("name = ?", "Music");
@@ -443,13 +448,12 @@ public class InitializeTables {
 		Creators_categories.createIt("creators_id", leo.getId(), "categories_id", visualArts.getId());
 		Creators_categories.createIt("creators_id", leo.getId(), "categories_id", design.getId());
 		Creators_categories.createIt("creators_id", dusty.getId(), "categories_id", music.getId());
-		
-		
+
+
 
 	}
 
 	private static void setup_users() {
-
 
 		for (String name : Arrays.asList("Bill_Jeffries", "Dick_Tatum", "John_Himperdinkle", "Terry_Westworth")) {
 			User cUser = User.createIt("username", name, 

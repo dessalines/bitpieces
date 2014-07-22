@@ -197,10 +197,10 @@
           />
 
         </div>
-      </div> -->
+      </div> 
       <div class="form-group">
         <label for="inputTimeZone" class="col-sm-2 control-label">Time zone</label>
-        <!-- <script id="categories_template" type="x-tmpl-mustache">  -->
+       
         <div class="col-sm-10">
           <select name="timeZone" class="form-control"  id="inputTimeZone" role="menu">
             <option value="UTC">(GMT+00:00) UTC</option>
@@ -213,13 +213,14 @@
 
         </div>
       </div>
+      -->
       <div id="currency" class="form-group">
       
        <label for="inputCurrency" class="col-sm-2 control-label">Currency</label>
 
        <div class="col-sm-10">
        <select name="currency" class="form-control"  id="inputCurrency" role="menu">
-       <option selected value="{{email}}">{{email}}</option>
+       <option selected value="{{curr_iso}}">{{curr_name}} ({{curr_iso}})</option>
 
        {{#currencies}}
        <option value="{{iso}}">{{name}} ({{iso}})</option>
@@ -237,6 +238,7 @@
       
       <div class="col-sm-10">
         <select name="precision" class="form-control"  id="inputPrecision" role="menu">
+          <option value="{{precision_}}">{{precision_}} Decimal Places</option>
           <option value="2">2 Decimal Places</option>
           <option value="4">4 Decimal Places</option>
           <option value="6">6 Decimal Places</option>
