@@ -115,6 +115,8 @@ public class SeriesFetcher {
 
 	}
 	
+	
+	
 	public static String convertJson(String json) {
 		// First, do the currency conversions
 				
