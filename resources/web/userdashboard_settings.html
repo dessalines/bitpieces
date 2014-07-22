@@ -25,7 +25,7 @@
   <!--   toastr css -->
   <link href="toastr/toastr.css" rel="stylesheet"/>
 
-     <!--   typeahead css -->
+  <!--   typeahead css -->
   <link href="typeaheadjs.css" rel="stylesheet"/>
 
   <!-- This main css -->
@@ -44,10 +44,10 @@
     <body>
       <!-- Navbars -->
 
-      <!-- Start using sb admin stuff -->
+      <!-- the start of the doc -->
       <div id="wrapper">
 
-       <!-- plug into here -->
+        <!-- plug into here -->
         <nav class="navbar navbar-default" role="navigation">
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -92,21 +92,21 @@
 
 
            <ul class="nav navbar-nav navbar-right">
- 
+
 
 
             <li id="userDropdown" class="dropdown user-dropdown">
 
              <script id="usernameTemplate" type="x-tmpl-mustache">  
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
 
 
-               <ul class="dropdown-menu">
-                 <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
-                 <li class="divider"></li>
-                 <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+             <ul class="dropdown-menu">
+             <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+             <li class="divider"></li>
+             <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
 
-               </ul>
+             </ul>
              </script>
            </li>
          </ul>
@@ -134,45 +134,136 @@
 
           <a class="list-group-item" href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a>
           <a class="list-group-item" href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a>
-          <a class="list-group-item active" href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a>
+          <a class="list-group-item" href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a>
         </div>
       </div>        
     </div>
 
-     <!-- The Page -->
-     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <!-- stop plugging in -->
 
-      <div class="row">
-        <div class="col-lg-12">
-          <h1>Prices <small>Prices for everything you own </small></h1>
-          <ol class="breadcrumb">
-            <li><a href="userdashboard_overview"><i class="fa fa-dashboard"></i> Overview</a></li>
-            <li class="active"><i class="fa fa-table"></i> Prices</li>
-          </ol>
+
+    <!-- Sidebar -->
+<!--   <div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+      <li class="active"><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
+      <li><a href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a></li>
+      <li><a href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a></li>
+      <li><a href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a></li>
+    </ul>
+
+  </div> -->
+
+
+
+  <!-- The Page -->
+  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h1>Settings <small>Your settings </small></h1>
+        <ol class="breadcrumb">
+          <li><a href="userdashboard_overview"><i class="fa fa-dashboard"></i> Overview</a></li>
+          <li class="active"><i class="fa fa-table"></i> Settings</li>
+        </ol>
+      </div>
+    </div><!-- /.row -->
+
+    <div class="row col-md-6">
+      <h3> Users Settings </h3>
+      <hr></hr>
+
+      <!-- 2 Forms, user settings, and notifications -->
+      <form id="settingsForm" class="form-horizontal" role="form">
+       <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Email address</label>
+        <div class="col-sm-10">
+          <input name="email" type="inputEmail3" class="form-control" id="inputEmail3" placeholder="Email"
+          data-bv-emailaddress="true"
+          data-bv-emailaddress-message="The input is not a valid email address"  />
         </div>
-      </div><!-- /.row -->
+      </div>
 
-      <!-- a big ass chart -->
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Prices for pieces owned</h3>
-            </div>
-            <div class="panel-body">
-              <div class = "fullscreen-chart" id="highcharts-chart-area"></div>
-            </div>
-          </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+          <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+          data-bv-notempty="true"
+          data-bv-notempty-message="The password is required and cannot be empty"
+          />
+
         </div>
-      </div><!-- /.row -->
+      </div>
+      <div class="form-group">
+        <label for="inputTimeZone" class="col-sm-2 control-label">Time zone</label>
+        <!-- <script id="categories_template" type="x-tmpl-mustache">  -->
+        <div class="col-sm-10">
+          <select name="category" class="form-control"  id="inputTimeZone" role="menu">
+            <option value="UTC">(GMT+00:00) UTC</option>
+            <option value="Mexico City">(GMT-06:00) Mexico City</option>
+            <option value="Copenhagen">(GMT+01:00) Copenhagen</option>
+           <!--  {{#.}}
+            <option value='{{name}}'>{{name}}</option>
+            {{/.}} -->
+          </select>
 
+          <!-- </script> -->
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputCurrency" class="col-sm-2 control-label">Currency</label>
+        <!-- <script id="categories_template" type="x-tmpl-mustache">  -->
+        <div class="col-sm-10">
+          <select name="category" class="form-control"  id="inputCurrency" role="menu">
+            <option value="BTC">bitcoinz(BTC)</option>
+            <option value="USD">U.S. dollar(USD)</option>
+           <!--  {{#.}}
+            <option value='{{name}}'>{{name}}</option>
+            {{/.}} -->
+          </select>
 
-      <!-- end of page -->
-    </div>
+          <!-- </script> -->
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPrecision" class="col-sm-2 control-label">Precision</label>
+        <!-- <script id="categories_template" type="x-tmpl-mustache">  -->
+        <div class="col-sm-10">
+          <select name="category" class="form-control"  id="inputPrecision" role="menu">
+            <option value="2">2 Decimal Places</option>
+            <option value="6">6 Decimal Places</option>
+           <!--  {{#.}}
+            <option value='{{name}}'>{{name}}</option>
+            {{/.}} -->
+          </select>
 
+          <!-- </script> -->
+        </div>
+      </div>
 
-    <!-- end of wrapper -->
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button id="settingsSaveBtn" type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </form>
   </div>
+  <div class="row col-md-6">
+   <h3> Notifications </h3>
+   <hr></hr>
+   <!-- a big ass chart -->
+   <div class="row">
+    <div class="col-lg-12">
+
+    </div>
+  </div>
+</div>
+
+</div>
+<!-- end of wrapper -->
+</div>
+</div>
+
+
 
 
       <!-- Bootstrap core JavaScript
@@ -184,6 +275,8 @@
       <script src="toastr/toastr.js"></script>
       <script src="mustache/mustache.js"></script>
       <script src="holder/holder.js"></script>
+      <script src="json.date-extensions.js"></script>
+      <script src="tablesorter/jquery.tablesorter.js"></script> 
       <script src="highcharts/js/highcharts.js"></script>
       <script src="highcharts/js//modules/exporting.js"></script>
       <script src="highcharts/js/themes/dark-unica.js"></script>
@@ -193,8 +286,8 @@
       <script src="tools.js"></script>
       <script src="highcharts_templates.js"></script>
       <script src="userdashboard.js"></script>
+      <script src="userdashboard_settings.js"></script>
       <script src="login.js"></script>
-      <script src="userdashboard_prices.js"></script>
 
     </body>
     </html>

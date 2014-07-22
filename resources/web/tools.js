@@ -384,11 +384,6 @@ $.ajax({
        });
 
 
-
-
-
-
-
 }
 
 function saveSummerNote(shortUrl, btn, id) {
