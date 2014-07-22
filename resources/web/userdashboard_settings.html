@@ -220,8 +220,6 @@
 
        <div class="col-sm-10">
        <select name="currency" class="form-control"  id="inputCurrency" role="menu">
-       <option selected value="{{curr_iso}}">{{curr_name}} ({{curr_iso}})</option>
-
        {{#currencies}}
        <option value="{{iso}}">{{name}} ({{iso}})</option>
        {{/currencies}}
@@ -238,7 +236,6 @@
       
       <div class="col-sm-10">
         <select name="precision" class="form-control"  id="inputPrecision" role="menu">
-          <option value="{{precision_}}">{{precision_}} Decimal Places</option>
           <option value="2">2 Decimal Places</option>
           <option value="4">4 Decimal Places</option>
           <option value="6">6 Decimal Places</option>

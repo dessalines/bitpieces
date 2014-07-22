@@ -36,6 +36,10 @@ function full() {
     console.log(template);
     console.log(rendered);
 
+    // Setting the correct selected based on it
+    $("#inputCurrency").val(jsonObj['curr_iso']).prop('selected', true);
+    $("#inputPrecision").val(jsonObj['precision_']).prop('selected', true);
+
     setupSaveSettings(sessionId + '/save_users_settings', '#settingsForm', '#settingsSaveBtn')
 
      // now do teh mustache
