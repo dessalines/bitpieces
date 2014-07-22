@@ -563,6 +563,46 @@ public class WebService {
 			return message;
 
 		});
+		
+		get("/:auth/get_users_settings", (req, res) -> {
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+
+				// get currency if one exists
+				json = WebTools.getUsersSettingsJson(uid.getId(), req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
+		
+		post("/:auth/save_users_settings", (req, res) -> {
+			String json = null;
+			try {
+				UserTypeAndId uid = standardInit(prop, res, req);
+				verifyUser(uid);
+
+				// get currency if one exists
+				json = WebTools.saveUsersSettings(uid.getId(), req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
 
 		get("/creators_search/:query", (req, res) -> {
 			allowResponseHeaders(req, res);
@@ -585,6 +625,20 @@ public class WebService {
 			dbInit(prop);
 
 			String json = WebTools.getCategoriesJson(req.body());
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+		
+		get("/get_currencies", (req, res) -> {
+			allowResponseHeaders(req, res);
+			dbInit(prop);
+
+			String json = WebTools.getCurrenciesJson(req.body());
 
 			dbClose();
 
@@ -624,6 +678,8 @@ public class WebService {
 			return "Logged out";
 
 		});
+		
+		
 
 
 

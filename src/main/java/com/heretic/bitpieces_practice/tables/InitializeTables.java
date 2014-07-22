@@ -3,10 +3,13 @@ package com.heretic.bitpieces_practice.tables;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 
+import com.google.common.collect.ImmutableMap;
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Badge;
@@ -18,6 +21,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Creators_btc_address;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_withdrawals;
+import com.heretic.bitpieces_practice.tables.Tables.Currencies;
 import com.heretic.bitpieces_practice.tables.Tables.Host_btc_addresses;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
@@ -65,7 +69,7 @@ public class InitializeTables {
 
 		setup_users();
 
-	
+		setup_currencies();
 
 		setup_host_btc_address();
 		
@@ -100,6 +104,41 @@ public class InitializeTables {
 
 
 
+	}
+
+
+	private static void setup_currencies() {
+	
+		Map<String, String> currencyMap = ImmutableMap.<String, String>builder()
+		 .put("AUD","Australian Dollar")
+		 .put( "BRL", "Brazilian Real")
+		 .put( "CAD", "Canadian Dollar")
+		 .put( "CHF", "Swiss Franc")
+		 .put( "CNY", "Chinese Yuan")
+		 .put( "EUR", "Euro")
+		 .put( "GBP", "British Pound Sterling")
+		 .put( "HKD", "Hong Kong Dollar")
+		 .put( "IDR", "Indonesian Rupiah")
+		 .put( "ILS", "Israeli New Sheqel")
+		 .put( "MXN", "Mexican Peso")
+		 .put( "NOK", "Norwegian Krone")
+		 .put( "NZD", "New Zealand Dollar")
+		 .put( "PLN", "Polish Zloty")
+		 .put( "RON", "Romanian Leu")
+		 .put( "RUB", "Russian Ruble")
+		 .put( "SEK", "Swedish Krona")
+		 .put( "SGD", "Singapore Dollar")
+		 .put( "TRY", "Turkish Lira")
+		 .put( "USD", "United States Dollar")
+		 .put( "ZAR", "South African Rand")
+		 .build();
+		
+		for (Entry<String, String> e : currencyMap.entrySet()) {
+			Currencies.createIt("iso", e.getKey(), "name", e.getValue());
+		}
+		
+		
+		
 	}
 
 

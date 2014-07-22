@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -33,6 +34,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_search_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_transactions;
+import com.heretic.bitpieces_practice.tables.Tables.Currencies;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued_view;
@@ -348,6 +350,28 @@ public class WebTools {
 
 	}
 
+	public static String getUsersSettingsJson(String userId, String body) {
+
+		User user =  User.findById(userId);
+
+		return user.toJson(false, "email");
+
+	}
+
+	public static String saveUsersSettings(String userId, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		User user =  User.findById(userId);
+		for (Entry<String, String> e : postMap.entrySet()) {
+			if (e.getKey().equals("email")) {
+				user.set(e.getKey(), e.getValue()).saveIt();
+			}
+		}
+
+
+		return "Settings updated";
+
+	}
+
 	public static String getUsersBidsAsksCurrentJson(String userId, String body) {
 
 		List<Model> list = Bids_asks_current.find("users_id=?",  userId).orderBy("time_ desc");
@@ -430,6 +454,16 @@ public class WebTools {
 		List<Model> list = Categories.findAll();
 
 		String json = createTableJSON(list, "name");
+
+		return json;
+
+
+	}
+	
+	public static String getCurrenciesJson(String query) {
+		List<Model> list = Currencies.findAll();
+
+		String json = createTableJSON(list);
 
 		return json;
 

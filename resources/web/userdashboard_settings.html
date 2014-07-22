@@ -169,21 +169,25 @@
     </div><!-- /.row -->
 
     <div class="row col-md-6">
+
       <h3> Users Settings </h3>
       <hr></hr>
 
       <!-- 2 Forms, user settings, and notifications -->
       <form id="settingsForm" class="form-horizontal" role="form">
-       <div class="form-group">
-        <label for="inputEmail3" class="col-sm-2 control-label">Email address</label>
-        <div class="col-sm-10">
-          <input name="email" type="inputEmail3" class="form-control" id="inputEmail3" placeholder="Email"
-          data-bv-emailaddress="true"
-          data-bv-emailaddress-message="The input is not a valid email address"  />
-        </div>
-      </div>
 
-      <div class="form-group">
+       <div id="users_settings"  class="form-group">
+         <script id="users_settings_template" type="x-tmpl-mustache"> 
+         <label for="email" class="col-sm-2 control-label">Email address</label>
+         <div class="col-sm-10">
+         <input name="email" type="email" class="form-control" id="email" value={{email}}
+         data-bv-emailaddress="true"
+         data-bv-emailaddress-message="The input is not a valid email address"  />
+         </div>
+         </script>
+       </div>
+
+<!--       <div class="form-group">
         <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
         <div class="col-sm-10">
           <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
@@ -192,70 +196,76 @@
           />
 
         </div>
-      </div>
+      </div> -->
       <div class="form-group">
         <label for="inputTimeZone" class="col-sm-2 control-label">Time zone</label>
         <!-- <script id="categories_template" type="x-tmpl-mustache">  -->
         <div class="col-sm-10">
-          <select name="category" class="form-control"  id="inputTimeZone" role="menu">
+          <select name="timeZone" class="form-control"  id="inputTimeZone" role="menu">
             <option value="UTC">(GMT+00:00) UTC</option>
             <option value="Mexico City">(GMT-06:00) Mexico City</option>
             <option value="Copenhagen">(GMT+01:00) Copenhagen</option>
-           <!--  {{#.}}
             <option value='{{name}}'>{{name}}</option>
-            {{/.}} -->
+
           </select>
 
-          <!-- </script> -->
+
         </div>
       </div>
-      <div class="form-group">
-        <label for="inputCurrency" class="col-sm-2 control-label">Currency</label>
-        <!-- <script id="categories_template" type="x-tmpl-mustache">  -->
-        <div class="col-sm-10">
-          <select name="category" class="form-control"  id="inputCurrency" role="menu">
-            <option value="BTC">bitcoinz(BTC)</option>
-            <option value="USD">U.S. dollar(USD)</option>
-           <!--  {{#.}}
-            <option value='{{name}}'>{{name}}</option>
-            {{/.}} -->
-          </select>
+      <div id="currency" class="form-group">
+       <script id="currency_template" type="x-tmpl-mustache"> 
+       <label for="inputCurrency" class="col-sm-2 control-label">Currency</label>
 
-          <!-- </script> -->
-        </div>
+       <div class="col-sm-10">
+       <select name="currency" class="form-control"  id="inputCurrency" role="menu">
+       <option value="mBTC">mBTC</option>
+       <option value="BTC" selected>BTC</option>
+
+       {{#.}}
+       <option value="{{iso}}">{{name}} ({{iso}})</option>
+       {{/.}}
+
+       </select>
+
+
+       </div>
+       </script>
+     </div>
+
+     <div class="form-group">
+      <label for="inputPrecision" class="col-sm-2 control-label">Precision</label>
+      
+      <div class="col-sm-10">
+        <select name="precision" class="form-control"  id="inputPrecision" role="menu">
+          <option value="2">2 Decimal Places</option>
+          <option value="4">4 Decimal Places</option>
+          <option value="6">6 Decimal Places</option>
+          <option value="8">8 Decimal Places</option>
+
+
+        </select>
+
+
       </div>
-      <div class="form-group">
-        <label for="inputPrecision" class="col-sm-2 control-label">Precision</label>
-        <!-- <script id="categories_template" type="x-tmpl-mustache">  -->
-        <div class="col-sm-10">
-          <select name="category" class="form-control"  id="inputPrecision" role="menu">
-            <option value="2">2 Decimal Places</option>
-            <option value="6">6 Decimal Places</option>
-           <!--  {{#.}}
-            <option value='{{name}}'>{{name}}</option>
-            {{/.}} -->
-          </select>
-
-          <!-- </script> -->
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button id="settingsSaveBtn" type="submit" class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="row col-md-6">
-   <h3> Notifications </h3>
-   <hr></hr>
-   <!-- a big ass chart -->
-   <div class="row">
-    <div class="col-lg-12">
-
     </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button id="settingsSaveBtn" type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </form>
+
+</div>
+<div class="row col-md-6">
+ <h3> Notifications </h3>
+ <hr></hr>
+ <!-- a big ass chart -->
+ <div class="row">
+  <div class="col-lg-12">
+
   </div>
+</div>
 </div>
 
 </div>

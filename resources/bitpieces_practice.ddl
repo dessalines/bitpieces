@@ -29,7 +29,8 @@ creators_badges,
 categories,
 creators_categories,
 cities,
-creators_cities
+creators_cities,
+currencies
 ;
 DROP VIEW IF EXISTS prices, worth, candlestick_prices, rewards_annualized_pct, pieces_total, pieces_available, pieces_owned_total, users_current_view,
 ask_bid_accept_checker, pieces_owned_accum, pieces_owned_value, pieces_owned_value_accum, prices_span, rewards_earned, rewards_earned_accum, pieces_owned_span,
@@ -332,6 +333,17 @@ CREATE TABLE badges
    name VARCHAR(56) NOT NULL,
    points int(11) NOT NULL DEFAULT 10,
    description TINYTEXT NOT NULL,
+   created_at TIMESTAMP NOT NULL DEFAULT 0,
+   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+   UPDATE CURRENT_TIMESTAMP
+)
+;
+
+CREATE TABLE currencies
+(
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   iso VARCHAR(56) NOT NULL,
+   name VARCHAR(56) NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -1062,8 +1074,6 @@ group by creators.id
 
 
 
-SELECT GROUP_CONCAT(name) as `Options`
-FROM categories
 
 
 
