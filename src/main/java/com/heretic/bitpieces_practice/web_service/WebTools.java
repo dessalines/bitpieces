@@ -2,30 +2,23 @@ package com.heretic.bitpieces_practice.web_service;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TimeZone;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.Paginator;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current;
 import com.heretic.bitpieces_practice.tables.Tables.Backers_current_count;
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
-import com.heretic.bitpieces_practice.tables.Tables.Bids_asks;
 import com.heretic.bitpieces_practice.tables.Tables.Bids_asks_current;
 import com.heretic.bitpieces_practice.tables.Tables.Categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
@@ -37,7 +30,6 @@ import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_search_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Currencies;
-import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_accum;
@@ -47,7 +39,6 @@ import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_b
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_by_owner;
 import com.heretic.bitpieces_practice.tables.Tables.Prices;
 import com.heretic.bitpieces_practice.tables.Tables.Prices_for_user;
-import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned_total;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_earned_total_by_user;
@@ -62,8 +53,8 @@ import com.heretic.bitpieces_practice.tables.Tables.Users_reputation;
 import com.heretic.bitpieces_practice.tables.Tables.Users_settings;
 import com.heretic.bitpieces_practice.tables.Tables.Users_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Worth;
-import com.heretic.bitpieces_practice.tools.UnitConverter;
 import com.heretic.bitpieces_practice.tools.Tools;
+import com.heretic.bitpieces_practice.tools.UnitConverter;
 
 public class WebTools {
 
@@ -327,6 +318,7 @@ public class WebTools {
 		List<Model> list = Users_funds_accum.find("users_id=?", userId);
 
 		return createHighChartsJSONForSingleCreator(list, "time_", "funds_accum", "Funds");
+
 	}
 
 	public static String getUsersDataJson(String userId, String body) {
@@ -340,17 +332,40 @@ public class WebTools {
 
 	public static String getUsersTransactionsJson(String userId, String body, UnitConverter sf) {
 
+		UsersSettings settings = new UsersSettings(userId);
 		List<Model> list = Users_transactions.find("users_id=?",  userId);
 
-		return createTableJSON(list, sf);
+		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso()));
+
+		return json;
 
 	}
 
-	public static String getUsersActivityJson(String userId, String body) {
+	public static class UsersSettings {
+		private final String iso;
+		private final Integer precision;
+		public UsersSettings(String userId) {
+			Users_settings settings = Users_settings.findById(userId);
+			this.precision = settings.getInteger("precision_");
+			this.iso = settings.getString("curr_iso");
+		}
+		public String getIso() {
+			return iso;
+		}
+		public Integer getPrecision() {
+			return precision;
+		}
 
+
+	}
+
+	public static String getUsersActivityJson(String userId, String body, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(userId);
 		List<Model> list = Users_activity.find("users_id=?",  userId);
 
-		return createTableJSON(list);
+		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso()));
+
+		return json;
 
 	}
 
@@ -365,23 +380,23 @@ public class WebTools {
 	public static String saveUsersSettings(String userId, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		User user =  User.findById(userId);
-		
+
 		String email = postMap.get("email");
 		String currency = postMap.get("currency");
 		String precision = postMap.get("precision");
-		
+
 		// Find the correct currency id
 		String currId = Currencies.findFirst("iso=?", currency).getId().toString();
-		
+
 		// Make a map from sql column names to value changes
 		Map<String, String> s= new HashMap<String, String>();
 		s.put("email", email);
 		s.put("local_currency_id", currId);
 		s.put("precision_", precision);
-		
-		
+
+
 		for (Entry<String, String> e : s.entrySet()) {
-				user.set(e.getKey(), e.getValue()).saveIt();
+			user.set(e.getKey(), e.getValue()).saveIt();
 		}
 
 
@@ -389,15 +404,18 @@ public class WebTools {
 
 	}
 
-	public static String getUsersBidsAsksCurrentJson(String userId, String body) {
+	public static String getUsersBidsAsksCurrentJson(String userId, String body, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(userId);
 
 		List<Model> list = Bids_asks_current.find("users_id=?",  userId).orderBy("time_ desc");
-
-		return createTableJSON(list);
+		
+		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso()));
+		return json;
 
 	}
 
-	public static String getUsersFundsCurrentJson(String userId, String body) {
+	public static String getUsersFundsCurrentJson(String userId, String body, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(userId);
 		String json = null;
 		try {
 			Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("users_id=?",  userId);
@@ -410,7 +428,8 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsEarnedTotalByUserJson(String userId, String body) {
+	public static String getRewardsEarnedTotalByUserJson(String userId, String body, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(userId);
 		String json = null;
 		try {
 			Rewards_earned_total_by_user rewardsEarned = Rewards_earned_total_by_user.findFirst("owners_id=?",  userId);
@@ -423,7 +442,8 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesValueCurrentByOwnerJson(String userId, String body) {
+	public static String getPiecesValueCurrentByOwnerJson(String userId, String body, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(userId);
 		String json = null;
 		try {
 			Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  userId);
@@ -460,8 +480,7 @@ public class WebTools {
 	public static String creatorsSearchJson(String query) {
 		List<Model> list = Creator.find("username like '%" + query + "%'");
 
-		String json = createTableJSON(list, "id", "username");
-
+		String json = createJSONListOfMapsFromModelList(list, "id", "username");
 		return json;
 
 
@@ -470,23 +489,24 @@ public class WebTools {
 	public static String getCategoriesJson(String query) {
 		List<Model> list = Categories.findAll();
 
-		String json = createTableJSON(list, "name");
+		String json = createJSONListOfMapsFromModelList(list, "name");
 
 		return json;
 
 
 	}
-	
+
 	public static String getCurrenciesJson(String query) {
 		List<Model> list = Currencies.findAll();
 
-		String json = createTableJSON(list);
+		String json = createJSONListOfMapsFromModelList(list);
 
 		return json;
 
 
 	}
 
+	// TODO need to handle the case where the user IS logged in, because of worth_current
 	public static String getDiscoverJson(String body) {
 		List<Model> list = null;
 		Long limit = 30L;
@@ -504,9 +524,7 @@ public class WebTools {
 		}
 
 
-
-
-		String json = createTableJSON(list);
+		String json = createJSONListOfMapsFromModelList(list);
 
 		return json;
 
@@ -587,31 +605,47 @@ public class WebTools {
 
 	}
 
-	public static String getBidsAsksCurrentJson(String creatorName, String body) {
-
+	public static String getBidsAsksCurrentJson(String creatorName, String userId, UnitConverter sf) {
 		List<Model> list = Bids_asks_current.find("creators_name=?",  creatorName);
+		
+		UsersSettings settings = null;
+		if (userId != null) {
+			settings = new UsersSettings(userId);
+		} 
 
-		return createTableJSON(list);
+		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso()));
+
 
 	}
 
-	public static String getRewardsPctJson(String creatorName, String body) {
+	public static String getRewardsPctJson(String creatorName, String body, String userId, UnitConverter sf) {
 
 		List<Model> list = Rewards_view.find("creators_name=?",  creatorName);
 
-		return createTableJSON(list);
+		UsersSettings settings = null;
+		if (userId != null) {
+			settings = new UsersSettings(userId);
+		} 
+
+		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso()));
 
 	}
 
-	public static String getRewardsOwedToUserJson(String creatorName, String body) {
+	public static String getRewardsOwedToUserJson(String creatorName, String body, String userId, UnitConverter sf) {
 
 		List<Model> list = Rewards_owed_to_user.find("creators_username=?",  creatorName);
+		
+		UsersSettings settings = null;
+		if (userId != null) {
+			settings = new UsersSettings(userId);
+		} 
 
-		return createTableJSON(list, "creators_username", "owners_name", "total_owed");
+		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(),
+				"creators_username", "owners_name", "total_owed"));
 
 	}
 
-	public static String getPiecesIssuedJson(String creatorName, String body) {
+	public static String getPiecesIssuedJson(String creatorName, String body, String userId, UnitConverter sf) {
 
 		List<Model> list = Pieces_issued_view.find("creators_name=?",  creatorName);
 
@@ -728,8 +762,40 @@ public class WebTools {
 
 	}
 
-	public static String createTableJSON(List<Model> list, UnitConverter sf, String... params) {
+	public static List<Map<String, String>> doUnitConversions(List<Model> list,
+			UnitConverter sf, Integer precision, String iso, String... params) {
 
+		// First, add the [ and commas ]
+		String json = createJSONListOfMapsFromModelList(list, params);
+
+		System.out.println(json);
+
+		// Now get the Object
+		List<Map<String, String>> lom = Tools.ListOfMapsPOJO(json);
+
+		// Do the necessary unit conversions
+		if (sf != null) {
+			DecimalFormat df = null;
+			if (precision != null && iso != null) {
+				df = UnitConverter.setupDecimalFormat(iso, precision);
+			}
+			lom = sf.convertAndFormatMoney(lom, false,  iso, df);
+
+		}
+
+		return lom;
+	}
+
+
+	public static String convertLOMtoJson(List<Map<String, String>> lom) {
+		return Tools.GSON.toJson(lom);
+	}
+	
+
+
+
+
+	public static String createJSONListOfMapsFromModelList(List<Model> list, String... params) {
 		String json = "[";
 		for (int i = 0; i < list.size(); i++) {
 			if (params != null) {
@@ -743,28 +809,9 @@ public class WebTools {
 		}
 		json += "]";
 
-		System.out.println(json);
-
-		if (sf != null) {
-			DecimalFormat df = UnitConverter.setupDecimalFormat("USD", 3);
-			json = sf.convertAndFormatMoneyJson(json, true, "USD", df);
-		}
-		
 		return json;
 	}
 
-	public static String createTableJSON(List<Model> list) {
-		return createTableJSON(list, null, null);
-	}
-	
-	public static String createTableJSON(List<Model> list, UnitConverter sf) {
-		return createTableJSON(list, sf, null);
-	}
-	
-	public static String createTableJSON(List<Model> list, String... params) {
-		return createTableJSON(list, null, params);
-	}
-	
 
 
 
@@ -830,7 +877,11 @@ public class WebTools {
 
 	}
 
+	public static  String createHighChartsJSONForSingleCreatorV2(List<Model> list, String dateColName,
+			String valueColName, String seriesName) {
 
+		return null;
+	}
 
 	public static String createHighChartsJSONForSingleCreator(List<Model> list, String dateColName,
 			String valueColName, String seriesName) {

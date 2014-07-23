@@ -194,7 +194,7 @@ public class UnitConverter {
 
 			historicalMoneyCols.retainAll(MONEY_COL_NAMES);
 			historicalMoneyCols.removeAll(CURRENT_MONEY_COL_NAMES);
-			System.out.println(historicalMoneyCols);
+//			System.out.println(historicalMoneyCols);
 
 
 			for (Map<String, String> cMap : listOfMaps) {
@@ -225,7 +225,7 @@ public class UnitConverter {
 						}
 
 
-						System.out.println(dt);
+//						System.out.println(dt);
 
 					} else if (iso.equals("mBTC")) {
 						for (String cCol : historicalMoneyCols) {
@@ -236,14 +236,23 @@ public class UnitConverter {
 						}
 					}
 					
-					// Convert the time columns
+					// Convert the time columns to the correct format
 					for (String cCol : timeCols) {
 						String prevValue = cMap.get(cCol);
-						Date timeBefore = Tools.SDF2.get().parse(prevValue);
-						String timeAfter = "/Date(" + String.valueOf(timeBefore.getTime()) + ")/";
-					
-						cMap.put(cCol, timeAfter);
+						System.out.println(prevValue);
+//						System.out.println(dt);
+//						Date timeBefore = Tools.SDF2.get().parse(prevValue);
+						DateTime timeAfter = Tools.DTF2.parseDateTime(prevValue);
+						String timeAfterStr = timeAfter.toString();
+//						System.out.println(prevValue);
+//						System.out.println(timeBefore);
+//						System.out.println(timeAfter);
 						
+						if (!convertTimeToMillis) {
+							cMap.put(cCol, timeAfterStr);
+						} else {
+							cMap.put(cCol, String.valueOf(timeAfter.getMillis()));
+						}
 					}
 				}
 
@@ -277,7 +286,7 @@ public class UnitConverter {
 			}
 			System.out.println(listOfMaps);
 
-		} catch (ExecutionException | ParseException e) {
+		} catch (ExecutionException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

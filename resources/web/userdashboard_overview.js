@@ -3,7 +3,7 @@ $(document).ready(function(){
 
 	sessionId = getCookie("authenticated_session_id");
 	console.log(sessionId);
-
+	setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
   
 	// fillUserHighChartStandardTemplate('get_users_funds_accum', '#users_funds', 'Funds ($)', '$');
 	fillTableFromMustache(sessionId + '/get_users_activity', '#recent_activity_template', '#recent_activity', '#recent_activity_table');

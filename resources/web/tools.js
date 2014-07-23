@@ -172,6 +172,23 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
 
 
         function fillTableFromMustache(url, templateId, divId, tableId) {
+  //         $.tablesorter.addParser({ 
+  //           id: 'my_date_column', 
+  //           is: function(s) { 
+  //       // return false so this parser is not auto detected 
+  //       return false; 
+  //     }, 
+  //     format: function(s) { 
+  //       console.log(s);
+  //       var timeInMillis = new Date.parse(s);
+
+  //       // var date = new Date(parseInt(s));
+  //       return date;         
+  //     }, 
+  //   // set type, either numeric or text 
+  //   type: 'numeric' 
+  // });
+
        var url = sparkService + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
@@ -185,14 +202,21 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
-            // JSON.useDateParser();
+            JSON.useDateParser();
             var jsonObj = JSON.parse(data);
             
             var template = $(templateId).html();
             Mustache.parse(template);   // optional, speeds up future uses
             var rendered = Mustache.render(template,jsonObj);
             $(divId).html(rendered);
-            $(tableId).tablesorter({debug: true}); 
+            $(tableId).tablesorter({
+              debug: true
+          //     headers: { 
+          //   0: {       // Change this to your column position
+          //     sorter:'my_date_column' 
+          //   } 
+          // }
+           }); 
             console.log(jsonObj);              
             console.log(template);
             console.log(rendered);
@@ -205,9 +229,9 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
          }
        });
 
-     }
+}
 
-     function fillFieldFromMustache(url, templateId, divId, isMoney) {
+function fillFieldFromMustache(url, templateId, divId, isMoney) {
        var url = sparkService + url// the script where you handle the form input.
        $.ajax({
         type: "GET",
@@ -360,7 +384,7 @@ $.ajax({
 
 
 
-            
+
             var mainBody = jsonObj[sqlColName];
             console.log(jsonObj);   
             console.log(mainBody);

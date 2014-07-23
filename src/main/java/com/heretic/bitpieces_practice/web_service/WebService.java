@@ -334,7 +334,7 @@ public class WebService {
 			try {
 				UserTypeAndId uid = standardInit(prop, res, req);
 				verifyUser(uid);
-
+				
 				// get currency if one exists
 
 				json = WebTools.getUsersTransactionsJson(uid.getId(), req.body(), sf);
@@ -611,7 +611,7 @@ public class WebService {
 		get("/creators_search/:query", (req, res) -> {
 			allowResponseHeaders(req, res);
 			dbInit(prop);
-
+			
 			String query = req.params(":query");
 
 			String json = WebTools.creatorsSearchJson(query);
