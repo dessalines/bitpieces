@@ -205,8 +205,8 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
-            JSON.useDateParser();
-            var jsonObj = JSON.parse(data);
+            // JSON.useDateParser();
+            var jsonObj = JSON.parseWithDate(data);
             
             var template = $(templateId).html();
             Mustache.parse(template);   // optional, speeds up future uses

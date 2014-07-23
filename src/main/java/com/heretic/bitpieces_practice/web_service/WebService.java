@@ -110,7 +110,7 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueAccumSeriesJson(uid.getId(), req.body());
+				json = WebTools.getPiecesOwnedValueAccumSeriesJson(uid.getId(), sf);
 
 
 				dbClose();
@@ -291,7 +291,7 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getUsersFundsAccumSeriesJson(uid.getId(), req.body());
+				json = WebTools.getUsersFundsAccumSeriesJson(uid.getId(), sf);
 
 
 				dbClose();
