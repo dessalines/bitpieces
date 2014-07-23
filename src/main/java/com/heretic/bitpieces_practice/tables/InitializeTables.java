@@ -167,7 +167,7 @@ public class InitializeTables {
 	private static void creator_withdrawal() {
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
 
-		Actions.creatorWithdrawal(leo.getId().toString(), 80d);
+		Actions.creatorWithdrawal(leo.getId().toString(), .08d);
 
 
 	}
@@ -184,26 +184,26 @@ public class InitializeTables {
 		Users_deposits dickDep = Users_deposits.createIt("users_id", dick.getId().toString(),
 				"cb_tid", "fake",
 				"time_", Tools.SDF.get().format(new Date()),
-				"btc_amount", 150d, 
+				"btc_amount", .15d, 
 				"status", "completed");
 
 		// an exact amount, or a straight up pieces buy
 		Users_deposits johnDep = Users_deposits.createIt("users_id", john.getId().toString(),
 				"cb_tid", "fake",
 				"time_", Tools.SDF.get().format(new Date()),
-				"btc_amount", 170d, 
+				"btc_amount", .17d, 
 				"status", "completed");
 
 		Users_deposits billDep = Users_deposits.createIt("users_id", bill.getId().toString(),
 				"cb_tid", "fake",
 				"time_", Tools.SDF.get().format(new Date()),
-				"btc_amount", 15d, 
+				"btc_amount", .015d, 
 				"status", "completed");
 
 		Users_deposits terryDep = Users_deposits.createIt("users_id", terry.getId().toString(),
 				"cb_tid", "fake",
 				"time_", Tools.SDF.get().format(new Date()),
-				"btc_amount", 300d, 
+				"btc_amount", .3d, 
 				"status", "completed");
 
 		Tools.Sleep(1000L);
@@ -214,7 +214,7 @@ public class InitializeTables {
 
 		User terry = User.findFirst("username like 'Terry%'");
 
-		Actions.userWithdrawal(terry.getId().toString(), 140d);
+		Actions.userWithdrawal(terry.getId().toString(), .140d);
 
 
 
@@ -251,7 +251,7 @@ public class InitializeTables {
 
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 
-		Actions.sellFromUser(dick.getId().toString(), bill.getId().toString(), leonardo.getId().toString(), 5, 1.2d);
+		Actions.sellFromUser(dick.getId().toString(), bill.getId().toString(), leonardo.getId().toString(), 5, 0.0012d);
 
 		Tools.Sleep(1000L);
 
@@ -264,7 +264,7 @@ public class InitializeTables {
 		Creator leonardo = Creator.findFirst("username like 'Leonardo%'");
 
 
-		Actions.sellFromCreator(leonardo.getId().toString(), dick.getId().toString(), 101, 1.0d);
+		Actions.sellFromCreator(leonardo.getId().toString(), dick.getId().toString(), 101, 0.001d);
 
 		Tools.Sleep(1000L);
 
@@ -272,7 +272,7 @@ public class InitializeTables {
 		Creator dusty = Creator.findFirst("username like 'Dusty%'");
 
 
-		Actions.sellFromCreator(dusty.getId().toString(), john.getId().toString(), 50, 2.0d);
+		Actions.sellFromCreator(dusty.getId().toString(), john.getId().toString(), 50, 0.002d);
 
 
 		Tools.Sleep(1000L);
@@ -292,13 +292,13 @@ public class InitializeTables {
 		Creator dusty = Creator.findFirst("username like 'Dusty%'");
 		String dustyCreatorId = dusty.getId().toString();
 
-		Actions.createAsk(dickUserId, leonardoCreatorId, 75, 1d,"2014-12-12", true);
+		Actions.createAsk(dickUserId, leonardoCreatorId, 75, 0.001d,"2014-12-12", true);
 		Tools.Sleep(1000L);
 
 		User john = User.findFirst("username like 'John%'");
 		String johnUserId = john.getId().toString();
 
-		Actions.createAsk(johnUserId, dustyCreatorId, 50, 2.05d,"2014-12-12", true);
+		Actions.createAsk(johnUserId, dustyCreatorId, 50, 0.00205d,"2014-12-12", true);
 		Tools.Sleep(1000L);
 
 	}
@@ -317,24 +317,24 @@ public class InitializeTables {
 		Creator dusty = Creator.findFirst("username like 'Dusty%'");
 		String dustyCreatorId = dusty.getId().toString();
 
-		Actions.createBid(billUserId, leonardoCreatorId, 5, 1.2263d, "2014-12-12", true);
+		Actions.createBid(billUserId, leonardoCreatorId, 5, 0.0012263d, "2014-12-12", true);
 		Tools.Sleep(1000L);
 
 		// Find John, also wants to bid on it, at a higher bid, and more pieces
 		User john = User.findFirst("username like 'John%'");
 		String johnUserId = john.getId().toString();
 
-		Actions.createBid(johnUserId, leonardoCreatorId, 10, 1.5d, "2014-12-12", true);
+		Actions.createBid(johnUserId, leonardoCreatorId, 10, 0.0015d, "2014-12-12", true);
 		Tools.Sleep(1000L);
 
 		// Finally Terry, wants to bid the lowest, but more than the asker has to sell
 		User terry = User.findFirst("username like 'Terry%'");
 		String terryUserId = terry.getId().toString();
 
-		Actions.createBid(terryUserId, leonardoCreatorId, 30, 1.16d, "2014-12-12", true);
+		Actions.createBid(terryUserId, leonardoCreatorId, 30, 0.00116d, "2014-12-12", true);
 		Tools.Sleep(1000L);
 
-		Actions.createBid(terryUserId, dustyCreatorId, 60, 2.5d, "2014-12-12", true);
+		Actions.createBid(terryUserId, dustyCreatorId, 60, 0.0025d, "2014-12-12", true);
 		Tools.Sleep(1000L);
 
 	}
@@ -375,11 +375,11 @@ public class InitializeTables {
 		Pieces_issued.createIt("creators_id",  leonardo.getId().toString(), 
 				"time_", Tools.SDF.get().format(new Date()), 
 				"pieces_issued", 200, 
-				"price_per_piece", 1d);
+				"price_per_piece", 0.001d);
 		Pieces_issued.createIt("creators_id", leonardo.getId().toString(), 
 				"time_", Tools.SDF.get().format(new Date(new Date().getTime()+86400000)), 
 				"pieces_issued", 300,
-				"price_per_piece", 1d);
+				"price_per_piece", 0.001d);
 
 		//		Pieces_total piecesTotal = Pieces_total.findFirst("creators_id = ?", leonardo.getId().toString());
 
@@ -388,7 +388,7 @@ public class InitializeTables {
 				"creators_id",  dusty.getId().toString(), 
 				"time_", Tools.SDF.get().format(new Date()), 
 				"pieces_issued", 50,
-				"price_per_piece", 2d);
+				"price_per_piece", 0.002d);
 
 
 	}
