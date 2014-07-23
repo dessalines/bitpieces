@@ -9,20 +9,30 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.Model;
 
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
+import com.heretic.bitpieces_practice.tables.Tables.User;
+import com.heretic.bitpieces_practice.tools.Tools.ListOfMapsPOJO;
 import com.heretic.bitpieces_practice.web_service.HTMLTools;
 
 public class Tester {
 	public static void main(String[] args) {
+		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
+		dbInit(prop);
+		List<User> list = User.findAll();
+//		System.out.println(c.get(0).getMetaModel().getAttributeNamesSkipId());
 		
-		
+		String sampleJson = "[{\"creators_id\":1,\"reward_pct\":1.4,\"category_names\":\"Design,Visual Arts\","
+				+ "\"number_of_backers\":4,\"worth_current\":117.15643434998,\"creators_name\":\"Leonardo_"
+				+ "Davinci\"},{\"creators_id\":2,\"reward_pct\":5.0,\"category_names\":\"Music\",\"number_of_backers"
+				+ "\":1,\"worth_current\":124445.52623523,\"creators_name\":\"Dusty_Springfield\"}]";
+		new ListOfMapsPOJO(sampleJson);
 		
 	}
 	public static void main3(String[] args) {
-		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
-		dbInit(prop);
+
 //		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
 //		WebTools.getPiecesOwnedValueCurrentSeriesJson("3", null);
 //		WebTools.getUsersFundsAccumSeriesJson("3", null);

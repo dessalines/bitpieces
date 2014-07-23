@@ -19,17 +19,24 @@ import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.type.TypeFactory;
+import org.codehaus.jackson.type.TypeReference;
 import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.javalite.activejdbc.Model;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.google.common.cache.Cache;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.heretic.bitpieces_practice.tables.Tables.User;
 
 public class Tools {
 	public static final String ROOT_DIR = "/home/tyler/git/bitpieces_practice/";
@@ -194,6 +201,28 @@ public class Tools {
 			
 		}
 		return retObj;
+	}
+	
+	public static class ListOfMapsPOJO {
+		List<Map<String, Object>> listOfMaps = new ArrayList<>();
+		
+		public ListOfMapsPOJO(String json) {
+//			String json = "{\"name\":\"mkyong\", \"age\":\"29\"}";
+			 
+			Map<String,String> map = new HashMap<String,String>();
+			ObjectMapper mapper = new ObjectMapper();
+		 
+			try {
+
+				List<Map<String,String>> myObjects = mapper.readValue(json, 
+						new TypeReference<ArrayList<HashMap<String,String>>>(){});
+
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
 }

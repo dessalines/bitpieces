@@ -14,25 +14,25 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<activejdbc.version>1.4.10-SNAPSHOT</activejdbc.version>
 	</properties>
-	
+
 	<repositories>
-    <repository>
-        <id>sonatype-nexus-snapshots</id>
-        <name>Sonatype Nexus Plugin Snapshots</name>
-        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        <releases>
-            <enabled>false</enabled>
-        </releases>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-    </repository>
-</repositories>
- 
+		<repository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Plugin Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 
-	
-	
+
+
+
 	<build>
 		<plugins>
 			<plugin>
@@ -90,6 +90,12 @@
 
 
 	<dependencies>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
