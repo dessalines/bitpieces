@@ -3,6 +3,7 @@ package com.heretic.bitpieces_practice.tools;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -15,6 +16,7 @@ import java.util.regex.Pattern;
 
 import org.javalite.activejdbc.Model;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -34,7 +36,7 @@ public class SeriesFetcher {
 		return "https://api.bitcoinaverage.com/history/" + ISO + "/per_day_all_time_history.csv";
 	}
 
-//	public static final String regex = "(?<=Rate\":\")[^\"]*";
+	//	public static final String regex = "(?<=Rate\":\")[^\"]*";
 	//	public static final String regex2 = "[^\"]";
 
 
@@ -117,12 +119,12 @@ public class SeriesFetcher {
 					+ "Davinci\"},{\"creators_id\":2,\"reward_pct\":5.0,\"category_names\":\"Music\",\"number_of_backers"
 					+ "\":1,\"worth_current\":124445.52623523,\"creators_name\":\"Dusty_Springfield\"}]";
 
-//			System.out.println(convertPrecision(sampleJson));
-//			System.out.println(sf.convertAndFormatMoney(sampleJson));
-			
-//			new ListOfMapsPOJO(sampleJson);
-			
+			//			System.out.println(convertPrecision(sampleJson));
+			//			System.out.println(sf.convertAndFormatMoney(sampleJson));
 
+			//			new ListOfMapsPOJO(sampleJson);
+			List<Map<String, String>> lom = Tools.ListOfMapsPOJO(sampleJson);
+			sf.convertPrecisionv2(lom, "USD");
 
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
@@ -141,12 +143,13 @@ public class SeriesFetcher {
 		return null;
 	}
 
+
 	public String convertAndFormatMoney(String json) {
-		
+
 		String regex = createKeyColonValueRegex(CURRENT_MONEY_COL_NAMES);
-		
+
 		System.out.println(regex);
-		
+
 		Pattern pattern = Pattern.compile(regex);
 
 		Matcher matcher = pattern.matcher(json);
@@ -156,11 +159,11 @@ public class SeriesFetcher {
 			System.out.print(" End index: " + matcher.end() + "|");
 			System.out.println(matcher.group());
 		}
-		
+
 		return null;
 
 	}
-	
+
 	public static String createKeyColonValueRegex(List<String> list) {
 		String names = "";
 		Iterator<String> it = list.iterator();
@@ -173,10 +176,77 @@ public class SeriesFetcher {
 		}
 
 		String regex = "(" + names + "):[^,]*";
-		
+
 		return regex;
 	}
-	
+
+	public List<Map<String, String>> convertPrecisionv2(List<Map<String, String>>listOfMaps, String iso) {
+
+		try {
+			String symbol = "\u00A5";
+			//		String symbol = "";
+			Integer precision = 4;
+			String dfPattern = symbol + "###,###.";
+			for (int i = 0; i < precision; i++) {
+				dfPattern +="#";
+			}
+
+			System.out.println(dfPattern);
+
+			DecimalFormat df = new DecimalFormat(dfPattern);
+
+			// Formattable columns
+			List<String> moneyCols = Tools.getColumnsFromListOfMaps(listOfMaps);
+
+			// Convert to todays chosen currency
+			List<String> currentMoneyCols = new ArrayList<>(moneyCols);
+			
+			Map<DateTime, Double> rates = getBtcRatesCache().get(iso);
+			DateTime now = new DateTime();
+			LocalDate today = now.toLocalDate();
+			DateTime startOfToday = today.toDateTimeAtStartOfDay(now.getZone());
+			Double todayRate = rates.get(startOfToday);
+			System.out.println(todayRate);
+
+			// Convert historical currency
+			List<String> historical = new ArrayList<>(moneyCols);
+			
+			currentMoneyCols.retainAll(CURRENT_MONEY_COL_NAMES);
+			
+			// only edit the columns that have the special names
+			moneyCols.retainAll(MONEY_COL_NAMES);
+
+			for (Map<String, String> cMap : listOfMaps) {
+
+				// Get todays conversion rate
+				for (String cCol : currentMoneyCols) {
+					String prevValue = cMap.get(cCol);
+					Double numberBefore = Double.valueOf(prevValue);
+					String numberAfter = String.valueOf(numberBefore*todayRate);
+					cMap.put(cCol, numberAfter);
+				}
+
+
+
+				// Format it
+				for (String cCol : moneyCols) {
+					String prevValue = cMap.get(cCol);
+					Double numberBefore = Double.valueOf(prevValue);
+					String formattedNumber = df.format(numberBefore);
+					cMap.put(cCol, formattedNumber);
+				}
+			}
+			System.out.println(listOfMaps);
+
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listOfMaps;	
+
+	}
+
+	@Deprecated
 	public static String convertPrecision(String json) {
 		String symbol = "\u00A5";
 		//		String symbol = "";
@@ -193,7 +263,7 @@ public class SeriesFetcher {
 
 		System.out.println("sample Json = " + json);
 
-//		String names = createOrRegex(MONEY_COL_NAMES);		
+		//		String names = createOrRegex(MONEY_COL_NAMES);		
 
 		String regex = createKeyColonValueRegex(MONEY_COL_NAMES);
 
@@ -209,11 +279,11 @@ public class SeriesFetcher {
 			System.out.print(" End index: " + matcher.end() + "|");
 			System.out.println(matcher.group());
 
-//			String regex2 = "[-+]?[0-9]*\\.?[0-9]+";
-//			String regex2 = "[:]'.*";
-//			String regex2 = "\\:(.*)";
+			//			String regex2 = "[-+]?[0-9]*\\.?[0-9]+";
+			//			String regex2 = "[:]'.*";
+			//			String regex2 = "\\:(.*)";
 			String regex2 = "(?<=:).*";
-			
+
 
 			Pattern pattern2 = Pattern.compile(regex2);
 
@@ -247,7 +317,7 @@ public class SeriesFetcher {
 
 		return json;
 	}
-	
+
 
 
 

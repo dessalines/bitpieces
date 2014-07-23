@@ -1,20 +1,14 @@
 package com.heretic.bitpieces_practice.tools;
 
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.Model;
 
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.User;
-import com.heretic.bitpieces_practice.tools.Tools.ListOfMapsPOJO;
 import com.heretic.bitpieces_practice.web_service.HTMLTools;
 
 public class Tester {
@@ -28,8 +22,8 @@ public class Tester {
 				+ "\"number_of_backers\":4,\"worth_current\":117.15643434998,\"creators_name\":\"Leonardo_"
 				+ "Davinci\"},{\"creators_id\":2,\"reward_pct\":5.0,\"category_names\":\"Music\",\"number_of_backers"
 				+ "\":1,\"worth_current\":124445.52623523,\"creators_name\":\"Dusty_Springfield\"}]";
-		new ListOfMapsPOJO(sampleJson);
-		
+		List<Map<String, String>> listOfMaps = Tools.ListOfMapsPOJO(sampleJson);
+		System.out.println(listOfMaps);
 	}
 	public static void main3(String[] args) {
 

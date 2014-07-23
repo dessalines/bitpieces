@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -203,26 +204,36 @@ public class Tools {
 		return retObj;
 	}
 	
-	public static class ListOfMapsPOJO {
-		List<Map<String, Object>> listOfMaps = new ArrayList<>();
+
 		
-		public ListOfMapsPOJO(String json) {
-//			String json = "{\"name\":\"mkyong\", \"age\":\"29\"}";
-			 
-			Map<String,String> map = new HashMap<String,String>();
+		public static List<Map<String, String>> ListOfMapsPOJO(String json) {
+
 			ObjectMapper mapper = new ObjectMapper();
 		 
 			try {
 
 				List<Map<String,String>> myObjects = mapper.readValue(json, 
 						new TypeReference<ArrayList<HashMap<String,String>>>(){});
-
-
+				
+				 return myObjects;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+			return null;
 		}
+		
+		public static List<String> getColumnsFromListOfMaps(List<Map<String, String>> lom) {
+			Map<String, String> cMap = lom.get(0);
+			List<String> cols = new ArrayList<>();
+			for (Entry<String, String> e : cMap.entrySet()) {
+				cols.add(e.getKey());
+			}
+			return cols;
+		}
+		
+		
 	}
 
-}
+
+
+
