@@ -852,7 +852,7 @@ public class WebTools {
 
 
 
-
+	@Deprecated
 	public static String createHighChartsJSONForMultipleCreators(List<Model> list, String dateColName,
 			String valueColName, String creatorsIdentifier) {
 
@@ -916,7 +916,7 @@ public class WebTools {
 	
 	public static  String createHighChartsJSONForMultipleCreatorsV2(List<Model> list, String dateColName,
 			String valueColName, String creatorsIdentifier, UnitConverter sf, Integer precision, String iso) {
-		
+		// TODO right now, doing 30 digits, and ignoring precision
 		List<Map<String, String>> lom = doUnitConversions(list, sf, 30, iso, true);
 		
 		List<Map<String, Object>> highChartsLOM = new ArrayList<Map<String, Object>>();
@@ -1006,7 +1006,8 @@ public class WebTools {
 		return json;
 		
 	}
-
+	
+	@Deprecated
 	public static String createHighChartsJSONForSingleCreator(List<Model> list, String dateColName,
 			String valueColName, String seriesName) {
 
@@ -1052,7 +1053,7 @@ public class WebTools {
 	}
 
 
-
+	// TODO need to do one of this yet
 	public static String createHighChartsJSONForCurrent(List<Model> list, 
 			String valueColName, String creatorsIdentifier) {
 
