@@ -148,6 +148,37 @@ public class UnitConverter {
 
 	}
 
+	public String convertSingleValueCurrentJson(String val, String iso, Integer precision) {
+		DecimalFormat df = setupDecimalFormat(iso, precision);
+		String retVal = null;
+		try {
+			// Get todays conversion rate
+			Double todayRate = null;
+			if (iso != null && !iso.contains("BTC")) {
+				DateTime now = new DateTime();
+				DateTime startOfToday = getStartOfDay(now);
+				todayRate = getBtcRatesCache().get(iso).get(startOfToday);
+				
+				Double number = Double.parseDouble(val);
+				 
+				// Convert it
+				Double afterConversion = number*todayRate;
+				
+				
+				// Format it
+				retVal = df.format(afterConversion);
+				
+			}
+
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return retVal;
+
+	}
+
 	public List<Map<String, String>> convertAndFormatMoney(List<Map<String, String>>listOfMaps,
 			Boolean convertTimeToMillis, 
 			DecimalFormat df) {
@@ -194,7 +225,7 @@ public class UnitConverter {
 
 			historicalMoneyCols.retainAll(MONEY_COL_NAMES);
 			historicalMoneyCols.removeAll(CURRENT_MONEY_COL_NAMES);
-//			System.out.println(historicalMoneyCols);
+			//			System.out.println(historicalMoneyCols);
 
 
 			for (Map<String, String> cMap : listOfMaps) {
@@ -225,7 +256,7 @@ public class UnitConverter {
 						}
 
 
-//						System.out.println(dt);
+						//						System.out.println(dt);
 
 					} else if (iso.equals("mBTC")) {
 						for (String cCol : historicalMoneyCols) {
@@ -235,19 +266,19 @@ public class UnitConverter {
 							cMap.put(cCol, numberAfter);
 						}
 					}
-					
+
 					// Convert the time columns to the correct format
 					for (String cCol : timeCols) {
 						String prevValue = cMap.get(cCol);
 						System.out.println(prevValue);
-//						System.out.println(dt);
-//						Date timeBefore = Tools.SDF2.get().parse(prevValue);
+						//						System.out.println(dt);
+						//						Date timeBefore = Tools.SDF2.get().parse(prevValue);
 						DateTime timeAfter = Tools.DTF2.parseDateTime(prevValue);
 						String timeAfterStr = timeAfter.toString();
-//						System.out.println(prevValue);
-//						System.out.println(timeBefore);
-//						System.out.println(timeAfter);
-						
+						//						System.out.println(prevValue);
+						//						System.out.println(timeBefore);
+						//						System.out.println(timeAfter);
+
 						if (!convertTimeToMillis) {
 							cMap.put(cCol, timeAfterStr);
 						} else {

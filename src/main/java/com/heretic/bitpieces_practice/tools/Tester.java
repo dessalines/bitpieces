@@ -34,7 +34,7 @@ public class Tester {
 				+ "2014-07-22T15:05:11\",\"end_time_\":\"2014-07-22T15:05:11\",\"start_time_\":\"2014-07-22T15:05:01\",\"timediff_seconds\":3}]";
 		
 		List<Map<String, String>> listOfMaps = Tools.ListOfMapsPOJO(sampleJson2);
-		WebTools.createTableJSON(list);
+//		WebTools.createTableJSON(list);
 		
 		
 		System.out.println(listOfMaps);
