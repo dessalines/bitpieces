@@ -408,9 +408,12 @@ public class WebTools {
 		UsersSettings settings = new UsersSettings(userId);
 
 		List<Model> list = Bids_asks_current.find("users_id=?",  userId).orderBy("time_ desc");
-
-		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso()));
-		return json;
+		if (list.size()>0) {
+			String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso()));
+			return json;
+		} else {
+			return "0";
+		}
 
 	}
 
