@@ -150,6 +150,7 @@ public class UnitConverter {
 
 	public String convertSingleValueCurrentJson(String val, String iso, Integer precision) {
 		DecimalFormat df = setupDecimalFormat(iso, precision);
+		Double number = Double.parseDouble(val);
 		String retVal = null;
 		try {
 			// Get todays conversion rate
@@ -159,7 +160,7 @@ public class UnitConverter {
 				DateTime startOfToday = getStartOfDay(now);
 				todayRate = getBtcRatesCache().get(iso).get(startOfToday);
 				
-				Double number = Double.parseDouble(val);
+				
 				 
 				// Convert it
 				Double afterConversion = number*todayRate;
@@ -168,6 +169,10 @@ public class UnitConverter {
 				// Format it
 				retVal = df.format(afterConversion);
 				
+			} else if (iso.equals("BTC")) {
+				return df.format(number);
+			} else if (iso.equals("mBTC")) {
+				return df.format(number*1000);
 			}
 
 		} catch (ExecutionException e) {

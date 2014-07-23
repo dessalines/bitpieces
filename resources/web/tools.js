@@ -1,5 +1,8 @@
 var sparkService = "http://localhost:4567/";
 // var sparkService = "http://68.56.177.238:4567/"
+var extractData = function(node)  {      
+    return $(node).text().replace(/[^0-9.]/g, ''); 
+} 
 
 function expireTimeString(seconds) {
 	var now = new Date();
@@ -210,7 +213,8 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
             var rendered = Mustache.render(template,jsonObj);
             $(divId).html(rendered);
             $(tableId).tablesorter({
-              debug: true
+              debug: true,
+              textExtraction: extractData
           //     headers: { 
           //   0: {       // Change this to your column position
           //     sorter:'my_date_column' 
@@ -246,13 +250,13 @@ function fillFieldFromMustache(url, templateId, divId, isMoney) {
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
             // JSON.useDateParser();
-            var jsonObj = JSON.parse(data);
-            if (jsonObj > 0 && isMoney) {
-              jsonObj = jsonObj.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-            }
+            // var jsonObj = JSON.parse(data);
+            // if (jsonObj > 0 && isMoney) {
+            //   jsonObj = jsonObj.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            // }
             var template = $(templateId).html();
             Mustache.parse(template);   // optional, speeds up future uses
-            var rendered = Mustache.render(template,jsonObj);
+            var rendered = Mustache.render(template,data);
             $(divId).html(rendered);
             console.log(jsonObj);              
             console.log(template);
