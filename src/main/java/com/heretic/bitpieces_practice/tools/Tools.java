@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,17 +26,14 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.type.TypeFactory;
 import org.codehaus.jackson.type.TypeReference;
 import org.jasypt.util.password.StrongPasswordEncryptor;
-import org.javalite.activejdbc.Model;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import com.google.common.cache.Cache;
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.heretic.bitpieces_practice.tables.Tables.User;
 
 public class Tools {
 	public static final String ROOT_DIR = "/home/tyler/git/bitpieces_practice/";
@@ -53,13 +49,76 @@ public class Tools {
 			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		}
 	};
+	
+	public static final ThreadLocal<SimpleDateFormat> SDF2 = new ThreadLocal<SimpleDateFormat>(){
+		@Override
+		protected SimpleDateFormat initialValue() {
+			return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		}
+	};
+
 
 
 	public static final DateTimeFormatter DTF = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+	public static final DateTimeFormatter DTF2 = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
 	// Instead of using session ids, use a java secure random ID
 	private static final SecureRandom RANDOM = new SecureRandom();
 
+	
+	public static final Map<String, String> CURRENCY_MAP = ImmutableMap.<String, String>builder()
+			.put("BTC", "Bitcoin")
+			.put("mBTC", "MilliBits")
+			.put("AUD","Australian Dollar")
+			.put( "BRL", "Brazilian Real")
+			.put( "CAD", "Canadian Dollar")
+			.put( "CHF", "Swiss Franc")
+			.put( "CNY", "Chinese Yuan")
+			.put( "EUR", "Euro")
+			.put( "GBP", "British Pound Sterling")
+			.put( "HKD", "Hong Kong Dollar")
+			.put( "IDR", "Indonesian Rupiah")
+			.put( "ILS", "Israeli New Sheqel")
+			.put( "MXN", "Mexican Peso")
+			.put( "NOK", "Norwegian Krone")
+			.put( "NZD", "New Zealand Dollar")
+			.put( "PLN", "Polish Zloty")
+			.put( "RON", "Romanian Leu")
+			.put( "RUB", "Russian Ruble")
+			.put( "SEK", "Swedish Krona")
+			.put( "SGD", "Singapore Dollar")
+			.put( "TRY", "Turkish Lira")
+			.put( "USD", "United States Dollar")
+			.put( "ZAR", "South African Rand")
+			.build();
+	
+	public static final Map<String, String> CURRENCY_UNICODES =  ImmutableMap.<String, String>builder()
+			.put("BTC", "\u0E3F")
+			.put("mBTC", "m\u0E3F")
+			.put("AUD","\u0024")
+			.put( "BRL", "R\u0024")
+			.put( "CAD", "\u0024")
+			.put( "CHF", "\u20A3")
+			.put( "CNY", "\u5143")
+			.put( "EUR", "\u20AC")
+			.put( "GBP", "\u20A4")
+			.put( "HKD", "\u0024")
+			.put( "IDR", "\u20B9")
+			.put( "ILS", "\u20AA")
+			.put( "MXN", "\u20B1")
+			.put( "NOK", "kr")
+			.put( "NZD", "\u0024")
+			.put( "PLN", "\u007A")
+			.put( "RON", "leu")
+			.put( "RUB", "\u20BD")
+			.put( "SEK", "kr")
+			.put( "SGD", "\u0024")
+			.put( "TRY", "\u20BA")
+			.put( "USD", "\u0024")
+			.put( "ZAR", "R")
+			.build();
+	
+	
 	public static void writeFile(String path, String content) {
 
 		try {

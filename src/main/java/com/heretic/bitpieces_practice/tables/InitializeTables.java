@@ -3,13 +3,11 @@ package com.heretic.bitpieces_practice.tables;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 
-import com.google.common.collect.ImmutableMap;
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tables.Tables.Ask;
 import com.heretic.bitpieces_practice.tables.Tables.Badge;
@@ -107,34 +105,12 @@ public class InitializeTables {
 
 	private static void setup_currencies() {
 
-		Map<String, String> currencyMap = ImmutableMap.<String, String>builder()
-				.put("BTC", "Bitcoin")
-				.put("mBTC", "MilliBits")
-				.put("AUD","Australian Dollar")
-				.put( "BRL", "Brazilian Real")
-				.put( "CAD", "Canadian Dollar")
-				.put( "CHF", "Swiss Franc")
-				.put( "CNY", "Chinese Yuan")
-				.put( "EUR", "Euro")
-				.put( "GBP", "British Pound Sterling")
-				.put( "HKD", "Hong Kong Dollar")
-				.put( "IDR", "Indonesian Rupiah")
-				.put( "ILS", "Israeli New Sheqel")
-				.put( "MXN", "Mexican Peso")
-				.put( "NOK", "Norwegian Krone")
-				.put( "NZD", "New Zealand Dollar")
-				.put( "PLN", "Polish Zloty")
-				.put( "RON", "Romanian Leu")
-				.put( "RUB", "Russian Ruble")
-				.put( "SEK", "Swedish Krona")
-				.put( "SGD", "Singapore Dollar")
-				.put( "TRY", "Turkish Lira")
-				.put( "USD", "United States Dollar")
-				.put( "ZAR", "South African Rand")
-				.build();
+		
+				
 
-		for (Entry<String, String> e : currencyMap.entrySet()) {
-			Currencies.createIt("iso", e.getKey(), "name", e.getValue());
+		for (Entry<String, String> e : Tools.CURRENCY_MAP.entrySet()) {
+			// Unicode still not working
+			Currencies.createIt("iso", e.getKey(), "name", e.getValue(), "unicode" , Tools.CURRENCY_UNICODES.get(e.getKey()));
 		}
 
 

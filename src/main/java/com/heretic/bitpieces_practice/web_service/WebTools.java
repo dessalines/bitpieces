@@ -1,5 +1,6 @@
 package com.heretic.bitpieces_practice.web_service;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Users_reputation;
 import com.heretic.bitpieces_practice.tables.Tables.Users_settings;
 import com.heretic.bitpieces_practice.tables.Tables.Users_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Worth;
+import com.heretic.bitpieces_practice.tools.UnitConverter;
 import com.heretic.bitpieces_practice.tools.Tools;
 
 public class WebTools {
@@ -181,7 +183,7 @@ public class WebTools {
 		//		DateTimeFormatter dtf = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 		String dateCorrectFormat = null;
 		try {
-			Date date = (new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")).parse(time_.replaceAll("Z$", "+0000"));
+			Date date = Tools.SDF2.get().parse(time_);
 			dateCorrectFormat = Tools.SDF.get().format(date);
 			System.out.println(dateCorrectFormat);
 		} catch (ParseException e) {
@@ -336,11 +338,11 @@ public class WebTools {
 		return json;
 	}
 
-	public static String getUsersTransactionsJson(String userId, String body) {
+	public static String getUsersTransactionsJson(String userId, String body, UnitConverter sf) {
 
 		List<Model> list = Users_transactions.find("users_id=?",  userId);
 
-		return createTableJSON(list);
+		return createTableJSON(list, sf);
 
 	}
 
@@ -726,7 +728,7 @@ public class WebTools {
 
 	}
 
-	public static String createTableJSON(List<Model> list, String... params) {
+	public static String createTableJSON(List<Model> list, UnitConverter sf, String... params) {
 
 		String json = "[";
 		for (int i = 0; i < list.size(); i++) {
@@ -743,12 +745,26 @@ public class WebTools {
 
 		System.out.println(json);
 
+		if (sf != null) {
+			DecimalFormat df = UnitConverter.setupDecimalFormat("USD", 3);
+			json = sf.convertAndFormatMoneyJson(json, true, "USD", df);
+		}
+		
 		return json;
 	}
 
 	public static String createTableJSON(List<Model> list) {
-		return createTableJSON(list, null);
+		return createTableJSON(list, null, null);
 	}
+	
+	public static String createTableJSON(List<Model> list, UnitConverter sf) {
+		return createTableJSON(list, sf, null);
+	}
+	
+	public static String createTableJSON(List<Model> list, String... params) {
+		return createTableJSON(list, null, params);
+	}
+	
 
 
 

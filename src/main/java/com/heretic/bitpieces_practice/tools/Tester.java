@@ -5,24 +5,38 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.Model;
 
 import com.heretic.bitpieces_practice.tables.Tables.Bid;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
-import com.heretic.bitpieces_practice.tables.Tables.User;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
 import com.heretic.bitpieces_practice.web_service.HTMLTools;
+import com.heretic.bitpieces_practice.web_service.WebTools;
 
 public class Tester {
 	public static void main(String[] args) {
 		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
 		dbInit(prop);
-		List<User> list = User.findAll();
-//		System.out.println(c.get(0).getMetaModel().getAttributeNamesSkipId());
-		
+		List<Model> list = Pieces_owned_value_accum.findAll().limit(2);
+		System.out.println(list);
+		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
+
 		String sampleJson = "[{\"creators_id\":1,\"reward_pct\":1.4,\"category_names\":\"Design,Visual Arts\","
 				+ "\"number_of_backers\":4,\"worth_current\":117.15643434998,\"creators_name\":\"Leonardo_"
 				+ "Davinci\"},{\"creators_id\":2,\"reward_pct\":5.0,\"category_names\":\"Music\",\"number_of_backers"
 				+ "\":1,\"worth_current\":124445.52623523,\"creators_name\":\"Dusty_Springfield\"}]";
-		List<Map<String, String>> listOfMaps = Tools.ListOfMapsPOJO(sampleJson);
+		
+		String sampleJson2 = "[{\"owners_id\":3,\"price_time_\":\"2014-07-22T15:05:01\",\"creators_id\":1,\"pieces_accum\":5,"
+				+ "\"price_per_piece\":1.2,\"value_accum\":6.0,\"creators_username\":\"Leonardo_Davinci\",\"price_end_time_\":\""
+				+ "2014-07-22T15:05:08\",\"end_time_\":\"2014-07-22T15:05:11\",\"start_time_\":\"2014-07-22T15:05:01\",\""
+				+ "timediff_seconds\":7},{\"owners_id\":3,\"price_time_\":\"2014-07-22T15:05:08\",\"creators_id\":1,\"pieces_accum\""
+				+ ":5,\"price_per_piece\":1.5,\"value_accum\":7.5,\"creators_username\":\"Leonardo_Davinci\",\"price_end_time_\":\""
+				+ "2014-07-22T15:05:11\",\"end_time_\":\"2014-07-22T15:05:11\",\"start_time_\":\"2014-07-22T15:05:01\",\"timediff_seconds\":3}]";
+		
+		List<Map<String, String>> listOfMaps = Tools.ListOfMapsPOJO(sampleJson2);
+		WebTools.createTableJSON(list);
+		
+		
 		System.out.println(listOfMaps);
 	}
 	public static void main3(String[] args) {

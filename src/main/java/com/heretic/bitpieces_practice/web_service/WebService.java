@@ -23,6 +23,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.actions.Actions;
+import com.heretic.bitpieces_practice.tools.UnitConverter;
 import com.heretic.bitpieces_practice.tools.Tools;
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
 import com.heretic.bitpieces_practice.tools.UserTypeAndId;
@@ -49,7 +50,10 @@ public class WebService {
 
 		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(SESSION_FILE_LOC));
 
-
+		// Get an instance of the currency/precision converter
+		UnitConverter sf = new UnitConverter();
+		
+		
 		get("/session", (req,res) -> {
 
 			allowResponseHeaders(req, res);
@@ -333,7 +337,7 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getUsersTransactionsJson(uid.getId(), req.body());
+				json = WebTools.getUsersTransactionsJson(uid.getId(), req.body(), sf);
 
 
 				dbClose();
