@@ -8,7 +8,7 @@ $(document).ready(function() {
     // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = getParameterByName('creator');
     $('#page_title').text(creatorName);
-    
+
 
     if (sessionId != null) {
         showHideButtons(creatorName);
@@ -57,7 +57,8 @@ function showHideButtons(creatorName) {
                 $('[name="buyPieces"]').attr('placeholder', 'There are ' + result + ' pieces left');
                 simpleFetch(creatorName + "/get_pieces_issued_most_recent_price").done(function(result) {
                     // $('[name="buy"]').attr('placeholder','$' + result + '/piece');
-                    $('[name="buy"]').val(result);
+                    var buyNum = result.replace(/^\D+/g, '');
+                    $('[name="buy"]').val(buyNum);
                 });
 
             }
@@ -82,6 +83,7 @@ function showHideButtons(creatorName) {
             $("#bidBtn").removeClass("hide");
             var url = creatorName + '/get_price_per_piece_current';
             simpleFetch(url).done(function(result) {
+
                 $('[name="bid"]').attr('placeholder', 'Last Price was $' + result + '/piece');
                 $('[name="ask"]').attr('placeholder', 'Last Price was $' + result + '/piece');
             });
@@ -94,8 +96,9 @@ function showHideButtons(creatorName) {
 
 
             simpleFetch(sessionId + '/get_users_funds_current').done(function(result) {
-                var usersFunds = parseFloat(result);
-                $('[name="usersFunds"]').text('$' + result);
+                var fundsNum = result.replace(/^\D+/g, '')
+                var usersFunds = parseFloat(fundsNum);
+                $('[name="usersFunds"]').text(result);
 
                 $('[name="' + e + 'Pieces' + '"]').bind('keyup', function(f) {
 
