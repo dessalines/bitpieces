@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     sessionId = getCookie("authenticated_session_id");
+    userType = getCookie("usertype");
     setupMiniSubmenu();
 
 
@@ -10,7 +11,7 @@ $(document).ready(function() {
     $('#page_title').text(creatorName);
 
 
-    if (sessionId != null) {
+    if (sessionId != null && userType == 'User') {
         showHideButtons(creatorName);
         bidAskOrBuySetup(sessionId + "/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
         bidAskOrBuySetup(sessionId + "/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");

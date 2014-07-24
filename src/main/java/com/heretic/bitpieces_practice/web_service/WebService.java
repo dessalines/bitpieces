@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.DB;
 import org.javalite.activejdbc.DBException;
 
 import spark.Request;
@@ -23,10 +22,10 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.actions.Actions;
-import com.heretic.bitpieces_practice.tools.UnitConverter;
 import com.heretic.bitpieces_practice.tools.Tools;
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
 import com.heretic.bitpieces_practice.tools.UID;
+import com.heretic.bitpieces_practice.tools.UnitConverter;
 
 public class WebService {
 
@@ -306,28 +305,6 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_user_data", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-
-				json = WebTools.getUsersDataJson(uid, req.body());
-
-
-				dbClose();
-
-				System.out.println(json);
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-
-		});
 
 		get("/:auth/get_users_transactions", (req, res) -> {
 			String json = null;
@@ -572,7 +549,7 @@ public class WebService {
 			String json = null;
 			try {
 				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+//				verifyUser(uid);
 
 				// get currency if one exists
 				json = WebTools.getUsersSettingsJson(uid);
@@ -588,14 +565,13 @@ public class WebService {
 
 		});
 		
-		post("/:auth/save_users_settings", (req, res) -> {
+		post("/:auth/save_settings", (req, res) -> {
 			String json = null;
 			try {
 				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.saveUsersSettings(uid, req.body());
+				json = WebTools.saveSettings(uid, req.body());
 
 				dbClose();
 

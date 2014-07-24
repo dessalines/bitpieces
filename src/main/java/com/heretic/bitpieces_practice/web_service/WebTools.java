@@ -423,14 +423,6 @@ public class WebTools {
 
 	}
 
-	public static String getUsersDataJson(UID uid, String body) {
-		User user  = User.findById(uid.getId());
-
-		String json = user.toJson(false, "email", "username");
-		System.out.println(json);
-
-		return json;
-	}
 
 	public static String getUsersTransactionsJson(UID uid, String body, UnitConverter sf) {
 
@@ -485,16 +477,30 @@ public class WebTools {
 
 	public static String getUsersSettingsJson(UID uid) {
 
-		Users_settings user =  Users_settings.findById(uid.getId());
+		
+		if (uid.getType() == UserType.User) {
+			Users_settings user =  Users_settings.findById(uid.getId());
+			return user.toJson(false);
+		} else {
+			Creators_settings user =  Creators_settings.findById(uid.getId());
+			return user.toJson(false);
+		}
+		
 
-		return user.toJson(false);
+		
 
 	}
 
-	public static String saveUsersSettings(UID uid, String body) {
+	public static String saveSettings(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		User user =  User.findById(uid.getId());
-
+		
+		Model user = null;
+		if (uid.getType() == UserType.User) {
+			user = User.findById(uid.getId());
+		} else {
+			user = Creator.findById(uid.getId());
+		}
+		
 		String email = postMap.get("email");
 		String currency = postMap.get("currency");
 		String precision = postMap.get("precision");
