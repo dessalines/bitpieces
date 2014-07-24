@@ -19,7 +19,7 @@ public class Tester {
 		dbInit(prop);
 		List<Model> list = Pieces_owned_value_accum.findAll().limit(2);
 		System.out.println(list);
-		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
+//		WebTools.getPiecesOwnedValueAccumSeriesJson("3", null);
 
 		String sampleJson = "[{\"creators_id\":1,\"reward_pct\":1.4,\"category_names\":\"Design,Visual Arts\","
 				+ "\"number_of_backers\":4,\"worth_current\":117.15643434998,\"creators_name\":\"Leonardo_"

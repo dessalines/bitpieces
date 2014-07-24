@@ -26,7 +26,7 @@ import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tools.UnitConverter;
 import com.heretic.bitpieces_practice.tools.Tools;
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
-import com.heretic.bitpieces_practice.tools.UserTypeAndId;
+import com.heretic.bitpieces_practice.tools.UID;
 
 public class WebService {
 
@@ -37,7 +37,7 @@ public class WebService {
 	public static final List<String> ALLOW_ACCESS_ADDRESSES = Arrays.asList("http://localhost", "http://68.56.177.238:8080");
 
 	// Use an expiring map to store the authenticated sessions
-	public static Cache<String, UserTypeAndId> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
+	public static Cache<String, UID> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
 			.maximumSize(10000)
 			.expireAfterAccess(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
 			.build();
@@ -85,9 +85,9 @@ public class WebService {
 		get("/:auth/getpiecesownedtotal", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
-				json = Actions.getPiecesOwnedTotal(uid.getId());
+				json = Actions.getPiecesOwnedTotal(uid);
 
 				dbClose();
 
@@ -105,12 +105,12 @@ public class WebService {
 		get("/:auth/get_pieces_owned_value_accum", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueAccumSeriesJson(uid.getId(), sf);
+				json = WebTools.getPiecesOwnedValueAccumSeriesJson(uid, sf);
 
 
 				dbClose();
@@ -128,12 +128,12 @@ public class WebService {
 		get("/:auth/get_pieces_owned_value_current", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), sf);
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid, sf);
 
 
 				dbClose();
@@ -151,12 +151,12 @@ public class WebService {
 		get("/:auth/:creator/get_pieces_owned_value_current", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 				String creatorName = req.params(":creator");
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), creatorName, sf);
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid, creatorName, sf);
 
 
 				dbClose();
@@ -174,12 +174,12 @@ public class WebService {
 		get("/:auth/:creator/get_pieces_owned_current", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 				String creatorName = req.params(":creator");
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedCurrentSeriesJson(uid.getId(), creatorName, sf);
+				json = WebTools.getPiecesOwnedCurrentSeriesJson(uid, creatorName, sf);
 
 
 				dbClose();
@@ -197,12 +197,12 @@ public class WebService {
 		get("/:auth/get_prices_for_user", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getPricesForUserSeriesJson(uid.getId(), sf);
+				json = WebTools.getPricesForUserSeriesJson(uid, sf);
 
 				dbClose();
 
@@ -219,12 +219,12 @@ public class WebService {
 		get("/:auth/get_rewards_earned_accum", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getRewardsEarnedAccumSeriesJson(uid.getId(), sf);
+				json = WebTools.getRewardsEarnedAccumSeriesJson(uid, sf);
 
 
 				dbClose();
@@ -242,12 +242,12 @@ public class WebService {
 		get("/:auth/get_rewards_earned_total", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getRewardsEarnedTotalJson(uid.getId(), sf);
+				json = WebTools.getRewardsEarnedTotalJson(uid, sf);
 
 				dbClose();
 
@@ -264,12 +264,12 @@ public class WebService {
 		get("/:auth/get_pieces_owned_accum", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedAccumSeriesJson(uid.getId(), sf);
+				json = WebTools.getPiecesOwnedAccumSeriesJson(uid, sf);
 
 
 				dbClose();
@@ -286,12 +286,12 @@ public class WebService {
 		get("/:auth/get_users_funds_accum", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getUsersFundsAccumSeriesJson(uid.getId(), sf);
+				json = WebTools.getUsersFundsAccumSeriesJson(uid, sf);
 
 
 				dbClose();
@@ -309,12 +309,12 @@ public class WebService {
 		get("/:auth/get_user_data", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getUsersDataJson(uid.getId(), req.body());
+				json = WebTools.getUsersDataJson(uid, req.body());
 
 
 				dbClose();
@@ -332,12 +332,12 @@ public class WebService {
 		get("/:auth/get_users_transactions", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 				
 				// get currency if one exists
 
-				json = WebTools.getUsersTransactionsJson(uid.getId(), req.body(), sf);
+				json = WebTools.getUsersTransactionsJson(uid, req.body(), sf);
 
 
 				dbClose();
@@ -355,11 +355,11 @@ public class WebService {
 		get("/:auth/get_users_activity", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.getUsersActivityJson(uid.getId(), sf);
+				json = WebTools.getUsersActivityJson(uid, sf);
 
 
 				dbClose();
@@ -376,11 +376,11 @@ public class WebService {
 		get("/:auth/get_users_funds_current", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.getUsersFundsCurrentJson(uid.getId(), sf);
+				json = WebTools.getUsersFundsCurrentJson(uid, sf);
 
 				dbClose();
 
@@ -396,11 +396,11 @@ public class WebService {
 		get("/:auth/get_rewards_earned_total_by_user", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.getRewardsEarnedTotalByUserJson(uid.getId(), sf);
+				json = WebTools.getRewardsEarnedTotalByUserJson(uid, sf);
 
 				dbClose();
 
@@ -416,11 +416,11 @@ public class WebService {
 		get("/:auth/get_pieces_value_current_by_owner", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.getPiecesValueCurrentByOwnerJson(uid.getId(), sf);
+				json = WebTools.getPiecesValueCurrentByOwnerJson(uid, sf);
 
 				dbClose();
 
@@ -436,11 +436,11 @@ public class WebService {
 		get("/:auth/get_users_reputation", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.getUsersReputationJson(uid.getId(), req.body());
+				json = WebTools.getUsersReputationJson(uid, req.body());
 
 				dbClose();
 
@@ -456,11 +456,11 @@ public class WebService {
 		get("/:auth/get_users_bids_asks_current", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.getUsersBidsAsksCurrentJson(uid.getId(), sf);
+				json = WebTools.getUsersBidsAsksCurrentJson(uid, sf);
 
 				dbClose();
 
@@ -477,10 +477,10 @@ public class WebService {
 		post("/:auth/placebid", (req, res) -> {
 			String message = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
-				message = WebTools.placeBid(uid.getId(), req.body(), sf);
+				message = WebTools.placeBid(uid, req.body(), sf);
 
 				dbClose();
 
@@ -498,10 +498,10 @@ public class WebService {
 			dbInit(prop);
 
 			// get the creator id from the token
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			String message = null;
 			try {
-				message = WebTools.placeAsk(uid.getId(), req.body(), sf);
+				message = WebTools.placeAsk(uid, req.body(), sf);
 			} catch (NoSuchElementException e) {
 				res.status(666);
 				return e.getMessage();
@@ -517,10 +517,10 @@ public class WebService {
 		post("/:auth/placebuy", (req, res) -> {
 			String message = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
-				message = WebTools.placeBuy(uid.getId(), req.body());
+				message = WebTools.placeBuy(uid, req.body());
 
 				dbClose();
 
@@ -535,10 +535,10 @@ public class WebService {
 		post("/:auth/delete_bid_ask", (req, res) -> {
 			String message = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
-				message = WebTools.deleteBidAsk(uid.getId(), req.body());
+				message = WebTools.deleteBidAsk(uid, req.body());
 
 				dbClose();
 
@@ -553,10 +553,10 @@ public class WebService {
 		post("/:auth/make_deposit_fake", (req, res) -> {
 			String message = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
-				message = WebTools.makeDepositFake(uid.getId(), req.body(), sf);
+				message = WebTools.makeDepositFake(uid, req.body(), sf);
 
 				dbClose();
 
@@ -571,11 +571,11 @@ public class WebService {
 		get("/:auth/get_users_settings", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.getUsersSettingsJson(uid.getId());
+				json = WebTools.getUsersSettingsJson(uid);
 
 				dbClose();
 
@@ -591,11 +591,11 @@ public class WebService {
 		post("/:auth/save_users_settings", (req, res) -> {
 			String json = null;
 			try {
-				UserTypeAndId uid = standardInit(prop, res, req);
+				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.saveUsersSettings(uid.getId(), req.body());
+				json = WebTools.saveUsersSettings(uid, req.body());
 
 				dbClose();
 
@@ -655,8 +655,8 @@ public class WebService {
 		post("/discover", (req, res) -> {
 			allowResponseHeaders(req, res);
 			dbInit(prop);
-			UserTypeAndId uid = getUserFromCookie(req);
-			String json = WebTools.getDiscoverJson(req.body(), uid.getId(), sf);
+			UID uid = getUserFromCookie(req);
+			String json = WebTools.getDiscoverJson(req.body(), uid, sf);
 
 			dbClose();
 
@@ -694,7 +694,7 @@ public class WebService {
 			dbInit(prop);
 
 			// Create the user
-			UserTypeAndId uid = Actions.createUserFromAjax(req.body());
+			UID uid = Actions.createUserFromAjax(req.body());
 
 			dbClose();
 
@@ -716,7 +716,7 @@ public class WebService {
 			dbInit(prop);
 
 			// Create the user
-			UserTypeAndId uid = Actions.createCreatorFromAjax(req.body());
+			UID uid = Actions.createCreatorFromAjax(req.body());
 
 			dbClose();
 
@@ -740,7 +740,7 @@ public class WebService {
 			dbInit(prop);
 
 			// log the user in
-			UserTypeAndId uid = Actions.userLogin(req.body());
+			UID uid = Actions.userLogin(req.body());
 
 			dbClose();
 
@@ -756,7 +756,7 @@ public class WebService {
 			dbInit(prop);
 
 			// log the user in
-			UserTypeAndId uid = Actions.creatorLogin(req.body());
+			UID uid = Actions.creatorLogin(req.body());
 
 			dbClose();
 
@@ -773,7 +773,7 @@ public class WebService {
 		post("/:auth/savecreatorpage", (req, res) -> {
 			String message = null;
 			try {			
-				UserTypeAndId cid = standardInit(prop, res, req);
+				UID cid = standardInit(prop, res, req);
 				verifyCreator(cid);
 
 
@@ -794,7 +794,7 @@ public class WebService {
 		get("/:auth/getcreatorpage", (req, res) -> {
 			String json = null;
 			try {			
-				UserTypeAndId cid = standardInit(prop, res, req);
+				UID cid = standardInit(prop, res, req);
 				verifyCreator(cid);
 
 				// get the creator id from the token		
@@ -813,13 +813,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token		
-				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, uid.getId(), sf);
+				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -834,13 +834,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPricePerPieceCurrentJson(creator, uid.getId(), sf);
+				json = WebTools.getPricePerPieceCurrentJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -855,13 +855,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsOwedJson(creator, uid.getId(), sf);
+				json = WebTools.getRewardsOwedJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -876,13 +876,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesOwnedValueCurrentCreatorSeriesJson(creator, uid.getId(), sf);
+				json = WebTools.getPiecesOwnedValueCurrentCreatorSeriesJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -938,13 +938,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPricesJson(creator, uid.getId(), sf);
+				json = WebTools.getPricesJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -960,13 +960,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getWorthJson(creator, uid.getId(), sf);
+				json = WebTools.getWorthJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -982,13 +982,13 @@ public class WebService {
 			String json = null;
 			String creator = req.params(":creator");
 			
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBidsAsksCurrentJson(creator, uid.getId(), sf);
+				json = WebTools.getBidsAsksCurrentJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1004,13 +1004,13 @@ public class WebService {
 			String json = null;
 			String creator = req.params(":creator");
 			
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsPctJson(creator, uid.getId(), sf);
+				json = WebTools.getRewardsPctJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1025,13 +1025,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsOwedToUserJson(creator,uid.getId(), sf);
+				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1046,13 +1046,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesIssuedJson(creator, uid.getId(), sf);
+				json = WebTools.getPiecesIssuedJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1068,13 +1068,13 @@ public class WebService {
 			String json = null;
 			String creator = req.params(":creator");
 			
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBackersCurrentJson(creator, uid.getId(), sf);
+				json = WebTools.getBackersCurrentJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1150,13 +1150,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsActivityJson(creator, uid.getId(), sf);
+				json = WebTools.getCreatorsActivityJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1171,13 +1171,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsTransactionsJson(creator, uid.getId(), sf);
+				json = WebTools.getCreatorsTransactionsJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1192,13 +1192,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsFundsAccumJson(creator,uid.getId(), sf);
+				json = WebTools.getCreatorsFundsAccumJson(creator,uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1213,13 +1213,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UserTypeAndId uid = getUserFromCookie(req);
+			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesIssuedMostRecentPriceJson(creator, uid.getId(), sf);
+				json = WebTools.getPiecesIssuedMostRecentPriceJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1235,14 +1235,14 @@ public class WebService {
 
 
 
-	private static void verifyUser(UserTypeAndId uid) throws NoSuchElementException {
+	private static void verifyUser(UID uid) throws NoSuchElementException {
 		if (uid.getType() != UserType.User) {
 			throw new NoSuchElementException("Sorry, not a user");
 		}
 
 	}
 
-	private static void verifyCreator(UserTypeAndId uid) throws NoSuchElementException {
+	private static void verifyCreator(UID uid) throws NoSuchElementException {
 		if (uid.getType() != UserType.Creator) {
 			throw new NoSuchElementException("Sorry, not a creator");
 		}
@@ -1251,21 +1251,21 @@ public class WebService {
 
 
 
-	private static UserTypeAndId getUserFromCookie(Request req) {
+	private static UID getUserFromCookie(Request req) {
 		String authId = req.cookie("authenticated_session_id");
 
-		UserTypeAndId uid = null;
+		UID uid = null;
 		try {
 			uid = SESSION_TO_USER_MAP.getIfPresent(authId);
 		} catch(NullPointerException e) {
 			System.err.println("No such user logged in");
-			return new UserTypeAndId(null, null, null);
+			return new UID(null, null, null);
 		}
 
 		return uid;
 	}
 
-	private static String verifyLoginAndSetCookies(UserTypeAndId uid, Response res) {
+	private static String verifyLoginAndSetCookies(UID uid, Response res) {
 		if (uid != null) {
 			String authenticatedSession = Tools.generateSecureRandom();
 			// Put the users ID in the session
@@ -1295,7 +1295,7 @@ public class WebService {
 	}
 
 	private static void writeCacheToFile() {
-		Map<String, UserTypeAndId> serializableMap = new HashMap<String, UserTypeAndId>(SESSION_TO_USER_MAP.asMap());
+		Map<String, UID> serializableMap = new HashMap<String, UID>(SESSION_TO_USER_MAP.asMap());
 		Tools.writeObjectToFile(serializableMap, SESSION_FILE_LOC);
 	}
 
@@ -1312,7 +1312,7 @@ public class WebService {
 		}
 	}
 
-	private static final UserTypeAndId standardInit(Properties prop, Response res, Request req) {
+	private static final UID standardInit(Properties prop, Response res, Request req) {
 		try {
 			Base.open("com.mysql.jdbc.Driver", 
 					prop.getProperty("dburl"), 
@@ -1325,7 +1325,7 @@ public class WebService {
 
 		allowResponseHeaders(req, res);
 
-		UserTypeAndId uid = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth"));
+		UID uid = SESSION_TO_USER_MAP.getIfPresent(req.params(":auth"));
 
 		return uid;
 	}

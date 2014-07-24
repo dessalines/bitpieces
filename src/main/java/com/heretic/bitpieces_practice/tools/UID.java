@@ -4,7 +4,12 @@ import java.io.Serializable;
 
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
 
-public class UserTypeAndId implements Serializable {
+/**
+ * The user or creators type, id, and username
+ * @author tyler
+ *
+ */
+public class UID implements Serializable {
 	/**
 	 * 
 	 */
@@ -13,7 +18,7 @@ public class UserTypeAndId implements Serializable {
 	String id;
 	String username;
 	
-	public UserTypeAndId(UserType type, String id, String username) {
+	public UID(UserType type, String id, String username) {
 		super();
 		this.type = type;
 		this.id = id;

@@ -30,7 +30,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Users_funds_current;
 import com.heretic.bitpieces_practice.tables.Tables.Users_withdrawals;
 import com.heretic.bitpieces_practice.tools.Tools;
 import com.heretic.bitpieces_practice.tools.Tools.UserType;
-import com.heretic.bitpieces_practice.tools.UserTypeAndId;
+import com.heretic.bitpieces_practice.tools.UID;
 
 public class Actions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -338,7 +338,7 @@ public class Actions {
 
 	}
 
-	public static UserTypeAndId createUserFromAjax(String reqBody) {
+	public static UID createUserFromAjax(String reqBody) {
 
 
 		// create user 
@@ -359,7 +359,7 @@ public class Actions {
 			makeDepositFake(user.getId().toString(), .1d);
 			
 
-			UserTypeAndId uid = new UserTypeAndId(UserType.User, 
+			UID uid = new UID(UserType.User, 
 					String.valueOf(user.getId()),
 					user.getString("username"));
 			return uid;
@@ -389,7 +389,7 @@ public class Actions {
 	
 
 
-	public static UserTypeAndId createCreatorFromAjax(String reqBody) {
+	public static UID createCreatorFromAjax(String reqBody) {
 
 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
@@ -403,7 +403,7 @@ public class Actions {
 
 			// TODO Create the static html5 page for that creator
 
-			UserTypeAndId uid = new UserTypeAndId(UserType.Creator, 
+			UID uid = new UID(UserType.Creator, 
 					String.valueOf(creator.getId()), 
 					creator.getString("username"));
 			return uid;
@@ -416,7 +416,7 @@ public class Actions {
 
 	}
 
-	public static UserTypeAndId userLogin(String reqBody) {
+	public static UID userLogin(String reqBody) {
 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
@@ -431,7 +431,7 @@ public class Actions {
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 		
-		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(
+		UID returnVal = (correctPass == true) ? new UID(
 				UserType.User, 
 				user.getId().toString(),
 				user.getString("username")) : null;
@@ -440,7 +440,7 @@ public class Actions {
 
 	}
 
-	public static UserTypeAndId creatorLogin(String reqBody) {
+	public static UID creatorLogin(String reqBody) {
 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
@@ -454,7 +454,7 @@ public class Actions {
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
 
-		UserTypeAndId returnVal = (correctPass == true) ? new UserTypeAndId(
+		UID returnVal = (correctPass == true) ? new UID(
 				UserType.Creator, 
 				user.getId().toString(),
 				user.getString("username")) : null;
@@ -465,8 +465,8 @@ public class Actions {
 
 	}
 
-	public static String getPiecesOwnedTotal(String userId) {
-		LazyList<Pieces_owned_total> pieces_owned_total = Pieces_owned_total.where("owners_id = ?", userId);
+	public static String getPiecesOwnedTotal(UID uid) {
+		LazyList<Pieces_owned_total> pieces_owned_total = Pieces_owned_total.where("owners_id = ?", uid.getId());
 
 		return pieces_owned_total.toJson(true, "creators_id", "pieces_owned_total");
 
@@ -506,7 +506,7 @@ public class Actions {
 
 			// This is based on the value of the current pieces
 			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
-					getDouble("value_total");
+					getDouble("value_total_current");
 
 			Double rewardsOwedForOneYear = creatorsValue*(Math.exp(rewardPct)-1.0d);
 

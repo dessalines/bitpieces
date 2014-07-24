@@ -28,6 +28,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_search_view;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_settings;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Currencies;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available_view;
@@ -54,7 +55,9 @@ import com.heretic.bitpieces_practice.tables.Tables.Users_settings;
 import com.heretic.bitpieces_practice.tables.Tables.Users_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Worth;
 import com.heretic.bitpieces_practice.tools.Tools;
+import com.heretic.bitpieces_practice.tools.Tools.UserType;
 import com.heretic.bitpieces_practice.tools.UnitConverter;
+import com.heretic.bitpieces_practice.tools.UID;
 
 public class WebTools {
 
@@ -105,10 +108,10 @@ public class WebTools {
 
 
 
-	public static String placeBid(String userId, String body, UnitConverter sf) {
+	public static String placeBid(UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
-		UsersSettings settings = new UsersSettings(userId);
+		UsersSettings settings = new UsersSettings(uid);
 
 		// You don't have the creators id, so you have to fetch it:ss
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
@@ -130,7 +133,7 @@ public class WebTools {
 		}
 
 
-		Actions.createBid(userId, 
+		Actions.createBid(uid.getId(), 
 				creator.getId().toString(), 
 				bidPieces, 
 				btcBid, 
@@ -141,10 +144,10 @@ public class WebTools {
 		return message;
 	}
 
-	public static String placeAsk(String userId, String body, UnitConverter sf) {
+	public static String placeAsk(UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
-		UsersSettings settings = new UsersSettings(userId);
+		UsersSettings settings = new UsersSettings(uid);
 
 		// You don't have the creators id, so you have to fetch it:ss
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
@@ -165,7 +168,7 @@ public class WebTools {
 			message = "Ask for " + askPieces + " pieces placed at " + btcAsk + " BTC";
 		}
 
-		Actions.createAsk(userId, 
+		Actions.createAsk(uid.getId(), 
 				creator.getId().toString(), 
 				askPieces,
 				btcAsk,
@@ -176,7 +179,7 @@ public class WebTools {
 		return message;
 	}
 
-	public static String placeBuy(String userId, String body) {
+	public static String placeBuy(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
 		// You don't have the creators id, so you have to fetch it:
@@ -188,7 +191,7 @@ public class WebTools {
 
 
 		Actions.sellFromCreator(creator.getId().toString(), 
-				userId, 
+				uid.getId(), 
 				Integer.valueOf(postMap.get("buyPieces")), 
 				price_per_piece);
 
@@ -196,7 +199,7 @@ public class WebTools {
 		return body;
 	}
 
-	public static String deleteBidAsk(String userId, String body) {
+	public static String deleteBidAsk(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
 		String type = postMap.get("type");
@@ -222,7 +225,7 @@ public class WebTools {
 
 
 		if (type.equals("bid")) {
-			Bid bid = Bid.findFirst("users_id=? and creators_id=? and time_ = ?", userId, c.getId().toString(), dateCorrectFormat);
+			Bid bid = Bid.findFirst("users_id=? and creators_id=? and time_ = ?", uid.getId(), c.getId().toString(), dateCorrectFormat);
 			System.out.println(bid);
 			bid.delete();
 			System.out.println("deleted it");
@@ -230,7 +233,7 @@ public class WebTools {
 
 		} else if (type.equals("ask")) {
 			Ask ask = Ask.findFirst("users_id=? and creators_id=? and time_ = ?", 
-					userId, c.getId().toString(), dateCorrectFormat);
+					uid.getId(), c.getId().toString(), dateCorrectFormat);
 			System.out.println(ask);
 			ask.delete();
 			System.out.println("deleted it");
@@ -240,9 +243,9 @@ public class WebTools {
 		return body;
 	}
 
-	public static String makeDepositFake(String userId, String body, UnitConverter sf) {
+	public static String makeDepositFake(UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		UsersSettings settings = new UsersSettings(userId);
+		UsersSettings settings = new UsersSettings(uid);
 
 		Double amount = Double.parseDouble(postMap.get("deposit"));
 		Double btcAmount = amount;
@@ -261,7 +264,7 @@ public class WebTools {
 
 
 		// First fetch from the table
-		Actions.makeDepositFake(userId,btcAmount);
+		Actions.makeDepositFake(uid.getId(),btcAmount);
 
 		return message;
 
@@ -271,11 +274,11 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedValueAccumSeriesJson(String userId, UnitConverter sf) {
+	public static String getPiecesOwnedValueAccumSeriesJson(UID uid, UnitConverter sf) {
 
-		UsersSettings settings = new UsersSettings(userId);
+		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", userId);
+		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", uid.getId());
 
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "value_accum", "creators_username",
@@ -286,11 +289,11 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedAccumSeriesJson(String userId,
+	public static String getPiecesOwnedAccumSeriesJson(UID uid,
 			UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Pieces_owned_accum.find("owners_id=?", userId);
+		List<Model> list = Pieces_owned_accum.find("owners_id=?", uid.getId());
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForMultipleCreatorsV2(list, "start_time_", "pieces_accum", "creators_username",
 					sf, settings.getPrecision(), settings.getIso());
@@ -301,10 +304,10 @@ public class WebTools {
 
 
 
-	public static String getPricesForUserSeriesJson(String userId, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+	public static String getPricesForUserSeriesJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Prices_for_user.find("owners_id=?", userId);
+		List<Model> list = Prices_for_user.find("owners_id=?", uid.getId());
 
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForMultipleCreatorsV2(list, "time_", "price_per_piece", "creators_username",
@@ -316,12 +319,12 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedValueCurrentSeriesJson(String userId, UnitConverter sf) {
+	public static String getPiecesOwnedValueCurrentSeriesJson(UID uid, UnitConverter sf) {
 
 		// First fetch from the table
-		List<Model> list = Pieces_owned_value_current.find("owners_id=?", userId);
+		List<Model> list = Pieces_owned_value_current.find("owners_id=?", uid.getId());
 
-		UsersSettings settings = new UsersSettings(userId);
+		UsersSettings settings = new UsersSettings(uid);
 
 		if (list.size()>0) { 
 			return createHighChartsJSONForCurrentV2(list, "value_total_current", "creators_username", sf,
@@ -332,10 +335,10 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsEarnedTotalJson(String userId, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+	public static String getRewardsEarnedTotalJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Rewards_earned_total.find("owners_id=?", userId);
+		List<Model> list = Rewards_earned_total.find("owners_id=?", uid.getId());
 
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForCurrentV2(list, "reward_earned_total", "creators_username",
@@ -346,11 +349,11 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedValueCurrentCreatorSeriesJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getPiecesOwnedValueCurrentCreatorSeriesJson(String creatorName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+		if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 
 		// First fetch from the table
@@ -361,12 +364,13 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedValueCurrentSeriesJson(String userId, String creatorName, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+	public static String getPiecesOwnedValueCurrentSeriesJson(UID uid, String creatorName, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
 			// First fetch from the table
-			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?", userId, creatorName);
+			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?",
+					uid.getId(), creatorName);
 
 			String val = p.getString("value_total_current");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -377,11 +381,12 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedCurrentSeriesJson(String userId, String creatorName, UnitConverter sf) {
+	public static String getPiecesOwnedCurrentSeriesJson(UID uid, String creatorName, UnitConverter sf) {
 
 		try {
 			// First fetch from the table
-			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?", userId, creatorName);
+			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?", 
+					uid.getId(), creatorName);
 			String val = p.getString("pieces_total");
 			return val;
 
@@ -392,10 +397,10 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsEarnedAccumSeriesJson(String userId, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+	public static String getRewardsEarnedAccumSeriesJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Rewards_earned_accum.find("owners_id=?", userId);
+		List<Model> list = Rewards_earned_accum.find("owners_id=?", uid.getId());
 
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "reward_accum", "creators_username",
@@ -405,12 +410,12 @@ public class WebTools {
 		}
 	}
 
-	public static String getUsersFundsAccumSeriesJson(String userId, UnitConverter sf) {
+	public static String getUsersFundsAccumSeriesJson(UID uid, UnitConverter sf) {
 
-		UsersSettings settings = new UsersSettings(userId);
+		UsersSettings settings = new UsersSettings(uid);
 
 		// First fetch from the table
-		List<Model> list = Users_funds_accum.find("users_id=?", userId);
+		List<Model> list = Users_funds_accum.find("users_id=?", uid.getId());
 
 		return createHighChartsJSONForSingleCreatorV2(list, "time_", "funds_accum", "Funds",
 				sf, settings.getPrecision(), settings.getIso());
@@ -418,8 +423,8 @@ public class WebTools {
 
 	}
 
-	public static String getUsersDataJson(String userId, String body) {
-		User user  = User.findById(userId);
+	public static String getUsersDataJson(UID uid, String body) {
+		User user  = User.findById(uid.getId());
 
 		String json = user.toJson(false, "email", "username");
 		System.out.println(json);
@@ -427,10 +432,10 @@ public class WebTools {
 		return json;
 	}
 
-	public static String getUsersTransactionsJson(String userId, String body, UnitConverter sf) {
+	public static String getUsersTransactionsJson(UID uid, String body, UnitConverter sf) {
 
-		UsersSettings settings = new UsersSettings(userId);
-		List<Model> list = Users_transactions.find("users_id=?",  userId);
+		UsersSettings settings = new UsersSettings(uid);
+		List<Model> list = Users_transactions.find("users_id=?",  uid.getId());
 
 		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 
@@ -441,12 +446,20 @@ public class WebTools {
 	public static class UsersSettings {
 		private final String iso;
 		private final Integer precision;
-		public UsersSettings(String userId) {
-			if (userId != null) {
-				Users_settings settings = Users_settings.findById(userId);
-				this.precision = settings.getInteger("precision_");
-				this.iso = settings.getString("curr_iso"); }
-			else {
+		public UsersSettings(UID uid) {
+
+			if (uid != null) {
+
+				if (uid.getType() == UserType.User) {
+					Users_settings settings = Users_settings.findById(uid.getId());
+					this.precision = settings.getInteger("precision_");
+					this.iso = settings.getString("curr_iso"); 
+				} else {
+					Creators_settings settings = Creators_settings.findById(uid.getId());
+					this.precision = settings.getInteger("precision_");
+					this.iso = settings.getString("curr_iso"); 
+				}
+			} else {
 				this.precision = null;
 				this.iso = null;
 			}
@@ -458,12 +471,11 @@ public class WebTools {
 			return precision;
 		}
 
-
 	}
 
-	public static String getUsersActivityJson(String userId, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
-		List<Model> list = Users_activity.find("users_id=?",  userId);
+	public static String getUsersActivityJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
+		List<Model> list = Users_activity.find("users_id=?",  uid.getId());
 
 		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 
@@ -471,17 +483,17 @@ public class WebTools {
 
 	}
 
-	public static String getUsersSettingsJson(String userId) {
+	public static String getUsersSettingsJson(UID uid) {
 
-		Users_settings user =  Users_settings.findById(userId);
+		Users_settings user =  Users_settings.findById(uid.getId());
 
 		return user.toJson(false);
 
 	}
 
-	public static String saveUsersSettings(String userId, String body) {
+	public static String saveUsersSettings(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		User user =  User.findById(userId);
+		User user =  User.findById(uid.getId());
 
 		String email = postMap.get("email");
 		String currency = postMap.get("currency");
@@ -506,10 +518,10 @@ public class WebTools {
 
 	}
 
-	public static String getUsersBidsAsksCurrentJson(String userId, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+	public static String getUsersBidsAsksCurrentJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
 
-		List<Model> list = Bids_asks_current.find("users_id=?",  userId).orderBy("time_ desc");
+		List<Model> list = Bids_asks_current.find("users_id=?",  uid.getId()).orderBy("time_ desc");
 		if (list.size()>0) {
 			String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 			return json;
@@ -519,11 +531,11 @@ public class WebTools {
 
 	}
 
-	public static String getUsersFundsCurrentJson(String userId, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+	public static String getUsersFundsCurrentJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("users_id=?",  userId);
+			Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("users_id=?",  uid.getId());
 
 			String val = usersFundsCurrent.getString("current_funds");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -534,11 +546,11 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsEarnedTotalByUserJson(String userId, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+	public static String getRewardsEarnedTotalByUserJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Rewards_earned_total_by_user rewardsEarned = Rewards_earned_total_by_user.findFirst("owners_id=?",  userId);
+			Rewards_earned_total_by_user rewardsEarned = Rewards_earned_total_by_user.findFirst("owners_id=?",  uid.getId());
 
 			String val = rewardsEarned.getString("reward_earned_total");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -549,11 +561,11 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesValueCurrentByOwnerJson(String userId, UnitConverter sf) {
-		UsersSettings settings = new UsersSettings(userId);
+	public static String getPiecesValueCurrentByOwnerJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  userId);
+			Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  uid.getId());
 
 			String val = value.getString("value_total_current");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -564,13 +576,13 @@ public class WebTools {
 
 	}
 
-	public static String getUsersReputationJson(String userId, String body) {
+	public static String getUsersReputationJson(UID uid, String body) {
 
 
 		String json = null;
 
 		try {
-			Users_reputation value = Users_reputation.findFirst("users_id=?",  userId);
+			Users_reputation value = Users_reputation.findFirst("users_id=?",  uid.getId());
 
 			json = value.getString("reputation");
 
@@ -615,11 +627,11 @@ public class WebTools {
 	}
 
 	// TODO need to handle the case where the user IS logged in, because of worth_current
-	public static String getDiscoverJson(String body, String userId, UnitConverter sf) {
+	public static String getDiscoverJson(String body, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		}
 
 
@@ -649,10 +661,10 @@ public class WebTools {
 
 
 	public static String getPiecesOwnedValueCurrentByCreatorJson(
-			String creatorName, String userId, UnitConverter sf) {
+			String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		}
 		Pieces_owned_value_current_by_creator p = 
 				Pieces_owned_value_current_by_creator.findFirst("username = ?", creatorName);
@@ -665,10 +677,10 @@ public class WebTools {
 	}
 
 	public static String getPricePerPieceCurrentJson(
-			String creatorName, String userId, UnitConverter sf) {
+			String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		}
 
 
@@ -683,10 +695,10 @@ public class WebTools {
 	}
 
 	public static String getRewardsOwedJson(
-			String creatorName, String userId, UnitConverter sf) {
+			String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		}
 
 		Rewards_owed r = Rewards_owed.findFirst("creators_username = ?", creatorName);
@@ -722,11 +734,11 @@ public class WebTools {
 	}
 
 	public static String getPricesJson(
-			String creatorName, String userId, UnitConverter sf) {
+			String creatorName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		}
 
 		List<Model> list = Prices.find("creators_name=?", creatorName);
@@ -736,11 +748,11 @@ public class WebTools {
 	}
 
 	public static String getWorthJson(
-			String creatorName, String userId, UnitConverter sf) {
+			String creatorName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		}
 
 		List<Model> list = Worth.find("creators_username=?", creatorName);
@@ -749,12 +761,12 @@ public class WebTools {
 
 	}
 
-	public static String getBidsAsksCurrentJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getBidsAsksCurrentJson(String creatorName, UID uid, UnitConverter sf) {
 		List<Model> list = Bids_asks_current.find("creators_name=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 
 		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
@@ -762,26 +774,26 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsPctJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getRewardsPctJson(String creatorName, UID uid, UnitConverter sf) {
 
 		List<Model> list = Rewards_view.find("creators_name=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 
 		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 
 	}
 
-	public static String getRewardsOwedToUserJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getRewardsOwedToUserJson(String creatorName, UID uid, UnitConverter sf) {
 
 		List<Model> list = Rewards_owed_to_user.find("creators_username=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 
 		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
@@ -789,12 +801,12 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesIssuedJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getPiecesIssuedJson(String creatorName, UID uid, UnitConverter sf) {
 
 		List<Model> list = Pieces_issued_view.find("creators_name=?",  creatorName);
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 
 
@@ -802,10 +814,10 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesIssuedMostRecentPriceJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getPiecesIssuedMostRecentPriceJson(String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 
 		List<Model> p = Pieces_issued_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
@@ -815,13 +827,13 @@ public class WebTools {
 
 	}
 
-	public static String getBackersCurrentJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getBackersCurrentJson(String creatorName, UID uid, UnitConverter sf) {
 
 		List<Model> list = Backers_current.find("creators_username=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 
 		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
@@ -889,13 +901,13 @@ public class WebTools {
 
 	}
 
-	public static String getCreatorsActivityJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getCreatorsActivityJson(String creatorName, UID uid, UnitConverter sf) {
 
 		List<Model> list = Creators_activity.find("creators_name=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 		Paginator p = new Paginator(Creators_activity.class, 5, "creators_name=?", creatorName);
 
@@ -906,11 +918,11 @@ public class WebTools {
 
 	}
 
-	public static String getCreatorsTransactionsJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getCreatorsTransactionsJson(String creatorName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		} 
 		List<Model> list = Creators_transactions.find("creators_name=?",  creatorName);
 
@@ -918,10 +930,10 @@ public class WebTools {
 
 	}
 
-	public static String getCreatorsFundsAccumJson(String creatorName, String userId, UnitConverter sf) {
+	public static String getCreatorsFundsAccumJson(String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-		if (userId != null) {
-			settings = new UsersSettings(userId);
+	if (uid != null) {
+			settings = new UsersSettings(uid);
 		}
 
 		List<Model> list = Creators_funds_accum.find("creators_name=?",  creatorName);

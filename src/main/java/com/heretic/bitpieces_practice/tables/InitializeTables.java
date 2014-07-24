@@ -394,14 +394,16 @@ public class InitializeTables {
 	}
 
 	private static void setup_creators() {
-
+		Currencies btc = Currencies.findFirst("iso=?", "BTC");
 		String now = Tools.SDF.get().format(new Date());
 		Creator leo = Creator.createIt("username", "Leonardo_Davinci",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
-				"email", "asdf@gmail.com");
+				"email", "asdf@gmail.com",
+				"local_currency_id", btc.getId());
 		Creator dusty = Creator.createIt("username", "Dusty_Springfield",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
-				"email", "asdf@gmail.com");
+				"email", "asdf@gmail.com",
+				"local_currency_id", btc.getId());
 
 		Creators_btc_address.createIt("creators_id", leo.getId(), "btc_addr", "fake");
 		Creators_btc_address.createIt("creators_id", dusty.getId(), "btc_addr", "fake");

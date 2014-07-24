@@ -189,6 +189,9 @@ public class Tables {
 	@Table("users_settings")
 	public static class Users_settings extends Model {}
 	
+	@Table("creators_settings")
+	public static class Creators_settings extends Model {}
+	
 	
 	
 	
