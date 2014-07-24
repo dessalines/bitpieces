@@ -90,13 +90,14 @@ function showHideButtons(creatorName) {
             });
 
         }
-        // This part adds the totals and such
-        var types = ['bid', 'ask', 'buy'];
-        types.forEach(function(e) {
 
 
 
-            simpleFetch(sessionId + '/get_users_funds_current').done(function(result) {
+
+        simpleFetch(sessionId + '/get_users_funds_current').done(function(result) {
+            // This part adds the totals and such
+            var types = ['bid', 'ask', 'buy'];
+            types.forEach(function(e) {
                 var fundsNum = result.replace(/^\D+/g, '')
                 var usersFunds = parseFloat(fundsNum);
                 $('[name="usersFunds"]').text(result);

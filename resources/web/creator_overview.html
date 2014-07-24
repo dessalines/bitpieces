@@ -285,7 +285,7 @@
             </div>
           </div>
         </div>
-        <a href="userdashboard_funds">
+        <a href="creator_worth" rel="keep-params">
           <div class="panel-footer announcement-bottom">
             <div class="row">
               <div class="col-xs-6">
@@ -317,7 +317,7 @@
             </div>
           </div>
         </div>
-        <a href="#">
+        <a href="creator_pricing" rel="keep-params">
           <div class="panel-footer announcement-bottom">
             <div class="row">
               <div class="col-xs-6">
@@ -332,13 +332,45 @@
       </div>
     </div>
   </div>
-  <div class="row">
+    <div class="row">
     <div class="col-lg-12">
       <div class="panel panel-warning">
         <div class="panel-heading">
           <div class="row">
             <div class="col-xs-4">
               <i class="fa fa-cubes fa-5x"></i>
+            </div>
+            <div id="pieces_held_current" class="col-xs-8 text-right">
+              <script id="pieces_held_current_template" type="x-tmpl-mustache"> 
+              <p class="announcement-heading">{{.}}</p>
+
+              <p class="announcement-text">Pieces held</p>
+              </script>
+            </div>
+          </div>
+        </div>
+        <a href="creator_pieces" rel="keep-params">
+          <div class="panel-footer announcement-bottom">
+            <div class="row">
+              <div class="col-xs-6">
+                View pieces
+              </div>
+              <div class="col-xs-6 text-right">
+                <i class="fa fa-arrow-circle-right"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-4">
+              <i class="fa fa-money fa-5x"></i>
             </div>
             <div id="rewards_paid" class="col-xs-8 text-right">
               <script id="rewards_paid_template" type="x-tmpl-mustache"> 
@@ -349,7 +381,7 @@
             </div>
           </div>
         </div>
-        <a href="userdashboard_pieces">
+        <a href="creator_rewards" rel="keep-params">
           <div class="panel-footer announcement-bottom">
             <div class="row">
               <div class="col-xs-6">
@@ -382,7 +414,7 @@
             </div>
           </div>
         </div>
-        <a href="userdashboard_pieces">
+        <a href="creator_pieces" rel="keep-params">
           <div class="panel-footer announcement-bottom">
             <div class="row">
               <div class="col-xs-6">
@@ -415,7 +447,7 @@
             </div>
           </div>
         </div>
-        <a href="userdashboard_pieces">
+        <a href="userdashboard_pieces" rel="keep-params">
           <div class="panel-footer announcement-bottom">
             <div class="row">
               <div class="col-xs-6">
