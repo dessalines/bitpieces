@@ -12,9 +12,9 @@ $(document).ready(function() {
 
     if (sessionId != null) {
         showHideButtons(creatorName);
-        bidAskOrBuySetup(sessionId + "/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal", "Placed Ask");
-        bidAskOrBuySetup(sessionId + "/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal", "Placed Bid");
-        bidAskOrBuySetup(sessionId + "/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal", "Placed Buy");
+        bidAskOrBuySetup(sessionId + "/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
+        bidAskOrBuySetup(sessionId + "/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
+        bidAskOrBuySetup(sessionId + "/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
 
 
         setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
@@ -72,6 +72,7 @@ function showHideButtons(creatorName) {
 
         simpleFetch(sessionId + "/" + creatorName + "/get_pieces_owned_current").done(function(result) {
             console.log('result = ' + result);
+
             if (result > 0) {
                 $("#askBtn").removeClass("hide");
                 $('[name="askPieces"]').attr('placeholder', 'You own ' + result + ' pieces');
@@ -143,7 +144,7 @@ function showHideButtons(creatorName) {
 }
 
 
-function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId, message) {
+function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
     $(formId).bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
@@ -197,7 +198,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId, mess
                 $(modalId).modal('hide');
                 $(formId)[0].reset();
 
-                toastr.success(message);
+                toastr.success(data);
 
 
 

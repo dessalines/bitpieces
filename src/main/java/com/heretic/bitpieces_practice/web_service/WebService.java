@@ -480,7 +480,7 @@ public class WebService {
 				UserTypeAndId uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
-				message = WebTools.placeBid(uid.getId(), req.body());
+				message = WebTools.placeBid(uid.getId(), req.body(), sf);
 
 				dbClose();
 
@@ -501,7 +501,7 @@ public class WebService {
 			UserTypeAndId uid = getUserFromCookie(req);
 			String message = null;
 			try {
-				message = WebTools.placeAsk(uid.getId(), req.body());
+				message = WebTools.placeAsk(uid.getId(), req.body(), sf);
 			} catch (NoSuchElementException e) {
 				res.status(666);
 				return e.getMessage();

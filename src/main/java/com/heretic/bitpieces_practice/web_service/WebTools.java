@@ -105,38 +105,75 @@ public class WebTools {
 
 
 
-	public static String placeBid(String userId, String body) {
+	public static String placeBid(String userId, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+
+		UsersSettings settings = new UsersSettings(userId);
 
 		// You don't have the creators id, so you have to fetch it:ss
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
 
+		Integer bidPieces = Integer.valueOf(postMap.get("bidPieces"));
+		Double bid = Double.valueOf(postMap.get("bid"));
+		Double btcBid = bid;
+		String message = null;
+
+		// Convert amount if necessary
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcBid = bid / spotRate;
+			System.out.println(bid + " / " + spotRate + " = " + btcBid);
+			message = "Bid for " + bidPieces + " pieces placed at " + btcBid + " BTC" + "(or "  + 
+					bid + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = "Bid for " + bidPieces + " pieces placed at " + btcBid + " BTC";
+		}
+
+
 		Actions.createBid(userId, 
 				creator.getId().toString(), 
-				Integer.valueOf(postMap.get("bidPieces")), 
-				Double.valueOf(postMap.get("bid")), 
+				bidPieces, 
+				btcBid, 
 				postMap.get("validUntil"), 
 				true);
 
 
-		return body;
+		return message;
 	}
 
-	public static String placeAsk(String userId, String body) {
+	public static String placeAsk(String userId, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
-		// You don't have the creators id, so you have to fetch it:
+		UsersSettings settings = new UsersSettings(userId);
+
+		// You don't have the creators id, so you have to fetch it:ss
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
+
+		Integer askPieces = Integer.valueOf(postMap.get("askPieces"));
+		Double ask = Double.valueOf(postMap.get("ask"));
+		Double btcAsk = ask;
+		String message = null;
+
+		// Convert amount if necessary
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcAsk = ask / spotRate;
+			System.out.println(ask + " / " + spotRate + " = " + btcAsk);
+			message = "Ask for " + askPieces + " pieces placed at " + btcAsk + " BTC" + "(or "  + 
+					ask + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = "Ask for " + askPieces + " pieces placed at " + btcAsk + " BTC";
+		}
 
 		Actions.createAsk(userId, 
 				creator.getId().toString(), 
-				Integer.valueOf(postMap.get("askPieces")), 
-				Double.valueOf(postMap.get("ask")), 
+				askPieces,
+				btcAsk,
 				postMap.get("validUntil"), 
 				true);
 
 
-		return body;
+		return message;
 	}
 
 	public static String placeBuy(String userId, String body) {
@@ -206,11 +243,11 @@ public class WebTools {
 	public static String makeDepositFake(String userId, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		UsersSettings settings = new UsersSettings(userId);
-		
+
 		Double amount = Double.parseDouble(postMap.get("deposit"));
 		Double btcAmount = amount;
 		String message = null;
-		
+
 		// Convert amount if necessary
 		if (!settings.getIso().equals("BTC")) {
 			Double spotRate = sf.getSpotRate(settings.getIso());
@@ -221,8 +258,8 @@ public class WebTools {
 		} else {
 			message = btcAmount + " BTC deposited";
 		}
-		
-	
+
+
 		// First fetch from the table
 		Actions.makeDepositFake(userId,btcAmount);
 
@@ -270,8 +307,8 @@ public class WebTools {
 		List<Model> list = Prices_for_user.find("owners_id=?", userId);
 
 		if (list.size() > 0 ) { 
-		return createHighChartsJSONForMultipleCreatorsV2(list, "time_", "price_per_piece", "creators_username",
-				sf, settings.getPrecision(), settings.getIso());
+			return createHighChartsJSONForMultipleCreatorsV2(list, "time_", "price_per_piece", "creators_username",
+					sf, settings.getPrecision(), settings.getIso());
 		} else {
 			return "0";
 		}
@@ -341,18 +378,17 @@ public class WebTools {
 	}
 
 	public static String getPiecesOwnedCurrentSeriesJson(String userId, String creatorName, UnitConverter sf) {
-		String json = null;
-		UsersSettings settings = new UsersSettings(userId);
+
 		try {
 			// First fetch from the table
 			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?", userId, creatorName);
 			String val = p.getString("pieces_total");
-			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+			return val;
 
 		} catch(NullPointerException e) {
 			return "0";
 		}
-		return json;
+
 
 	}
 
