@@ -28,11 +28,13 @@ import com.google.common.cache.LoadingCache;
 public class UnitConverter {
 
 	public static final List<String> MONEY_COL_NAMES = Arrays.asList("price_per_piece", "worth_current", 
-			"reward_pct", "funds", "funds_accum", "value_accum");
+			"reward_pct", "funds", "funds_accum", "value_accum", "value_total", "worth", "value_total_current",
+			"total_owed", "total_current");
 
 	public static final List<String> TIME_COL_NAMES = Arrays.asList("time_", "price_time_");
 
-	public static final List<String> CURRENT_MONEY_COL_NAMES = Arrays.asList("worth_current");
+	public static final List<String> CURRENT_MONEY_COL_NAMES = Arrays.asList("worth_current", "value_total", 
+			"value_total_current", "total_current");
 
 	public static String bitcoinAverageHistoricalCurrQuery(String ISO) {
 		return "https://api.bitcoinaverage.com/history/" + ISO + "/per_day_all_time_history.csv";
@@ -149,6 +151,14 @@ public class UnitConverter {
 	}
 
 	public String convertSingleValueCurrentJson(String val, String iso, Integer precision) {
+
+		if (iso== null) {
+			iso = "BTC";
+		}
+		if (precision == null) {
+			precision = 4;
+		}
+		
 		DecimalFormat df = setupDecimalFormat(iso, precision);
 		Double number = Double.parseDouble(val);
 		String retVal = null;
@@ -198,6 +208,8 @@ public class UnitConverter {
 			String iso, 
 			DecimalFormat df) {
 
+		
+		
 		try {
 
 			// Formattable columns

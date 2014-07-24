@@ -570,7 +570,7 @@ users.username as owners_name,
 pieces_owned_total.creators_id,
 creators.username as creators_username,
 sum(pieces_owned_total) as pieces_total,
-sum(pieces_owned_total * price_per_piece) as value_total
+sum(pieces_owned_total * price_per_piece) as value_total_current
 from pieces_owned_total
 inner join prices_span
 on pieces_owned_total.creators_id = prices_span.creators_id
@@ -589,7 +589,7 @@ group by pieces_owned_total.owners_id, pieces_owned_total.creators_id;
 CREATE VIEW pieces_owned_value_current_by_creator as 
 select creators_id,
 username, 
-sum(value_total) as value_total
+sum(value_total_current) as value_total_current
 from pieces_owned_value_current
 inner join creators
 on pieces_owned_value_current.creators_id = creators.id
@@ -616,7 +616,8 @@ valid_until,
 users.username as users_name, 
 bids.users_id, 
 'bid' as type,
-CONCAT(pieces, ' pieces at $',bid_per_piece, '/piece') as price
+pieces,
+bid_per_piece * pieces as total
 from bids
 inner join creators
 on bids.creators_id = creators.id
@@ -630,7 +631,8 @@ valid_until,
 users.username as users_name, 
 asks.users_id,
 'ask' as type,
-CONCAT(pieces, ' pieces at $',ask_per_piece, '/piece') as price
+pieces,
+ask_per_piece * pieces as total
 from asks
 inner join creators
 on asks.creators_id = creators.id
@@ -640,7 +642,7 @@ on asks.users_id = users.id
 order by creators_name, time_ desc;
 
 CREATE VIEW bids_asks_current as 
-select creators_name, time_, users_name, users_id, type, price
+select creators_name, time_, users_name, users_id, type, pieces, total as total_current
 from bids_asks
 where valid_until >= NOW()
 order by creators_name, time_ desc;
@@ -666,9 +668,11 @@ order by username, time_;
 
 CREATE VIEW pieces_owned_value_current_by_owner as 
 select owners_id,
-sum(value_total) as value_total
+sum(value_total_current) as value_total_current
 from pieces_owned_value_current
 group by owners_id;
+
+
 
 
 
@@ -877,8 +881,10 @@ prices
 on pieces_owned_value_current.creators_id = prices.creators_id
 inner join creators
 on pieces_owned_value_current.creators_id = creators.id
-where value_total > 0
+where value_total_current > 0
 order by owners_id, creators_id, time_;
+
+
 
 
 CREATE VIEW users_transactions as 
@@ -934,12 +940,19 @@ order by users_id, time_ desc;
 
 
 CREATE VIEW users_activity as 
-select * from users_transactions
+select users_id, 
+time_, 
+type,
+recipient,
+'' as pieces,
+funds
+from users_transactions
 union 
 select users_id, time_, 
 'bid' as type,
 creators.username as recipient,
-CONCAT(pieces, ' pieces at $',bid_per_piece, '/piece') as funds
+pieces,
+bid_per_piece*pieces as funds
 from bids
 inner join creators
 on bids.creators_id = creators.id
@@ -947,7 +960,8 @@ union
 select users_id, time_, 
 'ask' as type,
 creators.username as recipient,
-CONCAT(pieces, ' pieces at $',ask_per_piece, '/piece') as funds
+pieces,
+ask_per_piece*pieces as funds
 from asks
 inner join creators
 on asks.creators_id = creators.id
@@ -960,6 +974,7 @@ select creators.username as creators_name,
 time_,
 concat('withdrawal(', status, ')') as type, 
 '' as recipient, 
+'' as pieces, 
 -1*btc_amount_before_fee as funds from 
 creators_withdrawals
 inner join creators
@@ -969,6 +984,7 @@ select creators.username as creators_name,
 time_, 
 'buy' as type,
 users.username as recipient,
+pieces,
 total as funds
 from 
 sales_from_creators
@@ -979,31 +995,35 @@ on to_users_id = users.id
 order by creators_name, time_ desc;
 
 
+
 -- Their transactions(sales, withdrawals), Their bids and asks, sales amongst their users, and their pieces issued
 CREATE VIEW creators_activity as
-select creators_name, time_, type, recipient, funds
+select creators_name, time_, type, recipient, pieces, funds
 from creators_transactions
 union 
-select creators_name, time_, type, users_name, price from bids_asks
+select creators_name, time_, type, users_name, pieces, total from bids_asks
 union
 select creators_name, time_,
 'issue pieces' as type,
 '' as recipient, 
-CONCAT(pieces_issued, ' pieces at $',price_per_piece, '/piece') as funds
+pieces_issued,
+pieces_issued*price_per_piece as funds
 from pieces_issued_view
 union
 select creators.username as creators_name,
 time_, 
 'sale between users' as type,
 users.username as recipient,
-CONCAT(pieces, ' pieces at $',price_per_piece, '/piece') as funds
-
+pieces,
+price_per_piece*pieces as funds
 from sales_from_users
 inner join creators
 on sales_from_users.creators_id = creators.id
 inner join users
 on sales_from_users.to_users_id = users.id
 order by creators_name, time_ desc;
+
+
 
 
 
@@ -1033,11 +1053,13 @@ group by creators_id;
 
 
 CREATE VIEW backers_current as
-select owners_id, users.username as users_username, creators_id, creators_username, pieces_owned_value_current.pieces_total, value_total
+select owners_id, users.username as users_username, creators_id, creators_username, pieces_owned_value_current.pieces_total, value_total_current
 from pieces_owned_value_current
 inner join users 
 on pieces_owned_value_current.owners_id = users.id
-order by creators_id, value_total desc;
+order by creators_id, value_total_current desc;
+
+
 
 
 
@@ -1078,7 +1100,7 @@ CREATE VIEW creators_search_view as
 select creators.id as creators_id,
 creators.username as creators_name, 
 GROUP_CONCAT(categories.name) as category_names, 
-pieces_owned_value_current_by_creator.value_total as worth_current,
+pieces_owned_value_current_by_creator.value_total_current as worth_current,
 rewards_current.reward_pct,
 backers_current_count.number_of_backers
 from creators
@@ -1093,6 +1115,8 @@ on creators_categories.creators_id = creators.id
 inner join categories on
 creators_categories.categories_id = categories.id
 group by creators.id;
+
+
 
 CREATE VIEW users_settings as 
 select users.id, 

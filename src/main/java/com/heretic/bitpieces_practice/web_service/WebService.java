@@ -133,7 +133,7 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), req.body());
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), sf);
 
 
 				dbClose();
@@ -156,7 +156,7 @@ public class WebService {
 				String creatorName = req.params(":creator");
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), creatorName, req.body());
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid.getId(), creatorName, sf);
 
 
 				dbClose();
@@ -179,7 +179,7 @@ public class WebService {
 				String creatorName = req.params(":creator");
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedCurrentSeriesJson(uid.getId(), creatorName, req.body());
+				json = WebTools.getPiecesOwnedCurrentSeriesJson(uid.getId(), creatorName, sf);
 
 
 				dbClose();
@@ -202,7 +202,7 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getPricesForUserSeriesJson(uid.getId(), req.body());
+				json = WebTools.getPricesForUserSeriesJson(uid.getId(), sf);
 
 				dbClose();
 
@@ -224,7 +224,7 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getRewardsEarnedAccumSeriesJson(uid.getId(), req.body());
+				json = WebTools.getRewardsEarnedAccumSeriesJson(uid.getId(), sf);
 
 
 				dbClose();
@@ -247,7 +247,7 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getRewardsEarnedTotalJson(uid.getId(), req.body());
+				json = WebTools.getRewardsEarnedTotalJson(uid.getId(), sf);
 
 				dbClose();
 
@@ -269,7 +269,7 @@ public class WebService {
 
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedAccumSeriesJson(uid.getId(), req.body());
+				json = WebTools.getPiecesOwnedAccumSeriesJson(uid.getId(), sf);
 
 
 				dbClose();
@@ -813,12 +813,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			UserTypeAndId uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token		
-				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, req.body());
+				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, uid.getId(), sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -833,12 +834,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			UserTypeAndId uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPricePerPieceCurrentJson(creator, req.body());
+				json = WebTools.getPricePerPieceCurrentJson(creator, uid.getId(), sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -853,12 +855,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			UserTypeAndId uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsOwedJson(creator, req.body());
+				json = WebTools.getRewardsOwedJson(creator, uid.getId(), sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -873,12 +876,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			UserTypeAndId uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesOwnedValueCurrentCreatorSeriesJson(creator, req.body());
+				json = WebTools.getPiecesOwnedValueCurrentCreatorSeriesJson(creator, uid.getId(), sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -893,12 +897,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBackersCurrentCountJson(creator, req.body());
+				json = WebTools.getBackersCurrentCountJson(creator);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -933,12 +938,13 @@ public class WebService {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			UserTypeAndId uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPricesJson(creator, req.body());
+				json = WebTools.getPricesJson(creator, uid.getId(), sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -949,36 +955,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_pricing", (req, res) -> {
-			allowResponseHeaders(req, res);
-			String json = null;
-			String creator = req.params(":creator");
-			try {			
-
-				dbInit(prop);
-
-				// get the creator id from the token	
-				json = WebTools.getPricesJson(creator, req.body());
-
-				dbClose();
-			}catch (NoSuchElementException e) {
-				e.printStackTrace();
-			}
-
-			return json;
-
-		});
 
 		get("/:creator/get_worth", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			UserTypeAndId uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getWorthJson(creator, req.body());
+				json = WebTools.getWorthJson(creator, uid.getId(), sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1269,9 +1257,9 @@ public class WebService {
 		UserTypeAndId uid = null;
 		try {
 			uid = SESSION_TO_USER_MAP.getIfPresent(authId);
-		} catch(NoSuchElementException e) {
+		} catch(NullPointerException e) {
 			System.err.println("No such user logged in");
-			e.printStackTrace();
+			return new UserTypeAndId(null, null, null);
 		}
 
 		return uid;
