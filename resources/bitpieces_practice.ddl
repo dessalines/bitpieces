@@ -93,6 +93,9 @@ CREATE TABLE creators
    username VARCHAR(56) UNIQUE NOT NULL,
    password_encrypted TINYTEXT NOT NULL,
    email VARCHAR(56) NOT NULL,
+   local_currency_id int(11) NOT NULL DEFAULT 1,
+   FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
+   precision_ int(11) NOT NULL DEFAULT 6 ,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -617,6 +620,7 @@ users.username as users_name,
 bids.users_id, 
 'bid' as type,
 pieces,
+bid_per_piece as price_per_piece,
 bid_per_piece * pieces as total
 from bids
 inner join creators
@@ -632,6 +636,7 @@ users.username as users_name,
 asks.users_id,
 'ask' as type,
 pieces,
+ask_per_piece as price_per_piece,
 ask_per_piece * pieces as total
 from asks
 inner join creators
@@ -641,8 +646,10 @@ on asks.users_id = users.id
 --where asks.valid_until >= NOW()
 order by creators_name, time_ desc;
 
+
+
 CREATE VIEW bids_asks_current as 
-select creators_name, time_, users_name, users_id, type, pieces, total as total_current
+select creators_name, time_, users_name, users_id, type, pieces, price_per_piece, total as total_current
 from bids_asks
 where valid_until >= NOW()
 order by creators_name, time_ desc;
@@ -679,7 +686,7 @@ group by owners_id;
 
 CREATE VIEW pieces_owned_value_accum as
 select
-pieces_owned_accum.owners_id,u
+pieces_owned_accum.owners_id,
 pieces_owned_accum.creators_id,
 creators.username as creators_username,
 pieces_owned_accum.start_time_,
@@ -904,6 +911,7 @@ select from_users_id,
 time_, 
 'sell' as type,
 username as recipient, 
+pieces,
 total 
 from 
 sales_from_users
@@ -916,6 +924,7 @@ select to_users_id,
 time_, 
 'buy' as type,
 username as recipient, 
+pieces,
 -1*total from 
 sales_from_users
 inner join
@@ -927,6 +936,7 @@ select users_id,
 time_, 
 concat('deposit(', status, ')') as type,
 '' as recipient, 
+'' as pieces, 
 btc_amount as funds 
 from 
 users_deposits
@@ -934,6 +944,7 @@ union
 select users_id, time_,
 concat('withdrawal(', status, ')') as type, 
 '' as recipient, 
+'' as pieces,
 -1*btc_amount as funds from 
 users_withdrawals
 order by users_id, time_ desc;
@@ -1131,6 +1142,18 @@ from users
 inner join 
 currencies
 on users.local_currency_id = currencies.id;
+
+CREATE VIEW creators_settings as 
+select creators.id, 
+username, 
+email, 
+precision_,
+currencies.iso as curr_iso,
+currencies.name as curr_name 
+from creators
+inner join 
+currencies
+on creators.local_currency_id = currencies.id;
 
 
 
