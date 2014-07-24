@@ -477,7 +477,7 @@ public class WebTools {
 
 	public static String getUsersSettingsJson(UID uid) {
 
-		
+
 		if (uid.getType() == UserType.User) {
 			Users_settings user =  Users_settings.findById(uid.getId());
 			return user.toJson(false);
@@ -485,22 +485,22 @@ public class WebTools {
 			Creators_settings user =  Creators_settings.findById(uid.getId());
 			return user.toJson(false);
 		}
-		
 
-		
+
+
 
 	}
 
 	public static String saveSettings(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		
+
 		Model user = null;
 		if (uid.getType() == UserType.User) {
 			user = User.findById(uid.getId());
 		} else {
 			user = Creator.findById(uid.getId());
 		}
-		
+
 		String email = postMap.get("email");
 		String currency = postMap.get("currency");
 		String precision = postMap.get("precision");
@@ -636,7 +636,7 @@ public class WebTools {
 	public static String getDiscoverJson(String body, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		}
 
@@ -669,7 +669,7 @@ public class WebTools {
 	public static String getPiecesOwnedValueCurrentByCreatorJson(
 			String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		}
 		Pieces_owned_value_current_by_creator p = 
@@ -685,7 +685,7 @@ public class WebTools {
 	public static String getPricePerPieceCurrentJson(
 			String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		}
 
@@ -703,7 +703,7 @@ public class WebTools {
 	public static String getRewardsOwedJson(
 			String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		}
 
@@ -743,7 +743,7 @@ public class WebTools {
 			String creatorName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		}
 
@@ -757,7 +757,7 @@ public class WebTools {
 			String creatorName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		}
 
@@ -771,7 +771,7 @@ public class WebTools {
 		List<Model> list = Bids_asks_current.find("creators_name=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 
@@ -785,7 +785,7 @@ public class WebTools {
 		List<Model> list = Rewards_view.find("creators_name=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 
@@ -798,7 +798,7 @@ public class WebTools {
 		List<Model> list = Rewards_owed_to_user.find("creators_username=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 
@@ -811,7 +811,7 @@ public class WebTools {
 
 		List<Model> list = Pieces_issued_view.find("creators_name=?",  creatorName);
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 
@@ -822,7 +822,7 @@ public class WebTools {
 
 	public static String getPiecesIssuedMostRecentPriceJson(String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 
@@ -838,7 +838,7 @@ public class WebTools {
 		List<Model> list = Backers_current.find("creators_username=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 
@@ -912,7 +912,7 @@ public class WebTools {
 		List<Model> list = Creators_activity.find("creators_name=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 		Paginator p = new Paginator(Creators_activity.class, 5, "creators_name=?", creatorName);
@@ -927,7 +927,7 @@ public class WebTools {
 	public static String getCreatorsTransactionsJson(String creatorName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 		List<Model> list = Creators_transactions.find("creators_name=?",  creatorName);
@@ -938,7 +938,7 @@ public class WebTools {
 
 	public static String getCreatorsFundsAccumJson(String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
-	if (uid != null) {
+		if (uid != null) {
 			settings = new UsersSettings(uid);
 		}
 

@@ -39,4 +39,18 @@ $(document).ready(function() {
     fillUserHighChartStandardTemplate(creatorName + '/get_pricing', '#pricing', 'Price ($/piece)', '$');
 
 
+    // if you're this creator, then set up summer note
+    var userName = getCookie('username');
+    console.log('un = ' + userName);
+    if (userName == creatorName) {
+        // show the save btn
+
+        setupSummerNote(sessionId + '/getcreatorpage', '#main_body', 'main_body');
+        saveSummerNote(sessionId + '/savecreatorpage', '#saveBtn', '#main_body');
+
+        $("#saveBtn").removeClass("hide");
+    }
+
+
+
 });

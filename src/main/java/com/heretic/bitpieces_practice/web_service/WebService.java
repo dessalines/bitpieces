@@ -1235,7 +1235,7 @@ public class WebService {
 			uid = SESSION_TO_USER_MAP.getIfPresent(authId);
 		} catch(NullPointerException e) {
 			System.err.println("No such user logged in");
-			return new UID(null, null, null);
+			return null;
 		}
 
 		return uid;
