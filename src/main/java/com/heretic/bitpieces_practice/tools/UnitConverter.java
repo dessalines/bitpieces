@@ -28,10 +28,10 @@ import com.google.common.cache.LoadingCache;
 public class UnitConverter {
 
 	public static final List<String> MONEY_COL_NAMES = Arrays.asList("price_per_piece", "worth_current", 
-			"reward_pct", "funds", "funds_accum", "value_accum", "value_total", "worth", "value_total_current",
-			"total_owed", "total_current");
+			"funds", "funds_accum", "value_accum", "value_total", "worth", "value_total_current",
+			"total_owed", "total_current", "total");
 
-	public static final List<String> TIME_COL_NAMES = Arrays.asList("time_", "price_time_");
+	public static final List<String> TIME_COL_NAMES = Arrays.asList("time_", "price_time_", "start_time_");
 
 	public static final List<String> CURRENT_MONEY_COL_NAMES = Arrays.asList("worth_current", "value_total", 
 			"value_total_current", "total_current");
@@ -70,7 +70,16 @@ public class UnitConverter {
 						}
 					});
 
-
+	public Double getSpotRate(String iso) {
+		DateTime dt = getStartOfDay(new DateTime());
+		try {
+			return getBtcRatesCache().get(iso).get(dt);
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 
 	public static void main(String[] args) {
@@ -267,8 +276,20 @@ public class UnitConverter {
 						for (String cCol : historicalMoneyCols) {
 							String prevValue = cMap.get(cCol);
 							Double numberBefore = Double.valueOf(prevValue);
-							String numberAfter = String.valueOf(numberBefore*historicalRate);
-							cMap.put(cCol, numberAfter);
+							
+							
+							try {
+								String numberAfter = String.valueOf(numberBefore*historicalRate);
+								cMap.put(cCol, numberAfter);
+							} catch (NullPointerException e) {
+								// This happens when an action occurs in the future (issuing pieces), and you don't know
+								// what the conversion rate is at that point
+								cMap.put(cCol, "0");
+//								System.out.println("daystarts = " + dayStart + " | iso = " + iso + " | numbefore = " + numberBefore + " | rate = " + historicalRate);
+								
+							}
+							
+							
 
 						}
 

@@ -679,7 +679,7 @@ group by owners_id;
 
 CREATE VIEW pieces_owned_value_accum as
 select
-pieces_owned_accum.owners_id,
+pieces_owned_accum.owners_id,u
 pieces_owned_accum.creators_id,
 creators.username as creators_username,
 pieces_owned_accum.start_time_,
@@ -892,7 +892,8 @@ select to_users_id as users_id,
 time_, 
 'buy' as type,
 username as recipient,
--1*total as funds
+pieces, 
+-1*total as total
 from 
 sales_from_creators
 inner join creators
@@ -939,13 +940,14 @@ order by users_id, time_ desc;
 
 
 
+
 CREATE VIEW users_activity as 
 select users_id, 
 time_, 
 type,
 recipient,
-'' as pieces,
-funds
+pieces,
+total
 from users_transactions
 union 
 select users_id, time_, 

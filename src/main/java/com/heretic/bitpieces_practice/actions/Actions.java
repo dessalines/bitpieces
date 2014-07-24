@@ -356,7 +356,7 @@ public class Actions {
 			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
 			
 			// Give them $100BTC in play money
-			makeDepositFake(user.getId().toString(), 100d);
+			makeDepositFake(user.getId().toString(), .1d);
 			
 
 			UserTypeAndId uid = new UserTypeAndId(UserType.User, 

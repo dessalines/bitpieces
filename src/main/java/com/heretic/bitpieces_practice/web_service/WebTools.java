@@ -203,14 +203,30 @@ public class WebTools {
 		return body;
 	}
 
-	public static String makeDepositFake(String userId, String body) {
+	public static String makeDepositFake(String userId, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-
+		UsersSettings settings = new UsersSettings(userId);
+		
 		Double amount = Double.parseDouble(postMap.get("deposit"));
+		Double btcAmount = amount;
+		String message = null;
+		
+		// Convert amount if necessary
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcAmount = amount / spotRate;
+			System.out.println(amount + " / " + spotRate + " = " + btcAmount);
+			message = btcAmount + " BTC deposited ( or " + amount + " " + settings.getIso() + 
+					" @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = btcAmount + " BTC deposited";
+		}
+		
+	
 		// First fetch from the table
-		Actions.makeDepositFake(userId,amount);
+		Actions.makeDepositFake(userId,btcAmount);
 
-		return amount + " deposited.";
+		return message;
 
 
 
@@ -224,8 +240,12 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", userId);
 
-		return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "value_accum", "creators_username",
-				sf, settings.getPrecision(), settings.getIso());
+		if (list.size() > 0 ) { 
+			return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "value_accum", "creators_username",
+					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -234,9 +254,12 @@ public class WebTools {
 		UsersSettings settings = new UsersSettings(userId);
 		// First fetch from the table
 		List<Model> list = Pieces_owned_accum.find("owners_id=?", userId);
-
-		return createHighChartsJSONForMultipleCreatorsV2(list, "start_time_", "pieces_accum", "creators_username",
-				sf, settings.getPrecision(), settings.getIso());
+		if (list.size() > 0 ) { 
+			return createHighChartsJSONForMultipleCreatorsV2(list, "start_time_", "pieces_accum", "creators_username",
+					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 	}
 
 
@@ -246,8 +269,12 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Prices_for_user.find("owners_id=?", userId);
 
+		if (list.size() > 0 ) { 
 		return createHighChartsJSONForMultipleCreatorsV2(list, "time_", "price_per_piece", "creators_username",
 				sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 
 
 	}
@@ -259,8 +286,12 @@ public class WebTools {
 
 		UsersSettings settings = new UsersSettings(userId);
 
-		return createHighChartsJSONForCurrentV2(list, "value_total", "creators_username", sf,
-				settings.getPrecision(), settings.getIso());
+		if (list.size()>0) { 
+			return createHighChartsJSONForCurrentV2(list, "value_total_current", "creators_username", sf,
+					settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -269,9 +300,12 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Rewards_earned_total.find("owners_id=?", userId);
 
-
-		return createHighChartsJSONForCurrentV2(list, "reward_earned_total", "creators_username",
-				sf, settings.getPrecision(), settings.getIso());
+		if (list.size() > 0 ) { 
+			return createHighChartsJSONForCurrentV2(list, "reward_earned_total", "creators_username",
+					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -281,7 +315,7 @@ public class WebTools {
 		if (userId != null) {
 			settings = new UsersSettings(userId);
 		} 
-		
+
 		// First fetch from the table
 		List<Model> list = Pieces_owned_value_current.find("creators_username=?", creatorName);
 
@@ -314,7 +348,7 @@ public class WebTools {
 			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?", userId, creatorName);
 			String val = p.getString("pieces_total");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
-			
+
 		} catch(NullPointerException e) {
 			return "0";
 		}
@@ -327,20 +361,24 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Rewards_earned_accum.find("owners_id=?", userId);
 
-		return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "reward_accum", "creators_username",
-				sf, settings.getPrecision(), settings.getIso());
+		if (list.size() > 0 ) { 
+			return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "reward_accum", "creators_username",
+					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 	}
 
 	public static String getUsersFundsAccumSeriesJson(String userId, UnitConverter sf) {
-		
+
 		UsersSettings settings = new UsersSettings(userId);
-		
+
 		// First fetch from the table
 		List<Model> list = Users_funds_accum.find("users_id=?", userId);
 
 		return createHighChartsJSONForSingleCreatorV2(list, "time_", "funds_accum", "Funds",
 				sf, settings.getPrecision(), settings.getIso());
-				
+
 
 	}
 
@@ -481,7 +519,7 @@ public class WebTools {
 		try {
 			Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  userId);
 
-			String val = value.getString("value_total");
+			String val = value.getString("value_total_current");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
 		} catch(NullPointerException e) {
 			return "0";
@@ -541,7 +579,14 @@ public class WebTools {
 	}
 
 	// TODO need to handle the case where the user IS logged in, because of worth_current
-	public static String getDiscoverJson(String body) {
+	public static String getDiscoverJson(String body, String userId, UnitConverter sf) {
+
+		UsersSettings settings = new UsersSettings(null);
+		if (userId != null) {
+			settings = new UsersSettings(userId);
+		}
+
+
 		List<Model> list = null;
 		Long limit = 30L;
 		if (body.equals("")) {
@@ -557,8 +602,9 @@ public class WebTools {
 			}
 		}
 
+		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 
-		String json = createJSONListOfMapsFromModelList(list);
+
 
 		return json;
 
@@ -576,7 +622,7 @@ public class WebTools {
 				Pieces_owned_value_current_by_creator.findFirst("username = ?", creatorName);
 
 		String val = p.getString("value_total_current");
-		
+
 		String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
 		return json;
 
@@ -589,13 +635,13 @@ public class WebTools {
 			settings = new UsersSettings(userId);
 		}
 
-		
+
 		LazyList<Prices> prices = Prices.where("creators_name = ?", creatorName).orderBy("time_ desc").limit(1);
 		Prices p = prices.get(0);
 		String val = p.getString("price_per_piece");
-		
+
 		String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
-		
+
 		return json;
 
 	}
@@ -606,10 +652,10 @@ public class WebTools {
 		if (userId != null) {
 			settings = new UsersSettings(userId);
 		}
-		
+
 		Rewards_owed r = Rewards_owed.findFirst("creators_username = ?", creatorName);
 		String val = r.getString("total_owed");
-		
+
 		String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
 
 		return json;
@@ -641,7 +687,7 @@ public class WebTools {
 
 	public static String getPricesJson(
 			String creatorName, String userId, UnitConverter sf) {
-		
+
 		UsersSettings settings = new UsersSettings(null);
 		if (userId != null) {
 			settings = new UsersSettings(userId);
@@ -728,7 +774,7 @@ public class WebTools {
 
 		List<Model> p = Pieces_issued_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
 		String val = p.get(0).getString("price_per_piece");
-		
+
 		return sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
 
 	}
@@ -741,10 +787,10 @@ public class WebTools {
 		if (userId != null) {
 			settings = new UsersSettings(userId);
 		} 
-		
+
 		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
 				"users_username", "pieces_total", "value_total_current"));
-		
+
 	}
 
 	public static String getCreatorsReputationJson(String creatorName) {
@@ -841,7 +887,7 @@ public class WebTools {
 		if (userId != null) {
 			settings = new UsersSettings(userId);
 		}
-		
+
 		List<Model> list = Creators_funds_accum.find("creators_name=?",  creatorName);
 
 		return createHighChartsJSONForSingleCreatorV2(list, "time_", "funds_accum", "Funds", 
@@ -910,27 +956,27 @@ public class WebTools {
 			String valueColName, String creatorsIdentifier, UnitConverter sf, Integer precision, String iso) {
 		// TODO right now, doing 30 digits, and ignoring precision
 		List<Map<String, String>> lom = doUnitConversions(list, sf, 30, iso, true);
-		
+
 		List<Map<String, Object>> highChartsLOM = new ArrayList<Map<String, Object>>();
-		
+
 		List<Object[]> oneCreatorsData = new ArrayList<Object[]>();
-		
+
 		for (int i = 0; i < lom.size(); i++) {
 			Map<String, String> cMap = lom.get(i);
-			
+
 			Long millis = Long.parseLong(cMap.get(dateColName));
 			// Strip the unicode char
 			String valStr = cMap.get(valueColName);
 			valStr = valStr.replaceAll("[^\\d.]", "");
 			System.out.println(valStr);
 			Double val = Double.parseDouble(valStr);
-			
+
 			Object[] pair = {millis, val};
-			
+
 			oneCreatorsData.add(pair);
-			
+
 			String cCreatorsId = cMap.get(creatorsIdentifier);
-			
+
 			// If its the last one, add it to the map
 			if (i == list.size() -1) {
 
@@ -944,7 +990,7 @@ public class WebTools {
 				String nextCreatorsId = list.get(i+1).getString(creatorsIdentifier);
 
 				if (!cCreatorsId.equals(nextCreatorsId)) {
-					
+
 					//					String oneCreatorsDataStr = Arrays.toString(oneCreatorsData.toArray());
 					Map<String, Object> map = new LinkedHashMap<String, Object>();
 					System.out.println(cCreatorsId);
@@ -956,23 +1002,23 @@ public class WebTools {
 				}
 
 			}
-			
+
 		}
-		
+
 		String json = Tools.GSON.toJson(highChartsLOM);
 		System.out.println(json);
 		return json;
-		
-		
+
+
 	}
 
 	public static  String createHighChartsJSONForSingleCreatorV2(List<Model> list, String dateColName,
 			String valueColName, String seriesName, UnitConverter sf, Integer precision, String iso) {
 
 		List<Map<String, String>> lom = doUnitConversions(list, sf, precision, iso, true);
-		
+
 		List<Map<String, Object>> highChartsLOM = new ArrayList<Map<String, Object>>();
-		
+
 		List<Object[]> oneCreatorsData = new ArrayList<Object[]>();
 		for (Map<String, String> e : lom) {
 			Long millis = Long.parseLong(e.get(dateColName));
@@ -981,60 +1027,60 @@ public class WebTools {
 			valStr = valStr.replaceAll("[^\\d.]", "");
 			System.out.println(valStr);
 			Double val = Double.parseDouble(valStr);
-			
+
 			Object[] pair = {millis, val};
-			
+
 			oneCreatorsData.add(pair);
 		}
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", seriesName);
 		map.put("data", oneCreatorsData);
-		
+
 		highChartsLOM.add(map);
-		
+
 		String json = Tools.GSON.toJson(highChartsLOM);
 		System.out.println(json);
 		return json;
-		
+
 	}
-	
+
 	@Deprecated
 	public static String createHighChartsJSONForMultipleCreators(List<Model> list, String dateColName,
 			String valueColName, String creatorsIdentifier) {
-	
+
 		List<Map<String, String>> listOfMaps = new ArrayList<Map<String, String>>();
-	
+
 		List<String[]> oneCreatorsData = new ArrayList<String[]>();
-	
+
 		for (int i = 0; i < list.size(); i++) {
 			Model p = list.get(i);
-	
-	
+
+
 			System.out.println(p);
 			String UTCTime = p.getString(dateColName);
 			//			String highchartsDate = convertDateStrToHighchartsDateUTCString(UTCTime);
 			String millis = convertDateStrToMillis(UTCTime);
 			String val = p.getString(valueColName);
-	
+
 			String[] pair = {millis, val};
 			oneCreatorsData.add(pair);
-	
+
 			String cCreatorsId = p.getString(creatorsIdentifier);
-	
+
 			// If its the last one, add it to the map
 			if (i == list.size() -1) {
 				String oneCreatorsDataStr = Tools.GSON.toJson(oneCreatorsData).replaceAll("\"", "");
-	
+
 				Map<String, String> map = new LinkedHashMap<String, String>();
 				System.out.println(cCreatorsId);
 				map.put("name", cCreatorsId);
 				map.put("data", oneCreatorsDataStr);
-	
+
 				listOfMaps.add(map);
 			} else {
 				String nextCreatorsId = list.get(i+1).getString(creatorsIdentifier);
-	
+
 				if (!cCreatorsId.equals(nextCreatorsId)) {
 					String oneCreatorsDataStr = Tools.GSON.toJson(oneCreatorsData).replaceAll("\"", "");
 					//					String oneCreatorsDataStr = Arrays.toString(oneCreatorsData.toArray());
@@ -1042,23 +1088,23 @@ public class WebTools {
 					System.out.println(cCreatorsId);
 					map.put("name", cCreatorsId);
 					map.put("data", oneCreatorsDataStr);
-	
+
 					listOfMaps.add(map);
 					oneCreatorsData.clear();
 				}
-	
+
 			}
-	
+
 		}
-	
+
 		String listOfMapsStr = Tools.GSON.toJson(listOfMaps).replaceAll("\"\\[", "[").replaceAll("\\]\"", "]");
-	
+
 		System.out.println(listOfMapsStr);
-	
-	
-	
+
+
+
 		return listOfMapsStr;
-	
+
 	}
 
 	@Deprecated
@@ -1131,16 +1177,16 @@ public class WebTools {
 		return arrayStr;
 
 	}
-	
+
 	public static String createHighChartsJSONForCurrentV2(List<Model> list, 
 			String valueColName, String creatorsIdentifier, UnitConverter sf, Integer precision, String iso) {
 
 		List<Map<String, String>> lom = doUnitConversions(list, sf, precision, iso, true);
-		
+
 		List<Object[]> data = new ArrayList<Object[]>();
 
 		for (Map<String, String> cMap : lom) {
-			
+
 			String valStr = cMap.get(valueColName);
 			valStr = valStr.replaceAll("[^\\d.]", "");
 			Double val = Double.parseDouble(valStr);

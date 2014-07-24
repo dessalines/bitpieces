@@ -556,7 +556,7 @@ public class WebService {
 				UserTypeAndId uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
-				message = WebTools.makeDepositFake(uid.getId(), req.body());
+				message = WebTools.makeDepositFake(uid.getId(), req.body(), sf);
 
 				dbClose();
 
@@ -655,8 +655,8 @@ public class WebService {
 		post("/discover", (req, res) -> {
 			allowResponseHeaders(req, res);
 			dbInit(prop);
-
-			String json = WebTools.getDiscoverJson(req.body());
+			UserTypeAndId uid = getUserFromCookie(req);
+			String json = WebTools.getDiscoverJson(req.body(), uid.getId(), sf);
 
 			dbClose();
 
