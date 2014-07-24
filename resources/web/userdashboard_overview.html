@@ -361,19 +361,64 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Current bids/asks</h3>
+          </div>
 
+          <div id="users_bids_asks_current" class="panel-body">
 
+            <script id="users_bids_asks_current_template" type="x-tmpl-mustache"> 
+              <table id="users_bids_asks_current_table" class="table table-hover table-striped tablesorter">
+                <thead> 
+                  <tr>
+                    <th>Time <i class="fa fa-sort"></i></th>
+                    <th>Creator <i class="fa fa-sort"></th>
+                    <th>Type <i class="fa fa-sort"></th>
+                    <th>Pieces <i class="fa fa-sort"></th>
+                    <th>Price per piece<i class="fa fa-sort"></th>
+                  </tr>
+                </thead>
 
-      <!-- a big ass chart -->
-      <div class="row">
-        <div class="col-lg-12">
+                <tbody>
 
+                  {{#.}}
+
+                  <tr> 
+                    <td>{{time_}}</td>
+                    <td>{{creators_name}}</td>
+                    <td>{{type}}</td>
+                    <td>{{pieces}}</td>
+                    <td>{{price_per_piece}} <button id="remove_button" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash-o"></i></button></td>
+                  </tr>
+                  {{/.}}
+
+                </tbody>
+              </script>
+            </table>
+
+          </div>
         </div>
       </div>
 
     </div>
-    <!-- end of wrapper -->
+
+
+
+
+    <!-- a big ass chart -->
+    <div class="row">
+      <div class="col-lg-12">
+
+      </div>
+    </div>
+
   </div>
+  <!-- end of wrapper -->
+</div>
 </div>
 <!-- Modals -->
 <div id="depositModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
