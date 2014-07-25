@@ -673,6 +673,7 @@ order by username, time_;
 
 
 
+
 CREATE VIEW pieces_owned_value_current_by_owner as 
 select owners_id,
 sum(value_total_current) as value_total_current

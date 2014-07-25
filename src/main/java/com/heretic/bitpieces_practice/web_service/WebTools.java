@@ -181,40 +181,26 @@ public class WebTools {
 		return message;
 	}
 
-	public static String placeBuy(UID uid, String body, UnitConverter sf) {
+	// Don't need to do currency conversion for this one, since it just pulls the most recent price per piece
+	// in BTC already
+	public static String placeBuy(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-
-		UsersSettings settings = new UsersSettings(uid);
 
 		// You don't have the creators id, so you have to fetch it:
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
 
 		// Get the most recent price per piece from the creator:
 		List<Model> p = Pieces_issued_view.find("creators_name=?",  creator.getString("username")).orderBy("time_ desc").limit(1);
-
-		Integer pieces = Integer.valueOf(postMap.get("buyPieces"));
 		Double price_per_piece = p.get(0).getDouble("price_per_piece");
-		Double btcPricePerPiece = price_per_piece;
 
-		// Convert amount if necessary
-		String message = null;
-		if (!settings.getIso().equals("BTC")) {
-			Double spotRate = sf.getSpotRate(settings.getIso());
-			btcPricePerPiece = price_per_piece / spotRate;
-			System.out.println(price_per_piece + " / " + spotRate + " = " + btcPricePerPiece);
-			message = "Bought " + pieces + " pieces at " + btcPricePerPiece + " BTC" + "(or "  + 
-					price_per_piece + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
-		} else {
-			message = "Bought " + pieces + " pieces at " + btcPricePerPiece + " BTC";
-		}
 
 		Actions.sellFromCreator(creator.getId().toString(), 
 				uid.getId(), 
-				pieces,
-				btcPricePerPiece);
+				Integer.valueOf(postMap.get("buyPieces")), 
+				price_per_piece);
 
 
-		return message;
+		return body;
 	}
 
 	public static String issuePieces(UID uid, String body, UnitConverter sf) {
@@ -247,6 +233,18 @@ public class WebTools {
 
 
 		return message;
+	}
+	
+	public static String newReward(UID uid, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+		Double rewardPct = Double.valueOf(postMap.get("reward_pct"));
+		
+		Actions.issueReward(uid.getId(), rewardPct);
+		
+		return rewardPct + "% reward in effect";
+		
+		
 	}
 
 	public static String deleteBidAsk(UID uid, String body) {
@@ -842,9 +840,11 @@ public class WebTools {
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
-
-		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
-
+		if (list.size() > 0) {
+			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -858,6 +858,19 @@ public class WebTools {
 		} 
 
 		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+
+	}
+	
+	public static String getRewardsPctCurrentJson(String creatorName, UID uid) {
+
+		List<Model> list = Rewards_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
+		
+		UsersSettings settings = new UsersSettings(null);
+		if (uid != null) {
+			settings = new UsersSettings(uid);
+		} 
+		String reward = list.get(0).getString("reward_pct");
+		return reward;
 
 	}
 

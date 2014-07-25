@@ -44,54 +44,18 @@ $(document).ready(function() {
     console.log('un = ' + userName);
     if (userName == creatorName) {
         // show the save btn
-        setupIssueModal(sessionId + "/issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
+        setupModal(sessionId + "/issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
+        setupIssueForm(creatorName);
         setupSummerNote(sessionId + '/getcreatorpage', '#main_body', 'main_body');
         saveSummerNote(sessionId + '/savecreatorpage', '#saveBtn', '#main_body');
 
-        $("#saveBtn").removeClass("hide");
-        $("#issueBtn").removeClass("hide");
+        setupChangeRewardForm(creatorName);
+        setupModal(sessionId + "/new_reward", '#rewardForm', "#placeChangeRewardBtn", "#rewardModal");
 
-        // Stuff with the issue modal
-        var url = creatorName + '/get_price_per_piece_current';
-        simpleFetch(url).done(function(result) {
-
-            $('[name="issuePrice"]').attr('placeholder', 'Last Price was ' + result + '/piece');
-
-        });
-
-        simpleFetch(sessionId + '/get_creators_funds_current').done(function(result) {
-            var fundsNum = result.replace(/^\D+/g, '')
-            var creatorsFunds = parseFloat(fundsNum);
-            $('[name="creatorsFunds"]').text(result);
-
-            $('[name="issuePieces"]').bind('keyup', function(f) {
+        showHideCreatorButtons();
 
 
 
-
-                var pieces = parseFloat($(this).val());
-
-                // var issuePrice = $('[name="buy"]').text();
-                // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
-                var issuePrice = parseFloat($('[name="issuePrice"]').val());
-                // alert(pieces + ' ' + issuePrice)
-                var total = issuePrice * pieces;
-
-                if (!isNaN(total)) {
-                    $('#issueTotal').text('$' + total);
-                    var fundsLeft = creatorsFunds + total;
-
-
-                    $('#creatorsFundsLeft').text('$' + fundsLeft);
-
-
-                }
-            });
-
-
-
-
-        });
 
     }
 
@@ -99,7 +63,66 @@ $(document).ready(function() {
 
 });
 
-function setupIssueModal(shortUrl, formId, buttonId, modalId) {
+function showHideCreatorButtons() {
+    $("#saveBtn").removeClass("hide");
+    $("#issueBtn").removeClass("hide");
+    $("#changeRewardBtn").removeClass("hide");
+}
+
+function setupChangeRewardForm(creatorName) {
+    var url = creatorName + '/get_rewards_pct_current';
+    simpleFetch(url).done(function(result) {
+
+        $('[name="reward_pct"]').attr('placeholder', 'Last was ' + result + '%');
+
+    });
+
+}
+
+
+function setupIssueForm(creatorName) {
+    // Stuff with the issue modal
+    var url = creatorName + '/get_price_per_piece_current';
+    simpleFetch(url).done(function(result) {
+
+        $('[name="issuePrice"]').attr('placeholder', 'Last Price was ' + result + '/piece');
+
+    });
+
+    simpleFetch(sessionId + '/get_creators_funds_current').done(function(result) {
+        var fundsNum = result.replace(/^\D+/g, '')
+        var creatorsFunds = parseFloat(fundsNum);
+        $('[name="creatorsFunds"]').text(result);
+
+        $('[name="issuePieces"]').bind('keyup', function(f) {
+
+
+
+
+            var pieces = parseFloat($(this).val());
+
+            // var issuePrice = $('[name="buy"]').text();
+            // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
+            var issuePrice = parseFloat($('[name="issuePrice"]').val());
+            // alert(pieces + ' ' + issuePrice)
+            var total = issuePrice * pieces;
+
+            if (!isNaN(total)) {
+                $('#issueTotal').text('$' + total);
+                var fundsLeft = creatorsFunds + total;
+
+                $('#creatorsFundsLeft').text('$' + fundsLeft);
+
+            }
+        });
+
+
+
+
+    });
+}
+
+function setupModal(shortUrl, formId, buttonId, modalId) {
 
     $(formId).bootstrapValidator({
         message: 'This value is not valid',
@@ -107,7 +130,7 @@ function setupIssueModal(shortUrl, formId, buttonId, modalId) {
 
     });
 
-    // Placing the Ask
+    // Placing the issue
     $(buttonId).click(function(event) {
 
         // serializes the form's elements.

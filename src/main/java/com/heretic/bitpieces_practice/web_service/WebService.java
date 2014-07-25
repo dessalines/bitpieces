@@ -517,7 +517,7 @@ public class WebService {
 				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
-				message = WebTools.placeBuy(uid, req.body(), sf);
+				message = WebTools.placeBuy(uid, req.body());
 
 				dbClose();
 
@@ -536,6 +536,24 @@ public class WebService {
 				verifyCreator(uid);
 
 				message = WebTools.issuePieces(uid, req.body(), sf);
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+		
+		post("/:auth/new_reward", (req, res) -> {
+			String message = null;
+			try {
+				UID uid = standardInit(prop, res, req);
+				verifyCreator(uid);
+
+				message = WebTools.newReward(uid, req.body());
 
 				dbClose();
 
@@ -1012,6 +1030,8 @@ public class WebService {
 			return json;
 
 		});
+		
+		
 
 		get("/:creator/get_rewards_pct", (req, res) -> {
 			allowResponseHeaders(req, res);
@@ -1025,6 +1045,28 @@ public class WebService {
 
 				// get the creator id from the token	
 				json = WebTools.getRewardsPctJson(creator, uid, sf);
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_rewards_pct_current", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			String creator = req.params(":creator");
+			
+			UID uid = getUserFromCookie(req);
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token	
+				json = WebTools.getRewardsPctCurrentJson(creator, uid);
 
 				dbClose();
 			}catch (NoSuchElementException e) {

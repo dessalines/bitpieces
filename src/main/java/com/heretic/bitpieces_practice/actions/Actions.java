@@ -20,6 +20,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_total;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_by_creator;
+import com.heretic.bitpieces_practice.tables.Tables.Reward;
 import com.heretic.bitpieces_practice.tables.Tables.Rewards_current;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_creators;
 import com.heretic.bitpieces_practice.tables.Tables.Sales_from_users;
@@ -35,8 +36,23 @@ import com.heretic.bitpieces_practice.tools.UID;
 public class Actions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final Double SERVICE_FEE_PCT = .05d;
+	private static final Double MINIMUM_REWARD_PCT = 1d;
 	private static final Gson GSON = new Gson();
 
+	public static Reward issueReward(String creatorId, Double pct) {
+		String now = Tools.SDF.get().format(new Date());
+		
+		if (pct < MINIMUM_REWARD_PCT) {
+			throw new NoSuchElementException("Reward cannot be less than " + MINIMUM_REWARD_PCT);
+		}
+		
+		Reward reward = Reward.createIt("creators_id", creatorId,
+				"time_", now,
+				"reward_pct", pct);
+		
+		return reward;
+	}
+	
 	public static Bid createBid(String userId, String creatorId, Integer pieces, Double bid_per_piece, 
 			String validUntil, Boolean partial) {
 

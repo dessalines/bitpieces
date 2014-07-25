@@ -167,7 +167,7 @@ public class UnitConverter {
 		if (precision == null) {
 			precision = 4;
 		}
-		
+
 		DecimalFormat df = setupDecimalFormat(iso, precision);
 		Double number = Double.parseDouble(val);
 		String retVal = null;
@@ -178,16 +178,16 @@ public class UnitConverter {
 				DateTime now = new DateTime();
 				DateTime startOfToday = getStartOfDay(now);
 				todayRate = getBtcRatesCache().get(iso).get(startOfToday);
-				
-				
-				 
+
+
+
 				// Convert it
 				Double afterConversion = number*todayRate;
-				
-				
+
+
 				// Format it
 				retVal = df.format(afterConversion);
-				
+
 			} else if (iso.equals("BTC")) {
 				return df.format(number);
 			} else if (iso.equals("mBTC")) {
@@ -198,7 +198,7 @@ public class UnitConverter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return retVal;
 
 	}
@@ -217,8 +217,8 @@ public class UnitConverter {
 			String iso, 
 			DecimalFormat df) {
 
-		
-		
+
+
 		try {
 
 			// Formattable columns
@@ -275,21 +275,22 @@ public class UnitConverter {
 						// Loop over all the historical money cols(IE money cols - current_money_cols)
 						for (String cCol : historicalMoneyCols) {
 							String prevValue = cMap.get(cCol);
-							Double numberBefore = Double.valueOf(prevValue);
-							
-							
 							try {
+								Double numberBefore = Double.valueOf(prevValue);
+
+
+
 								String numberAfter = String.valueOf(numberBefore*historicalRate);
 								cMap.put(cCol, numberAfter);
-							} catch (NullPointerException e) {
+							} catch (NullPointerException | NumberFormatException e) {
 								// This happens when an action occurs in the future (issuing pieces), and you don't know
 								// what the conversion rate is at that point
-								cMap.put(cCol, "0");
-//								System.out.println("daystarts = " + dayStart + " | iso = " + iso + " | numbefore = " + numberBefore + " | rate = " + historicalRate);
-								
+								cMap.put(cCol, "");
+								//								System.out.println("daystarts = " + dayStart + " | iso = " + iso + " | numbefore = " + numberBefore + " | rate = " + historicalRate);
+
 							}
-							
-							
+
+
 
 						}
 
@@ -348,9 +349,13 @@ public class UnitConverter {
 				// Format the necessary columns
 				for (String cCol : allColumns) {
 					String prevValue = cMap.get(cCol);
-					Double numberBefore = Double.valueOf(prevValue);
-					String formattedNumber = df.format(numberBefore);
-					cMap.put(cCol, formattedNumber);
+					try {
+						Double numberBefore = Double.valueOf(prevValue);
+						String formattedNumber = df.format(numberBefore);
+						cMap.put(cCol, formattedNumber);
+					} catch (NumberFormatException e) {
+						cMap.put(cCol, "");
+					}
 				}
 			}
 			System.out.println(listOfMaps);
