@@ -96,9 +96,6 @@ function setupIssueForm(creatorName) {
 
         $('[name="issuePieces"]').bind('keyup', function(f) {
 
-
-
-
             var pieces = parseFloat($(this).val());
 
             // var issuePrice = $('[name="buy"]').text();

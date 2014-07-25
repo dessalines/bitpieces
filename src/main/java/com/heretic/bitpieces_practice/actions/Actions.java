@@ -417,7 +417,7 @@ public class Actions {
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
 
-			// TODO Create the static html5 page for that creator
+			
 
 			UID uid = new UID(UserType.Creator, 
 					String.valueOf(creator.getId()), 

@@ -106,13 +106,10 @@ public class InitializeTables {
 	private static void setup_currencies() {
 
 		
-				
-
 		for (Entry<String, String> e : Tools.CURRENCY_MAP.entrySet()) {
 			// Unicode still not working
 			Currencies.createIt("iso", e.getKey(), "name", e.getValue(), "unicode" , Tools.CURRENCY_UNICODES.get(e.getKey()));
 		}
-
 
 
 	}
