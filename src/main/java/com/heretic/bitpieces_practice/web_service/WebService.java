@@ -369,6 +369,26 @@ public class WebService {
 			return json;
 
 		});
+		
+		get("/:auth/get_creators_funds_current", (req, res) -> {
+			String json = null;
+			try {
+				UID uid = standardInit(prop, res, req);
+				verifyCreator(uid);
+
+				// get currency if one exists
+				json = WebTools.getCreatorsFundsCurrentJson(uid, sf);
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
 
 		get("/:auth/get_rewards_earned_total_by_user", (req, res) -> {
 			String json = null;
@@ -497,7 +517,25 @@ public class WebService {
 				UID uid = standardInit(prop, res, req);
 				verifyUser(uid);
 
-				message = WebTools.placeBuy(uid, req.body());
+				message = WebTools.placeBuy(uid, req.body(), sf);
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+		
+		post("/:auth/issue_pieces", (req, res) -> {
+			String message = null;
+			try {
+				UID uid = standardInit(prop, res, req);
+				verifyCreator(uid);
+
+				message = WebTools.issuePieces(uid, req.body(), sf);
 
 				dbClose();
 

@@ -24,6 +24,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_activity;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_accum;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_current;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields_view;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_reputation;
@@ -32,6 +33,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Creators_settings;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_transactions;
 import com.heretic.bitpieces_practice.tables.Tables.Currencies;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available_view;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued_view;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_accum;
@@ -179,24 +181,72 @@ public class WebTools {
 		return message;
 	}
 
-	public static String placeBuy(UID uid, String body) {
+	public static String placeBuy(UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+
+		UsersSettings settings = new UsersSettings(uid);
 
 		// You don't have the creators id, so you have to fetch it:
 		Creator creator = Creator.findFirst("username = ?", postMap.get("creatorName"));
 
 		// Get the most recent price per piece from the creator:
 		List<Model> p = Pieces_issued_view.find("creators_name=?",  creator.getString("username")).orderBy("time_ desc").limit(1);
-		Double price_per_piece = p.get(0).getDouble("price_per_piece");
 
+		Integer pieces = Integer.valueOf(postMap.get("buyPieces"));
+		Double price_per_piece = p.get(0).getDouble("price_per_piece");
+		Double btcPricePerPiece = price_per_piece;
+
+		// Convert amount if necessary
+		String message = null;
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcPricePerPiece = price_per_piece / spotRate;
+			System.out.println(price_per_piece + " / " + spotRate + " = " + btcPricePerPiece);
+			message = "Bought " + pieces + " pieces at " + btcPricePerPiece + " BTC" + "(or "  + 
+					price_per_piece + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = "Bought " + pieces + " pieces at " + btcPricePerPiece + " BTC";
+		}
 
 		Actions.sellFromCreator(creator.getId().toString(), 
 				uid.getId(), 
-				Integer.valueOf(postMap.get("buyPieces")), 
-				price_per_piece);
+				pieces,
+				btcPricePerPiece);
 
 
-		return body;
+		return message;
+	}
+
+	public static String issuePieces(UID uid, String body, UnitConverter sf) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+
+		UsersSettings settings = new UsersSettings(uid);
+
+		Integer pieces = Integer.valueOf(postMap.get("issuePieces"));
+		Double price = Double.valueOf(postMap.get("issuePrice"));
+		Double btcIssuePrice = price;
+		String message = null;
+
+		// Convert amount if necessary
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcIssuePrice = price / spotRate;
+			System.out.println(price + " / " + spotRate + " = " + btcIssuePrice);
+			message = "Issued " + pieces + " pieces at " + btcIssuePrice + " BTC" + "(or "  + 
+					price + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = "Issued " + pieces + " pieces at " + btcIssuePrice + " BTC";
+		}
+
+
+		Pieces_issued.createIt(
+				"creators_id",  uid.getId(), 
+				"time_", Tools.SDF.get().format(new Date()), 
+				"pieces_issued", pieces,
+				"price_per_piece", btcIssuePrice);
+
+
+		return message;
 	}
 
 	public static String deleteBidAsk(UID uid, String body) {
@@ -552,6 +602,21 @@ public class WebTools {
 
 	}
 
+	public static String getCreatorsFundsCurrentJson(UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(uid);
+		String json = null;
+		try {
+			Creators_funds_current creatorsFundsCurrent = Creators_funds_current.findFirst("creators_id=?",  uid.getId());
+
+			String val = creatorsFundsCurrent.getString("current_funds");
+			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+		} catch(NullPointerException e) {
+			return "0";
+		}
+		return json;
+
+	}
+
 	public static String getRewardsEarnedTotalByUserJson(UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
@@ -655,8 +720,11 @@ public class WebTools {
 				list = Creators_search_view.find("category_names like '%" + category + "%'").limit(limit);;
 			}
 		}
+		String json = "0";
+		if (list.size() > 0) {
+			json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		} 
 
-		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 
 
 
@@ -1006,7 +1074,7 @@ public class WebTools {
 
 
 
-	public static  String createHighChartsJSONForMultipleCreatorsV2(List<Model> list, String dateColName,
+	public static String createHighChartsJSONForMultipleCreatorsV2(List<Model> list, String dateColName,
 			String valueColName, String creatorsIdentifier, UnitConverter sf, Integer precision, String iso) {
 		// TODO right now, doing 30 digits, and ignoring precision
 		List<Map<String, String>> lom = doUnitConversions(list, sf, 30, iso, true);
@@ -1022,7 +1090,7 @@ public class WebTools {
 			// Strip the unicode char
 			String valStr = cMap.get(valueColName);
 			valStr = valStr.replaceAll("[^\\d.]", "");
-			System.out.println(valStr);
+			//			System.out.println(valStr);
 			Double val = Double.parseDouble(valStr);
 
 			Object[] pair = {millis, val};
@@ -1030,16 +1098,18 @@ public class WebTools {
 			oneCreatorsData.add(pair);
 
 			String cCreatorsId = cMap.get(creatorsIdentifier);
-
+			//			System.out.println("creator = " + cCreatorsId + " map = " + Tools.GSON2.toJson(oneCreatorsData));
 			// If its the last one, add it to the map
 			if (i == list.size() -1) {
 
 				Map<String, Object> map = new LinkedHashMap<String, Object>();
-				System.out.println(cCreatorsId);
+				//				System.out.println(cCreatorsId);
 				map.put("name", cCreatorsId);
 				map.put("data", oneCreatorsData);
-
+				//				System.out.println("this is the last map" + Tools.GSON2.toJson(map));
 				highChartsLOM.add(map);
+
+				//				System.out.println("the final state = " + Tools.GSON2.toJson(highChartsLOM));
 			} else {
 				String nextCreatorsId = list.get(i+1).getString(creatorsIdentifier);
 
@@ -1047,12 +1117,17 @@ public class WebTools {
 
 					//					String oneCreatorsDataStr = Arrays.toString(oneCreatorsData.toArray());
 					Map<String, Object> map = new LinkedHashMap<String, Object>();
-					System.out.println(cCreatorsId);
+					//					System.out.println(cCreatorsId);
 					map.put("name", cCreatorsId);
-					map.put("data", oneCreatorsData);
+					// NEEDED to add the new arraylist, because clearing the one data fucked it up
+					map.put("data", new ArrayList<Object[]>(oneCreatorsData));
+
 
 					highChartsLOM.add(map);
+					//					System.out.println("just added this map" + Tools.GSON2.toJson(map));
+					//					System.out.println("before clearing final state = " + Tools.GSON2.toJson(highChartsLOM));
 					oneCreatorsData.clear();
+					//					System.out.println("before final state = " + Tools.GSON2.toJson(highChartsLOM));
 				}
 
 			}
@@ -1060,13 +1135,13 @@ public class WebTools {
 		}
 
 		String json = Tools.GSON.toJson(highChartsLOM);
-		System.out.println(json);
+		//		System.out.println(json);
 		return json;
 
 
 	}
 
-	public static  String createHighChartsJSONForSingleCreatorV2(List<Model> list, String dateColName,
+	public static String createHighChartsJSONForSingleCreatorV2(List<Model> list, String dateColName,
 			String valueColName, String seriesName, UnitConverter sf, Integer precision, String iso) {
 
 		List<Map<String, String>> lom = doUnitConversions(list, sf, precision, iso, true);
