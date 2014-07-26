@@ -1358,7 +1358,7 @@ public class WebService {
 			res.cookie("username", uid.getUsername(), COOKIE_EXPIRE_SECONDS, false);
 			res.cookie("usertype", uid.getType().toString(), COOKIE_EXPIRE_SECONDS, false);
 
-			String json = GSON.toJson(SESSION_TO_USER_MAP);
+			String json = Tools.GSON2.toJson(SESSION_TO_USER_MAP);
 			System.out.println(json);
 
 

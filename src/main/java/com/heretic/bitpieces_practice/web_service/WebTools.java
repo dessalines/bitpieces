@@ -588,7 +588,7 @@ public class WebTools {
 			Creators_categories.createIt("creators_id", uid.getId(), "categories_id", catRow.getId());
 
 		}
-		return "Saved";
+		return "Categories Saved";
 	}
 
 	public static String getUsersBidsAsksCurrentJson(UID uid, UnitConverter sf) {
