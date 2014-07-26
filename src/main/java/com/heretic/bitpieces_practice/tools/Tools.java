@@ -184,6 +184,24 @@ public class Tools {
 		return postMap;
 
 	}
+	
+	public static final List<String> createArrayFromAjaxPostSelect(String reqBody) {
+//		System.out.println(reqBody);
+		List<String> list = new ArrayList<>();
+		System.out.println(reqBody);
+		String[] split = reqBody.split("&");
+		for (int i = 0; i < split.length; i++) {
+			String[] keyValue = split[i].split("=");
+			try {
+				list.add(URLDecoder.decode(keyValue[1], "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return list;
+
+	}
 
 	public static enum UserType {
 		User, Creator

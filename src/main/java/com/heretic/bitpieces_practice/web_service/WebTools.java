@@ -23,6 +23,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Bids_asks_current;
 import com.heretic.bitpieces_practice.tables.Tables.Categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_activity;
+import com.heretic.bitpieces_practice.tables.Tables.Creators_categories;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_accum;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_current;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_page_fields;
@@ -234,17 +235,17 @@ public class WebTools {
 
 		return message;
 	}
-	
+
 	public static String newReward(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		
+
 		Double rewardPct = Double.valueOf(postMap.get("reward_pct"));
-		
+
 		Actions.issueReward(uid.getId(), rewardPct);
-		
+
 		return rewardPct + "% reward in effect";
-		
-		
+
+
 	}
 
 	public static String deleteBidAsk(UID uid, String body) {
@@ -571,10 +572,23 @@ public class WebTools {
 		return "Settings updated";
 
 	}
-	
-	public static String saveCategories(UID uid, String body) {
-		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		return "nada yet";
+
+	public static String saveCreatorsCategories(UID uid, String body) {
+		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		List<String> categories = Tools.createArrayFromAjaxPostSelect(body);
+		System.out.println(categories);
+
+
+		// first, delete them all for that creator
+		Creators_categories.delete("creators_id = ?", uid.getId());
+
+		for (String cCat : categories) {
+			// Find the categories by id and add them to the creator
+			Categories catRow = Categories.findFirst("name = ?", cCat);
+			Creators_categories.createIt("creators_id", uid.getId(), "categories_id", catRow.getId());
+
+		}
+		return "Saved";
 	}
 
 	public static String getUsersBidsAsksCurrentJson(UID uid, UnitConverter sf) {
@@ -865,11 +879,11 @@ public class WebTools {
 		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 
 	}
-	
+
 	public static String getRewardsPctCurrentJson(String creatorName, UID uid) {
 
 		List<Model> list = Rewards_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
-		
+
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);

@@ -640,14 +640,14 @@ public class WebService {
 
 		});
 		
-		post("/:auth/save_categories", (req, res) -> {
+		post("/:auth/save_creators_categories", (req, res) -> {
 			String json = null;
 			try {
 				UID uid = standardInit(prop, res, req);
 				verifyCreator(uid);
 
 				// get currency if one exists
-				json = WebTools.saveCategories(uid, req.body());
+				json = WebTools.saveCreatorsCategories(uid, req.body());
 
 				dbClose();
 
