@@ -247,12 +247,12 @@ public class WebTools {
 
 
 	}
-	
+
 	public static String raiseFunds(UID uid, String body, UnitConverter sf) {
 		String message = newReward(uid, body);
 		String message2 = issuePieces(uid, body, sf);
-		
-		
+
+
 		return message + "<br>" + message2;
 	}
 
@@ -416,9 +416,12 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Pieces_owned_value_current.find("creators_username=?", creatorName);
 
+		if (list.size() > 0) {
 		return createHighChartsJSONForCurrentV2(list, "value_total_current", "owners_name",
 				sf, settings.getPrecision(), settings.getIso());
-
+		} else {
+			return "0";
+		}
 	}
 
 	public static String getPiecesOwnedValueCurrentSeriesJson(UID uid, String creatorName, UnitConverter sf) {
@@ -775,10 +778,14 @@ public class WebTools {
 		Pieces_owned_value_current_by_creator p = 
 				Pieces_owned_value_current_by_creator.findFirst("username = ?", creatorName);
 
-		String val = p.getString("value_total_current");
+		if (p != null) {
+			String val = p.getString("value_total_current");
 
-		String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
-		return json;
+			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+			return json;
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -791,12 +798,14 @@ public class WebTools {
 
 
 		LazyList<Prices> prices = Prices.where("creators_name = ?", creatorName).orderBy("time_ desc").limit(1);
-		Prices p = prices.get(0);
-		String val = p.getString("price_per_piece");
+		if (prices.size() > 0) {
+			Prices p = prices.get(0);
+			String val = p.getString("price_per_piece");
 
-		String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
-
-		return json;
+			return  sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -808,11 +817,16 @@ public class WebTools {
 		}
 
 		Rewards_owed r = Rewards_owed.findFirst("creators_username = ?", creatorName);
-		String val = r.getString("total_owed");
 
-		String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+		if (r != null) {
+			String val = r.getString("total_owed");
 
-		return json;
+			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+
+			return json; 
+		} else {
+			return "0.0";
+		}
 
 	}
 
@@ -820,9 +834,14 @@ public class WebTools {
 			String creatorName) {
 
 		Backers_current_count r = Backers_current_count.findFirst("creators_username = ?", creatorName);
-		String json = r.getString("number_of_backers");
 
-		return json;
+		if (r != null) {
+			String json = r.getString("number_of_backers");
+
+			return json;
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -848,8 +867,12 @@ public class WebTools {
 		}
 
 		List<Model> list = Prices.find("creators_name=?", creatorName);
-		return createHighChartsJSONForSingleCreatorV2(list, "time_", "price_per_piece", "Pricing",
-				sf, settings.getPrecision(), settings.getIso());
+		if (list.size() > 0) {
+			return createHighChartsJSONForSingleCreatorV2(list, "time_", "price_per_piece", "Pricing",
+					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -862,8 +885,12 @@ public class WebTools {
 		}
 
 		List<Model> list = Worth.find("creators_username=?", creatorName);
-		return createHighChartsJSONForSingleCreatorV2(list, "price_time_", "worth", "Worth",
-				sf, settings.getPrecision(), settings.getIso());
+		if (list.size() > 0) {
+			return createHighChartsJSONForSingleCreatorV2(list, "price_time_", "worth", "Worth",
+					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -903,7 +930,7 @@ public class WebTools {
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
-		String reward = list.get(0).getString("reward_pct");
+		String reward = list.get(0).getString("reward_percentage");
 		return reward;
 
 	}
@@ -916,10 +943,12 @@ public class WebTools {
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
-
-		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
-				"creators_username", "owners_name", "total_owed"));
-
+		if (list.size() > 0) {
+			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
+					"creators_username", "owners_name", "total_owed"));
+		} else {
+			return "0";
+		}
 	}
 
 	public static String getPiecesIssuedJson(String creatorName, UID uid, UnitConverter sf) {
@@ -957,8 +986,12 @@ public class WebTools {
 			settings = new UsersSettings(uid);
 		} 
 
+		if (list.size() >0 ) {
 		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
 				"users_username", "pieces_total", "value_total_current"));
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -1046,9 +1079,11 @@ public class WebTools {
 			settings = new UsersSettings(uid);
 		} 
 		List<Model> list = Creators_transactions.find("creators_name=?",  creatorName);
-
-		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
-
+		if (list.size() > 0) {
+			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		} else {
+			return "0";
+		}
 	}
 
 	public static String getCreatorsFundsAccumJson(String creatorName, UID uid, UnitConverter sf) {
@@ -1058,9 +1093,12 @@ public class WebTools {
 		}
 
 		List<Model> list = Creators_funds_accum.find("creators_name=?",  creatorName);
-
-		return createHighChartsJSONForSingleCreatorV2(list, "time_", "funds_accum", "Funds", 
-				sf, settings.getPrecision(), settings.getIso());
+		if (list.size() > 0) {
+			return createHighChartsJSONForSingleCreatorV2(list, "time_", "funds_accum", "Funds", 
+					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 	}
 
 	public static List<Map<String, String>> doUnitConversions(List<Model> list,
