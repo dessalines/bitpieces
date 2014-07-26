@@ -4,7 +4,12 @@ This sets up all the common stuff, having to do with the top bar, redirects, sea
 
 $(document).ready(function() {
     var sessionId = getCookie("authenticated_session_id");
-
+    var userType = getCookie('usertype');
+    var userName = getCookie('username');
+    // set up the correct dashboard if its a creator
+    if (userType == 'Creator') {
+        $("#dashboardhref").prop("href", "creator_overview?creator=" + userName);
+    }
 
 
     setupCreatorSearch();
