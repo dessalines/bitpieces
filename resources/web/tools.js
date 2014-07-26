@@ -290,7 +290,7 @@ function fillFieldFromMustache(url, templateId, divId, isMoney) {
 
 function fillJSONFieldFromMustache(url, templateId, divId, isMoney) {
     var url = sparkService + url // the script where you handle the form input.
-    $.ajax({
+    return $.ajax({
         type: "GET",
         url: url,
         xhrFields: {
