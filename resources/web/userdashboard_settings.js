@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 
 
-    sessionId = getCookie("authenticated_session_id");
+    var sessionId = getCookie("authenticated_session_id");
 
 
     // fillFieldFromMustacheCustom(sessionId + '/get_users_settings', '#users_settings_template', '#users_settings', false);
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 function full() {
     var template = $('#users_settings_template').html();
-
+    var sessionId = getCookie("authenticated_session_id");
     $.when(getJson(sessionId + '/get_users_settings'),
         getJson('get_currencies')).done(function(a1, a2) {
         // the code here will be executed when all four ajax requests resolve.
