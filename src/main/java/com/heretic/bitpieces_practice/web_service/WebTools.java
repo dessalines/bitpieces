@@ -417,8 +417,8 @@ public class WebTools {
 		List<Model> list = Pieces_owned_value_current.find("creators_username=?", creatorName);
 
 		if (list.size() > 0) {
-		return createHighChartsJSONForCurrentV2(list, "value_total_current", "owners_name",
-				sf, settings.getPrecision(), settings.getIso());
+			return createHighChartsJSONForCurrentV2(list, "value_total_current", "owners_name",
+					sf, settings.getPrecision(), settings.getIso());
 		} else {
 			return "0";
 		}
@@ -987,8 +987,8 @@ public class WebTools {
 		} 
 
 		if (list.size() >0 ) {
-		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
-				"users_username", "pieces_total", "value_total_current"));
+			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
+					"users_username", "pieces_total", "value_total_current"));
 		} else {
 			return "0";
 		}
@@ -996,7 +996,6 @@ public class WebTools {
 	}
 
 	public static String getCreatorsReputationJson(String creatorName) {
-
 
 		String json = null;
 

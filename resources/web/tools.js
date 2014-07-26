@@ -675,7 +675,7 @@ function standardFormPost(shortUrl, formId) {
 
         var url = sparkService + shortUrl; // the script where you handle the form input.
         console.log(url);
-        $.ajax({
+        var post = $.ajax({
             type: "POST",
             url: url,
             xhrFields: {

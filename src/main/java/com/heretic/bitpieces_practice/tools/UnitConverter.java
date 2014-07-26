@@ -330,9 +330,16 @@ public class UnitConverter {
 				if (iso != null && !iso.contains("BTC")) {
 					for (String cCol : currentMoneyCols) {
 						String prevValue = cMap.get(cCol);
-						Double numberBefore = Double.valueOf(prevValue);
-						String numberAfter = String.valueOf(numberBefore*todayRate);
-						cMap.put(cCol, numberAfter);
+						try {
+							Double numberBefore = Double.valueOf(prevValue);
+							String numberAfter = String.valueOf(numberBefore*todayRate);
+							cMap.put(cCol, numberAfter);
+						} catch (NullPointerException | NumberFormatException e) {
+							// This happens when an action occurs in the future (issuing pieces), and you don't know
+							// what the conversion rate is at that point
+							cMap.put(cCol, "");
+
+						}
 					}
 				} else if (iso.equals("mBTC")) {
 					for (String cCol : currentMoneyCols) {
@@ -353,7 +360,7 @@ public class UnitConverter {
 						Double numberBefore = Double.valueOf(prevValue);
 						String formattedNumber = df.format(numberBefore);
 						cMap.put(cCol, formattedNumber);
-					} catch (NumberFormatException e) {
+					} catch (NumberFormatException|NullPointerException e) {
 						cMap.put(cCol, "");
 					}
 				}
