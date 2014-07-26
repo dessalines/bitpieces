@@ -124,7 +124,8 @@ function setupSaveSettings(shortUrl, formId, buttonId) {
                 // document.cookie="authenticated_session_id=" + data + 
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
-
+                
+                // $('#units,#raiseFunds').collapse();
                 toastr.success(data);
 
 

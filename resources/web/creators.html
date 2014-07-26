@@ -157,6 +157,7 @@
 
                  <div class="register">
                   <h3> Register </h3>
+                  <hr></hr>
 
                   <form id="creatorRegisterForm" class="form-horizontal" role="form"
                   data-bv-message="This value is not valid"
@@ -289,7 +290,7 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
             <button id="saveCategoriesBtn" type="submit" class="btn btn-primary" 
-            data-toggle="collapse" data-target="#categories,#collapseThree">Save</button>
+            data-toggle="collapse" data-target="#categories,#units">Save</button>
           </div>
         </div>
 
@@ -302,16 +303,187 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h4 class="panel-title">
-      <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-        Collapsible Group Item #3
+      <a data-toggle="collapse" data-parent="#accordion" href="#units">
+        Units
       </a>
     </h4>
   </div>
-  <div id="collapseThree" class="panel-collapse collapse">
+  <div id="units" class="panel-collapse collapse">
     <div class="panel-body">
-      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      The creators units
+
+      <div id="users_settings" >
+       <script id="users_settings_template" type="x-tmpl-mustache"> 
+        <h3> Units </h3>
+        <hr></hr>
+
+        <!-- 2 Forms, user settings, and notifications -->
+        <form id="settingsForm" class="form-horizontal" role="form">
+
+         <div   class="form-group">
+
+           <!--   
+           <label for="email" class="col-sm-2 control-label">Email address</label>
+           <div class="col-sm-10">
+             <input name="email" type="email" class="form-control" id="email" value={{email}}
+             data-bv-emailaddress="true"
+             data-bv-emailaddress-message="The input is not a valid email address"  />
+           </div>
+           
+         </div>
+
+         <div class="form-group">
+           <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+           <div class="col-sm-10">
+            <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+            data-bv-notempty="true"
+            data-bv-notempty-message="The password is required and cannot be empty"
+            />
+
+          </div>
+        </div> 
+        <div class="form-group">
+          <label for="inputTimeZone" class="col-sm-2 control-label">Time zone</label>
+
+          <div class="col-sm-10">
+            <select name="timeZone" class="form-control"  id="inputTimeZone" role="menu">
+              <option value="UTC">(GMT+00:00) UTC</option>
+              <option value="Mexico City">(GMT-06:00) Mexico City</option>
+              <option value="Copenhagen">(GMT+01:00) Copenhagen</option>
+              <option value='{{name}}'>{{name}}</option>
+
+            </select>
+
+
+          </div>
+        </div>
+      -->
+      <div id="currency" class="form-group">
+
+       <label for="inputCurrency" class="col-sm-2 control-label">Currency</label>
+
+       <div class="col-sm-10">
+         <select name="currency" class="form-control"  id="inputCurrency" role="menu">
+           {{#currencies}}
+           <option value="{{iso}}">{{name}} ({{iso}})</option>
+           {{/currencies}}
+
+         </select>
+
+
+       </div>
+
+     </div>
+
+     <div class="form-group">
+      <label for="inputPrecision" class="col-sm-2 control-label">Precision</label>
+
+      <div class="col-sm-10">
+        <select name="precision" class="form-control"  id="inputPrecision" role="menu">
+          <option value="2">2 Decimal Places</option>
+          <option value="4">4 Decimal Places</option>
+          <option value="6">6 Decimal Places</option>
+          <option value="8">8 Decimal Places</option>
+
+
+        </select>
+
+
+      </div>
     </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button id="settingsSaveBtn" type="submit" class="btn btn-primary"
+        data-toggle="collapse" data-target="#raiseFunds">Save</button>
+      </div>
+    </div>
+
+  </form>
+</script>
+</div>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="#raiseFunds">
+        Raise Funds
+      </a>
+    </h4>
   </div>
+  <div id="raiseFunds" class="panel-collapse collapse">
+    <div class="panel-body">
+      A big description or a link to one talking about rewards, and issues
+      <form id="raiseFundsForm" class="form-horizontal" role="form">
+
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward Percentage</label>
+          <div class="col-sm-10">
+          <input name="reward_pct" class="form-control" type="text" id="formGroupInputLarge" value="1.0"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be > 1"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-value="1"
+            data-bv-greaterthan-message="Must be > 1" 
+
+            >
+          </div>
+        </div>
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+          <div class="col-sm-10">
+            <input name="issuePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="In the currency above"
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-value=".001"
+            data-bv-greaterthan-message="Must be > .001"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be > .001"
+
+            >
+          </div>
+        </div>
+
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+          <div class="col-sm-10">
+            <input name="issuePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+            type="text" 
+            data-bv-integer="true"
+            data-bv-integer-message="Must be a whole number"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be a whole number"
+
+            >
+          </div>
+        </div>
+
+        <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+         <div id="issueTotal" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button id="raiseFundsBtn" type="submit" class="btn btn-primary" 
+          data-toggle="collapse" data-target="#units,#raiseFunds">Take me to my page</button>
+        </div>
+      </div>
+
+
+
+    </form>
+  </div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -348,6 +520,8 @@
        <!-- my scripts -->
        <script src="tools.js"></script>
        <script src="login.js"></script>
+       <script src="userdashboard_settings.js"></script>
        <script src="creators.js"></script>
+
      </body>
      </html>

@@ -698,6 +698,7 @@ function standardFormPost(shortUrl, formId) {
                 
 
                 console.log(document.cookie);
+                    return data;
 
             },
             error: function(request, status, error) {

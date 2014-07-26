@@ -564,6 +564,24 @@ public class WebService {
 			return message;
 
 		});
+		
+		post("/:auth/raise_funds", (req, res) -> {
+			String message = null;
+			try {
+				UID uid = standardInit(prop, res, req);
+				verifyCreator(uid);
+
+				message = WebTools.raiseFunds(uid, req.body(), sf);
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
 
 		post("/:auth/delete_bid_ask", (req, res) -> {
 			String message = null;

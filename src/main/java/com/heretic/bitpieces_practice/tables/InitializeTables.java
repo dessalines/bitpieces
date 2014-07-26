@@ -35,15 +35,16 @@ import com.heretic.bitpieces_practice.tools.Tools;
 
 /**
  * TODO
- * - Do a deposit / withdrawal check
- * - Before buying anything, do a users funds check
- * - Before buying creators pieces, make sure users have deposited
+ * + Do a deposit / withdrawal check
+ * + Before buying anything, do a users funds check
+ * + Before buying creators pieces, make sure users have deposited
  * - implement recaptcha
- * - Start using jsoup to write creators and users pages
- * - Do a logout post method
+ * + Start using jsoup to write creators and users pages
+ * + Do a logout post method
  * - badges page
  * - rewards page
  * - settings page
+ * - make sure you can't issue pieces with first having a reward pct
  * 
  * @author tyler
  *

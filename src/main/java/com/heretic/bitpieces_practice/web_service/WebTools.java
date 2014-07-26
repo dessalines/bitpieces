@@ -247,6 +247,14 @@ public class WebTools {
 
 
 	}
+	
+	public static String raiseFunds(UID uid, String body, UnitConverter sf) {
+		String message = newReward(uid, body);
+		String message2 = issuePieces(uid, body, sf);
+		
+		
+		return message + "<br>" + message2;
+	}
 
 	public static String deleteBidAsk(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
@@ -559,9 +567,16 @@ public class WebTools {
 
 		// Make a map from sql column names to value changes
 		Map<String, String> s= new HashMap<String, String>();
-		s.put("email", email);
-		s.put("local_currency_id", currId);
-		s.put("precision_", precision);
+
+		if (email != null) {
+			s.put("email", email);
+		}
+		if (currency != null) {
+			s.put("local_currency_id", currId);
+		}
+		if (precision != null) {
+			s.put("precision_", precision);
+		}
 
 
 		for (Entry<String, String> e : s.entrySet()) {
