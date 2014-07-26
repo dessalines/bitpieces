@@ -247,7 +247,8 @@
               TODO some kinda captcha thing
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button id="creatorRegisterBtn" type="submit" class="btn btn-primary">Register</button>
+                  <button id="creatorRegisterBtn" type="submit" class="btn btn-primary"
+                  data-toggle="collapse" data-target="#registerCreator,#categories" >Register</button>
                 </div>
               </div>
             </form>
@@ -268,8 +269,8 @@
       </div>
       <div id="categories" class="panel-collapse collapse">
         <div class="panel-body">
-        Select up to 3 categories
-         <form id="discover_search" class="form-inline" role="form">
+          Select up to 3 categories
+          <form id="categoriesForm" class="form-inline" role="form">
 
            <div class="form-group" id="categoriesDiv">
 
@@ -277,34 +278,41 @@
 
               <select multiple id="categorySelect" name="category" class="form-control" role="menu" aria-labelledby="dropdownMenu1"
               size=10 style='height: 100%;'>
-                {{#.}}
-                <option value='{{name}}'>{{name}}</option>
-                {{/.}}
-              </select>
+              {{#.}}
+              <option value='{{name}}'>{{name}}</option>
+              {{/.}}
+            </select>
 
-            </script>
+          </script>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="saveCategoriesBtn" type="submit" class="btn btn-primary" 
+            data-toggle="collapse" data-target="#categories,#collapseThree">Save</button>
           </div>
+        </div>
 
 
-          
-        </form>
-      </div>
+
+      </form>
     </div>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-          Collapsible Group Item #3
-        </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+        Collapsible Group Item #3
+      </a>
+    </h4>
+  </div>
+  <div id="collapseThree" class="panel-collapse collapse">
+    <div class="panel-body">
+      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
     </div>
   </div>
+</div>
 </div>
 </div>
 

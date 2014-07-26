@@ -639,6 +639,27 @@ public class WebService {
 			return json;
 
 		});
+		
+		post("/:auth/save_categories", (req, res) -> {
+			String json = null;
+			try {
+				UID uid = standardInit(prop, res, req);
+				verifyCreator(uid);
+
+				// get currency if one exists
+				json = WebTools.saveCategories(uid, req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
+
 
 		get("/creators_search/:query", (req, res) -> {
 			allowResponseHeaders(req, res);

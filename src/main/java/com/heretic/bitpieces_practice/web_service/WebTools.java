@@ -571,6 +571,11 @@ public class WebTools {
 		return "Settings updated";
 
 	}
+	
+	public static String saveCategories(UID uid, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		return "nada yet";
+	}
 
 	public static String getUsersBidsAsksCurrentJson(UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
