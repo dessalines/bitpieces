@@ -1,5 +1,7 @@
 var sparkService = "http://localhost:4567/";
 // var sparkService = "http://68.56.177.238:4567/"
+
+var pageNumbers = {};
 var extractData = function(node) {
     return $(node).text().replace(/[^0-9.]/g, '');
 }
@@ -190,7 +192,7 @@ function fillUserInfoMustacheFromCookie() {
 
 
 
-function fillTableFromMustache(url, templateId, divId, tableId) {
+function fillTableFromMustache(url, templateHtml, divId, tableId) {
     //         $.tablesorter.addParser({ 
     //           id: 'my_date_column', 
     //           is: function(s) { 
@@ -224,9 +226,9 @@ function fillTableFromMustache(url, templateId, divId, tableId) {
             // JSON.useDateParser();
             var jsonObj = JSON.parseWithDate(data);
 
-            var template = $(templateId).html();
-            Mustache.parse(template); // optional, speeds up future uses
-            var rendered = Mustache.render(template, jsonObj);
+            
+            Mustache.parse(templateHtml); // optional, speeds up future uses
+            var rendered = Mustache.render(templateHtml, jsonObj);
             $(divId).html(rendered);
             $(tableId).tablesorter({
                 debug: true,
@@ -238,7 +240,7 @@ function fillTableFromMustache(url, templateId, divId, tableId) {
                 // }
             });
             console.log(jsonObj);
-            console.log(template);
+            console.log(templateHtml);
             console.log(rendered);
 
 

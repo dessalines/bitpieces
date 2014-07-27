@@ -1055,20 +1055,23 @@ public class WebTools {
 
 	}
 
-	public static String getCreatorsActivityJson(String creatorName, UID uid, UnitConverter sf) {
+	public static String getCreatorsActivityJson(String creatorName, UID uid, UnitConverter sf, Integer pageNum) {
 
-		List<Model> list = Creators_activity.find("creators_name=?",  creatorName);
+//		List<Model> list = Creators_activity.find("creators_name=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
-		Paginator p = new Paginator(Creators_activity.class, 5, "creators_name=?", creatorName);
+		Paginator p = new Paginator(Creators_activity.class, 4, "creators_name=?", creatorName);
 
-		List<Model> items = p.getPage(1);
+		List<Model> items = p.getPage(pageNum);
 
+		if (items.size() > 0 ) {
 		return convertLOMtoJson(doUnitConversions(items, sf, settings.getPrecision(), settings.getIso(), false));
-
+		} else {
+			return "0";
+		}
 
 	}
 

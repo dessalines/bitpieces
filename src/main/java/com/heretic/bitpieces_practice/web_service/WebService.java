@@ -1241,17 +1241,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_creators_activity", (req, res) -> {
+		get("/:creator/get_creators_activity/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsActivityJson(creator, uid, sf);
+				json = WebTools.getCreatorsActivityJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {

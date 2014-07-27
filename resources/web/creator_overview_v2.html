@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-	<title>Dashboard Template for Bootstrap</title>
+  <title>Dashboard Template for Bootstrap</title>
 
-	<!-- Bootstrap core CSS -->
-	<link href="../darkly.bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="../darkly.bootstrap.min.css" rel="stylesheet">
 
-	<!-- Link to font awesome -->
-	<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
+  <!-- Link to font awesome -->
+  <link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
 
-	<!-- Bootstrap social css -->
-	<link href="../bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
+  <!-- Bootstrap social css -->
+  <link href="../bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
 
-	<!--   Bootstrap validator -->
-	<link rel="stylesheet" href="../bootstrap-validator/dist/css/bootstrapValidator.min.css"/>
+  <!--   Bootstrap validator -->
+  <link rel="stylesheet" href="../bootstrap-validator/dist/css/bootstrapValidator.min.css"/>
 
-	<!--   toastr css -->
-	<link href="../toastr/toastr.css" rel="stylesheet"/>
+  <!--   toastr css -->
+  <link href="../toastr/toastr.css" rel="stylesheet"/>
 
-	<!--   typeahead css -->
-	<link href="../typeaheadjs.css" rel="stylesheet"/>
+  <!--   typeahead css -->
+  <link href="../typeaheadjs.css" rel="stylesheet"/>
 
-	<!-- Pickadate -->
-	<link href="../pickadate/lib/themes/default.css" rel="stylesheet"/>
-	<link href="../pickadate/lib/themes/default.date.css" rel="stylesheet"/>
+  <!-- Pickadate -->
+  <link href="../pickadate/lib/themes/default.css" rel="stylesheet"/>
+  <link href="../pickadate/lib/themes/default.date.css" rel="stylesheet"/>
 
   <!-- Summernote -->
   <link href="summernote/dist/summernote.css" rel="stylesheet"/>
@@ -80,19 +80,19 @@
                <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
                <li><a href="#logout" class="hide">Log Out</a></li> -->
                <li class="dropdown">
-               	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-               	<ul class="dropdown-menu">
-               		<li><a href="#">Action</a></li>
-               		<li><a href="#">Another action</a></li>
-               		<li><a href="#">Something else here</a></li>
-               		<li class="divider"></li>
-               		<li class="dropdown-header">Nav header</li>
-               		<li><a href="#">Separated link</a></li>
-               		<li><a href="#">One more separated link</a></li>
-               	</ul>
-               </li>
-             </ul>
-             <form id="creator_search" class="navbar-form navbar-left" role="search">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form id="creator_search" class="navbar-form navbar-left" role="search">
               <div class="form-group">
                <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
              </div>
@@ -207,7 +207,7 @@
         <div class="panel-heading">
           <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
         </div>
-        <div id="creators_activity" class="panel-body">
+        <div id="creators_activity" class="panel-body"  style="height: 276px;overflow:auto;">
           <script id="creators_activity_template" type="x-tmpl-mustache"> 
             <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
               <thead>
@@ -239,6 +239,12 @@
           </table>
 
 
+        </div>
+        <div class="panel-footer">
+          <ul class="pager">
+          <li id="creators_activity_pager_prev" class="disabled"><a style="cursor:pointer;">Previous</a></li>
+            <li id="creators_activity_pager_next" ><a style="cursor:pointer;">Next</a></li>
+          </ul>
         </div>
 
       </div>
@@ -481,44 +487,44 @@
 
 <!-- Modals -->
 <div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+  <div class="modal-dialog">
 
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Bid</h4>
-			</div>
-			<div class="modal-body">
-				<form id="bidForm" class="form-horizontal" role="form">
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-						<div class="col-sm-10">
-							<input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-							data-bv-greaterthan="true"
-							data-bv-greaterthan-value=".01"
-							data-bv-greaterthan-message="Must be > .01"
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Bid</h4>
+      </div>
+      <div class="modal-body">
+        <form id="bidForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-value=".01"
+              data-bv-greaterthan-message="Must be > .01"
 
-							>
-						</div>
-					</div>
+              >
+            </div>
+          </div>
 
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-						<div class="col-sm-10">
-							<input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-							type="text" 
-							data-bv-integer="true"
-							data-bv-integer-message="Must be a whole number"
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+              <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              type="text" 
+              data-bv-integer="true"
+              data-bv-integer-message="Must be a whole number"
 
-							>
-						</div>
-					</div>
+              >
+            </div>
+          </div>
 
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-						<div class="col-sm-10">
-							<input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-						</div>
-					</div>
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+            <div class="col-sm-10">
+              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+            </div>
+          </div>
           <div class="form-group form-group-lg">
 
            <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
@@ -552,17 +558,17 @@
  </div>
 </div>
 <div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+  <div class="modal-dialog">
 
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">buy</h4>
-			</div>
-			<div class="modal-body">
-				<form id="buyForm" class="form-horizontal" role="form">
-					<div class="form-group form-group-lg">
-						<label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-						<div class="col-sm-10 input-group">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">buy</h4>
+      </div>
+      <div class="modal-body">
+        <form id="buyForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10 input-group">
               <span class="input-group-addon">$</span>
               <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
               <span class="input-group-addon">per piece</span>
@@ -851,7 +857,7 @@
       <script src="../tools.js"></script>
       <script src="../highcharts_templates.js"></script>
       <script src="../creatorpage.js"></script>
-      <script src="../creator_overview.js"></script>
+      <script src="../creator_overview_v2.js"></script>
       <script src="../login.js"></script>
 
 
