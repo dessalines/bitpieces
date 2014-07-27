@@ -249,6 +249,7 @@ public class WebTools {
 	}
 
 	public static String raiseFunds(UID uid, String body, UnitConverter sf) {
+
 		String message = newReward(uid, body);
 		String message2 = issuePieces(uid, body, sf);
 

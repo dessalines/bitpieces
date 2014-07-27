@@ -99,7 +99,7 @@ function showHideButtons(creatorName) {
             // This part adds the totals and such
             var types = ['bid', 'ask', 'buy'];
             types.forEach(function(e) {
-                var fundsNum = result.replace(/^\D+/g, '')
+                var fundsNum = result.replace(/[^0-9\.]+/g,"");
                 var usersFunds = parseFloat(fundsNum);
                 $('[name="usersFunds"]').text(result);
 
@@ -112,6 +112,7 @@ function showHideButtons(creatorName) {
                     var buyPrice = parseFloat($('[name="' + e + '"]').val());
                     // alert(buyPieces + ' ' + buyPrice)
                     var total = buyPrice * buyPieces;
+                 
 
                     if (!isNaN(total)) {
                         $('#' + e + 'Total').text('$' + total);
@@ -121,6 +122,10 @@ function showHideButtons(creatorName) {
                         } else {
                             fundsLeft = usersFunds - total;
                         }
+                    //        console.log(total);
+                    // console.log(fundsNum);
+                    //     console.log(usersFunds);
+                    //     console.log(e);
                         $('#' + e + 'FundsLeft').text('$' + fundsLeft);
 
                         if (fundsLeft <= 0) {
