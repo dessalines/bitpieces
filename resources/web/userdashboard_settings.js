@@ -118,8 +118,11 @@ function setupSaveSettings(shortUrl, formId, buttonId) {
                 // console.log(asdf);
                 // console.log(xhr.getAllResponseHeaders()); 
 
-                $('#raiseFunds').collapse('show');
+                $('#raiseFunds').collapse();
                 $('#units').collapse('hide');
+                // $('#raiseFunds').attr("data-toggle", "collapse");
+                $('#units').attr("data-target", "#units,#raiseFunds");
+                // $('#raiseFunds').attr("data-target", "");
                 // alert(data); // show response from the php script.
 
                 xhr.getResponseHeader('Set-Cookie');
