@@ -78,7 +78,7 @@ function fillFieldFromMustacheCustom(url, templateId, divId, isMoney) {
             console.log(template);
             console.log(rendered);
 
-            setupSaveSettings(sessionId + '/save_users_settings', '#settingsForm', '#settingsSaveBtn')
+            setupSaveSettings(sessionId + '/save_users_settings', '#settingsForm', '#settingsSaveBtn');
 
         },
         error: function(request, status, error) {
@@ -118,6 +118,8 @@ function setupSaveSettings(shortUrl, formId, buttonId) {
                 // console.log(asdf);
                 // console.log(xhr.getAllResponseHeaders()); 
 
+                $('#raiseFunds').collapse('show');
+                $('#units').collapse('hide');
                 // alert(data); // show response from the php script.
 
                 xhr.getResponseHeader('Set-Cookie');
