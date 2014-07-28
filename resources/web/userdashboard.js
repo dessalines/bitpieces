@@ -5,8 +5,12 @@ $(document).ready(function() {
 
     // fillUserInfoMustache('get_user_data');
 
+
+
     setupMiniSubmenu();
     navigateWithParams();
+
+
 
 
 });
