@@ -3,7 +3,8 @@ $(document).ready(function() {
 
     sessionId = getCookie("authenticated_session_id");
     console.log(sessionId);
-    setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+
+    showHideDepositButton();
 
     // fillUserHighChartStandardTemplate('get_users_funds_accum', '#users_funds', 'Funds ($)', '$');
 
@@ -19,6 +20,18 @@ $(document).ready(function() {
         "#remove_button", sessionId);
 
 });
+
+function showHideDepositButton() {
+    var userName = getParameterByName('user');
+    var sessionUserName = getCookie("username");
+
+    if (userName == sessionUserName) {
+        $('#depositBtn').removeClass("hide");
+        $('#withdrawBtn').removeClass("hide");
+        setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+    }
+
+}
 
 
 function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonName, sessionId) {

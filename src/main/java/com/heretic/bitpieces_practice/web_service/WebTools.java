@@ -464,7 +464,7 @@ public class WebTools {
 		List<Model> list = Rewards_earned_accum.find("owners_name=?", userName);
 
 		if (list.size() > 0 ) {
-			return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "reward_accum", "creators_username",
+			return createHighChartsJSONForMultipleCreatorsV2(list, "start_time_", "reward_accum", "creators_username",
 					sf, settings.getPrecision(), settings.getIso());
 		} else {
 			return "0";

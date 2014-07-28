@@ -5,8 +5,6 @@ $(document).ready(function() {
 
     // fillUserInfoMustache('get_user_data');
 
-    var userName = getParameterByName('user');
-
     setupMiniSubmenu();
     navigateWithParams();
 

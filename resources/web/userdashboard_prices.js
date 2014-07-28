@@ -1,11 +1,9 @@
+$(document).ready(function() {
+
+    var userName = getParameterByName('user');
 
 
-$(document).ready(function(){
 
-
-    sessionId = getCookie("authenticated_session_id");
-    console.log(sessionId);
-
-    fillUserHighChartStandardTemplate(sessionId + '/get_prices_for_user', '#highcharts-chart-area', 'Price ($/piece)', '$');
+    fillUserHighChartStandardTemplate(userName + '/get_prices_for_user', '#highcharts-chart-area', 'Price ($/piece)', '$');
 
 });
