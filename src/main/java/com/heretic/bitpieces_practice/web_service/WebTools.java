@@ -487,14 +487,19 @@ public class WebTools {
 	}
 
 
-	public static String getUsersTransactionsJson(String userName, UID uid, UnitConverter sf) {
+	public static String getUsersTransactionsJson(String userName, UID uid, UnitConverter sf, Integer pageNum) {
 
 		UsersSettings settings = new UsersSettings(uid);
-		List<Model> list = Users_transactions.find("owners_name=?",  userName);
 
-		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		Paginator p = new Paginator(Users_transactions.class, PAGINATOR_ROWS, "owners_name=?",  userName);
+		List<Model> list = p.getPage(pageNum);
+		
+		if (list.size() > 0) {
+		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		} else {
+			return "0";
+		}
 
-		return json;
 
 	}
 
@@ -528,13 +533,17 @@ public class WebTools {
 
 	}
 
-	public static String getUsersActivityJson(String userName, UID uid, UnitConverter sf) {
+	public static String getUsersActivityJson(String userName, UID uid, UnitConverter sf, Integer pageNum) {
 		UsersSettings settings = new UsersSettings(uid);
-		List<Model> list = Users_activity.find("owners_name=?",  userName);
 
-		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
-
-		return json;
+		Paginator p = new Paginator(Users_activity.class, PAGINATOR_ROWS, "owners_name=?",  userName);
+		List<Model> list = p.getPage(pageNum);
+		
+		if (list.size() > 0) {
+		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		} else {
+			return "0";
+		}
 
 	}
 

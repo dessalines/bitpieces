@@ -48,26 +48,26 @@
       <div id="wrapper">
 
        <!-- plug into here -->
-        <nav class="navbar navbar-default" role="navigation">
-          <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">BitPieces</a>
-            </div>
+       <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">BitPieces</a>
+          </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-               <li><a href="/carousel">Home</a></li>
-               <li><a href="/discover">Discover</a></li>
-               <li><a href="/creators">Creators</a></li>
-               <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+             <li><a href="/carousel">Home</a></li>
+             <li><a href="/discover">Discover</a></li>
+             <li><a href="/creators">Creators</a></li>
+             <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
                <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
                <li><a href="#logout" class="hide">Log Out</a></li> -->
                <li class="dropdown">
@@ -92,7 +92,7 @@
 
 
            <ul class="nav navbar-nav navbar-right">
- 
+             
 
 
             <li id="userDropdown" class="dropdown user-dropdown">
@@ -140,8 +140,8 @@
     </div>
 
 
-     <!-- The Page -->
-     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <!-- The Page -->
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
       <div class="row">
         <div class="col-lg-12">
@@ -171,45 +171,51 @@
             <div class="panel-heading">
               <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Transactions</h3>
             </div>
-            <div id="transactions" class="panel-body">
+            <div id="transactions" class="panel-body" style="height: 276px;overflow:auto;">
               <script id="transactions_template" type="x-tmpl-mustache"> 
-              <table id="transactions_table" class="table table-hover table-striped tablesorter">
-              <thead> 
-              <tr>
-              <th>Time <i class="fa fa-sort"></i></th>
-              <th>Type <i class="fa fa-sort"></th>
-              <th>Recipient <i class="fa fa-sort"></th>
-              <th>Pieces <i class="fa fa-sort"></th>
-              <th>Total <i class="fa fa-sort"></th>
-              </tr>
-              </thead>
+                <table id="transactions_table" class="table table-hover table-striped tablesorter">
+                  <thead> 
+                    <tr>
+                      <th>Time <i class="fa fa-sort"></i></th>
+                      <th>Type <i class="fa fa-sort"></th>
+                      <th>Recipient <i class="fa fa-sort"></th>
+                      <th>Pieces <i class="fa fa-sort"></th>
+                      <th>Total <i class="fa fa-sort"></th>
+                    </tr>
+                  </thead>
 
-              <tbody>
+                  <tbody>
 
-              {{#.}}
+                    {{#.}}
 
-              <tr> 
-              <td>{{time_}}</td>
-              <td>{{type}}</td>
-              <td>{{recipient}}</td>
-              <td>{{pieces}}</td>
-              <td>{{total}}</td>
-              </tr>
-              {{/.}}
+                    <tr> 
+                      <td>{{time_}}</td>
+                      <td>{{type}}</td>
+                      <td>{{recipient}}</td>
+                      <td>{{pieces}}</td>
+                      <td>{{total}}</td>
+                    </tr>
+                    {{/.}}
 
-              </tbody>
-              </script>
-            </table>
+                  </tbody>
+                </script>
+              </table>
 
+            </div>
+            <div class="panel-footer">
+              <ul class="pager">
+                <li id="transactions_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
+                <li id="transactions_pager_next" ><a href="javascript:void(0);">Next</a></li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
 
-    </div><!-- /.row -->
+      </div><!-- /.row -->
+    </div>
+
+    <!-- end of wrapper -->
   </div>
-
-  <!-- end of wrapper -->
-</div>
 
 
       <!-- Bootstrap core JavaScript

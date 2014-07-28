@@ -318,7 +318,7 @@
           <div class="panel-heading">
             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
           </div>
-          <div id="recent_activity" class="panel-body">
+          <div id="recent_activity" class="panel-body" style="height: 276px;overflow:auto;">
             <script id="recent_activity_template" type="x-tmpl-mustache"> 
               <table id="recent_activity_table" class="table table-hover table-striped tablesorter">
                 <thead> 
@@ -348,6 +348,12 @@
               </script>
             </table>
 
+          </div>
+          <div class="panel-footer">
+            <ul class="pager">
+              <li id="recent_activity_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
+              <li id="recent_activity_pager_next" ><a href="javascript:void(0);">Next</a></li>
+            </ul>
           </div>
         </div>
       </div>

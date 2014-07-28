@@ -298,14 +298,15 @@ public class WebService {
 		});
 
 
-		get("/:user/get_users_transactions", (req, res) -> {
+		get("/:user/get_users_transactions/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
 				String userName = req.params(":user");
+				Integer pageNum = Integer.parseInt(req.params(":page_num"));
 				UID uid = getUserFromCookie(req);
 				dbInit(prop);
-				json = WebTools.getUsersTransactionsJson(userName, uid, sf);
+				json = WebTools.getUsersTransactionsJson(userName, uid, sf, pageNum);
 
 
 				dbClose();
@@ -320,16 +321,17 @@ public class WebService {
 
 		});
 
-		get("/:user/get_users_activity", (req, res) -> {
+		get("/:user/get_users_activity/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
 				String userName = req.params(":user");
+				Integer pageNum = Integer.parseInt(req.params(":page_num"));
 				UID uid = getUserFromCookie(req);
 				dbInit(prop);
 
 				// get currency if one exists
-				json = WebTools.getUsersActivityJson(userName, uid, sf);
+				json = WebTools.getUsersActivityJson(userName, uid, sf, pageNum);
 
 
 				dbClose();
