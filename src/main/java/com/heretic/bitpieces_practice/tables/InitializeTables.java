@@ -45,8 +45,8 @@ import com.heretic.bitpieces_practice.tools.Tools;
  * - rewards page
  * - settings page
  * - make sure you can't issue pieces with first having a reward pct
- *	Add new reward system based on div/(share*year)
- * Make user pages transparent
+ *	+ Add new reward system based on div/(share*year)
+ * + Make user pages transparent
  * Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
  * 
  * @author tyler
@@ -371,24 +371,16 @@ public class InitializeTables {
 		// Find leonardo davinci
 		//		Creators_required_fields leonardo = Creators_required_fields.findFirst("username = 'Leonardo'");
 		Creator leonardo = Creator.findFirst("username like ?", "Leonardo%");
-
-		Pieces_issued.createIt("creators_id",  leonardo.getId().toString(), 
-				"time_", Tools.SDF.get().format(new Date()), 
-				"pieces_issued", 200, 
-				"price_per_piece", 0.001d);
-		Pieces_issued.createIt("creators_id", leonardo.getId().toString(), 
-				"time_", Tools.SDF.get().format(new Date(new Date().getTime()+86400000)), 
-				"pieces_issued", 300,
-				"price_per_piece", 0.001d);
-
-		//		Pieces_total piecesTotal = Pieces_total.findFirst("creators_id = ?", leonardo.getId().toString());
+		
+		Actions.issuePieces(leonardo.getId().toString(),
+				200,
+				0.001d);
 
 		Creator dusty = Creator.findFirst("username like ?", "Dusty%");
-		Pieces_issued.createIt(
-				"creators_id",  dusty.getId().toString(), 
-				"time_", Tools.SDF.get().format(new Date()), 
-				"pieces_issued", 50,
-				"price_per_piece", 0.002d);
+		
+		Actions.issuePieces(dusty.getId().toString(),
+				50,
+				0.002d);
 
 
 	}

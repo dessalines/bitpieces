@@ -66,6 +66,8 @@ public class WebTools {
 
 
 
+	private static final Integer PAGINATOR_ROWS = 100;
+
 	public static String saveCreatorPage(String id, String reqBody) {
 
 		System.out.println(reqBody);
@@ -1065,7 +1067,7 @@ public class WebTools {
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
-		Paginator p = new Paginator(Creators_activity.class, 4, "creators_name=?", creatorName);
+		Paginator p = new Paginator(Creators_activity.class, PAGINATOR_ROWS, "creators_name=?", creatorName);
 
 		List<Model> items = p.getPage(pageNum);
 

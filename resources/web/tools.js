@@ -719,3 +719,36 @@ function standardFormPost(shortUrl, formId) {
 
 
 }
+
+function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
+    var pageNum = pageNumbers[tableId];
+
+    var nextId = divId + "_pager_next";
+    var prevId = divId + "_pager_prev";
+    console.log(nextId);
+    fillTableFromMustache(shortUrl + pageNum,
+        templateHtml, divId, tableId);
+
+    $(nextId).click(function(e) {
+        pageNum++;
+        $(prevId).removeClass('disabled');
+
+        fillTableFromMustache(shortUrl + pageNum,
+            templateHtml, divId, tableId);
+
+    });
+    $(prevId).click(function(e) {
+        if (pageNum > 1) {
+            pageNum--;
+
+            fillTableFromMustache(shortUrl + pageNum,
+                templateHtml, divId, tableId);
+        }
+        if (pageNum == 1) {
+            $(this).addClass('disabled');
+            return;
+        }
+
+
+    });
+}

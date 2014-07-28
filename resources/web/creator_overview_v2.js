@@ -38,7 +38,7 @@ $(document).ready(function() {
 
     var template = $('#creators_activity_template').html();
     pageNumbers['#creators_activity_table'] = 1;
-    pager(creatorName + '/get_creators_activity/', template, '#creators_activity', '#creators_activity_table');
+    setupPagedTable(creatorName + '/get_creators_activity/', template, '#creators_activity', '#creators_activity_table');
 
 
     // if you're this creator, then set up summer note, issue pieces button
@@ -64,36 +64,7 @@ $(document).ready(function() {
 
 });
 
-function pager(shortUrl, templateHtml, divId, tableId) {
-    var pageNum = pageNumbers[tableId];
 
-    var nextId = divId + "_pager_next";
-    var prevId = divId + "_pager_prev";
-    console.log(nextId);
-    fillTableFromMustache(shortUrl + pageNum,
-        templateHtml, divId, tableId);
-
-    $(nextId).click(function(e) {
-        pageNum++;
-        $(prevId).removeClass('disabled');
-
-          fillTableFromMustache(shortUrl + pageNum,
-        templateHtml, divId, tableId);
-
-    });
-    $(prevId).click(function(e) {
-        if (pageNum > 1) {
-            pageNum--;
-        }
-        if (pageNum == 1) {
-            $(this).addClass('disabled');
-        } 
-
-    fillTableFromMustache(shortUrl + pageNum,
-        templateHtml, divId, tableId);
-
-    });
-}
 
 
 function showHideCreatorButtons() {
