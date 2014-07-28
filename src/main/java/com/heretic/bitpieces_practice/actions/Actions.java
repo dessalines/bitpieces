@@ -39,16 +39,14 @@ public class Actions {
 	private static final Double MINIMUM_REWARD_PCT = 1d;
 	private static final Gson GSON = new Gson();
 
-	public static Reward issueReward(String creatorId, Double pct) {
+	public static Reward issueReward(String creatorId, Double reward_per_piece_per_year) {
 		String now = Tools.SDF.get().format(new Date());
 		
-		if (pct < MINIMUM_REWARD_PCT) {
-			throw new NoSuchElementException("Reward cannot be less than " + MINIMUM_REWARD_PCT);
-		}
+		
 		
 		Reward reward = Reward.createIt("creators_id", creatorId,
 				"time_", now,
-				"reward_pct", pct);
+				"reward_per_piece_per_year", reward_per_piece_per_year);
 		
 		return reward;
 	}

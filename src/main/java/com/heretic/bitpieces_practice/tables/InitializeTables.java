@@ -158,9 +158,9 @@ public class InitializeTables {
 		String now = Tools.SDF.get().format(new Date());
 
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
-		Reward.createIt("creators_id", leo.getId(),
-				"time_", now,
-				"reward_pct", 1.4d);
+
+		
+		Actions.issueReward(leo.getId().toString(), 0.00008d);
 
 	}
 
@@ -409,13 +409,9 @@ public class InitializeTables {
 		Creators_btc_address.createIt("creators_id", leo.getId(), "btc_addr", "fake");
 		Creators_btc_address.createIt("creators_id", dusty.getId(), "btc_addr", "fake");
 
-		Reward.createIt("creators_id", leo.getId(),
-				"time_", now,
-				"reward_pct", 1.0d);
 
-		Reward.createIt("creators_id", dusty.getId(),
-				"time_", now,
-				"reward_pct", 5.0d);
+		Actions.issueReward(leo.getId().toString(), 0.00001d);
+		Actions.issueReward(dusty.getId().toString(), 0.00005d);
 
 		Creators_page_fields.createIt("creators_id", leo.getId(),
 				"main_body", "The main body of leo's page");
