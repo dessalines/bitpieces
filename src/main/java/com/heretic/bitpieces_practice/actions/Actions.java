@@ -502,17 +502,19 @@ public class Actions {
 	}
 
 	public static void creatorWithdrawal(String creatorId, Double amount) {
-
+		
 		// Make sure the creator has enough to cover the withdraw
 		try {
 			Double creatorsFunds = Creators_funds_current.findFirst("creators_id = ?", creatorId).getDouble("current_funds");
-			Double rewardPct = Rewards_current.findFirst("creators_id = ?", creatorId).getDouble("reward_pct")/100d;
+			Double rewardPerPiecePerYear = Rewards_current.findFirst(
+					"creators_id = ?", creatorId).getDouble("reward_per_piece_per_year")/100d;
 
 			// This is based on the value of the current pieces
-			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
-					getDouble("value_total_current");
+//			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
+//					getDouble("value_total_current");
 
-			Double rewardsOwedForOneYear = creatorsValue*(Math.exp(rewardPct)-1.0d);
+			Integer piecesOwnedTotal = Pieces_available.findFirst("creators_id = ?", creatorId).getInteger("pieces_owned_total");
+			Double rewardsOwedForOneYear = rewardPerPiecePerYear * piecesOwnedTotal;
 
 			Double availableFunds = creatorsFunds - rewardsOwedForOneYear;
 

@@ -729,6 +729,7 @@ group by creators_id, creators_username, price_time_
 order by creators_id, price_time_;
 
 
+
 CREATE VIEW rewards_earned as 
 select pieces_owned_accum.owners_id,
 pieces_owned_accum.owners_name,
@@ -737,11 +738,11 @@ pieces_owned_accum.creators_username,
 pieces_owned_accum.start_time_,
 pieces_owned_accum.end_time_,
 pieces_owned_accum.timediff_seconds,
-pieces_owned_accum.pieces_owned,
+pieces_owned_accum.pieces_accum,
 rewards_span.time_ as rewards_start_time_, 
 rewards_span.end_time_ as rewards_end_time_,
 rewards_span.reward_per_piece_per_year,
-pieces_owned*reward_per_piece_per_year * pieces_owned_accum.timediff_seconds/3.15569E7 as reward_earned
+pieces_accum * pieces_owned_accum.timediff_seconds/3.15569E7 as reward_earned
 from pieces_owned_accum
 inner join rewards_span
 on pieces_owned_accum.creators_id = rewards_span.creators_id
