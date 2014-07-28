@@ -4,9 +4,11 @@ $(document).ready(function() {
 
 
     var template = $('#discover_creators_template').html();
+
     // initially fill the table
     setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
         '#discover_creators', template, '#discover_creators_table')
+
 
 
     $('#categories').on('change', function() {

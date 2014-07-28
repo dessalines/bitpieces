@@ -30,12 +30,12 @@ public class UnitConverter {
 	public static final List<String> MONEY_COL_NAMES = Arrays.asList("price_per_piece", "worth_current", 
 			"funds", "funds_accum", "value_accum", "value_total", "worth", "value_total_current",
 			"total_owed", "total_current", "total", "reward_accum", "reward_per_piece_per_year", "reward_earned",
-			"reward_earned_total");
+			"reward_earned_total", "price_current");
 
 	public static final List<String> TIME_COL_NAMES = Arrays.asList("time_", "price_time_", "start_time_");
 
 	public static final List<String> CURRENT_MONEY_COL_NAMES = Arrays.asList("worth_current", "value_total", 
-			"value_total_current", "total_current");
+			"value_total_current", "total_current", "price_current");
 
 	public static String bitcoinAverageHistoricalCurrQuery(String ISO) {
 		return "https://api.bitcoinaverage.com/history/" + ISO + "/per_day_all_time_history.csv";

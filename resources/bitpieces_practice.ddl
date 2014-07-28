@@ -1202,14 +1202,26 @@ and b.start_time_ <= a.start_time_
 GROUP BY a.owners_id, a.creators_username, a.start_time_, a.reward_earned
 ORDER BY a.owners_id, a.creators_username, a.start_time_;
 
+CREATE VIEW prices_current as
+select prices.creators_id, prices.creators_name, price_per_piece 
+from prices
+inner join max_price_times
+on time_ = max_price_times.max_time_;
 
+
+CREATE VIEW max_price_times as
+SELECT   creators_id, creators_name, max(time_) as max_time_
+FROM     prices
+GROUP BY creators_id;
 
 CREATE VIEW creators_search_view as 
 select creators.id as creators_id,
 creators.username as creators_name, 
 GROUP_CONCAT(categories.name) as category_names, 
 pieces_owned_value_current_by_creator.value_total_current as worth_current,
+prices_current.price_per_piece as price_current,
 rewards_current.reward_per_piece_per_year,
+CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
 backers_current_count.number_of_backers
 from creators
 inner join pieces_owned_value_current_by_creator
@@ -1222,7 +1234,13 @@ inner join creators_categories
 on creators_categories.creators_id = creators.id
 inner join categories on
 creators_categories.categories_id = categories.id
+inner join prices_current
+on creators.username = prices_current.creators_name
 group by creators.id;
+
+
+
+
 
 
 
