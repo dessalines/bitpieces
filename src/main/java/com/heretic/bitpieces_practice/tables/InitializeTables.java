@@ -48,6 +48,8 @@ import com.heretic.bitpieces_practice.tools.Tools;
  *	+ Add new reward system based on div/(share*year)
  * + Make user pages transparent
  * Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
+ * Make 3 column creator pages
+ * 
  * 
  * @author tyler
  *
