@@ -1,15 +1,14 @@
 $(document).ready(function() {
 
-  sessionId = getCookie("authenticated_session_id");
-  console.log(sessionId);
+    sessionId = getCookie("authenticated_session_id");
+    userType = getCookie("usertype");
 
-  // fillUserInfoMustache('get_user_data');
+    // fillUserInfoMustache('get_user_data');
 
-  setupMiniSubmenu();
+    var userName = getParameterByName('user');
 
+    setupMiniSubmenu();
+    navigateWithParams();
 
 
 });
-
-
-

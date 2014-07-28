@@ -42,7 +42,7 @@ pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_o
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
 users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user, pieces_owned_by_creator,
 bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped,
-rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings
+rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -742,11 +742,12 @@ pieces_owned_accum.pieces_accum,
 rewards_span.time_ as rewards_start_time_, 
 rewards_span.end_time_ as rewards_end_time_,
 rewards_span.reward_per_piece_per_year,
-pieces_accum * pieces_owned_accum.timediff_seconds/3.15569E7 as reward_earned
+pieces_accum * pieces_owned_accum.timediff_seconds*reward_per_piece_per_year/3.15569E7 as reward_earned
 from pieces_owned_accum
 inner join rewards_span
 on pieces_owned_accum.creators_id = rewards_span.creators_id
 and (pieces_owned_accum.start_time_ >= rewards_span.time_ and pieces_owned_accum.end_time_ <= rewards_span.end_time_)
+and pieces_accum > 0 
 order by owners_id, pieces_owned_accum.start_time_;
 
 

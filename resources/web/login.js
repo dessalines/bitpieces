@@ -78,8 +78,7 @@ $(document).ready(function() {
                 console.log(document.cookie);
                 setTimeout(
                     function() {
-                        var url = "userdashboard_overview";
-                        window.location.replace(url);
+                        window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
 
                     }, 1000);
 
@@ -157,7 +156,7 @@ $(document).ready(function() {
 
                 // GO to the dashboard
                 if (!isCreator) {
-                    window.location.replace("userdashboard_overview");
+                    window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
                 } else {
                     console.log(formData);
                     var url = "creator_overview?creator=" + formData[0]['value'];

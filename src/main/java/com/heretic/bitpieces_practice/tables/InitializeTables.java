@@ -158,7 +158,6 @@ public class InitializeTables {
 		String now = Tools.SDF.get().format(new Date());
 
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
-
 		
 		Actions.issueReward(leo.getId().toString(), 0.00008d);
 
