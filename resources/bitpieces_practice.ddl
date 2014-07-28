@@ -755,7 +755,7 @@ group by owners_id, creators_id;
 
 
 CREATE VIEW rewards_earned_total_by_user as
-select owners_id, sum(reward_earned) as reward_earned_total
+select owners_id, owners_name, sum(reward_earned) as reward_earned_total
 from rewards_earned
 group by owners_id;
 
@@ -840,7 +840,7 @@ GROUP BY a.users_id, a.time_, a.funds;
 
 
 CREATE VIEW users_funds_current as
-select users_id, sum(funds) as current_funds from 
+select users_id, owners_name, sum(funds) as current_funds from 
 users_funds
 group by users_id;
 
@@ -882,8 +882,10 @@ GROUP BY a.creators_id, a.time_, a.funds;
 
 
 CREATE VIEW creators_funds_current as
-select creators_id, sum(funds) as current_funds from 
+select creators_id, creators.username as creators_name, sum(funds) as current_funds from 
 creators_funds
+inner join creators
+on creators_id = creators.id
 group by creators_id;
 
 

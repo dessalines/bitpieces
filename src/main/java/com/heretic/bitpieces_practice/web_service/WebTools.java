@@ -526,9 +526,9 @@ public class WebTools {
 
 	}
 
-	public static String getUsersActivityJson(UID uid, UnitConverter sf) {
+	public static String getUsersActivityJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
-		List<Model> list = Users_activity.find("users_id=?",  uid.getId());
+		List<Model> list = Users_activity.find("owners_name=?",  userName);
 
 		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 
@@ -610,10 +610,10 @@ public class WebTools {
 		return "Categories Saved";
 	}
 
-	public static String getUsersBidsAsksCurrentJson(UID uid, UnitConverter sf) {
+	public static String getUsersBidsAsksCurrentJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 
-		List<Model> list = Bids_asks_current.find("users_id=?",  uid.getId()).orderBy("time_ desc");
+		List<Model> list = Bids_asks_current.find("users_name=?",  userName).orderBy("time_ desc");
 		if (list.size()>0) {
 			String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 			return json;
@@ -623,11 +623,11 @@ public class WebTools {
 
 	}
 
-	public static String getUsersFundsCurrentJson(UID uid, UnitConverter sf) {
+	public static String getUsersFundsCurrentJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("users_id=?",  uid.getId());
+			Users_funds_current usersFundsCurrent = Users_funds_current.findFirst("owners_name=?",  userName);
 
 			String val = usersFundsCurrent.getString("current_funds");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -638,11 +638,11 @@ public class WebTools {
 
 	}
 
-	public static String getCreatorsFundsCurrentJson(UID uid, UnitConverter sf) {
+	public static String getCreatorsFundsCurrentJson(String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Creators_funds_current creatorsFundsCurrent = Creators_funds_current.findFirst("creators_id=?",  uid.getId());
+			Creators_funds_current creatorsFundsCurrent = Creators_funds_current.findFirst("creators_name=?",  creatorName);
 
 			String val = creatorsFundsCurrent.getString("current_funds");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -653,11 +653,12 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsEarnedTotalByUserJson(UID uid, UnitConverter sf) {
+	public static String getRewardsEarnedTotalByUserJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Rewards_earned_total_by_user rewardsEarned = Rewards_earned_total_by_user.findFirst("owners_id=?",  uid.getId());
+			Rewards_earned_total_by_user rewardsEarned = Rewards_earned_total_by_user.findFirst(
+					"owners_name=?",  userName);
 
 			String val = rewardsEarned.getString("reward_earned_total");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -668,11 +669,12 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesValueCurrentByOwnerJson(UID uid, UnitConverter sf) {
+	public static String getPiecesValueCurrentByOwnerJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst("owners_id=?",  uid.getId());
+			Pieces_owned_value_current_by_owner value = Pieces_owned_value_current_by_owner.findFirst(
+					"owners_name=?",  userName);
 
 			String val = value.getString("value_total_current");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -683,13 +685,13 @@ public class WebTools {
 
 	}
 
-	public static String getUsersReputationJson(UID uid, String body) {
+	public static String getUsersReputationJson(String userName) {
 
 
 		String json = null;
 
 		try {
-			Users_reputation value = Users_reputation.findFirst("users_id=?",  uid.getId());
+			Users_reputation value = Users_reputation.findFirst("owners_name=?",  userName);
 
 			json = value.getString("reputation");
 

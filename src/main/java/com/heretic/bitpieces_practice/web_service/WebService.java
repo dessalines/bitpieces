@@ -313,9 +313,10 @@ public class WebService {
 			String json = null;
 			try {
 				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
 
 				// get currency if one exists
-				json = WebTools.getUsersActivityJson(userName, sf);
+				json = WebTools.getUsersActivityJson(userName, uid, sf);
 
 
 				dbClose();
@@ -333,9 +334,9 @@ public class WebService {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-
+				UID uid = getUserFromCookie(req);
 				// get currency if one exists
-				json = WebTools.getUsersFundsCurrentJson(userName, sf);
+				json = WebTools.getUsersFundsCurrentJson(userName, uid, sf);
 
 				dbClose();
 
@@ -352,9 +353,9 @@ public class WebService {
 			String json = null;
 			try {
 				String creatorName = req.params(":creator");
-
+				UID uid = getUserFromCookie(req);
 				// get currency if one exists
-				json = WebTools.getCreatorsFundsCurrentJson(creatorName, sf);
+				json = WebTools.getCreatorsFundsCurrentJson(creatorName, uid, sf);
 
 				dbClose();
 
@@ -371,9 +372,9 @@ public class WebService {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-
-				// get currency if one exists
-				json = WebTools.getRewardsEarnedTotalByUserJson(userName, sf);
+				UID uid = getUserFromCookie(req);
+	
+				json = WebTools.getRewardsEarnedTotalByUserJson(userName, uid, sf);
 
 				dbClose();
 
@@ -390,9 +391,9 @@ public class WebService {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-
-				// get currency if one exists
-				json = WebTools.getPiecesValueCurrentByOwnerJson(userName, sf);
+				UID uid = getUserFromCookie(req);
+			
+				json = WebTools.getPiecesValueCurrentByOwnerJson(userName, uid, sf);
 
 				dbClose();
 
@@ -411,7 +412,7 @@ public class WebService {
 				String userName = req.params(":user");
 
 				// get currency if one exists
-				json = WebTools.getUsersReputationJson(userName, req.body());
+				json = WebTools.getUsersReputationJson(userName);
 
 				dbClose();
 
@@ -428,9 +429,9 @@ public class WebService {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-
+				UID uid = getUserFromCookie(req);
 				// get currency if one exists
-				json = WebTools.getUsersBidsAsksCurrentJson(userName, sf);
+				json = WebTools.getUsersBidsAsksCurrentJson(userName, uid, sf);
 
 				dbClose();
 
