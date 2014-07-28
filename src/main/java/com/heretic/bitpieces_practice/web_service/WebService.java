@@ -244,17 +244,15 @@ public class WebService {
 			}
 			return json;
 
-
 		});
 
 		get("/:user/get_pieces_owned_accum", (req, res) -> {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-
-				// get currency if one exists
-
-				json = WebTools.getPiecesOwnedAccumSeriesJson(userName, sf);
+				UID uid = getUserFromCookie(req);
+			
+				json = WebTools.getPiecesOwnedAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
@@ -272,10 +270,9 @@ public class WebService {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-
-				// get currency if one exists
-
-				json = WebTools.getUsersFundsAccumSeriesJson(userName, sf);
+				UID uid = getUserFromCookie(req);
+			
+				json = WebTools.getUsersFundsAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
@@ -295,8 +292,9 @@ public class WebService {
 			String json = null;
 			try {
 				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
 				
-				json = WebTools.getUsersTransactionsJson(userName,  sf);
+				json = WebTools.getUsersTransactionsJson(userName, uid, sf);
 
 
 				dbClose();

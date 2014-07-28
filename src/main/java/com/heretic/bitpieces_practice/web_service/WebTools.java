@@ -347,11 +347,11 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedAccumSeriesJson(UID uid,
+	public static String getPiecesOwnedAccumSeriesJson(String userName, UID uid,
 			UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Pieces_owned_accum.find("owners_id=?", uid.getId());
+		List<Model> list = Pieces_owned_accum.find("owners_name=?", userName);
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForMultipleCreatorsV2(list, "start_time_", "pieces_accum", "creators_username",
 					sf, settings.getPrecision(), settings.getIso());
@@ -471,12 +471,12 @@ public class WebTools {
 		}
 	}
 
-	public static String getUsersFundsAccumSeriesJson(UID uid, UnitConverter sf) {
+	public static String getUsersFundsAccumSeriesJson(String userName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(uid);
 
 		// First fetch from the table
-		List<Model> list = Users_funds_accum.find("users_id=?", uid.getId());
+		List<Model> list = Users_funds_accum.find("owners_name=?", userName);
 
 		return createHighChartsJSONForSingleCreatorV2(list, "time_", "funds_accum", "Funds",
 				sf, settings.getPrecision(), settings.getIso());
@@ -485,10 +485,10 @@ public class WebTools {
 	}
 
 
-	public static String getUsersTransactionsJson(UID uid, UnitConverter sf) {
+	public static String getUsersTransactionsJson(String userName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(uid);
-		List<Model> list = Users_transactions.find("users_id=?",  uid.getId());
+		List<Model> list = Users_transactions.find("owners_name=?",  userName);
 
 		String json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 
