@@ -332,11 +332,11 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedValueAccumSeriesJson(UID uid, UnitConverter sf) {
+	public static String getPiecesOwnedValueAccumSeriesJson(String userName, UID uid,UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Pieces_owned_value_accum.find("owners_id=?", uid.getId());
+		List<Model> list = Pieces_owned_value_accum.find("owners_name=?", userName);
 
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "value_accum", "creators_username",
@@ -362,10 +362,10 @@ public class WebTools {
 
 
 
-	public static String getPricesForUserSeriesJson(UID uid, UnitConverter sf) {
+	public static String getPricesForUserSeriesJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Prices_for_user.find("owners_id=?", uid.getId());
+		List<Model> list = Prices_for_user.find("owners_name=?", userName);
 
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForMultipleCreatorsV2(list, "time_", "price_per_piece", "creators_username",
@@ -377,10 +377,10 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedValueCurrentSeriesJson(UID uid, UnitConverter sf) {
+	public static String getPiecesOwnedValueCurrentSeriesJson(String userName, UID uid, UnitConverter sf) {
 
 		// First fetch from the table
-		List<Model> list = Pieces_owned_value_current.find("owners_id=?", uid.getId());
+		List<Model> list = Pieces_owned_value_current.find("owners_name=?", userName);
 
 		UsersSettings settings = new UsersSettings(uid);
 
@@ -393,10 +393,10 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsEarnedTotalJson(UID uid, UnitConverter sf) {
+	public static String getRewardsEarnedTotalJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Rewards_earned_total.find("owners_id=?", uid.getId());
+		List<Model> list = Rewards_earned_total.find("owners_name=?", userName);
 
 		if (list.size() > 0 ) { 
 			return createHighChartsJSONForCurrentV2(list, "reward_earned_total", "creators_username",
@@ -425,13 +425,13 @@ public class WebTools {
 		}
 	}
 
-	public static String getPiecesOwnedValueCurrentSeriesJson(UID uid, String creatorName, UnitConverter sf) {
+	public static String getPiecesOwnedValueCurrentSeriesJson(String userName, String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
 			// First fetch from the table
-			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?",
-					uid.getId(), creatorName);
+			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_name=? and creators_username=?",
+					userName, creatorName);
 
 			String val = p.getString("value_total_current");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -442,12 +442,12 @@ public class WebTools {
 
 	}
 
-	public static String getPiecesOwnedCurrentSeriesJson(UID uid, String creatorName, UnitConverter sf) {
+	public static String getPiecesOwnedCurrentSeriesJson(String userName, String creatorName, UID uid, UnitConverter sf) {
 
 		try {
 			// First fetch from the table
-			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_id=? and creators_username=?", 
-					uid.getId(), creatorName);
+			Pieces_owned_value_current p = Pieces_owned_value_current.findFirst("owners_name=? and creators_username=?", 
+					userName, creatorName);
 			String val = p.getString("pieces_total");
 			return val;
 
@@ -458,12 +458,12 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsEarnedAccumSeriesJson(UID uid, UnitConverter sf) {
+	public static String getRewardsEarnedAccumSeriesJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		// First fetch from the table
-		List<Model> list = Rewards_earned_accum.find("owners_id=?", uid.getId());
+		List<Model> list = Rewards_earned_accum.find("owners_name=?", userName);
 
-		if (list.size() > 0 ) { 
+		if (list.size() > 0 ) {
 			return createHighChartsJSONForMultipleCreatorsV2(list, "price_time_", "reward_accum", "creators_username",
 					sf, settings.getPrecision(), settings.getIso());
 		} else {
@@ -485,7 +485,7 @@ public class WebTools {
 	}
 
 
-	public static String getUsersTransactionsJson(UID uid, String body, UnitConverter sf) {
+	public static String getUsersTransactionsJson(UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(uid);
 		List<Model> list = Users_transactions.find("users_id=?",  uid.getId());

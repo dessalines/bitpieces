@@ -45,6 +45,9 @@ import com.heretic.bitpieces_practice.tools.Tools;
  * - rewards page
  * - settings page
  * - make sure you can't issue pieces with first having a reward pct
+ *	Add new reward system based on div/(share*year)
+ * Make user pages transparent
+ * Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
  * 
  * @author tyler
  *

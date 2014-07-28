@@ -9,17 +9,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
+import org.joda.time.DateTime;
 
 import spark.Request;
 import spark.Response;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tools.Tools;
@@ -36,10 +40,12 @@ public class WebService {
 	public static final List<String> ALLOW_ACCESS_ADDRESSES = Arrays.asList("http://localhost", "http://68.56.177.238:8080");
 
 	// Use an expiring map to store the authenticated sessions
-	public static Cache<String, UID> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
+	private static Cache<String, UID> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
 			.maximumSize(10000)
 			.expireAfterAccess(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
 			.build();
+	
+
 
 	private static final Gson GSON = new Gson();
 	private static Logger log = Logger.getLogger(WebService.class.getName());
@@ -81,35 +87,17 @@ public class WebService {
 
 		});
 
-		get("/:auth/getpiecesownedtotal", (req, res) -> {
+
+		get("/:user/get_pieces_owned_value_accum", (req, res) -> {
 			String json = null;
+			String userName = req.params(":user");
+			UID uid = getUserFromCookie(req);
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-				json = Actions.getPiecesOwnedTotal(uid);
 
-				dbClose();
-
-				System.out.println(json);
-
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-
-		});
-
-		get("/:auth/get_pieces_owned_value_accum", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
 
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueAccumSeriesJson(uid, sf);
+				json = WebTools.getPiecesOwnedValueAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
@@ -124,15 +112,15 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_pieces_owned_value_current", (req, res) -> {
+		get("/:user/get_pieces_owned_value_current", (req, res) -> {
 			String json = null;
+			String userName = req.params(":user");
+			UID uid = getUserFromCookie(req);
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
 
-				// get currency if one exists
+			
 
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid, sf);
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, uid, sf);
 
 
 				dbClose();
@@ -147,15 +135,15 @@ public class WebService {
 
 		});
 
-		get("/:auth/:creator/get_pieces_owned_value_current", (req, res) -> {
+		get("/:user/:creator/get_pieces_owned_value_current", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
-				// get currency if one exists
+				UID uid = getUserFromCookie(req);
 
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid, creatorName, sf);
+
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, creatorName, uid, sf);
 
 
 				dbClose();
@@ -170,15 +158,16 @@ public class WebService {
 
 		});
 
-		get("/:auth/:creator/get_pieces_owned_current", (req, res) -> {
+		get("/:user/:creator/get_pieces_owned_current", (req, res) -> {
 			String json = null;
+
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
-				// get currency if one exists
+				UID uid = getUserFromCookie(req);
+			
 
-				json = WebTools.getPiecesOwnedCurrentSeriesJson(uid, creatorName, sf);
+				json = WebTools.getPiecesOwnedCurrentSeriesJson(userName, creatorName, uid, sf);
 
 
 				dbClose();
@@ -193,15 +182,15 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_prices_for_user", (req, res) -> {
+		get("/:user/get_prices_for_user", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
 
 				// get currency if one exists
 
-				json = WebTools.getPricesForUserSeriesJson(uid, sf);
+				json = WebTools.getPricesForUserSeriesJson(userName, uid, sf);
 
 				dbClose();
 
@@ -215,15 +204,14 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_rewards_earned_accum", (req, res) -> {
+		get("/:user/get_rewards_earned_accum", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
 				// get currency if one exists
 
-				json = WebTools.getRewardsEarnedAccumSeriesJson(uid, sf);
+				json = WebTools.getRewardsEarnedAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
@@ -238,15 +226,14 @@ public class WebService {
 
 		});
 		
-		get("/:auth/get_rewards_earned_total", (req, res) -> {
+		get("/:user/get_rewards_earned_total", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
 				// get currency if one exists
 
-				json = WebTools.getRewardsEarnedTotalJson(uid, sf);
+				json = WebTools.getRewardsEarnedTotalJson(userName, uid, sf);
 
 				dbClose();
 
@@ -260,15 +247,14 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_pieces_owned_accum", (req, res) -> {
+		get("/:user/get_pieces_owned_accum", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedAccumSeriesJson(uid, sf);
+				json = WebTools.getPiecesOwnedAccumSeriesJson(userName, sf);
 
 
 				dbClose();
@@ -282,15 +268,14 @@ public class WebService {
 
 
 		});
-		get("/:auth/get_users_funds_accum", (req, res) -> {
+		get("/:user/get_users_funds_accum", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
 				// get currency if one exists
 
-				json = WebTools.getUsersFundsAccumSeriesJson(uid, sf);
+				json = WebTools.getUsersFundsAccumSeriesJson(userName, sf);
 
 
 				dbClose();
@@ -306,15 +291,12 @@ public class WebService {
 		});
 
 
-		get("/:auth/get_users_transactions", (req, res) -> {
+		get("/:user/get_users_transactions", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 				
-				// get currency if one exists
-
-				json = WebTools.getUsersTransactionsJson(uid, req.body(), sf);
+				json = WebTools.getUsersTransactionsJson(userName,  sf);
 
 
 				dbClose();
@@ -329,14 +311,13 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_users_activity", (req, res) -> {
+		get("/:user/get_users_activity", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
 				// get currency if one exists
-				json = WebTools.getUsersActivityJson(uid, sf);
+				json = WebTools.getUsersActivityJson(userName, sf);
 
 
 				dbClose();
@@ -350,14 +331,13 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_users_funds_current", (req, res) -> {
+		get("/:user/get_users_funds_current", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
 				// get currency if one exists
-				json = WebTools.getUsersFundsCurrentJson(uid, sf);
+				json = WebTools.getUsersFundsCurrentJson(userName, sf);
 
 				dbClose();
 
@@ -370,14 +350,13 @@ public class WebService {
 
 		});
 		
-		get("/:auth/get_creators_funds_current", (req, res) -> {
+		get("/:creator/get_creators_funds_current", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyCreator(uid);
+				String creatorName = req.params(":creator");
 
 				// get currency if one exists
-				json = WebTools.getCreatorsFundsCurrentJson(uid, sf);
+				json = WebTools.getCreatorsFundsCurrentJson(creatorName, sf);
 
 				dbClose();
 
@@ -390,14 +369,13 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_rewards_earned_total_by_user", (req, res) -> {
+		get("/:user/get_rewards_earned_total_by_user", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
 				// get currency if one exists
-				json = WebTools.getRewardsEarnedTotalByUserJson(uid, sf);
+				json = WebTools.getRewardsEarnedTotalByUserJson(userName, sf);
 
 				dbClose();
 
@@ -410,14 +388,13 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_pieces_value_current_by_owner", (req, res) -> {
+		get("/:user/get_pieces_value_current_by_owner", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
 				// get currency if one exists
-				json = WebTools.getPiecesValueCurrentByOwnerJson(uid, sf);
+				json = WebTools.getPiecesValueCurrentByOwnerJson(userName, sf);
 
 				dbClose();
 
@@ -430,14 +407,13 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_users_reputation", (req, res) -> {
+		get("/:user/get_users_reputation", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
 				// get currency if one exists
-				json = WebTools.getUsersReputationJson(uid, req.body());
+				json = WebTools.getUsersReputationJson(userName, req.body());
 
 				dbClose();
 
@@ -450,14 +426,13 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_users_bids_asks_current", (req, res) -> {
+		get("/:user/get_users_bids_asks_current", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
 				// get currency if one exists
-				json = WebTools.getUsersBidsAsksCurrentJson(uid, sf);
+				json = WebTools.getUsersBidsAsksCurrentJson(userName, sf);
 
 				dbClose();
 
