@@ -29,7 +29,7 @@ public class UnitConverter {
 
 	public static final List<String> MONEY_COL_NAMES = Arrays.asList("price_per_piece", "worth_current", 
 			"funds", "funds_accum", "value_accum", "value_total", "worth", "value_total_current",
-			"total_owed", "total_current", "total", "reward_accum");
+			"total_owed", "total_current", "total", "reward_accum", "reward_per_piece_per_year");
 
 	public static final List<String> TIME_COL_NAMES = Arrays.asList("time_", "price_time_", "start_time_");
 

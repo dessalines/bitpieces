@@ -899,9 +899,10 @@ public class WebTools {
 
 	}
 
-	public static String getBidsAsksCurrentJson(String creatorName, UID uid, UnitConverter sf) {
-		List<Model> list = Bids_asks_current.find("creators_name=?",  creatorName);
+	public static String getBidsAsksCurrentJson(String creatorName, UID uid, UnitConverter sf, Integer pageNum) {
 
+		Paginator p = new Paginator(Bids_asks_current.class, PAGINATOR_ROWS, "creators_name=?",  creatorName);
+		List<Model> list = p.getPage(pageNum);
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
@@ -914,16 +915,21 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsPctJson(String creatorName, UID uid, UnitConverter sf) {
+	public static String getRewardsJson(String creatorName, UID uid, UnitConverter sf, Integer pageNum) {
 
-		List<Model> list = Rewards_view.find("creators_name=?",  creatorName);
-
+		Paginator p = new Paginator(Rewards_view.class, PAGINATOR_ROWS,"creators_name=?",  creatorName);
+		List<Model> list = p.getPage(pageNum);
+		
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
-
-		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		if (list.size() > 0) {
+			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		} else {
+			return "0";
+		}
+		
 
 	}
 
@@ -940,10 +946,11 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsOwedToUserJson(String creatorName, UID uid, UnitConverter sf) {
+	public static String getRewardsOwedToUserJson(String creatorName, UID uid, UnitConverter sf,Integer pageNum) {
 
-		List<Model> list = Rewards_owed_to_user.find("creators_username=?",  creatorName);
-
+		Paginator p = new Paginator(Rewards_owed_to_user.class, PAGINATOR_ROWS,"creators_username=?",  creatorName);
+		List<Model> list = p.getPage(pageNum);
+		
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
@@ -956,16 +963,22 @@ public class WebTools {
 		}
 	}
 
-	public static String getPiecesIssuedJson(String creatorName, UID uid, UnitConverter sf) {
+	public static String getPiecesIssuedJson(String creatorName, UID uid, UnitConverter sf, Integer pageNum) {
 
-		List<Model> list = Pieces_issued_view.find("creators_name=?",  creatorName);
+
+		Paginator p = new Paginator(Pieces_issued_view.class, PAGINATOR_ROWS, "creators_name=?",  creatorName);
+		List<Model> list = p.getPage(pageNum);
+
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 
-
-		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		if (list.size() > 0) {
+			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -982,9 +995,10 @@ public class WebTools {
 
 	}
 
-	public static String getBackersCurrentJson(String creatorName, UID uid, UnitConverter sf) {
+	public static String getBackersCurrentJson(String creatorName, UID uid, UnitConverter sf, Integer pageNum) {
 
-		List<Model> list = Backers_current.find("creators_username=?",  creatorName);
+		Paginator p = new Paginator(Backers_current.class, PAGINATOR_ROWS, "creators_username=?",  creatorName);
+		List<Model> list = p.getPage(pageNum);
 
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
@@ -1061,31 +1075,35 @@ public class WebTools {
 
 	public static String getCreatorsActivityJson(String creatorName, UID uid, UnitConverter sf, Integer pageNum) {
 
-//		List<Model> list = Creators_activity.find("creators_name=?",  creatorName);
+		//		List<Model> list = Creators_activity.find("creators_name=?",  creatorName);
 
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
 		Paginator p = new Paginator(Creators_activity.class, PAGINATOR_ROWS, "creators_name=?", creatorName);
-
 		List<Model> items = p.getPage(pageNum);
 
 		if (items.size() > 0 ) {
-		return convertLOMtoJson(doUnitConversions(items, sf, settings.getPrecision(), settings.getIso(), false));
+			return convertLOMtoJson(doUnitConversions(items, sf, settings.getPrecision(), settings.getIso(), false));
 		} else {
 			return "0";
 		}
 
 	}
 
-	public static String getCreatorsTransactionsJson(String creatorName, UID uid, UnitConverter sf) {
+	public static String getCreatorsTransactionsJson(String creatorName, UID uid, UnitConverter sf, Integer pageNum) {
 
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
-		List<Model> list = Creators_transactions.find("creators_name=?",  creatorName);
+
+		Paginator p = new Paginator(Creators_transactions.class, PAGINATOR_ROWS, "creators_name=?", creatorName);
+
+		List<Model> list = p.getPage(pageNum);
+
+
 		if (list.size() > 0) {
 			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 		} else {

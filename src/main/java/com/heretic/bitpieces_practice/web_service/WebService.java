@@ -1041,10 +1041,11 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_bids_asks_current", (req, res) -> {
+		get("/:creator/get_bids_asks_current/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			
 			UID uid = getUserFromCookie(req);
 			try {			
@@ -1052,7 +1053,8 @@ public class WebService {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBidsAsksCurrentJson(creator, uid, sf);
+				
+				json = WebTools.getBidsAsksCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1065,18 +1067,18 @@ public class WebService {
 		
 		
 
-		get("/:creator/get_rewards_pct", (req, res) -> {
+		get("/:creator/get_rewards/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsPctJson(creator, uid, sf);
+				json = WebTools.getRewardsJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1109,17 +1111,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_rewards_owed_to_user", (req, res) -> {
+		get("/:creator/get_rewards_owed_to_user/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf);
+				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1130,17 +1133,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_pieces_issued", (req, res) -> {
+		get("/:creator/get_pieces_issued/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			UID uid = getUserFromCookie(req);
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesIssuedJson(creator, uid, sf);
+				json = WebTools.getPiecesIssuedJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1151,18 +1155,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_backers_current", (req, res) -> {
+		get("/:creator/get_backers_current/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBackersCurrentJson(creator, uid, sf);
+				json = WebTools.getBackersCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1256,17 +1260,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_creators_transactions", (req, res) -> {
+		get("/:creator/get_creators_transactions/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsTransactionsJson(creator, uid, sf);
+				json = WebTools.getCreatorsTransactionsJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
