@@ -1,5 +1,5 @@
 -- The DLL
--- testdddddddsasdf
+
 -- The Table Drops
 SET FOREIGN_KEY_CHECKS=0
 ;
@@ -995,6 +995,7 @@ order by users_id, time_ desc;
 
 CREATE VIEW users_activity as 
 select users_id, 
+owners_name, 
 time_, 
 type,
 recipient,
@@ -1002,7 +1003,9 @@ pieces,
 total
 from users_transactions
 union 
-select users_id, time_, 
+select users_id, 
+users.username as owners_name,
+time_, 
 'bid' as type,
 creators.username as recipient,
 pieces,
@@ -1010,8 +1013,12 @@ bid_per_piece*pieces as funds
 from bids
 inner join creators
 on bids.creators_id = creators.id
+inner join users
+on bids.users_id = users.id
 union
-select users_id, time_, 
+select users_id, 
+users.username as owners_name, 
+time_, 
 'ask' as type,
 creators.username as recipient,
 pieces,
@@ -1019,6 +1026,8 @@ ask_per_piece*pieces as funds
 from asks
 inner join creators
 on asks.creators_id = creators.id
+inner join users
+on asks.users_id = users.id
 order by users_id, time_ desc;
 
 
