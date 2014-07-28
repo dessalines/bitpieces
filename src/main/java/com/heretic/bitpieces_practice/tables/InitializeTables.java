@@ -44,7 +44,7 @@ import com.heretic.bitpieces_practice.tools.Tools;
  * - badges page
  * - rewards page
  * - settings page
- * - make sure you can't issue pieces with first having a reward pct
+ * + make sure you can't issue pieces with first having a reward pct
  *	+ Add new reward system based on div/(share*year)
  * + Make user pages transparent
  * Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
@@ -400,7 +400,7 @@ public class InitializeTables {
 		Creators_btc_address.createIt("creators_id", leo.getId(), "btc_addr", "fake");
 		Creators_btc_address.createIt("creators_id", dusty.getId(), "btc_addr", "fake");
 
-
+		
 		Actions.issueReward(leo.getId().toString(), 0.00001d);
 		Actions.issueReward(dusty.getId().toString(), 0.00005d);
 
