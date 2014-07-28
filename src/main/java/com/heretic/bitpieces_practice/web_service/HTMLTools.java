@@ -13,7 +13,7 @@ import com.heretic.bitpieces_practice.tools.Tools;
 
 public class HTMLTools {
 	public static void saveCreatorHTMLPage(String username, Creators_page_fields page) {
-
+		
 		try {
 			String path = Tools.ROOT_DIR + "resources/web/creators_pages/" + username + ".html";
 

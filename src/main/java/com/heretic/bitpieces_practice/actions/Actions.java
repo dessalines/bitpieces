@@ -481,16 +481,6 @@ public class Actions {
 
 	}
 
-	public static String getPiecesOwnedTotal(UID uid) {
-		LazyList<Pieces_owned_total> pieces_owned_total = Pieces_owned_total.where("owners_id = ?", uid.getId());
-
-		return pieces_owned_total.toJson(true, "creators_id", "pieces_owned_total");
-
-		//		return GSON.toJson(pieces_owned_total.toMaps());
-
-
-	}
-
 	public static void userWithdrawal(String userId, Double amount) {
 
 		// Make sure the user has enough to cover the withdraw

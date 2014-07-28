@@ -1,5 +1,5 @@
 -- The DLL
-
+-- testdddddddsasdf
 -- The Table Drops
 SET FOREIGN_KEY_CHECKS=0
 ;
@@ -482,6 +482,8 @@ order by owners_id, creators_id;
 
 
 
+
+
 -- Pieces available is the total pieces - pieces_owned_total 
 CREATE view pieces_available as
 select
@@ -536,17 +538,19 @@ CREATE VIEW pieces_owned_accum as
 select
 a.owners_id,
 a.creators_id,
+users.username as owners_name, 
 creators.username as creators_username,
 a.start_time_,
 a.end_time_, 
 a.pieces_owned,
 --b.pieces_owned,
 sum(b.pieces_owned) as pieces_accum
-from pieces_owned_span a, pieces_owned_span b, creators
+from pieces_owned_span a, pieces_owned_span b, creators, users
 WHERE b.owners_id = a.owners_id
 and b.creators_id = a.creators_id
 and b.start_time_ <= a.start_time_
 and a.creators_id = creators.id
+and a.owners_id = users.id
 GROUP BY a.creators_id, a.owners_id, a.start_time_, a.pieces_owned
 ORDER BY a.owners_id, a.creators_id, a.start_time_
 ;
@@ -689,6 +693,7 @@ CREATE VIEW pieces_owned_value_accum as
 select
 pieces_owned_accum.owners_id,
 pieces_owned_accum.creators_id,
+users.username as owners_name,
 creators.username as creators_username,
 pieces_owned_accum.start_time_,
 pieces_owned_accum.end_time_,
@@ -703,6 +708,8 @@ inner join prices_span on pieces_owned_accum.creators_id = prices_span.creators_
 and (prices_span.time_ >= pieces_owned_accum.start_time_ and prices_span.end_time_ <= pieces_owned_accum.end_time_)
 inner join creators
 on pieces_owned_accum.creators_id = creators.id
+inner join users
+on pieces_owned_accum.owners_id = users.id
 order by pieces_owned_accum.owners_id,
 pieces_owned_accum.creators_id,
 prices_span.time_
@@ -723,6 +730,7 @@ order by creators_id, price_time_;
 CREATE VIEW rewards_earned as
 select pieces_owned_value_accum.owners_id, 
 pieces_owned_value_accum.creators_id, 
+pieces_owned_value_accum.owners_name,
 creators.username as creators_username,
 price_time_, 
 pieces_owned_value_accum.end_time_, pieces_owned_value_accum.timediff_seconds, value_accum, 
@@ -738,7 +746,7 @@ on pieces_owned_value_accum.creators_id = creators.id
 ;
 
 CREATE VIEW rewards_earned_total as
-select owners_id, creators_id, creators_username, sum(reward_earned) as reward_earned_total
+select owners_id, creators_id, owners_name, creators_username, sum(reward_earned) as reward_earned_total
 from rewards_earned
 group by owners_id, creators_id;
 
@@ -779,37 +787,49 @@ group by creators_id, creators_username;
 
 -- This is deposits - withdrawals + rewards earned - purchases from creator - purchases from user + buys from user
 CREATE VIEW users_funds as 
-select to_users_id as users_id, time_, -1*total as funds from 
+select to_users_id as users_id, users.username as owners_name, time_, -1*total as funds from 
 sales_from_creators
+inner join users
+on sales_from_creators.to_users_id = users.id
 union 
-select from_users_id, time_, total from 
+select from_users_id, users.username as owners_name, time_, total from 
 sales_from_users
+inner join users
+on sales_from_users.from_users_id = users.id
 union
-select to_users_id, time_, -1*total from 
+select to_users_id, users.username as owners_name, time_, -1*total from 
 sales_from_users
+inner join users
+on sales_from_users.to_users_id = users.id
 union
 -- use end time, because it shows the last time of rewards
-select owners_id, end_time_, reward_earned as funds from 
+select owners_id, owners_name, end_time_, reward_earned as funds from 
 rewards_earned
 union
-select users_id, time_, btc_amount as funds from 
+select users_id, users.username as owners_name, time_, btc_amount as funds from 
 users_deposits
+inner join users
+on users_deposits.users_id = users.id
 where status='completed'
 union
-select users_id, time_, -1*btc_amount as funds from 
+select users_id, users.username as owners_name, time_, -1*btc_amount as funds from 
 users_withdrawals
+inner join users
+on users_withdrawals.users_id = users.id
 where status='completed'
 order by users_id, time_, funds;
 
 
+
+
 CREATE VIEW users_funds_grouped as
 select 
-users_id, time_, sum(funds) as funds
+users_id, owners_name, time_, sum(funds) as funds
 from users_funds
 group by users_id, time_;
 
 CREATE VIEW users_funds_accum as 
-select a.users_id, a.time_, 
+select a.users_id, a.owners_name, a.time_, 
 --a.funds, 
 sum(b.funds) as funds_accum
 from users_funds_grouped a, users_funds_grouped b
@@ -880,6 +900,7 @@ group by owners_id, creators_id;
 CREATE VIEW prices_for_user as 
 select pieces_owned_value_current.owners_id, 
 pieces_owned_value_current.creators_id,
+pieces_owned_value_current.owners_name,
 creators.username as creators_username,
 prices.time_,
 prices.price_per_piece
@@ -897,43 +918,55 @@ order by owners_id, creators_id, time_;
 
 CREATE VIEW users_transactions as 
 select to_users_id as users_id, 
+users.username as owners_name, 
 time_, 
 'buy' as type,
-username as recipient,
+creators.username as recipient,
 pieces, 
 -1*total as total
 from 
 sales_from_creators
 inner join creators
 on sales_from_creators.from_creators_id = creators.id
+inner join users
+on sales_from_creators.to_users_id = users.id
 union
  
 select from_users_id, 
+b.username as owners_name,
 time_, 
 'sell' as type,
-username as recipient, 
+a.username as recipient, 
 pieces,
 total 
 from 
 sales_from_users
 inner join
-users 
-on sales_from_users.to_users_id = users.id
+users a
+on sales_from_users.to_users_id = a.id
+inner join 
+users b
+on sales_from_users.from_users_id = b.id
 union
 
 select to_users_id, 
+b.username as owners_name,
 time_, 
 'buy' as type,
-username as recipient, 
+a.username as recipient, 
 pieces,
 -1*total from 
 sales_from_users
 inner join
-users 
-on sales_from_users.from_users_id = users.id
+users a
+on sales_from_users.from_users_id = a.id
+inner join 
+users b
+on sales_from_users.to_users_id = b.id
 union
 
 select users_id, 
+users.username as owners_name,
 time_, 
 concat('deposit(', status, ')') as type,
 '' as recipient, 
@@ -941,13 +974,20 @@ concat('deposit(', status, ')') as type,
 btc_amount as funds 
 from 
 users_deposits
+inner join users
+on users_deposits.users_id = users.id
+
 union
-select users_id, time_,
+select users_id, 
+users.username as owners_name,
+time_,
 concat('withdrawal(', status, ')') as type, 
 '' as recipient, 
 '' as pieces,
 -1*btc_amount as funds from 
 users_withdrawals
+inner join users
+on users_withdrawals.users_id = users.id
 order by users_id, time_ desc;
 
 
@@ -1100,7 +1140,7 @@ inner join creators
 on pieces_available.creators_id = creators.id;
 
 CREATE VIEW rewards_earned_accum as
-select a.owners_id, a.creators_username, a.price_time_, a.reward_earned,
+select a.owners_id, a.owners_name, a.creators_username, a.price_time_, a.reward_earned,
 sum(b.reward_earned) as reward_accum
 from rewards_earned a, rewards_earned b
 where b.owners_id = a.owners_id 
@@ -1108,6 +1148,7 @@ and b.creators_username = a.creators_username
 and b.price_time_ <= a.price_time_
 GROUP BY a.owners_id, a.creators_username, a.price_time_, a.reward_earned
 ORDER BY a.owners_id, a.creators_username, a.price_time_;
+
 
 
 CREATE VIEW creators_search_view as 

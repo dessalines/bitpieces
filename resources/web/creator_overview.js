@@ -118,6 +118,7 @@ function setupIssueForm(creatorName) {
 
     });
 }
+// test
 
 function setupModal(shortUrl, formId, buttonId, modalId) {
 
