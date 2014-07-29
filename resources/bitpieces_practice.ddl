@@ -42,7 +42,7 @@ pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_o
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
 users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user, pieces_owned_by_creator,
 bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped,
-rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings
+rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings, max_price_times
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -1202,6 +1202,11 @@ and b.start_time_ <= a.start_time_
 GROUP BY a.owners_id, a.creators_username, a.start_time_, a.reward_earned
 ORDER BY a.owners_id, a.creators_username, a.start_time_;
 
+CREATE VIEW max_price_times as
+SELECT   creators_id, creators_name, max(time_) as max_time_
+FROM     prices
+GROUP BY creators_id;
+
 CREATE VIEW prices_current as
 select prices.creators_id, prices.creators_name, price_per_piece 
 from prices
@@ -1209,10 +1214,7 @@ inner join max_price_times
 on time_ = max_price_times.max_time_;
 
 
-CREATE VIEW max_price_times as
-SELECT   creators_id, creators_name, max(time_) as max_time_
-FROM     prices
-GROUP BY creators_id;
+
 
 CREATE VIEW creators_search_view as 
 select creators.id as creators_id,

@@ -121,7 +121,8 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </div>
-        <div class="list-group">
+        <div id="scroll-nav" class="list-group">
+     
           <li class="list-group-item">
             <a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a>
             <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
@@ -131,6 +132,7 @@
           <a class="list-group-item" href="#categories"><i class="fa fa-table"></i> Categories</a>
           <a class="list-group-item" href="#units"><i class="fa fa-table"></i> Units</a>
           <a class="list-group-item" href="#raiseFunds"><i class="fa fa-table"></i> Raise Funds</a>
+         
         </div>
       </div>        
     </div>
@@ -144,7 +146,7 @@
         </div>
 
         <div class="row">
-          <div class="panel-group" id="accordion" data-spy="scroll" data-target="#side_col">
+          <div class="panel-group" id="accordion" data-spy="scroll" data-target="#scroll-nav">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
@@ -422,7 +424,7 @@
         <div class="form-group form-group-lg">
           <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward Percentage</label>
           <div class="col-sm-10">
-          <input name="reward_pct" class="form-control" type="text" id="formGroupInputLarge" value="1.0"
+            <input name="reward_pct" class="form-control" type="text" id="formGroupInputLarge" value="1.0"
 
             data-bv-notempty="true"
             data-bv-notempty-message="Must be > 1"
@@ -526,3 +528,5 @@
 
      </body>
      </html>
+
+
