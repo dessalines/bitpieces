@@ -75,7 +75,7 @@ function setupSaveCategories() {
             $("#saveCategoriesBtn").click(function(event) {
                 var sessionId = getCookie("authenticated_session_id");
                 standardFormPost(sessionId + "/save_creators_categories", "#categoriesForm");
-
+                console.log('getting the users settings');
                 // $('.collapse').collapse();
                 getJson(sessionId + '/get_users_settings').done(function(e) {
                     console.log(sessionId);
@@ -149,4 +149,3 @@ function raiseFundsPost(shortUrl, formId) {
 
 
 }
-

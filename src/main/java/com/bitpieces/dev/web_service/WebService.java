@@ -544,7 +544,7 @@ public class WebService {
 				UID uid = standardInit(prop, res, req);
 				verifyCreator(uid);
 
-				message = WebTools.newReward(uid, req.body());
+				message = WebTools.newReward(uid, req.body(), sf);
 
 				dbClose();
 
@@ -1087,7 +1087,7 @@ public class WebService {
 
 		});
 		
-		get("/:creator/get_rewards_pct_current", (req, res) -> {
+		get("/:creator/get_rewards_current", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
@@ -1098,7 +1098,7 @@ public class WebService {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsPctCurrentJson(creator, uid);
+				json = WebTools.getRewardsCurrentJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {

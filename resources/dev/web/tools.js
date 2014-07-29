@@ -44,7 +44,8 @@ function getCookie(name) {
 }
 
 function delete_cookie(name) {
-    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = name + '=; path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
 }
 
 function showHideElementsLoggedIn() {
@@ -397,13 +398,16 @@ function setupLogout() {
 
 
                 toastr.success(data);
-                console.log('got here');
+                console.log(url);
+                delete_cookie("authenticated_session_id");
+                delete_cookie("username");
+                delete_cookie("usertype");
                 setTimeout(
                     function() {
                         var url = "carousel";
                         window.location.replace(url);
 
-                    }, 1000);
+                    }, 1500);
 
 
             },
@@ -414,9 +418,7 @@ function setupLogout() {
         });
 
 
-        delete_cookie("authenticated_session_id");
-        delete_cookie("username");
-        delete_cookie("usertype");
+
         // showHideElementsLoggedIn();
 
 

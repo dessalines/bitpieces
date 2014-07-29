@@ -15,6 +15,7 @@ import com.bitpieces.shared.Tables.Bid;
 import com.bitpieces.shared.Tables.Creator;
 import com.bitpieces.shared.Tables.Creators_funds_current;
 import com.bitpieces.shared.Tables.Creators_withdrawals;
+import com.bitpieces.shared.Tables.Currencies;
 import com.bitpieces.shared.Tables.Pieces_available;
 import com.bitpieces.shared.Tables.Pieces_issued;
 import com.bitpieces.shared.Tables.Pieces_owned;
@@ -436,10 +437,15 @@ public class Actions {
 
 		// Create the required fields 
 		try {
+			// The default currency is BTC
+			Currencies btc = Currencies.findFirst("iso=?", "BTC");
+			
+			
 			Creator creator = Creator.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
-					"email", postMap.get("email"));
+					"email", postMap.get("email"),
+					"local_currency_id", btc.getId());
 
 
 

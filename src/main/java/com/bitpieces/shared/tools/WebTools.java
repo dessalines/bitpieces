@@ -235,21 +235,36 @@ public class WebTools {
 		return message;
 	}
 
-	public static String newReward(UID uid, String body) {
+	public static String newReward(UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+		UsersSettings settings = new UsersSettings(uid);
 
-		Double rewardPct = Double.valueOf(postMap.get("reward_pct"));
+		Double rewardPerPiecePerYear = Double.valueOf(postMap.get("reward_per_piece_per_year"));
+		Double btcReward = rewardPerPiecePerYear;
+		
+		String message = null;
+		// Convert amount if necessary
+				if (!settings.getIso().equals("BTC")) {
+					Double spotRate = sf.getSpotRate(settings.getIso());
+					btcReward = rewardPerPiecePerYear / spotRate;
+					System.out.println(rewardPerPiecePerYear + " / " + spotRate + " = " + btcReward);
+					message = "Reward at " + btcReward + " BTC" + "(or "  + 
+							rewardPerPiecePerYear + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+				} else {
+					message = "Reward at " + btcReward + " BTC";
+				}
+				
+		Actions.issueReward(uid.getId(), rewardPerPiecePerYear);
 
-		Actions.issueReward(uid.getId(), rewardPct);
-
-		return rewardPct + "% reward in effect";
+		return rewardPerPiecePerYear + "/piece/year reward in effect";
 
 
 	}
 
 	public static String raiseFunds(UID uid, String body, UnitConverter sf) {
 
-		String message = newReward(uid, body);
+		String message = newReward(uid, body, sf);
 		String message2 = issuePieces(uid, body, sf);
 
 
@@ -490,9 +505,9 @@ public class WebTools {
 
 		Paginator p = new Paginator(Users_transactions.class, PAGINATOR_ROWS, "owners_name=?",  userName);
 		List<Model> list = p.getPage(pageNum);
-		
+
 		if (list.size() > 0) {
-		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 		} else {
 			return "0";
 		}
@@ -535,9 +550,9 @@ public class WebTools {
 
 		Paginator p = new Paginator(Users_activity.class, PAGINATOR_ROWS, "owners_name=?",  userName);
 		List<Model> list = p.getPage(pageNum);
-		
+
 		if (list.size() > 0) {
-		return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
 		} else {
 			return "0";
 		}
@@ -925,7 +940,7 @@ public class WebTools {
 
 		Paginator p = new Paginator(Rewards_view.class, PAGINATOR_ROWS,"creators_name=?",  creatorName);
 		List<Model> list = p.getPage(pageNum);
-		
+
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
@@ -935,11 +950,11 @@ public class WebTools {
 		} else {
 			return "0";
 		}
-		
+
 
 	}
 
-	public static String getRewardsPctCurrentJson(String creatorName, UID uid) {
+	public static String getRewardsCurrentJson(String creatorName, UID uid, UnitConverter sf) {
 
 		List<Model> list = Rewards_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
 
@@ -947,8 +962,13 @@ public class WebTools {
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
-		String reward = list.get(0).getString("reward_percentage");
-		return reward;
+		if (list.size() > 0) {
+			String val = list.get(0).getString("reward_per_piece_per_year");
+			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+			return json;
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -956,7 +976,7 @@ public class WebTools {
 
 		Paginator p = new Paginator(Rewards_owed_to_user.class, PAGINATOR_ROWS,"creators_username=?",  creatorName);
 		List<Model> list = p.getPage(pageNum);
-		
+
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);

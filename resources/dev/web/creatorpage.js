@@ -49,6 +49,7 @@ $(document).ready(function() {
 
 function showHideButtons(creatorName) {
     // Only show these things if its a user type
+    var userName = getCookie('username');
     if (getCookie('usertype') == 'User') {
         // Showing or hiding the bid/ask/buy buttons
         simpleFetch(creatorName + "/get_pieces_available").done(function(result) {
@@ -71,7 +72,8 @@ function showHideButtons(creatorName) {
             }
         });
 
-        simpleFetch(sessionId + "/" + creatorName + "/get_pieces_owned_current").done(function(result) {
+
+        simpleFetch(userName + "/" + creatorName + "/get_pieces_owned_current").done(function(result) {
             console.log('result = ' + result);
 
             if (result > 0) {
@@ -95,11 +97,11 @@ function showHideButtons(creatorName) {
 
 
 
-        simpleFetch(sessionId + '/get_users_funds_current').done(function(result) {
+        simpleFetch(userName + '/get_users_funds_current').done(function(result) {
             // This part adds the totals and such
             var types = ['bid', 'ask', 'buy'];
             types.forEach(function(e) {
-                var fundsNum = result.replace(/[^0-9\.]+/g,"");
+                var fundsNum = result.replace(/[^0-9\.]+/g, "");
                 var usersFunds = parseFloat(fundsNum);
                 $('[name="usersFunds"]').text(result);
 
@@ -112,7 +114,7 @@ function showHideButtons(creatorName) {
                     var buyPrice = parseFloat($('[name="' + e + '"]').val());
                     // alert(buyPieces + ' ' + buyPrice)
                     var total = buyPrice * buyPieces;
-                 
+
 
                     if (!isNaN(total)) {
                         $('#' + e + 'Total').text('$' + total);
@@ -122,10 +124,10 @@ function showHideButtons(creatorName) {
                         } else {
                             fundsLeft = usersFunds - total;
                         }
-                    //        console.log(total);
-                    // console.log(fundsNum);
-                    //     console.log(usersFunds);
-                    //     console.log(e);
+                        //        console.log(total);
+                        // console.log(fundsNum);
+                        //     console.log(usersFunds);
+                        //     console.log(e);
                         $('#' + e + 'FundsLeft').text('$' + fundsLeft);
 
                         if (fundsLeft <= 0) {

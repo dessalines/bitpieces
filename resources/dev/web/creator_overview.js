@@ -103,10 +103,10 @@ function showHideCreatorButtons() {
 }
 
 function setupChangeRewardForm(creatorName) {
-    var url = creatorName + '/get_rewards_pct_current';
+    var url = creatorName + '/get_rewards_current';
     simpleFetch(url).done(function(result) {
 
-        $('[name="reward_pct"]').attr('placeholder', 'Last was ' + result + '%');
+        $('[name="reward"]').attr('placeholder', 'Last was ' + result + ' per piece per year');
 
     });
 

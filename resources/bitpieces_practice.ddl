@@ -94,7 +94,7 @@ CREATE TABLE creators
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
    username VARCHAR(56) UNIQUE NOT NULL,
    password_encrypted TINYTEXT NOT NULL,
-   email VARCHAR(56) NOT NULL,
+   email VARCHAR(56) UNIQUE NOT NULL,
    local_currency_id int(11) NOT NULL DEFAULT 1,
    FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
    precision_ int(11) NOT NULL DEFAULT 6 ,
