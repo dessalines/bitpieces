@@ -458,7 +458,7 @@ function setupSummerNote(url, id, sqlColName) {
                 minHeight: null, // set minimum height of editor
                 maxHeight: null, // set maximum height of editor
 
-                focus: true, // set focus to editable area after initializing summernote
+                focus: false, // set focus to editable area after initializing summernote
             });
             $(id).code(mainBody);
 
@@ -468,7 +468,9 @@ function setupSummerNote(url, id, sqlColName) {
 
             toastr.error(request.responseText);
         }
+
     });
+
 
 
 }

@@ -49,6 +49,7 @@ $(document).ready(function() {
         setupModal(sessionId + "/issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
         setupIssueForm(creatorName);
         setupSummerNote(sessionId + '/getcreatorpage', '#main_body', 'main_body');
+
         saveSummerNote(sessionId + '/savecreatorpage', '#saveBtn', '#main_body');
 
         setupChangeRewardForm(creatorName);
@@ -106,7 +107,7 @@ function setupChangeRewardForm(creatorName) {
     var url = creatorName + '/get_rewards_current';
     simpleFetch(url).done(function(result) {
 
-        $('[name="reward"]').attr('placeholder', 'Last was ' + result + ' per piece per year');
+        $('[name="reward_per_piece_per_year"]').attr('placeholder', 'Last was ' + result + ' per piece per year');
 
     });
 
