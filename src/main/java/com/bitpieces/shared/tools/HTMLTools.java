@@ -1,4 +1,4 @@
-package com.bitpieces.dev.web_service;
+package com.bitpieces.shared.tools;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import com.bitpieces.shared.Tables.Creators_page_fields;
-import com.bitpieces.shared.tools.Tools;
 
 public class HTMLTools {
 	public static void saveCreatorHTMLPage(String username, Creators_page_fields page) {

@@ -1,4 +1,4 @@
-package com.bitpieces.dev.web_service;
+package com.bitpieces.shared.tools;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -57,9 +57,6 @@ import com.bitpieces.shared.Tables.Users_settings;
 import com.bitpieces.shared.Tables.Users_transactions;
 import com.bitpieces.shared.Tables.Worth;
 import com.bitpieces.shared.actions.Actions;
-import com.bitpieces.shared.tools.Tools;
-import com.bitpieces.shared.tools.UID;
-import com.bitpieces.shared.tools.UnitConverter;
 import com.bitpieces.shared.tools.Tools.UserType;
 
 public class WebTools {
@@ -1196,7 +1193,7 @@ public class WebTools {
 	public static String createHighChartsJSONForMultipleCreatorsV2(List<Model> list, String dateColName,
 			String valueColName, String creatorsIdentifier, UnitConverter sf, Integer precision, String iso) {
 		// TODO right now, doing 30 digits, and ignoring precision
-		List<Map<String, String>> lom = doUnitConversions(list, sf, 30, iso, true);
+		List<Map<String, String>> lom = doUnitConversions(list, sf, 19, iso, true);
 
 		List<Map<String, Object>> highChartsLOM = new ArrayList<Map<String, Object>>();
 
@@ -1263,7 +1260,7 @@ public class WebTools {
 	public static String createHighChartsJSONForSingleCreatorV2(List<Model> list, String dateColName,
 			String valueColName, String seriesName, UnitConverter sf, Integer precision, String iso) {
 
-		List<Map<String, String>> lom = doUnitConversions(list, sf, precision, iso, true);
+		List<Map<String, String>> lom = doUnitConversions(list, sf, 20, iso, true);
 
 		List<Map<String, Object>> highChartsLOM = new ArrayList<Map<String, Object>>();
 

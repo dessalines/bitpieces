@@ -589,7 +589,8 @@ function navigateWithParams() {
 }
 
 function setupDepositButton(shortUrl, btnId, formId, modalId) {
-    simpleFetch(sessionId + '/get_users_funds_current').done(function(result) {
+    var userName = getCookie("username");
+    simpleFetch(userName + '/get_users_funds_current').done(function(result) {
         $('[name="deposit"]').attr('placeholder', 'Current funds:' + result);
     });
 
