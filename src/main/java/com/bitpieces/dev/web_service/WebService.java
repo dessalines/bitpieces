@@ -18,6 +18,7 @@ import org.javalite.activejdbc.DBException;
 import spark.Request;
 import spark.Response;
 
+import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.actions.Actions;
 import com.bitpieces.shared.tools.Tools;
 import com.bitpieces.shared.tools.UID;
@@ -32,8 +33,6 @@ public class WebService {
 
 	// How long to keep the cookies
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(180);
-	public static final String SESSION_FILE_LOC = System.getProperty( "user.home" ) + "/session.cache";
-	public static final String DB_PROP_LOC = System.getProperty( "user.home" ) + "/db.properties";
 	public static final List<String> ALLOW_ACCESS_ADDRESSES = Arrays.asList("http://localhost", "http://68.56.177.238:8080");
 
 	// Use an expiring map to store the authenticated sessions
@@ -48,9 +47,9 @@ public class WebService {
 	private static Logger log = Logger.getLogger(WebService.class.getName());
 	public static void main(String[] args) {
 
-		Properties prop = Tools.loadProperties(DB_PROP_LOC);
+		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 
-		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(SESSION_FILE_LOC));
+		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(DataSources.DEV_SESSION_FILE));
 
 		// Get an instance of the currency/precision converter
 		UnitConverter sf = new UnitConverter();
@@ -1388,7 +1387,7 @@ public class WebService {
 
 	private static void writeCacheToFile() {
 		Map<String, UID> serializableMap = new HashMap<String, UID>(SESSION_TO_USER_MAP.asMap());
-		Tools.writeObjectToFile(serializableMap, SESSION_FILE_LOC);
+		Tools.writeObjectToFile(serializableMap, DataSources.DEV_SESSION_FILE);
 	}
 
 
@@ -1405,6 +1404,12 @@ public class WebService {
 		
 
 	}
+
+	private static final void dbClose() {
+		Base.close();
+	}
+
+
 
 	private static final UID standardInit(Properties prop, Response res, Request req) {
 		try {
@@ -1425,10 +1430,6 @@ public class WebService {
 	}
 
 
-
-	private static final void dbClose() {
-		Base.close();
-	}
 
 	public static Integer cookieExpiration(Integer minutes) {
 		return minutes*60;

@@ -70,6 +70,7 @@ public class InitializeTables {
 				prop.getProperty("dbpassword"));
 
 		System.out.println("Initializing tables...");
+		
 		delete_all();
 
 		setup_currencies();
