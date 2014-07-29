@@ -1,7 +1,10 @@
 package com.bitpieces.shared.tools;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 
@@ -12,11 +15,16 @@ import spark.Request;
 import spark.Response;
 
 import com.bitpieces.shared.DataSources;
+import com.bitpieces.shared.actions.Actions;
 import com.bitpieces.shared.tools.Tools.UserType;
 import com.google.common.cache.Cache;
 
 public class WebCommon {
-
+	
+	// How long to keep the cookies
+	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(180);
+	
+	
 	/**
 	 * This needs the cache, to get the correct user, a properties file for making the 
 	 * correct db connections, and a unit converter to convert everything correctly
@@ -26,7 +34,8 @@ public class WebCommon {
 	 */
 	public static void commonGets(Cache<String, UID> cache, 
 			Properties prop, 
-			UnitConverter sf) {
+			UnitConverter sf,
+			String cacheFile) {
 
 		get("/hello", (req, res) -> {
 			allowResponseHeaders(req, res);
@@ -960,9 +969,189 @@ public class WebCommon {
 	
 	public static void commonPosts(Cache<String, UID> cache, 
 			Properties prop, 
-			UnitConverter sf) {
+			UnitConverter sf,
+			String cacheFile) {
+		
+		post("/:auth/save_settings", (req, res) -> {
+			String json = null;
+			try {
+				UID uid = standardInit(prop, res, req, cache);
+
+				// get currency if one exists
+				json = WebTools.saveSettings(uid, req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
+		
+		post("/:auth/save_creators_categories", (req, res) -> {
+			String json = null;
+			try {
+				UID uid = standardInit(prop, res, req, cache);
+				WebCommon.verifyCreator(uid);
+
+				// get currency if one exists
+				json = WebTools.saveCreatorsCategories(uid, req.body());
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
+
+
 		
 		
+		post("/discover", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+			UID uid = WebCommon.getUserFromCookie(req, cache);
+			String json = WebTools.getDiscoverJson(req.body(), uid, sf);
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
+
+		post("/:auth/user_logout", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+
+
+			String auth = req.params(":auth");
+
+
+			// remove the key, and save the map
+			cache.invalidate(auth);
+			writeCacheToFile(cache, cacheFile);
+
+
+
+			return "Logged out";
+
+		});
+		
+		
+
+
+
+
+
+		post("/registeruser", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+
+			// Create the user
+			UID uid = Actions.createUserFromAjax(req.body());
+
+			dbClose();
+
+			// Its null if it couldn't create the user, usually cause of constraints
+			if (uid != null) {
+				verifyLoginAndSetCookies(uid, res, cache, cacheFile);
+
+				return "user registered";
+			} else {
+
+				res.status(666);
+				return "User already exists";
+			}
+
+		});
+
+		post("/registercreator", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+
+			// Create the user
+			UID uid = Actions.createCreatorFromAjax(req.body());
+
+			dbClose();
+
+			// Its null if it couldn't create the user, usually cause of constraints
+			if (uid != null) {
+				verifyLoginAndSetCookies(uid, res, cache, cacheFile);
+
+				return "creator registered";
+			} else {
+
+				res.status(666);
+				return "Creator already exists";
+			}
+
+		});
+
+		post("/userlogin", (req, res) -> {
+			System.out.println(req.headers("Origin"));
+			WebCommon.allowResponseHeaders(req, res);
+
+			dbInit(prop);
+
+			// log the user in
+			UID uid = Actions.userLogin(req.body());
+
+			dbClose();
+
+			String message = verifyLoginAndSetCookies(uid, res, cache, cacheFile);
+
+			return message;
+
+		});
+
+		post("/creatorlogin", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+
+			dbInit(prop);
+
+			// log the user in
+			UID uid = Actions.creatorLogin(req.body());
+
+			dbClose();
+
+
+			String message = verifyLoginAndSetCookies(uid, res, cache, cacheFile);
+
+			return message;
+
+		});
+
+
+
+
+		post("/:auth/savecreatorpage", (req, res) -> {
+			String message = null;
+			try {			
+				UID cid = standardInit(prop, res, req, cache);
+				WebCommon.verifyCreator(cid);
+
+
+
+				// get the creator id from the token		
+				message = WebTools.saveCreatorPage(cid.getId(), req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+
+			return message;
+
+		});
 	}
 	
 	
@@ -1039,5 +1228,43 @@ public class WebCommon {
 
 	}
 	
+	private static void writeCacheToFile(Cache<String, UID> cache, String file) {
+		Map<String, UID> serializableMap = new HashMap<String, UID>(cache.asMap());
+		Tools.writeObjectToFile(serializableMap, file);
+	}
+	
+	private static String verifyLoginAndSetCookies(UID uid, Response res, Cache<String, UID> cache, String cacheFile) {
+		if (uid != null) {
+			String authenticatedSession = Tools.generateSecureRandom();
+			// Put the users ID in the session
+			//				req.session().attribute("userId", userId); // put the user id in the session data
+
+			// Store the users Id in a static map, give them a session id
+			cache.put(authenticatedSession, uid);
+			writeCacheToFile(cache, cacheFile);
+
+
+			// Set some cookies for that users login
+			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
+			res.cookie("username", uid.getUsername(), COOKIE_EXPIRE_SECONDS, false);
+			res.cookie("usertype", uid.getType().toString(), COOKIE_EXPIRE_SECONDS, false);
+
+			String json = Tools.GSON2.toJson(cache);
+			System.out.println(json);
+
+
+
+			return authenticatedSession;
+		} else {
+			res.status(666);
+			return "Incorrect Username or password";
+		}
+
+	}
+	
+
+	public static Integer cookieExpiration(Integer minutes) {
+		return minutes*60;
+	}
 	
 }

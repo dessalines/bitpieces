@@ -27,26 +27,25 @@ import com.google.common.cache.CacheBuilder;
 
 public class WebService {
 
-	// How long to keep the cookies
-	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(180);
+
 
 
 	// Use an expiring map to store the authenticated sessions
 	public static Cache<String, UID> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
 			.maximumSize(10000)
-			.expireAfterAccess(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
+			.expireAfterAccess(WebCommon.COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
 			.build();
-	
+
 
 	public static void main(String[] args) {
-		
-		
+
+
 		// Load the correct db connection
 		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 
 		// Load the correct session cache
 		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(DataSources.DEV_SESSION_FILE));
-		
+
 		// Set the correct port
 		setPort(DataSources.DEV_WEB_PORT);
 
@@ -54,9 +53,12 @@ public class WebService {
 		UnitConverter sf = new UnitConverter();
 
 		// Setup all the common gets
-		WebCommon.commonGets(SESSION_TO_USER_MAP, prop, sf);
-		
-		
+		WebCommon.commonGets(SESSION_TO_USER_MAP, prop, sf, DataSources.DEV_SESSION_FILE);
+
+		// Setup all the common posts
+		WebCommon.commonPosts(SESSION_TO_USER_MAP, prop, sf, DataSources.DEV_SESSION_FILE);
+
+
 		post("/:auth/placebid", (req, res) -> {
 			String message = null;
 			try {
@@ -114,7 +116,7 @@ public class WebService {
 			return message;
 
 		});
-		
+
 		post("/:auth/issue_pieces", (req, res) -> {
 			String message = null;
 			try {
@@ -132,7 +134,7 @@ public class WebService {
 			return message;
 
 		});
-		
+
 		post("/:auth/new_reward", (req, res) -> {
 			String message = null;
 			try {
@@ -150,7 +152,7 @@ public class WebService {
 			return message;
 
 		});
-		
+
 		post("/:auth/raise_funds", (req, res) -> {
 			String message = null;
 			try {
@@ -204,191 +206,12 @@ public class WebService {
 			return message;
 
 		});
-		
-		
-		
-		post("/:auth/save_settings", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
 
-				// get currency if one exists
-				json = WebTools.saveSettings(uid, req.body());
 
-				dbClose();
 
-				System.out.println(json);
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
 
-		});
-		
-		post("/:auth/save_creators_categories", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
-				WebCommon.verifyCreator(uid);
 
-				// get currency if one exists
-				json = WebTools.saveCreatorsCategories(uid, req.body());
 
-				dbClose();
-
-				System.out.println(json);
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-		});
-
-
-		
-		
-		post("/discover", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-			dbInit(prop);
-			UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-			String json = WebTools.getDiscoverJson(req.body(), uid, sf);
-
-			dbClose();
-
-			System.out.println(json);
-			return json;
-
-
-		});
-
-		post("/:auth/user_logout", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-
-
-			String auth = req.params(":auth");
-
-
-			// remove the key, and save the map
-			SESSION_TO_USER_MAP.invalidate(auth);
-			writeCacheToFile();
-
-
-
-			return "Logged out";
-
-		});
-		
-		
-
-
-
-
-
-		post("/registeruser", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-			dbInit(prop);
-
-			// Create the user
-			UID uid = Actions.createUserFromAjax(req.body());
-
-			dbClose();
-
-			// Its null if it couldn't create the user, usually cause of constraints
-			if (uid != null) {
-				verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP);
-
-				return "user registered";
-			} else {
-
-				res.status(666);
-				return "User already exists";
-			}
-
-		});
-
-		post("/registercreator", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-			dbInit(prop);
-
-			// Create the user
-			UID uid = Actions.createCreatorFromAjax(req.body());
-
-			dbClose();
-
-			// Its null if it couldn't create the user, usually cause of constraints
-			if (uid != null) {
-				verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP);
-
-				return "creator registered";
-			} else {
-
-				res.status(666);
-				return "Creator already exists";
-			}
-
-		});
-
-		post("/userlogin", (req, res) -> {
-			System.out.println(req.headers("Origin"));
-			WebCommon.allowResponseHeaders(req, res);
-
-			dbInit(prop);
-
-			// log the user in
-			UID uid = Actions.userLogin(req.body());
-
-			dbClose();
-
-			String message = verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP);
-
-			return message;
-
-		});
-
-		post("/creatorlogin", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-
-			dbInit(prop);
-
-			// log the user in
-			UID uid = Actions.creatorLogin(req.body());
-
-			dbClose();
-
-
-			String message = verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP);
-
-			return message;
-
-		});
-
-
-
-
-		post("/:auth/savecreatorpage", (req, res) -> {
-			String message = null;
-			try {			
-				UID cid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
-				WebCommon.verifyCreator(cid);
-
-
-
-				// get the creator id from the token		
-				message = WebTools.saveCreatorPage(cid.getId(), req.body());
-
-				dbClose();
-			}catch (NoSuchElementException e) {
-				e.printStackTrace();
-			}
-
-
-			return message;
-
-		});
-
-		
 
 
 	}
@@ -401,39 +224,9 @@ public class WebService {
 
 
 
-	private static String verifyLoginAndSetCookies(UID uid, Response res, Cache<String, UID> cache) {
-		if (uid != null) {
-			String authenticatedSession = Tools.generateSecureRandom();
-			// Put the users ID in the session
-			//				req.session().attribute("userId", userId); // put the user id in the session data
-
-			// Store the users Id in a static map, give them a session id
-			cache.put(authenticatedSession, uid);
-			writeCacheToFile();
-
-
-			// Set some cookies for that users login
-			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
-			res.cookie("username", uid.getUsername(), COOKIE_EXPIRE_SECONDS, false);
-			res.cookie("usertype", uid.getType().toString(), COOKIE_EXPIRE_SECONDS, false);
-
-			String json = Tools.GSON2.toJson(cache);
-			System.out.println(json);
 
 
 
-			return authenticatedSession;
-		} else {
-			res.status(666);
-			return "Incorrect Username or password";
-		}
-
-	}
-
-	private static void writeCacheToFile() {
-		Map<String, UID> serializableMap = new HashMap<String, UID>(SESSION_TO_USER_MAP.asMap());
-		Tools.writeObjectToFile(serializableMap, DataSources.DEV_SESSION_FILE);
-	}
 
 
 	private static final void dbInit(Properties prop) {
@@ -446,7 +239,7 @@ public class WebService {
 			dbClose();
 			dbInit(prop);
 		}
-		
+
 
 	}
 
@@ -475,9 +268,6 @@ public class WebService {
 
 
 
-	public static Integer cookieExpiration(Integer minutes) {
-		return minutes*60;
-	}
 
 
 }
