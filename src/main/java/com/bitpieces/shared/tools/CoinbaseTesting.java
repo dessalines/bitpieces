@@ -90,7 +90,7 @@ public class CoinbaseTesting {
 		t.setAmount(Money.parse("USD 5"));
 		t.setNotes("Invoice for window derping");
 		
-
+		
 		Transaction r = cb.requestMoney(t);
 		
 		System.out.println(r);

@@ -34,6 +34,7 @@ import com.bitpieces.shared.tools.UID;
 import com.bitpieces.shared.tools.WebCommon;
 import com.coinbase.api.Coinbase;
 import com.coinbase.api.entity.Account;
+import com.coinbase.api.entity.Button;
 import com.coinbase.api.exception.CoinbaseException;
 import com.google.gson.Gson;
 
@@ -381,6 +382,61 @@ public class Actions {
 
 	}
 
+	public static Users_deposits makeDepositFake(String usersId, Double btc_amount) {
+
+		String timeStr = SDF.format(new Date());
+
+
+
+		return Users_deposits.createIt("users_id", usersId,
+				"cb_tid", "fake", 
+				"time_", timeStr, 
+				"btc_amount", btc_amount, 
+				"status", "completed");
+
+	}
+
+
+	public static Users_deposits makeDeposit(Coinbase cb, String userId, Double btc_amount, String cb_tid) {
+
+		String timeStr = SDF.format(new Date());
+	
+		return Users_deposits.createIt("users_id", userId,
+				"cb_tid", cb_tid, 
+				"time_", timeStr, 
+				"btc_amount", btc_amount, 
+				"status", "completed");
+
+	}
+
+	public static String createCoinbaseAccount(Coinbase cb, String username) {
+		Account account = new Account();
+		account.setName(username);
+
+		Account cbAccountDetails = null;
+		try {
+			cbAccountDetails = cb.createAccount(account);
+		} catch (CoinbaseException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String fetchedAccountId = cbAccountDetails.getId();
+
+		return fetchedAccountId;
+	}
+	
+	
+
+
+
+
+
+
+
+
+
+
 	public static UID createUserDevFromAjax(String reqBody) {
 
 
@@ -415,71 +471,35 @@ public class Actions {
 
 	}
 
-	public static Users_deposits makeDepositFake(String usersId, Double btc_amount) {
+	public static UID createUserFromAjax(Coinbase cb, String reqBody) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
-		String timeStr = SDF.format(new Date());
+		// create a coinbase account for that user(This is necessary for payment buttons and such)
+		String cbAcctId = createCoinbaseAccount(cb, postMap.get("username"));
 
-
-
-		return Users_deposits.createIt("users_id", usersId,
-				"cb_tid", "fake", 
-				"time_", timeStr, 
-				"btc_amount", btc_amount, 
-				"status", "completed");
-
-	}
-
-
-	public static Users_deposits makeDeposit(Coinbase cb, UID uid, Double btc_amount, String cb_tid) {
-
-		WebCommon.verifyUser(uid);
-		
-		String timeStr = SDF.format(new Date());
-
-
-		
-		User user = User.findById(uid.getId());
-		
-		String cbAcctId = user.getString("cb_acct_id");
-		
-		
-		
-		
-		
-
-		return Users_deposits.createIt("users_id", uid.getId(),
-				"cb_tid", "fake", 
-				"time_", timeStr, 
-				"btc_amount", btc_amount, 
-				"status", "completed");
-
-	}
-
-	public static String createCoinbaseAccount(Coinbase cb, String username) {
-	Account account = new Account();
-		account.setName(username);
-
-		Account cbAccountDetails = null;
 		try {
-		cbAccountDetails = cb.createAccount(account);
-		} catch (CoinbaseException | IOException e) {
-			// TODO Auto-generated catch block
+			User user = User.createIt(
+					"username", postMap.get("username"),
+					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
+					"email", postMap.get("email"),
+					"cb_acct_id", cbAcctId);
+
+			// Give them the padowan badge
+			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
+			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
+
+
+			UID uid = new UID(UserType.User, 
+					String.valueOf(user.getId()),
+					user.getString("username"));
+			return uid;
+
+		} catch (org.javalite.activejdbc.DBException e) {
 			e.printStackTrace();
+			return null;
 		}
 
-		String fetchedAccountId = cbAccountDetails.getId();
-
-		return fetchedAccountId;
 	}
-
-
-
-
-
-	
-
-
-
 
 	public static UID createCreatorDevFromAjax(String reqBody) {
 
@@ -497,6 +517,41 @@ public class Actions {
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"),
 					"local_currency_id", btc.getId());
+
+
+
+			UID uid = new UID(UserType.Creator, 
+					String.valueOf(creator.getId()), 
+					creator.getString("username"));
+			return uid;
+
+		} catch (org.javalite.activejdbc.DBException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+
+	}
+
+
+	public static UID createCreatorFromAjax(Coinbase cb, String reqBody) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+
+		// create a coinbase account for that user(This is necessary for payment buttons and such)
+		String cbAcctId = createCoinbaseAccount(cb, postMap.get("username"));
+
+		// Create the required fields 
+		try {
+			// The default currency is BTC
+			Currencies btc = Currencies.findFirst("iso=?", "BTC");
+
+
+			Creator creator = Creator.createIt(
+					"username", postMap.get("username"),
+					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
+					"email", postMap.get("email"),
+					"local_currency_id", btc.getId(),
+					"cb_acct_id", cbAcctId);
 
 
 

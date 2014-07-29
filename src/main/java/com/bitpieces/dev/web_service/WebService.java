@@ -31,7 +31,7 @@ public class WebService {
 
 
 	// Use an expiring map to store the authenticated sessions
-	public static Cache<String, UID> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
+	private static Cache<String, UID> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
 			.maximumSize(10000)
 			.expireAfterAccess(WebCommon.COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
 			.build();
