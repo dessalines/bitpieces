@@ -9,6 +9,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
+
 public class ScheduledProcessing {
 	public static void main(String[] args) {
 		// Another

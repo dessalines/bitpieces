@@ -268,6 +268,7 @@ public class Tools {
 			e1.printStackTrace();
 			File file = new File(fileLoc);
 			try {
+				file.delete();
 				file.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

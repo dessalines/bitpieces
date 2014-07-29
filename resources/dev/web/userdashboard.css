@@ -6,7 +6,15 @@
 /*body {
   padding-top: 50px;
   }*/
-
+  .pager {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+  .table {
+    font-size: .8em;
+  }
 
 
   /*dropdown hover*/
