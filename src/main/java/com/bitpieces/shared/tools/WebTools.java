@@ -1,5 +1,7 @@
 package com.bitpieces.shared.tools;
 
+import static spark.Spark.get;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.Paginator;
 
+import com.bitpieces.dev.web_service.WebService;
 import com.bitpieces.shared.Tables.Ask;
 import com.bitpieces.shared.Tables.Backers_current;
 import com.bitpieces.shared.Tables.Backers_current_count;
@@ -237,24 +240,24 @@ public class WebTools {
 
 	public static String newReward(UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		
+
 		UsersSettings settings = new UsersSettings(uid);
 
 		Double rewardPerPiecePerYear = Double.valueOf(postMap.get("reward_per_piece_per_year"));
 		Double btcReward = rewardPerPiecePerYear;
-		
+
 		String message = null;
 		// Convert amount if necessary
-				if (!settings.getIso().equals("BTC")) {
-					Double spotRate = sf.getSpotRate(settings.getIso());
-					btcReward = rewardPerPiecePerYear / spotRate;
-					System.out.println(rewardPerPiecePerYear + " / " + spotRate + " = " + btcReward);
-					message = "Reward at " + btcReward + " BTC" + "(or "  + 
-							rewardPerPiecePerYear + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
-				} else {
-					message = "Reward at " + btcReward + " BTC";
-				}
-				
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcReward = rewardPerPiecePerYear / spotRate;
+			System.out.println(rewardPerPiecePerYear + " / " + spotRate + " = " + btcReward);
+			message = "Reward at " + btcReward + " BTC" + "(or "  + 
+					rewardPerPiecePerYear + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = "Reward at " + btcReward + " BTC";
+		}
+
 		Actions.issueReward(uid.getId(), btcReward);
 
 		return message;

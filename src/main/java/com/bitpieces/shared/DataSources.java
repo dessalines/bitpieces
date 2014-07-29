@@ -1,5 +1,8 @@
 package com.bitpieces.shared;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class DataSources {
 	public static final String HOME = System.getProperty( "user.home" );
 
@@ -10,5 +13,8 @@ public class DataSources {
 	public static final String DEV_SESSION_FILE =  HOME + "/bitpieces_dev_session.cache";
 	
 	public static final Integer DEV_WEB_PORT = 4567;
+	
+	
+	public static final List<String> ALLOW_ACCESS_ADDRESSES = Arrays.asList("http://localhost", "http://68.56.177.238:8080");
 	
 }
