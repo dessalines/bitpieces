@@ -42,7 +42,7 @@ pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_o
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
 users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user, pieces_owned_by_creator,
 bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped,
-rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings, max_price_times
+rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings, max_price_times, prices_current
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -1226,19 +1226,20 @@ rewards_current.reward_per_piece_per_year,
 CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
 backers_current_count.number_of_backers
 from creators
-inner join pieces_owned_value_current_by_creator
+left join pieces_owned_value_current_by_creator
 on pieces_owned_value_current_by_creator.creators_id = creators.id
-inner join rewards_current
+left join rewards_current
 on rewards_current.creators_id = creators.id
-inner join backers_current_count
+left join backers_current_count
 on backers_current_count.creators_id = creators.id
-inner join creators_categories
+left join creators_categories
 on creators_categories.creators_id = creators.id
 inner join categories on
 creators_categories.categories_id = categories.id
-inner join prices_current
+left join prices_current
 on creators.username = prices_current.creators_name
 group by creators.id;
+
 
 
 

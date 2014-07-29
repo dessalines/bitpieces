@@ -116,14 +116,6 @@ public class InitializeTables {
 
 		Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
 
-		User bill = User.findFirst("username like 'Bill%'");
-
-		// Give bill a padawan badge for registering
-
-		Users_badges.createIt("users_id", bill.getId().toString(), "badges_id", padawanBadge.getId().toString());
-
-		Creator leo = Creator.findFirst("username like 'Leonardo%'");
-		Creators_badges.createIt("creators_id", leo.getId().toString(), "badges_id", padawanBadge.getId().toString());
 
 
 
