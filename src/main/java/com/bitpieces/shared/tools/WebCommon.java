@@ -1051,49 +1051,6 @@ public class WebCommon {
 
 
 
-		post("/registeruser", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-			dbInit(prop);
-
-			// Create the user
-			UID uid = Actions.createUserFromAjax(req.body());
-
-			dbClose();
-
-			// Its null if it couldn't create the user, usually cause of constraints
-			if (uid != null) {
-				verifyLoginAndSetCookies(uid, res, cache, cacheFile);
-
-				return "user registered";
-			} else {
-
-				res.status(666);
-				return "User already exists";
-			}
-
-		});
-
-		post("/registercreator", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-			dbInit(prop);
-
-			// Create the user
-			UID uid = Actions.createCreatorFromAjax(req.body());
-
-			dbClose();
-
-			// Its null if it couldn't create the user, usually cause of constraints
-			if (uid != null) {
-				verifyLoginAndSetCookies(uid, res, cache, cacheFile);
-
-				return "creator registered";
-			} else {
-
-				res.status(666);
-				return "Creator already exists";
-			}
-
-		});
 
 		post("/userlogin", (req, res) -> {
 			System.out.println(req.headers("Origin"));
@@ -1233,7 +1190,7 @@ public class WebCommon {
 		Tools.writeObjectToFile(serializableMap, file);
 	}
 	
-	private static String verifyLoginAndSetCookies(UID uid, Response res, Cache<String, UID> cache, String cacheFile) {
+	public static String verifyLoginAndSetCookies(UID uid, Response res, Cache<String, UID> cache, String cacheFile) {
 		if (uid != null) {
 			String authenticatedSession = Tools.generateSecureRandom();
 			// Put the users ID in the session

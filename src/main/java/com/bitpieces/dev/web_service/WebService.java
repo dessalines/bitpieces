@@ -59,6 +59,51 @@ public class WebService {
 		WebCommon.commonPosts(SESSION_TO_USER_MAP, prop, sf, DataSources.DEV_SESSION_FILE);
 
 
+
+		post("/registeruser", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+
+			// Create the user
+			UID uid = Actions.createUserDevFromAjax(req.body());
+
+			dbClose();
+
+			// Its null if it couldn't create the user, usually cause of constraints
+			if (uid != null) {
+				WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.DEV_SESSION_FILE);
+
+				return "user registered";
+			} else {
+
+				res.status(666);
+				return "User already exists";
+			}
+
+		});
+
+		post("/registercreator", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+
+			// Create the user
+			UID uid = Actions.createCreatorDevFromAjax(req.body());
+
+			dbClose();
+
+			// Its null if it couldn't create the user, usually cause of constraints
+			if (uid != null) {
+				WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.DEV_SESSION_FILE);
+
+				return "creator registered";
+			} else {
+
+				res.status(666);
+				return "Creator already exists";
+			}
+
+		});
+		
 		post("/:auth/placebid", (req, res) -> {
 			String message = null;
 			try {

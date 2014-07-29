@@ -395,11 +395,13 @@ public class InitializeTables {
 		Creator leo = Creator.createIt("username", "Leonardo_Davinci",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 				"email", "asdf1@gmail.com",
-				"local_currency_id", btc.getId());
+				"local_currency_id", btc.getId(),
+				"cb_acct_id", "fakeleo");
 		Creator dusty = Creator.createIt("username", "Dusty_Springfield",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 				"email", "asdf2@gmail.com",
-				"local_currency_id", btc.getId());
+				"local_currency_id", btc.getId(),
+				"cb_acct_id", "fakedusty");
 
 		Creators_btc_address.createIt("creators_id", leo.getId(), "btc_addr", "fake");
 		Creators_btc_address.createIt("creators_id", dusty.getId(), "btc_addr", "fake");
@@ -432,7 +434,8 @@ public class InitializeTables {
 			User cUser = User.createIt("username", name, 
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 					"email", name + "22@gmail.com", 
-					"local_currency_id", btc.getId());
+					"local_currency_id", btc.getId(),
+					"cb_acct_id", "fake" + name);
 			Users_btc_address.createIt("users_id", cUser.getId().toString(), "btc_addr", "fake");
 		}
 

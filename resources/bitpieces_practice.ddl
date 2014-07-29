@@ -31,7 +31,9 @@ creators_categories,
 cities,
 creators_cities,
 currencies, 
-timezones
+timezones,
+creators_coinbase_acct_id,
+users_coinbase_acct_id
 ;
 
 
@@ -81,6 +83,7 @@ CREATE TABLE users
    local_currency_id int(11) NOT NULL DEFAULT 1,
    FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
    precision_ int(11) NOT NULL DEFAULT 6 ,
+   cb_acct_id VARCHAR(56) UNIQUE NOT NULL,
 --   local_timezone_id int(11) DEFAULT 1 NOT NULL,
 --   FOREIGN KEY (local_timezone_id) REFERENCES timezones(id),
    created_at TIMESTAMP NOT NULL DEFAULT 0,
@@ -98,6 +101,7 @@ CREATE TABLE creators
    local_currency_id int(11) NOT NULL DEFAULT 1,
    FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
    precision_ int(11) NOT NULL DEFAULT 6 ,
+   cb_acct_id VARCHAR(56) UNIQUE NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -1338,3 +1342,5 @@ select * from pieces_owned order by owners_id, time_ desc
 
 
 --ALTER TABLE employees ADD unique INDEX name (first_name, last_name)
+
+

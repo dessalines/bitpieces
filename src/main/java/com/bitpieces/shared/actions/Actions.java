@@ -1,12 +1,11 @@
 package com.bitpieces.shared.actions;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
-import org.javalite.activejdbc.LazyList;
 
 import com.bitpieces.shared.Tables.Ask;
 import com.bitpieces.shared.Tables.Ask_bid_accept_checker;
@@ -20,7 +19,6 @@ import com.bitpieces.shared.Tables.Pieces_available;
 import com.bitpieces.shared.Tables.Pieces_issued;
 import com.bitpieces.shared.Tables.Pieces_owned;
 import com.bitpieces.shared.Tables.Pieces_owned_total;
-import com.bitpieces.shared.Tables.Pieces_owned_value_current_by_creator;
 import com.bitpieces.shared.Tables.Reward;
 import com.bitpieces.shared.Tables.Rewards_current;
 import com.bitpieces.shared.Tables.Sales_from_creators;
@@ -31,8 +29,12 @@ import com.bitpieces.shared.Tables.Users_deposits;
 import com.bitpieces.shared.Tables.Users_funds_current;
 import com.bitpieces.shared.Tables.Users_withdrawals;
 import com.bitpieces.shared.tools.Tools;
-import com.bitpieces.shared.tools.UID;
 import com.bitpieces.shared.tools.Tools.UserType;
+import com.bitpieces.shared.tools.UID;
+import com.bitpieces.shared.tools.WebCommon;
+import com.coinbase.api.Coinbase;
+import com.coinbase.api.entity.Account;
+import com.coinbase.api.exception.CoinbaseException;
 import com.google.gson.Gson;
 
 public class Actions {
@@ -47,13 +49,13 @@ public class Actions {
 		// TODO Make sure the reward is at least one percent of the current pieces value, unless that's ZERO
 		// and its the initial reward. Maybe think about this some more. Maybe let them choose whatever 
 		// reward they want, and let the users pick the highest ones
-//		Pieces_owned_value_current_by_creator currentWorth = 
-//				Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId);
-		
-		
-		
-//		Double rewardPct = reward_per_piece_per_year
-		
+		//		Pieces_owned_value_current_by_creator currentWorth = 
+		//				Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId);
+
+
+
+		//		Double rewardPct = reward_per_piece_per_year
+
 		Reward reward = Reward.createIt("creators_id", creatorId,
 				"time_", now,
 				"reward_per_piece_per_year", reward_per_piece_per_year);
@@ -379,7 +381,7 @@ public class Actions {
 
 	}
 
-	public static UID createUserFromAjax(String reqBody) {
+	public static UID createUserDevFromAjax(String reqBody) {
 
 
 		// create user 
@@ -428,9 +430,58 @@ public class Actions {
 	}
 
 
+	public static Users_deposits makeDeposit(Coinbase cb, UID uid, Double btc_amount, String cb_tid) {
+
+		WebCommon.verifyUser(uid);
+		
+		String timeStr = SDF.format(new Date());
 
 
-	public static UID createCreatorFromAjax(String reqBody) {
+		
+		User user = User.findById(uid.getId());
+		
+		String cbAcctId = user.getString("cb_acct_id");
+		
+		
+		
+		
+		
+
+		return Users_deposits.createIt("users_id", uid.getId(),
+				"cb_tid", "fake", 
+				"time_", timeStr, 
+				"btc_amount", btc_amount, 
+				"status", "completed");
+
+	}
+
+	public static String createCoinbaseAccount(Coinbase cb, String username) {
+	Account account = new Account();
+		account.setName(username);
+
+		Account cbAccountDetails = null;
+		try {
+		cbAccountDetails = cb.createAccount(account);
+		} catch (CoinbaseException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String fetchedAccountId = cbAccountDetails.getId();
+
+		return fetchedAccountId;
+	}
+
+
+
+
+
+	
+
+
+
+
+	public static UID createCreatorDevFromAjax(String reqBody) {
 
 
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
@@ -439,8 +490,8 @@ public class Actions {
 		try {
 			// The default currency is BTC
 			Currencies btc = Currencies.findFirst("iso=?", "BTC");
-			
-			
+
+
 			Creator creator = Creator.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),

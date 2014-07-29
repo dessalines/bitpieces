@@ -192,6 +192,9 @@ public class Tables {
 	@Table("creators_settings")
 	public static class Creators_settings extends Model {}
 	
+
+	
+	
 	
 	
 	
