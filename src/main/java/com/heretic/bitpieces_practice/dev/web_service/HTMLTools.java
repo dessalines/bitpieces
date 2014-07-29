@@ -8,7 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.heretic.bitpieces_practice.dev.tables.Tables.Creators_page_fields;
+import com.heretic.bitpieces_practice.shared.Tables.Creators_page_fields;
 import com.heretic.bitpieces_practice.shared.tools.Tools;
 
 public class HTMLTools {

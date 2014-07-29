@@ -7,11 +7,11 @@ import java.util.Properties;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 
-import com.heretic.bitpieces_practice.dev.tables.Tables.Bid;
-import com.heretic.bitpieces_practice.dev.tables.Tables.Creators_page_fields;
-import com.heretic.bitpieces_practice.dev.tables.Tables.Pieces_owned_value_accum;
 import com.heretic.bitpieces_practice.dev.web_service.HTMLTools;
 import com.heretic.bitpieces_practice.dev.web_service.WebTools;
+import com.heretic.bitpieces_practice.shared.Tables.Bid;
+import com.heretic.bitpieces_practice.shared.Tables.Creators_page_fields;
+import com.heretic.bitpieces_practice.shared.Tables.Pieces_owned_value_accum;
 import com.heretic.bitpieces_practice.shared.tools.Tools;
 
 public class Tester {

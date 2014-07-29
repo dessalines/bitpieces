@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.dev.tables;
+package com.heretic.bitpieces_practice.dev.init;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.dev;
+package com.heretic.bitpieces_practice.dev.scheduled;
 
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
