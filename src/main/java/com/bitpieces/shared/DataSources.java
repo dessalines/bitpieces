@@ -8,4 +8,7 @@ public class DataSources {
 	public static final String PROD_DB_PROP = HOME + "/bitpieces_prod_db.properties";
 	
 	public static final String DEV_SESSION_FILE =  HOME + "/bitpieces_dev_session.cache";
+	
+	public static final Integer DEV_WEB_PORT = 4567;
+	
 }

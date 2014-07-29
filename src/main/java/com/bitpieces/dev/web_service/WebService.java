@@ -2,6 +2,7 @@ package com.bitpieces.dev.web_service;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -46,10 +47,16 @@ public class WebService {
 	private static final Gson GSON = new Gson();
 	private static Logger log = Logger.getLogger(WebService.class.getName());
 	public static void main(String[] args) {
-
+		
+		
+		// Load the correct db connection
 		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 
+		// Load the correct session cache
 		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(DataSources.DEV_SESSION_FILE));
+		
+		// Set the correct port
+		setPort(DataSources.DEV_WEB_PORT);
 
 		// Get an instance of the currency/precision converter
 		UnitConverter sf = new UnitConverter();
