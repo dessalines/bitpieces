@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.shared.actions;
+package com.bitpieces.shared.actions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,31 +8,31 @@ import java.util.NoSuchElementException;
 
 import org.javalite.activejdbc.LazyList;
 
+import com.bitpieces.shared.Tables.Ask;
+import com.bitpieces.shared.Tables.Ask_bid_accept_checker;
+import com.bitpieces.shared.Tables.Badge;
+import com.bitpieces.shared.Tables.Bid;
+import com.bitpieces.shared.Tables.Creator;
+import com.bitpieces.shared.Tables.Creators_funds_current;
+import com.bitpieces.shared.Tables.Creators_withdrawals;
+import com.bitpieces.shared.Tables.Pieces_available;
+import com.bitpieces.shared.Tables.Pieces_issued;
+import com.bitpieces.shared.Tables.Pieces_owned;
+import com.bitpieces.shared.Tables.Pieces_owned_total;
+import com.bitpieces.shared.Tables.Pieces_owned_value_current_by_creator;
+import com.bitpieces.shared.Tables.Reward;
+import com.bitpieces.shared.Tables.Rewards_current;
+import com.bitpieces.shared.Tables.Sales_from_creators;
+import com.bitpieces.shared.Tables.Sales_from_users;
+import com.bitpieces.shared.Tables.User;
+import com.bitpieces.shared.Tables.Users_badges;
+import com.bitpieces.shared.Tables.Users_deposits;
+import com.bitpieces.shared.Tables.Users_funds_current;
+import com.bitpieces.shared.Tables.Users_withdrawals;
+import com.bitpieces.shared.tools.Tools;
+import com.bitpieces.shared.tools.UID;
+import com.bitpieces.shared.tools.Tools.UserType;
 import com.google.gson.Gson;
-import com.heretic.bitpieces_practice.shared.Tables.Ask;
-import com.heretic.bitpieces_practice.shared.Tables.Ask_bid_accept_checker;
-import com.heretic.bitpieces_practice.shared.Tables.Badge;
-import com.heretic.bitpieces_practice.shared.Tables.Bid;
-import com.heretic.bitpieces_practice.shared.Tables.Creator;
-import com.heretic.bitpieces_practice.shared.Tables.Creators_funds_current;
-import com.heretic.bitpieces_practice.shared.Tables.Creators_withdrawals;
-import com.heretic.bitpieces_practice.shared.Tables.Pieces_available;
-import com.heretic.bitpieces_practice.shared.Tables.Pieces_issued;
-import com.heretic.bitpieces_practice.shared.Tables.Pieces_owned;
-import com.heretic.bitpieces_practice.shared.Tables.Pieces_owned_total;
-import com.heretic.bitpieces_practice.shared.Tables.Pieces_owned_value_current_by_creator;
-import com.heretic.bitpieces_practice.shared.Tables.Reward;
-import com.heretic.bitpieces_practice.shared.Tables.Rewards_current;
-import com.heretic.bitpieces_practice.shared.Tables.Sales_from_creators;
-import com.heretic.bitpieces_practice.shared.Tables.Sales_from_users;
-import com.heretic.bitpieces_practice.shared.Tables.User;
-import com.heretic.bitpieces_practice.shared.Tables.Users_badges;
-import com.heretic.bitpieces_practice.shared.Tables.Users_deposits;
-import com.heretic.bitpieces_practice.shared.Tables.Users_funds_current;
-import com.heretic.bitpieces_practice.shared.Tables.Users_withdrawals;
-import com.heretic.bitpieces_practice.shared.tools.Tools;
-import com.heretic.bitpieces_practice.shared.tools.UID;
-import com.heretic.bitpieces_practice.shared.tools.Tools.UserType;
 
 public class Actions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

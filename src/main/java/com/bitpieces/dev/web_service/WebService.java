@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.dev.web_service;
+package com.bitpieces.dev.web_service;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -18,14 +18,14 @@ import org.javalite.activejdbc.DBException;
 import spark.Request;
 import spark.Response;
 
+import com.bitpieces.shared.actions.Actions;
+import com.bitpieces.shared.tools.Tools;
+import com.bitpieces.shared.tools.UID;
+import com.bitpieces.shared.tools.UnitConverter;
+import com.bitpieces.shared.tools.Tools.UserType;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.gson.Gson;
-import com.heretic.bitpieces_practice.shared.actions.Actions;
-import com.heretic.bitpieces_practice.shared.tools.Tools;
-import com.heretic.bitpieces_practice.shared.tools.UID;
-import com.heretic.bitpieces_practice.shared.tools.UnitConverter;
-import com.heretic.bitpieces_practice.shared.tools.Tools.UserType;
 
 public class WebService {
 

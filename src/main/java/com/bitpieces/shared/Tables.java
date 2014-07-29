@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.shared;
+package com.bitpieces.shared;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;

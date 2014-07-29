@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.dev.init;
+package com.bitpieces.dev.init;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 
-import com.heretic.bitpieces_practice.shared.tools.Tools;
+import com.bitpieces.shared.tools.Tools;
 
 public class InitializeLocations {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.shared.tools;
+package com.bitpieces.shared.tools;
 
 import java.util.List;
 import java.util.Properties;

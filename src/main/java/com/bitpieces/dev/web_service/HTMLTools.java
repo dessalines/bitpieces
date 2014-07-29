@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.dev.web_service;
+package com.bitpieces.dev.web_service;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +8,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.heretic.bitpieces_practice.shared.Tables.Creators_page_fields;
-import com.heretic.bitpieces_practice.shared.tools.Tools;
+import com.bitpieces.shared.Tables.Creators_page_fields;
+import com.bitpieces.shared.tools.Tools;
 
 public class HTMLTools {
 	public static void saveCreatorHTMLPage(String username, Creators_page_fields page) {

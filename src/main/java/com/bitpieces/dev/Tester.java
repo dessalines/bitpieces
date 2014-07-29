@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.dev;
+package com.bitpieces.dev;
 
 import java.util.List;
 import java.util.Map;
@@ -7,12 +7,12 @@ import java.util.Properties;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 
-import com.heretic.bitpieces_practice.dev.web_service.HTMLTools;
-import com.heretic.bitpieces_practice.dev.web_service.WebTools;
-import com.heretic.bitpieces_practice.shared.Tables.Bid;
-import com.heretic.bitpieces_practice.shared.Tables.Creators_page_fields;
-import com.heretic.bitpieces_practice.shared.Tables.Pieces_owned_value_accum;
-import com.heretic.bitpieces_practice.shared.tools.Tools;
+import com.bitpieces.dev.web_service.HTMLTools;
+import com.bitpieces.dev.web_service.WebTools;
+import com.bitpieces.shared.Tables.Bid;
+import com.bitpieces.shared.Tables.Creators_page_fields;
+import com.bitpieces.shared.Tables.Pieces_owned_value_accum;
+import com.bitpieces.shared.tools.Tools;
 
 public class Tester {
 	public static void main(String[] args) {

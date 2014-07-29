@@ -1,8 +1,8 @@
-package com.heretic.bitpieces_practice.shared.tools;
+package com.bitpieces.shared.tools;
 
 import java.io.Serializable;
 
-import com.heretic.bitpieces_practice.shared.tools.Tools.UserType;
+import com.bitpieces.shared.tools.Tools.UserType;
 
 /**
  * The user or creators type, id, and username

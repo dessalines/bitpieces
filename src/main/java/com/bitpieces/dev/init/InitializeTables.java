@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.dev.init;
+package com.bitpieces.dev.init;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -8,30 +8,30 @@ import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 
-import com.heretic.bitpieces_practice.shared.Tables.Ask;
-import com.heretic.bitpieces_practice.shared.Tables.Badge;
-import com.heretic.bitpieces_practice.shared.Tables.Bid;
-import com.heretic.bitpieces_practice.shared.Tables.Categories;
-import com.heretic.bitpieces_practice.shared.Tables.Creator;
-import com.heretic.bitpieces_practice.shared.Tables.Creators_badges;
-import com.heretic.bitpieces_practice.shared.Tables.Creators_btc_address;
-import com.heretic.bitpieces_practice.shared.Tables.Creators_categories;
-import com.heretic.bitpieces_practice.shared.Tables.Creators_page_fields;
-import com.heretic.bitpieces_practice.shared.Tables.Creators_withdrawals;
-import com.heretic.bitpieces_practice.shared.Tables.Currencies;
-import com.heretic.bitpieces_practice.shared.Tables.Host_btc_addresses;
-import com.heretic.bitpieces_practice.shared.Tables.Pieces_issued;
-import com.heretic.bitpieces_practice.shared.Tables.Pieces_owned;
-import com.heretic.bitpieces_practice.shared.Tables.Reward;
-import com.heretic.bitpieces_practice.shared.Tables.Sales_from_creators;
-import com.heretic.bitpieces_practice.shared.Tables.Sales_from_users;
-import com.heretic.bitpieces_practice.shared.Tables.User;
-import com.heretic.bitpieces_practice.shared.Tables.Users_badges;
-import com.heretic.bitpieces_practice.shared.Tables.Users_btc_address;
-import com.heretic.bitpieces_practice.shared.Tables.Users_deposits;
-import com.heretic.bitpieces_practice.shared.Tables.Users_withdrawals;
-import com.heretic.bitpieces_practice.shared.actions.Actions;
-import com.heretic.bitpieces_practice.shared.tools.Tools;
+import com.bitpieces.shared.Tables.Ask;
+import com.bitpieces.shared.Tables.Badge;
+import com.bitpieces.shared.Tables.Bid;
+import com.bitpieces.shared.Tables.Categories;
+import com.bitpieces.shared.Tables.Creator;
+import com.bitpieces.shared.Tables.Creators_badges;
+import com.bitpieces.shared.Tables.Creators_btc_address;
+import com.bitpieces.shared.Tables.Creators_categories;
+import com.bitpieces.shared.Tables.Creators_page_fields;
+import com.bitpieces.shared.Tables.Creators_withdrawals;
+import com.bitpieces.shared.Tables.Currencies;
+import com.bitpieces.shared.Tables.Host_btc_addresses;
+import com.bitpieces.shared.Tables.Pieces_issued;
+import com.bitpieces.shared.Tables.Pieces_owned;
+import com.bitpieces.shared.Tables.Reward;
+import com.bitpieces.shared.Tables.Sales_from_creators;
+import com.bitpieces.shared.Tables.Sales_from_users;
+import com.bitpieces.shared.Tables.User;
+import com.bitpieces.shared.Tables.Users_badges;
+import com.bitpieces.shared.Tables.Users_btc_address;
+import com.bitpieces.shared.Tables.Users_deposits;
+import com.bitpieces.shared.Tables.Users_withdrawals;
+import com.bitpieces.shared.actions.Actions;
+import com.bitpieces.shared.tools.Tools;
 
 /**
  * TODO
