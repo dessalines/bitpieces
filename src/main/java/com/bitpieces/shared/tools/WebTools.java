@@ -255,7 +255,7 @@ public class WebTools {
 					message = "Reward at " + btcReward + " BTC";
 				}
 				
-		Actions.issueReward(uid.getId(), rewardPerPiecePerYear);
+		Actions.issueReward(uid.getId(), btcReward);
 
 		return rewardPerPiecePerYear + "/piece/year reward in effect";
 
