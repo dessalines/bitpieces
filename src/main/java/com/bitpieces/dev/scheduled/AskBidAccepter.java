@@ -8,12 +8,13 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.actions.Actions;
 import com.bitpieces.shared.tools.Tools;
 
 public class AskBidAccepter implements Job {
 	public static void main(String[] args) {
-		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
+		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 		dbInit(prop);
 		Actions.askBidAccepter();
 		dbClose();

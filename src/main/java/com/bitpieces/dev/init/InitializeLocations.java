@@ -7,12 +7,13 @@ import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 
+import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.tools.Tools;
 
 public class InitializeLocations {
 	public static void main(String[] args) {
 
-		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
+		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 
 		Base.open("com.mysql.jdbc.Driver", 
 				prop.getProperty("dburl"), 

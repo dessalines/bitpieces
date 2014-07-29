@@ -7,16 +7,16 @@ import java.util.Properties;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.Model;
 
+import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.Tables.Bid;
 import com.bitpieces.shared.Tables.Creators_page_fields;
 import com.bitpieces.shared.Tables.Pieces_owned_value_accum;
 import com.bitpieces.shared.tools.HTMLTools;
 import com.bitpieces.shared.tools.Tools;
-import com.bitpieces.shared.tools.WebTools;
 
 public class Tester {
 	public static void main(String[] args) {
-		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
+		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 		dbInit(prop);
 		List<Model> list = Pieces_owned_value_accum.findAll().limit(2);
 		System.out.println(list);
@@ -73,7 +73,7 @@ public class Tester {
 	public static void main2(String[] args) {
 	
 		
-		Properties prop = Tools.loadProperties("/home/tyler/db.properties");
+		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 		
 		dbInit(prop);
 		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  1);

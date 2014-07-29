@@ -1,4 +1,4 @@
-package com.bitpieces.dev.init;
+package com.bitpieces.stage.init;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -62,7 +62,7 @@ public class InitializeTables {
 
 	public static void main(String[] args) {
 
-		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
+		Properties prop = Tools.loadProperties(DataSources.STAGE_DB_PROP);
 
 		Base.open("com.mysql.jdbc.Driver", 
 				prop.getProperty("dburl"), 
@@ -74,37 +74,10 @@ public class InitializeTables {
 
 		setup_currencies();
 
-		setup_users();
-
-		setup_host_btc_address();
-
 		setup_categories();
-
-		setup_creators();
 
 		setup_badges();
 
-		issue_pieces();
-
-		user_deposit();
-
-		sell_from_creator();
-
-		sell_from_user();
-
-		create_bid();
-
-		create_ask();
-
-		issue_new_reward();
-
-		password_checker();
-
-		ask_bid_acceptor();
-
-		user_withdrawal();
-
-		creator_withdrawal();
 
 
 	}
