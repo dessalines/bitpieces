@@ -1,20 +1,15 @@
-package com.heretic.bitpieces_practice.scheduler;
+package com.heretic.bitpieces_practice.dev;
+
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
 
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.impl.StdSchedulerFactory;
-
-import com.heretic.bitpieces_practice.tools.AskBidAccepter;
-
-import static org.quartz.JobBuilder.*;
-import static org.quartz.TriggerBuilder.*;
-import static org.quartz.SimpleScheduleBuilder.*;
-public class Quartz {
+public class ScheduledProcessing {
 	public static void main(String[] args) {
 
         try {

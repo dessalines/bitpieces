@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.tools;
+package com.heretic.bitpieces_practice.dev;
 
 import java.util.Properties;
 
@@ -8,7 +8,8 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.heretic.bitpieces_practice.actions.Actions;
+import com.heretic.bitpieces_practice.shared.actions.Actions;
+import com.heretic.bitpieces_practice.shared.tools.Tools;
 
 public class AskBidAccepter implements Job {
 	public static void main(String[] args) {

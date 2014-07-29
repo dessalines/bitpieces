@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.tools;
+package com.heretic.bitpieces_practice.shared.tools;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;

@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.web_service;
+package com.heretic.bitpieces_practice.dev.web_service;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -9,28 +9,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
-import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.javalite.activejdbc.Base;
-import org.javalite.activejdbc.DB;
 import org.javalite.activejdbc.DBException;
-import org.joda.time.DateTime;
 
 import spark.Request;
 import spark.Response;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import com.google.gson.Gson;
-import com.heretic.bitpieces_practice.actions.Actions;
-import com.heretic.bitpieces_practice.tools.Tools;
-import com.heretic.bitpieces_practice.tools.Tools.UserType;
-import com.heretic.bitpieces_practice.tools.UID;
-import com.heretic.bitpieces_practice.tools.UnitConverter;
+import com.heretic.bitpieces_practice.shared.actions.Actions;
+import com.heretic.bitpieces_practice.shared.tools.Tools;
+import com.heretic.bitpieces_practice.shared.tools.UID;
+import com.heretic.bitpieces_practice.shared.tools.UnitConverter;
+import com.heretic.bitpieces_practice.shared.tools.Tools.UserType;
 
 public class WebService {
 

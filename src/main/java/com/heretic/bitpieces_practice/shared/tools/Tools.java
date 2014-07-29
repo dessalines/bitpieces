@@ -1,4 +1,4 @@
-package com.heretic.bitpieces_practice.tools;
+package com.heretic.bitpieces_practice.shared.tools;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
