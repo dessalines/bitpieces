@@ -17,6 +17,7 @@ import com.heretic.bitpieces_practice.tables.Tables.Creator;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_funds_current;
 import com.heretic.bitpieces_practice.tables.Tables.Creators_withdrawals;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_available;
+import com.heretic.bitpieces_practice.tables.Tables.Pieces_issued;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_total;
 import com.heretic.bitpieces_practice.tables.Tables.Pieces_owned_value_current_by_creator;
@@ -39,20 +40,43 @@ public class Actions {
 	private static final Double MINIMUM_REWARD_PCT = 1d;
 	private static final Gson GSON = new Gson();
 
-	public static Reward issueReward(String creatorId, Double pct) {
+	public static Reward issueReward(String creatorId, Double reward_per_piece_per_year) {
 		String now = Tools.SDF.get().format(new Date());
+
+		// TODO Make sure the reward is at least one percent of the current pieces value, unless that's ZERO
+		// and its the initial reward. Maybe think about this some more. Maybe let them choose whatever 
+		// reward they want, and let the users pick the highest ones
+//		Pieces_owned_value_current_by_creator currentWorth = 
+//				Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId);
 		
-		if (pct < MINIMUM_REWARD_PCT) {
-			throw new NoSuchElementException("Reward cannot be less than " + MINIMUM_REWARD_PCT);
-		}
+		
+		
+//		Double rewardPct = reward_per_piece_per_year
 		
 		Reward reward = Reward.createIt("creators_id", creatorId,
 				"time_", now,
-				"reward_pct", pct);
-		
+				"reward_per_piece_per_year", reward_per_piece_per_year);
+
 		return reward;
 	}
-	
+
+	public static void issuePieces(String creatorId, Integer pieces, Double pricePerPiece) {
+		String now = Tools.SDF.get().format(new Date());
+
+		// Make sure there is a reward
+		List<Reward> rewards  = Reward.find("creators_id = ?"	, creatorId);
+
+		if (rewards.size() > 0) {
+			Pieces_issued.createIt("creators_id",  creatorId, 
+					"time_", now,
+					"pieces_issued", pieces, 
+					"price_per_piece",pricePerPiece);
+		} else {
+			throw new NoSuchElementException("Cannot issue pieces without first having a reward");
+		}
+
+	}
+
 	public static Bid createBid(String userId, String creatorId, Integer pieces, Double bid_per_piece, 
 			String validUntil, Boolean partial) {
 
@@ -263,9 +287,9 @@ public class Actions {
 
 			String dateOfTransaction = SDF.format(new Date());
 			// Do the sale at the bidders price, or penalize them for overbidding
-				
-		
-			
+
+
+
 			// This method already makes sure the bidder has the money
 			sellFromUser(askersId, biddersId, creatorsId, piecesForTransaction, bidPerPiece);
 
@@ -366,14 +390,14 @@ public class Actions {
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
-			
+
 			// Give them the padowan badge
 			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
 			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
-			
+
 			// Give them $100BTC in play money
 			makeDepositFake(user.getId().toString(), .1d);
-			
+
 
 			UID uid = new UID(UserType.User, 
 					String.valueOf(user.getId()),
@@ -387,22 +411,22 @@ public class Actions {
 
 
 	}
-	
+
 	public static Users_deposits makeDepositFake(String usersId, Double btc_amount) {
-		
+
 		String timeStr = SDF.format(new Date());
-		
-		
-		
+
+
+
 		return Users_deposits.createIt("users_id", usersId,
 				"cb_tid", "fake", 
 				"time_", timeStr, 
 				"btc_amount", btc_amount, 
 				"status", "completed");
-		
+
 	}
-	
-	
+
+
 
 
 	public static UID createCreatorFromAjax(String reqBody) {
@@ -417,7 +441,7 @@ public class Actions {
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"));
 
-			
+
 
 			UID uid = new UID(UserType.Creator, 
 					String.valueOf(creator.getId()), 
@@ -446,13 +470,13 @@ public class Actions {
 		String encryptedPassword = user.getString("password_encrypted");
 
 		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("password"), encryptedPassword);
-		
+
 		UID returnVal = (correctPass == true) ? new UID(
 				UserType.User, 
 				user.getId().toString(),
 				user.getString("username")) : null;
 
-		return returnVal;
+				return returnVal;
 
 	}
 
@@ -475,18 +499,8 @@ public class Actions {
 				user.getId().toString(),
 				user.getString("username")) : null;
 
-		return returnVal;
+				return returnVal;
 
-
-
-	}
-
-	public static String getPiecesOwnedTotal(UID uid) {
-		LazyList<Pieces_owned_total> pieces_owned_total = Pieces_owned_total.where("owners_id = ?", uid.getId());
-
-		return pieces_owned_total.toJson(true, "creators_id", "pieces_owned_total");
-
-		//		return GSON.toJson(pieces_owned_total.toMaps());
 
 
 	}
@@ -518,13 +532,15 @@ public class Actions {
 		// Make sure the creator has enough to cover the withdraw
 		try {
 			Double creatorsFunds = Creators_funds_current.findFirst("creators_id = ?", creatorId).getDouble("current_funds");
-			Double rewardPct = Rewards_current.findFirst("creators_id = ?", creatorId).getDouble("reward_pct")/100d;
+			Double rewardPerPiecePerYear = Rewards_current.findFirst(
+					"creators_id = ?", creatorId).getDouble("reward_per_piece_per_year")/100d;
 
 			// This is based on the value of the current pieces
-			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
-					getDouble("value_total_current");
+			//			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
+			//					getDouble("value_total_current");
 
-			Double rewardsOwedForOneYear = creatorsValue*(Math.exp(rewardPct)-1.0d);
+			Integer piecesOwnedTotal = Pieces_available.findFirst("creators_id = ?", creatorId).getInteger("pieces_owned_total");
+			Double rewardsOwedForOneYear = rewardPerPiecePerYear * piecesOwnedTotal;
 
 			Double availableFunds = creatorsFunds - rewardsOwedForOneYear;
 
@@ -535,9 +551,9 @@ public class Actions {
 			}
 
 			Double fee = SERVICE_FEE_PCT * amount;
-			
+
 			Double amountAfterFee = amount - fee;
-			
+
 			Creators_withdrawals.createIt("creators_id",creatorId,
 					"cb_tid", "fake",
 					"time_", SDF.format(new Date()),
@@ -546,13 +562,15 @@ public class Actions {
 					"btc_amount_after_fee", amountAfterFee,
 					"status", "completed");
 
-			
+
 		} catch(NullPointerException e) {
 			throw new NoSuchElementException("You have no funds");
 		}
 
 
 	}
+
+
 
 
 

@@ -44,7 +44,12 @@ import com.heretic.bitpieces_practice.tools.Tools;
  * - badges page
  * - rewards page
  * - settings page
- * - make sure you can't issue pieces with first having a reward pct
+ * + make sure you can't issue pieces with first having a reward pct
+ *	+ Add new reward system based on div/(share*year)
+ * + Make user pages transparent
+ * Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
+ * Make 3 column creator pages
+ * 
  * 
  * @author tyler
  *
@@ -155,9 +160,8 @@ public class InitializeTables {
 		String now = Tools.SDF.get().format(new Date());
 
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
-		Reward.createIt("creators_id", leo.getId(),
-				"time_", now,
-				"reward_pct", 1.4d);
+		
+		Actions.issueReward(leo.getId().toString(), 0.00008d);
 
 	}
 
@@ -369,24 +373,16 @@ public class InitializeTables {
 		// Find leonardo davinci
 		//		Creators_required_fields leonardo = Creators_required_fields.findFirst("username = 'Leonardo'");
 		Creator leonardo = Creator.findFirst("username like ?", "Leonardo%");
-
-		Pieces_issued.createIt("creators_id",  leonardo.getId().toString(), 
-				"time_", Tools.SDF.get().format(new Date()), 
-				"pieces_issued", 200, 
-				"price_per_piece", 0.001d);
-		Pieces_issued.createIt("creators_id", leonardo.getId().toString(), 
-				"time_", Tools.SDF.get().format(new Date(new Date().getTime()+86400000)), 
-				"pieces_issued", 300,
-				"price_per_piece", 0.001d);
-
-		//		Pieces_total piecesTotal = Pieces_total.findFirst("creators_id = ?", leonardo.getId().toString());
+		
+		Actions.issuePieces(leonardo.getId().toString(),
+				200,
+				0.001d);
 
 		Creator dusty = Creator.findFirst("username like ?", "Dusty%");
-		Pieces_issued.createIt(
-				"creators_id",  dusty.getId().toString(), 
-				"time_", Tools.SDF.get().format(new Date()), 
-				"pieces_issued", 50,
-				"price_per_piece", 0.002d);
+		
+		Actions.issuePieces(dusty.getId().toString(),
+				50,
+				0.002d);
 
 
 	}
@@ -406,13 +402,9 @@ public class InitializeTables {
 		Creators_btc_address.createIt("creators_id", leo.getId(), "btc_addr", "fake");
 		Creators_btc_address.createIt("creators_id", dusty.getId(), "btc_addr", "fake");
 
-		Reward.createIt("creators_id", leo.getId(),
-				"time_", now,
-				"reward_pct", 1.0d);
-
-		Reward.createIt("creators_id", dusty.getId(),
-				"time_", now,
-				"reward_pct", 5.0d);
+		
+		Actions.issueReward(leo.getId().toString(), 0.00001d);
+		Actions.issueReward(dusty.getId().toString(), 0.00005d);
 
 		Creators_page_fields.createIt("creators_id", leo.getId(),
 				"main_body", "The main body of leo's page");

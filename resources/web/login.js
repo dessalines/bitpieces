@@ -3,12 +3,15 @@ This sets up all the common stuff, having to do with the top bar, redirects, sea
 */
 
 $(document).ready(function() {
+
     var sessionId = getCookie("authenticated_session_id");
     var userType = getCookie('usertype');
     var userName = getCookie('username');
     // set up the correct dashboard if its a creator
     if (userType == 'Creator') {
         $("#dashboardhref").prop("href", "creator_overview?creator=" + userName);
+    } else if (userType == 'User') {
+        $("#dashboardhref").prop("href", "userdashboard_overview?user=" + userName);
     }
 
 
@@ -78,8 +81,7 @@ $(document).ready(function() {
                 console.log(document.cookie);
                 setTimeout(
                     function() {
-                        var url = "userdashboard_overview";
-                        window.location.replace(url);
+                        window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
 
                     }, 1000);
 
@@ -157,7 +159,7 @@ $(document).ready(function() {
 
                 // GO to the dashboard
                 if (!isCreator) {
-                    window.location.replace("userdashboard_overview");
+                    window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
                 } else {
                     console.log(formData);
                     var url = "creator_overview?creator=" + formData[0]['value'];

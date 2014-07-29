@@ -210,7 +210,7 @@
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Current Bids and Asks</h3>
       </div>
-      <div id="bids_asks" class="panel-body">
+      <div id="bids_asks" class="panel-body" style="height: 276px;overflow:auto;">
         <script id="bids_asks_template" type="x-tmpl-mustache"> 
           <table id="bids_asks_table" class="table table-hover table-striped tablesorter">
             <thead> 
@@ -240,6 +240,12 @@
           </script>
         </table>
 
+      </div>
+      <div class="panel-footer">
+        <ul class="pager">
+          <li id="bids_asks_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
+          <li id="bids_asks_pager_next" ><a href="javascript:void(0);">Next</a></li>
+        </ul>
       </div>
     </div>
   </div>

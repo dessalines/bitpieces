@@ -9,17 +9,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.javalite.activejdbc.Base;
+import org.javalite.activejdbc.DB;
 import org.javalite.activejdbc.DBException;
+import org.joda.time.DateTime;
 
 import spark.Request;
 import spark.Response;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.gson.Gson;
 import com.heretic.bitpieces_practice.actions.Actions;
 import com.heretic.bitpieces_practice.tools.Tools;
@@ -40,6 +45,8 @@ public class WebService {
 			.maximumSize(10000)
 			.expireAfterAccess(COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
 			.build();
+	
+
 
 	private static final Gson GSON = new Gson();
 	private static Logger log = Logger.getLogger(WebService.class.getName());
@@ -51,7 +58,7 @@ public class WebService {
 
 		// Get an instance of the currency/precision converter
 		UnitConverter sf = new UnitConverter();
-		
+
 		
 		get("/session", (req,res) -> {
 
@@ -81,35 +88,18 @@ public class WebService {
 
 		});
 
-		get("/:auth/getpiecesownedtotal", (req, res) -> {
+
+		get("/:user/get_pieces_owned_value_accum", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
+			String userName = req.params(":user");
+			UID uid = getUserFromCookie(req);
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-				json = Actions.getPiecesOwnedTotal(uid);
 
-				dbClose();
-
-				System.out.println(json);
-
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-
-		});
-
-		get("/:auth/get_pieces_owned_value_accum", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
+				dbInit(prop);
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueAccumSeriesJson(uid, sf);
+				json = WebTools.getPiecesOwnedValueAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
@@ -124,15 +114,16 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_pieces_owned_value_current", (req, res) -> {
+		get("/:user/get_pieces_owned_value_current", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
+			String userName = req.params(":user");
+			UID uid = getUserFromCookie(req);
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
 
-				// get currency if one exists
-
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid, sf);
+			
+				dbInit(prop);
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, uid, sf);
 
 
 				dbClose();
@@ -147,15 +138,16 @@ public class WebService {
 
 		});
 
-		get("/:auth/:creator/get_pieces_owned_value_current", (req, res) -> {
+		get("/:user/:creator/get_pieces_owned_value_current", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
-				// get currency if one exists
+				UID uid = getUserFromCookie(req);
 
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(uid, creatorName, sf);
+				dbInit(prop);
+				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, creatorName, uid, sf);
 
 
 				dbClose();
@@ -170,127 +162,17 @@ public class WebService {
 
 		});
 
-		get("/:auth/:creator/get_pieces_owned_current", (req, res) -> {
+		get("/:user/:creator/get_pieces_owned_current", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
+
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
-				// get currency if one exists
-
-				json = WebTools.getPiecesOwnedCurrentSeriesJson(uid, creatorName, sf);
-
-
-				dbClose();
-
-				System.out.println(json);
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-
-		});
-
-		get("/:auth/get_prices_for_user", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-
-				json = WebTools.getPricesForUserSeriesJson(uid, sf);
-
-				dbClose();
-
-				System.out.println(json);
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-
-		});
-
-		get("/:auth/get_rewards_earned_accum", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-
-				json = WebTools.getRewardsEarnedAccumSeriesJson(uid, sf);
-
-
-				dbClose();
-
-				System.out.println(json);
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-
-		});
-		
-		get("/:auth/get_rewards_earned_total", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-
-				json = WebTools.getRewardsEarnedTotalJson(uid, sf);
-
-				dbClose();
-
-				System.out.println(json);
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-
-		});
-
-		get("/:auth/get_pieces_owned_accum", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-
-				json = WebTools.getPiecesOwnedAccumSeriesJson(uid, sf);
-
-
-				dbClose();
-
-				System.out.println(json);
-			} catch (NoSuchElementException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return json;
-
-
-		});
-		get("/:auth/get_users_funds_accum", (req, res) -> {
-			String json = null;
-			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-
-				json = WebTools.getUsersFundsAccumSeriesJson(uid, sf);
+				UID uid = getUserFromCookie(req);
+			
+				dbInit(prop);
+				json = WebTools.getPiecesOwnedCurrentSeriesJson(userName, creatorName, uid, sf);
 
 
 				dbClose();
@@ -305,16 +187,102 @@ public class WebService {
 
 		});
 
-
-		get("/:auth/get_users_transactions", (req, res) -> {
+		get("/:user/get_prices_for_user", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+
+
+				dbInit(prop);
+				json = WebTools.getPricesForUserSeriesJson(userName, uid, sf);
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+
+		});
+
+		get("/:user/get_rewards_earned_accum", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			try {
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+
 				
-				// get currency if one exists
+				dbInit(prop);
+				json = WebTools.getRewardsEarnedAccumSeriesJson(userName, uid, sf);
 
-				json = WebTools.getUsersTransactionsJson(uid, req.body(), sf);
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+
+		});
+		
+		get("/:user/get_rewards_earned_total", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			try {
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getRewardsEarnedTotalJson(userName, uid, sf);
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
+
+		get("/:user/get_pieces_owned_accum", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			try {
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getPiecesOwnedAccumSeriesJson(userName, uid, sf);
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+
+		});
+		get("/:user/get_users_funds_accum", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			try {
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getUsersFundsAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
@@ -329,14 +297,41 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_users_activity", (req, res) -> {
+
+		get("/:user/get_users_transactions/:page_num", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
+				Integer pageNum = Integer.parseInt(req.params(":page_num"));
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getUsersTransactionsJson(userName, uid, sf, pageNum);
+
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+
+		});
+
+		get("/:user/get_users_activity/:page_num", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			try {
+				String userName = req.params(":user");
+				Integer pageNum = Integer.parseInt(req.params(":page_num"));
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
 
 				// get currency if one exists
-				json = WebTools.getUsersActivityJson(uid, sf);
+				json = WebTools.getUsersActivityJson(userName, uid, sf, pageNum);
 
 
 				dbClose();
@@ -350,14 +345,14 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_users_funds_current", (req, res) -> {
+		get("/:user/get_users_funds_current", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-				json = WebTools.getUsersFundsCurrentJson(uid, sf);
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getUsersFundsCurrentJson(userName, uid, sf);
 
 				dbClose();
 
@@ -370,14 +365,14 @@ public class WebService {
 
 		});
 		
-		get("/:auth/get_creators_funds_current", (req, res) -> {
+		get("/:creator/get_creators_funds_current", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyCreator(uid);
-
-				// get currency if one exists
-				json = WebTools.getCreatorsFundsCurrentJson(uid, sf);
+				String creatorName = req.params(":creator");
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getCreatorsFundsCurrentJson(creatorName, uid, sf);
 
 				dbClose();
 
@@ -390,14 +385,14 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_rewards_earned_total_by_user", (req, res) -> {
+		get("/:user/get_rewards_earned_total_by_user", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-				json = WebTools.getRewardsEarnedTotalByUserJson(uid, sf);
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getRewardsEarnedTotalByUserJson(userName, uid, sf);
 
 				dbClose();
 
@@ -410,14 +405,14 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_pieces_value_current_by_owner", (req, res) -> {
+		get("/:user/get_pieces_value_current_by_owner", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-				json = WebTools.getPiecesValueCurrentByOwnerJson(uid, sf);
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getPiecesValueCurrentByOwnerJson(userName, uid, sf);
 
 				dbClose();
 
@@ -430,14 +425,14 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_users_reputation", (req, res) -> {
+		get("/:user/get_users_reputation", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
+				String userName = req.params(":user");
 
-				// get currency if one exists
-				json = WebTools.getUsersReputationJson(uid, req.body());
+				dbInit(prop);
+				json = WebTools.getUsersReputationJson(userName);
 
 				dbClose();
 
@@ -450,14 +445,14 @@ public class WebService {
 
 		});
 
-		get("/:auth/get_users_bids_asks_current", (req, res) -> {
+		get("/:user/get_users_bids_asks_current", (req, res) -> {
+			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req);
-				verifyUser(uid);
-
-				// get currency if one exists
-				json = WebTools.getUsersBidsAsksCurrentJson(uid, sf);
+				String userName = req.params(":user");
+				UID uid = getUserFromCookie(req);
+				dbInit(prop);
+				json = WebTools.getUsersBidsAsksCurrentJson(userName, uid, sf);
 
 				dbClose();
 
@@ -1048,10 +1043,11 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_bids_asks_current", (req, res) -> {
+		get("/:creator/get_bids_asks_current/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			
 			UID uid = getUserFromCookie(req);
 			try {			
@@ -1059,7 +1055,8 @@ public class WebService {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBidsAsksCurrentJson(creator, uid, sf);
+				
+				json = WebTools.getBidsAsksCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1072,18 +1069,18 @@ public class WebService {
 		
 		
 
-		get("/:creator/get_rewards_pct", (req, res) -> {
+		get("/:creator/get_rewards/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsPctJson(creator, uid, sf);
+				json = WebTools.getRewardsJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1116,17 +1113,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_rewards_owed_to_user", (req, res) -> {
+		get("/:creator/get_rewards_owed_to_user/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf);
+				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1137,17 +1135,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_pieces_issued", (req, res) -> {
+		get("/:creator/get_pieces_issued/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
 			UID uid = getUserFromCookie(req);
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesIssuedJson(creator, uid, sf);
+				json = WebTools.getPiecesIssuedJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1158,18 +1157,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_backers_current", (req, res) -> {
+		get("/:creator/get_backers_current/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBackersCurrentJson(creator, uid, sf);
+				json = WebTools.getBackersCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1263,17 +1262,18 @@ public class WebService {
 
 		});
 
-		get("/:creator/get_creators_transactions", (req, res) -> {
+		get("/:creator/get_creators_transactions/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = getUserFromCookie(req);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsTransactionsJson(creator, uid, sf);
+				json = WebTools.getCreatorsTransactionsJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
@@ -1406,6 +1406,8 @@ public class WebService {
 			dbClose();
 			dbInit(prop);
 		}
+		
+
 	}
 
 	private static final UID standardInit(Properties prop, Response res, Request req) {

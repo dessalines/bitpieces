@@ -180,6 +180,8 @@ function fillUserInfoMustacheFromCookie() {
         var rendered = Mustache.render(template, jsonObj);
         $('#userDropdown').html(rendered);
 
+
+        $("#settings").attr("href", "userdashboard_settings?user=" + jsonObj);
         console.log(jsonObj);
         console.log(template);
         console.log(rendered);
@@ -226,7 +228,7 @@ function fillTableFromMustache(url, templateHtml, divId, tableId) {
             // JSON.useDateParser();
             var jsonObj = JSON.parseWithDate(data);
 
-            
+
             Mustache.parse(templateHtml); // optional, speeds up future uses
             var rendered = Mustache.render(templateHtml, jsonObj);
             $(divId).html(rendered);
@@ -666,54 +668,87 @@ function getJson(shortUrl) {
 
 function standardFormPost(shortUrl, formId) {
     // !!!!!!They must have names unfortunately
- 
-
-        // serializes the form's elements.
-        var formData = $(formId).serializeArray();
-        console.log(formData);
-
-        // Loading
-        $(this).button('loading');
-
-        var url = sparkService + shortUrl; // the script where you handle the form input.
-        console.log(url);
-        var post = $.ajax({
-            type: "POST",
-            url: url,
-            xhrFields: {
-                withCredentials: true
-            },
-            data: formData,
-            success: function(data, status, xhr) {
 
 
-                xhr.getResponseHeader('Set-Cookie');
-                // document.cookie="authenticated_session_id=" + data + 
-                // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
-                // Hide the modal, reset the form, show successful
+    // serializes the form's elements.
+    var formData = $(formId).serializeArray();
+    console.log(formData);
 
-                $(formId)[0].reset();
+    // Loading
+    $(this).button('loading');
 
-                toastr.success(data);
+    var url = sparkService + shortUrl; // the script where you handle the form input.
+    console.log(url);
+    var post = $.ajax({
+        type: "POST",
+        url: url,
+        xhrFields: {
+            withCredentials: true
+        },
+        data: formData,
+        success: function(data, status, xhr) {
 
 
-                
+            xhr.getResponseHeader('Set-Cookie');
+            // document.cookie="authenticated_session_id=" + data + 
+            // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
+            // Hide the modal, reset the form, show successful
 
-                console.log(document.cookie);
-                    return data;
+            $(formId)[0].reset();
 
-            },
-            error: function(request, status, error) {
-                toastr.error(request.responseText);
-            }
-        });
-
-                event.preventDefault();
-        return false;
+            toastr.success(data);
 
 
 
-     // event.preventDefault();
- 
 
+            console.log(document.cookie);
+            return data;
+
+        },
+        error: function(request, status, error) {
+            toastr.error(request.responseText);
+        }
+    });
+
+    event.preventDefault();
+    return false;
+
+
+
+    // event.preventDefault();
+
+
+}
+
+function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
+    var pageNum = pageNumbers[tableId];
+
+    var nextId = divId + "_pager_next";
+    var prevId = divId + "_pager_prev";
+    console.log(nextId);
+    fillTableFromMustache(shortUrl + pageNum,
+        templateHtml, divId, tableId);
+
+    $(nextId).click(function(e) {
+        pageNum++;
+        $(prevId).removeClass('disabled');
+
+        fillTableFromMustache(shortUrl + pageNum,
+            templateHtml, divId, tableId);
+
+    });
+    $(prevId).click(function(e) {
+        if (pageNum > 1) {
+            pageNum--;
+
+            fillTableFromMustache(shortUrl + pageNum,
+                templateHtml, divId, tableId);
+        }
+        if (pageNum == 1) {
+            $(this).addClass('disabled');
+            return;
+        }
+
+
+    });
 }

@@ -2,6 +2,9 @@ $(document).ready(function() {
 
     var creatorName = getParameterByName('creator');
     fillUserHighChartStandardTemplate(creatorName + '/get_pricing', '#pricing', 'Price ($/piece)', '$');
-    fillTableFromMustache(creatorName + '/get_bids_asks_current', '#bids_asks_template', '#bids_asks', '#bids_asks_table');
+
+    var template = $('#bids_asks_template').html();
+    pageNumbers['#bids_asks_table'] = 1;
+    setupPagedTable(creatorName + '/get_bids_asks_current/', template, '#bids_asks', '#bids_asks_table');
 
 });

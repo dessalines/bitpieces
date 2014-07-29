@@ -3,19 +3,47 @@ $(document).ready(function() {
 
     sessionId = getCookie("authenticated_session_id");
     console.log(sessionId);
-    setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+
+    showHideDepositButton();
 
     // fillUserHighChartStandardTemplate('get_users_funds_accum', '#users_funds', 'Funds ($)', '$');
-    fillTableFromMustache(sessionId + '/get_users_activity', '#recent_activity_template', '#recent_activity', '#recent_activity_table');
-    fillUserHighChartPieChartTemplate(sessionId + '/get_pieces_owned_value_current', '#pieces_owned_value_current');
-    fillFieldFromMustache(sessionId + '/get_users_funds_current', '#funds_current_template', '#funds_current', true);
-    fillFieldFromMustache(sessionId + '/get_rewards_earned_total_by_user', '#rewards_earned_total_by_user_template', '#rewards_earned_total_by_user', true);
-    fillFieldFromMustache(sessionId + '/get_pieces_value_current_by_owner', '#pieces_owned_current_template', '#pieces_owned_current', true);
-    fillFieldFromMustache(sessionId + '/get_users_reputation', '#users_reputation_template', '#users_reputation', false);
-    fillTableFromMustacheSpecial(sessionId + '/get_users_bids_asks_current', '#users_bids_asks_current_template', '#users_bids_asks_current', '#users_bids_asks_current_table',
+
+    var userName = getParameterByName('user');
+
+
+    var template = $('#recent_activity_template').html();
+    pageNumbers['#recent_activity_table'] = 1;
+    setupPagedTable(userName + '/get_users_activity/', template, '#recent_activity', '#recent_activity_table');
+
+
+    fillUserHighChartPieChartTemplate(userName + '/get_pieces_owned_value_current', '#pieces_owned_value_current');
+    fillFieldFromMustache(userName + '/get_users_funds_current', '#funds_current_template', '#funds_current', true);
+    fillFieldFromMustache(userName + '/get_rewards_earned_total_by_user', '#rewards_earned_total_by_user_template', '#rewards_earned_total_by_user', true);
+    fillFieldFromMustache(userName + '/get_pieces_value_current_by_owner', '#pieces_owned_current_template', '#pieces_owned_current', true);
+    fillFieldFromMustache(userName + '/get_users_reputation', '#users_reputation_template', '#users_reputation', false);
+
+    fillTableFromMustacheSpecial(userName + '/get_users_bids_asks_current', '#users_bids_asks_current_template', '#users_bids_asks_current',
+        '#users_bids_asks_current_table',
         "#remove_button", sessionId);
 
+    // TODO do this in a paged way
+    // var template = $('#users_bids_asks_current_template').html();
+    // pageNumbers['#users_bids_asks_current_table'] = 1;
+    // setupPagedTable(creatorName + '/get_users_bids_asks_current/', template, '#users_bids_asks_current', '#users_bids_asks_current_table');
+
 });
+
+function showHideDepositButton() {
+    var userName = getParameterByName('user');
+    var sessionUserName = getCookie("username");
+
+    if (userName == sessionUserName) {
+        $('#depositBtn').removeClass("hide");
+        $('#withdrawBtn').removeClass("hide");
+        setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+    }
+
+}
 
 
 function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonName, sessionId) {
