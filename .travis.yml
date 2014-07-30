@@ -7,7 +7,7 @@ script: mvn test -Dmaven.compiler.target=1.8 -Dmaven.compiler.source=1.8 -B
 deploy:
   provider: releases
   api-key: c66d3dda82e949116e6dfbc5170152ba5eeb49b1
-  file: bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+  file: target/bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar
   skip_cleanup: true
   on:
     tags: true
