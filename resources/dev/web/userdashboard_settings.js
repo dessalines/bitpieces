@@ -5,7 +5,7 @@ $(document).ready(function() {
     var sessionId = getCookie("authenticated_session_id");
 
 
-    // fillFieldFromMustacheCustom(sessionId + '/get_users_settings', '#users_settings_template', '#users_settings', false);
+    // fillFieldFromMustacheCustom('/get_users_settings', '#users_settings_template', '#users_settings', false);
 
     // fillFieldFromMustacheCustom('get_currencies', '#currency_template', '#currency', false);
 
@@ -19,7 +19,7 @@ $(document).ready(function() {
 function full() {
     var template = $('#users_settings_template').html();
     var sessionId = getCookie("authenticated_session_id");
-    $.when(getJson(sessionId + '/get_users_settings'),
+    $.when(getJson('/get_users_settings'),
         getJson('get_currencies')).done(function(a1, a2) {
         // the code here will be executed when all four ajax requests resolve.
         // a1, a2, a3 and a4 are lists of length 3 containing the response text,
@@ -42,7 +42,7 @@ function full() {
         $("#inputCurrency").val(jsonObj['curr_iso']).prop('selected', true);
         $("#inputPrecision").val(jsonObj['precision_']).prop('selected', true);
 
-        setupSaveSettings(sessionId + '/save_settings', '#settingsForm', '#settingsSaveBtn')
+        setupSaveSettings('/save_settings', '#settingsForm', '#settingsSaveBtn')
 
         // now do teh mustache
     });
@@ -78,7 +78,7 @@ function fillFieldFromMustacheCustom(url, templateId, divId, isMoney) {
             console.log(template);
             console.log(rendered);
 
-            setupSaveSettings(sessionId + '/save_users_settings', '#settingsForm', '#settingsSaveBtn');
+            setupSaveSettings('/save_users_settings', '#settingsForm', '#settingsSaveBtn');
 
         },
         error: function(request, status, error) {

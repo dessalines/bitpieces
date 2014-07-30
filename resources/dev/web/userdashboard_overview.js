@@ -40,7 +40,7 @@ function showHideDepositButton() {
     if (userName == sessionUserName) {
         $('#depositBtn').removeClass("hide");
         $('#withdrawBtn').removeClass("hide");
-        setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+        setupDepositButton("/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
     }
 
 }
@@ -86,7 +86,7 @@ function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonNam
                 console.log(row);
                 console.log(json);
 
-                var url = sparkService + sessionId + "/delete_bid_ask";
+                var url = sparkService + "/delete_bid_ask";
                 $.ajax({
                     type: "POST",
                     url: url,

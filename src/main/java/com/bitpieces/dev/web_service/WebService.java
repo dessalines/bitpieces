@@ -265,12 +265,6 @@ public class WebService {
 		});
 
 
-
-
-
-
-
-
 	}
 
 	private static final void dbInit(Properties prop) {

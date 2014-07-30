@@ -20,7 +20,7 @@ $(document).ready(function() {
     $("#raiseFundsBtn").click(function(event) {
         var sessionId = getCookie("authenticated_session_id");
 
-        raiseFundsPost(sessionId + '/raise_funds', "#raiseFundsForm");
+        raiseFundsPost('/raise_funds', "#raiseFundsForm");
     });
 
 
@@ -74,10 +74,10 @@ function setupSaveCategories() {
 
             $("#saveCategoriesBtn").click(function(event) {
                 var sessionId = getCookie("authenticated_session_id");
-                standardFormPost(sessionId + "/save_creators_categories", "#categoriesForm");
+                standardFormPost("/save_creators_categories", "#categoriesForm");
                 console.log('getting the users settings');
                 // $('.collapse').collapse();
-                getJson(sessionId + '/get_users_settings').done(function(e) {
+                getJson('/get_users_settings').done(function(e) {
                     console.log(sessionId);
                     full();
                 });

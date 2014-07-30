@@ -13,12 +13,12 @@ $(document).ready(function() {
 
     if (sessionId != null && userType == 'User') {
         showHideButtons(creatorName);
-        bidAskOrBuySetup(sessionId + "/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
-        bidAskOrBuySetup(sessionId + "/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
-        bidAskOrBuySetup(sessionId + "/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
+        bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
+        bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
+        bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
 
 
-        setupDepositButton(sessionId + "/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+        setupDepositButton("/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
     }
     navigateWithParams();
 

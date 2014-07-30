@@ -46,14 +46,14 @@ $(document).ready(function() {
     console.log('un = ' + userName);
     if (userName == creatorName) {
         // show the save btn
-        setupModal(sessionId + "/issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
+        setupModal("/issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
         setupIssueForm(creatorName);
-        setupSummerNote(sessionId + '/getcreatorpage', '#main_body', 'main_body');
+        setupSummerNote('/getcreatorpage', '#main_body', 'main_body');
 
-        saveSummerNote(sessionId + '/savecreatorpage', '#saveBtn', '#main_body');
+        saveSummerNote('/savecreatorpage', '#saveBtn', '#main_body');
 
         setupChangeRewardForm(creatorName);
-        setupModal(sessionId + "/new_reward", '#rewardForm', "#placeChangeRewardBtn", "#rewardModal");
+        setupModal("/new_reward", '#rewardForm', "#placeChangeRewardBtn", "#rewardModal");
 
         showHideCreatorButtons();
 
@@ -123,7 +123,7 @@ function setupIssueForm(creatorName) {
 
     });
 
-    simpleFetch(sessionId + '/get_creators_funds_current').done(function(result) {
+    simpleFetch('/get_creators_funds_current').done(function(result) {
         var fundsNum = result.replace(/^\D+/g, '')
         var creatorsFunds = parseFloat(fundsNum);
         $('[name="creatorsFunds"]').text(result);

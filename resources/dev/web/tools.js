@@ -380,7 +380,7 @@ function setupMiniSubmenu() {
 
 function setupLogout() {
     var sessionId = getCookie("authenticated_session_id");
-    var url = sparkService + sessionId + "/user_logout"
+    var url = sparkService + "/user_logout"
     $('#logouthref').click(function() {
         $.ajax({
             type: "POST",
