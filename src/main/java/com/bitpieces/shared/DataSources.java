@@ -19,7 +19,8 @@ public class DataSources {
 	public static final String IP_ADDRESS = "68.56.177.238";
 	
 	public static final List<String> ALLOW_ACCESS_ADDRESSES = Arrays.asList(
-			"http://localhost", "http://68.56.177.238:8080", "https://coinbase.com");
+			"http://localhost", "http://68.56.177.238:8080", "https://coinbase.com", 
+			"http://173.163.212.165:4568", "http://173.163.212.165:8080", "http://173.163.212.165");
 	
 	public static final String COINBASE_PROP = HOME + "/coinbase.properties";
 }
