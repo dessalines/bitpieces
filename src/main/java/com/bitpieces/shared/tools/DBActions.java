@@ -390,7 +390,7 @@ public class DBActions {
 	}
 
 
-	public static Users_deposits makeDeposit(Coinbase cb, String userId, Double btc_amount, String cb_tid) {
+	public static Users_deposits makeDeposit(String userId, Double btc_amount, String cb_tid) {
 
 		String timeStr = SDF.format(new Date());
 	

@@ -275,6 +275,10 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				System.out.println(req.body());
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				WebCommon.verifyUser(uid);
+				
+				WebTools.makeDepositFromCoinbaseCallback(uid, req.body());
 				
 			} catch (NoSuchElementException e) {
 				res.status(666);

@@ -57,10 +57,10 @@ public class CoinbaseTesting {
 			}
 		}
 
-		CoinbaseTools.deleteAccountNames(cb, Arrays.asList("jul_29", "falwell"));
-		//		a.setName("jul_29");
+//		CoinbaseTools.deleteAccountNames(cb, Arrays.asList("jul_29", "falwell"));
 
 
+		WebTools.makeDepositFromCoinbaseCallback(null,null);
 
 
 

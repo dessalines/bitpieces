@@ -43,6 +43,8 @@ public class Tools {
 	public static final Gson GSON = new Gson();
 	public static final Gson GSON2 = new GsonBuilder().setPrettyPrinting().create();
 
+	public static final ObjectMapper JACKSON = new ObjectMapper();
+	
 	public static final ThreadLocal<SimpleDateFormat> SDF = new ThreadLocal<SimpleDateFormat>(){
 		@Override
 		protected SimpleDateFormat initialValue() {

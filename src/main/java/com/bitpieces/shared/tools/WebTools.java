@@ -2,6 +2,7 @@ package com.bitpieces.shared.tools;
 
 import static spark.Spark.get;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.codehaus.jackson.JsonNode;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.Paginator;
@@ -343,6 +345,56 @@ public class WebTools {
 		return message;
 
 	}
+
+	public static void makeDepositFromCoinbaseCallback(UID uid, String body) {
+
+		// Sample deposit callback
+		String sampleJson = "{\"order\":{\"id\":null,\"created_at\":null,\"status\":\"completed\",\"ev"
+				+ "ent\":null,\"total_btc\":{\"cents\":100000000,\"currency_iso\":\"BTC\"},\"t"
+				+ "otal_native\":{\"cents\":57250,\"currency_iso\":\"USD\"},\"total_payout\":{\"c"
+				+ "ents\":57250,\"currency_iso\":\"USD\"},\"custom\":\"123456789\",\"rece"
+				+ "ive_address\":\"1JteEueJTjvgTmb6ppYXv8Pab2yNyTuuo1\",\"button\":{\"ty"
+				+ "pe\":\"buy_now\",\"name\":\"Test Item\",\"description\":null,\"id\":null},\"tra"
+				+ "nsaction\":{\"id\":\"53d9400014f27fed5400000a\",\"hash\":\"4a5e1e4baab"
+				+ "89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\",\"confirmat"
+				+ "ions\":0}}}";
+
+		JsonNode root;
+		
+		try {
+			root = Tools.JACKSON.readTree(sampleJson);
+
+			JsonNode order = root.get("order");
+
+			if (order.get("status").asText().equals("completed")) {
+				String bitcents = order.get("total_btc").get("cents").asText();
+				Double btcAmount = Double.valueOf(Double.parseDouble(bitcents)/1E6d);
+
+				String cb_tid = order.get("transaction").get("id").asText();
+
+				System.out.println(bitcents + "|" + btcAmount + "|" + "cb_tid");
+				// First fetch from the table
+//				DBActions.makeDeposit(uid.getId(),btcAmount,cb_tid);
+
+			}		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+
+
+
+
+
+
+
+	}
+
+
+
+
 
 	public static String getPiecesOwnedValueAccumSeriesJson(String userName, UID uid,UnitConverter sf) {
 
