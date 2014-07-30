@@ -494,7 +494,7 @@ public class WebCommon {
 
 		});
 
-		get("/:auth/getcreatorpage", (req, res) -> {
+		get("/getcreatorpage", (req, res) -> {
 			String json = null;
 			try {			
 				WebCommon.allowResponseHeaders(req, res);
@@ -971,7 +971,7 @@ public class WebCommon {
 			UnitConverter sf,
 			String cacheFile) {
 
-		post("/:auth/save_settings", (req, res) -> {
+		post("/save_settings", (req, res) -> {
 			String json = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
@@ -992,7 +992,7 @@ public class WebCommon {
 
 		});
 
-		post("/:auth/save_creators_categories", (req, res) -> {
+		post("/save_creators_categories", (req, res) -> {
 			String json = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
@@ -1031,11 +1031,9 @@ public class WebCommon {
 
 		});
 
-		post("/:auth/user_logout", (req, res) -> {
+		post("/user_logout", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-
-
-			String auth = req.params(":auth");
+			String auth = req.cookie("authenticated_session_id");
 
 
 			// remove the key, and save the map
@@ -1092,7 +1090,7 @@ public class WebCommon {
 
 
 
-		post("/:auth/savecreatorpage", (req, res) -> {
+		post("/savecreatorpage", (req, res) -> {
 			String message = null;
 			try {			
 				WebCommon.allowResponseHeaders(req, res);

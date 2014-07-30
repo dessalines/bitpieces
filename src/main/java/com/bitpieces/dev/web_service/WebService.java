@@ -273,19 +273,6 @@ public class WebService {
 
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	private static final void dbInit(Properties prop) {
 		try {
 			Base.open("com.mysql.jdbc.Driver", 
@@ -303,24 +290,6 @@ public class WebService {
 	private static final void dbClose() {
 		Base.close();
 	}
-
-	//	private static final UID standardInit(Properties prop, Response res, Request req, Cache<String, UID> cache) {
-	//		try {
-	//			Base.open("com.mysql.jdbc.Driver", 
-	//					prop.getProperty("dburl"), 
-	//					prop.getProperty("dbuser"), 
-	//					prop.getProperty("dbpassword"));
-	//		} catch (DBException e) {
-	//			dbClose();
-	//			dbInit(prop);
-	//		}
-	//
-	//		WebCommon.allowResponseHeaders(req, res);
-	//
-	//		UID uid = cache.getIfPresent(req.params(":auth"));
-	//
-	//		return uid;
-	//	}
 
 
 
