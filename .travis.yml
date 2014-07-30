@@ -1,5 +1,16 @@
 language: java
 jdk:
-  - oraclejdk8
-install: mvn install -Dmaven.compiler.target=1.8 -Dmaven.compiler.source=1.8 -DskipTests=true -B
+- oraclejdk8
+install: mvn install -Dmaven.compiler.target=1.8 -Dmaven.compiler.source=1.8 -DskipTests=true
+  -B
 script: mvn test -Dmaven.compiler.target=1.8 -Dmaven.compiler.source=1.8 -B
+deploy:
+ provider: releases
+  user: "tchoulihan"
+   password:
+    secure: llmKlFp6Y17kykR2ZS3zjPB9DeHcucMXwyMU4wzF7VEB70n7dK8fpRmks3C59Fs75rjjq4pEvrxrSzMB21DKU2yWT2CPfmHKNSn6qRoMvpmB6o02vLLNKfo3gsDl/ycDoIuXA5M/K3P+yG2lLQIZi1fFc8xUVPW061i4Zfc3JAU=
+file: "dunno"
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
