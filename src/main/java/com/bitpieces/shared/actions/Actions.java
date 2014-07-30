@@ -364,7 +364,7 @@ public class Actions {
 
 			// now update the valid_until on those bid/ask rows
 			//			Integer bidPiecesLeft = bidPieces
-
+			// tagging a commit
 			// Create new bid/ask rows for the new amounts of pieces, with the valid until date
 
 
