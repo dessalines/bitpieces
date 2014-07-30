@@ -25,6 +25,8 @@ import com.bitpieces.shared.tools.WebTools;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
+// 
+// java -cp bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar com.bitpieces.dev.web_service.WebService
 public class WebService {
 
 
