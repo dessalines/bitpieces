@@ -9,14 +9,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import com.bitpieces.shared.DataSources;
-import com.bitpieces.shared.actions.Actions;
+import com.bitpieces.shared.tools.DBActions;
 import com.bitpieces.shared.tools.Tools;
 
 public class AskBidAccepter implements Job {
 	public static void main(String[] args) {
 		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 		dbInit(prop);
-		Actions.askBidAccepter();
+		DBActions.askBidAccepter();
 		dbClose();
 	}
 	

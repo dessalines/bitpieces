@@ -11,7 +11,7 @@ import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 
 import com.bitpieces.shared.DataSources;
-import com.bitpieces.shared.actions.Actions;
+import com.bitpieces.shared.tools.DBActions;
 import com.bitpieces.shared.tools.Tools;
 import com.bitpieces.shared.tools.UID;
 import com.bitpieces.shared.tools.UnitConverter;
@@ -62,7 +62,7 @@ public class WebService {
 			dbInit(prop);
 
 			// Create the user
-			UID uid = Actions.createUserDevFromAjax(req.body());
+			UID uid = DBActions.createUserDevFromAjax(req.body());
 
 			dbClose();
 
@@ -84,7 +84,7 @@ public class WebService {
 			dbInit(prop);
 
 			// Create the user
-			UID uid = Actions.createCreatorDevFromAjax(req.body());
+			UID uid = DBActions.createCreatorDevFromAjax(req.body());
 
 			dbClose();
 

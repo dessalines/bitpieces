@@ -1,6 +1,5 @@
-package com.bitpieces.shared.actions;
+package com.bitpieces.shared.tools;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -28,17 +27,11 @@ import com.bitpieces.shared.Tables.Users_badges;
 import com.bitpieces.shared.Tables.Users_deposits;
 import com.bitpieces.shared.Tables.Users_funds_current;
 import com.bitpieces.shared.Tables.Users_withdrawals;
-import com.bitpieces.shared.tools.Tools;
 import com.bitpieces.shared.tools.Tools.UserType;
-import com.bitpieces.shared.tools.UID;
-import com.bitpieces.shared.tools.WebCommon;
 import com.coinbase.api.Coinbase;
-import com.coinbase.api.entity.Account;
-import com.coinbase.api.entity.Button;
-import com.coinbase.api.exception.CoinbaseException;
 import com.google.gson.Gson;
 
-public class Actions {
+public class DBActions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final Double SERVICE_FEE_PCT = .05d;
 	private static final Double MINIMUM_REWARD_PCT = 1d;
@@ -409,22 +402,7 @@ public class Actions {
 
 	}
 
-	public static String createCoinbaseAccount(Coinbase cb, String username) {
-		Account account = new Account();
-		account.setName(username);
 
-		Account cbAccountDetails = null;
-		try {
-			cbAccountDetails = cb.createAccount(account);
-		} catch (CoinbaseException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		String fetchedAccountId = cbAccountDetails.getId();
-
-		return fetchedAccountId;
-	}
 	
 	
 
@@ -475,7 +453,7 @@ public class Actions {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// create a coinbase account for that user(This is necessary for payment buttons and such)
-		String cbAcctId = createCoinbaseAccount(cb, postMap.get("username"));
+		String cbAcctId = CoinbaseTools.createCoinbaseAccount(cb, postMap.get("username"));
 
 		try {
 			User user = User.createIt(
@@ -538,7 +516,7 @@ public class Actions {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// create a coinbase account for that user(This is necessary for payment buttons and such)
-		String cbAcctId = createCoinbaseAccount(cb, postMap.get("username"));
+		String cbAcctId = CoinbaseTools.createCoinbaseAccount(cb, postMap.get("username"));
 
 		// Create the required fields 
 		try {

@@ -59,7 +59,6 @@ import com.bitpieces.shared.Tables.Users_reputation;
 import com.bitpieces.shared.Tables.Users_settings;
 import com.bitpieces.shared.Tables.Users_transactions;
 import com.bitpieces.shared.Tables.Worth;
-import com.bitpieces.shared.actions.Actions;
 import com.bitpieces.shared.tools.Tools.UserType;
 
 public class WebTools {
@@ -138,7 +137,7 @@ public class WebTools {
 		}
 
 
-		Actions.createBid(uid.getId(), 
+		DBActions.createBid(uid.getId(), 
 				creator.getId().toString(), 
 				bidPieces, 
 				btcBid, 
@@ -173,7 +172,7 @@ public class WebTools {
 			message = "Ask for " + askPieces + " pieces placed at " + btcAsk + " BTC";
 		}
 
-		Actions.createAsk(uid.getId(), 
+		DBActions.createAsk(uid.getId(), 
 				creator.getId().toString(), 
 				askPieces,
 				btcAsk,
@@ -197,7 +196,7 @@ public class WebTools {
 		Double price_per_piece = p.get(0).getDouble("price_per_piece");
 
 
-		Actions.sellFromCreator(creator.getId().toString(), 
+		DBActions.sellFromCreator(creator.getId().toString(), 
 				uid.getId(), 
 				Integer.valueOf(postMap.get("buyPieces")), 
 				price_per_piece);
@@ -258,7 +257,7 @@ public class WebTools {
 			message = "Reward at " + btcReward + " BTC";
 		}
 
-		Actions.issueReward(uid.getId(), btcReward);
+		DBActions.issueReward(uid.getId(), btcReward);
 
 		return message;
 
@@ -339,7 +338,7 @@ public class WebTools {
 
 
 		// First fetch from the table
-		Actions.makeDepositFake(uid.getId(),btcAmount);
+		DBActions.makeDepositFake(uid.getId(),btcAmount);
 
 		return message;
 

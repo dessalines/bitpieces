@@ -15,7 +15,6 @@ import spark.Request;
 import spark.Response;
 
 import com.bitpieces.shared.DataSources;
-import com.bitpieces.shared.actions.Actions;
 import com.bitpieces.shared.tools.Tools.UserType;
 import com.google.common.cache.Cache;
 
@@ -1060,7 +1059,7 @@ public class WebCommon {
 			dbInit(prop);
 
 			// log the user in
-			UID uid = Actions.userLogin(req.body());
+			UID uid = DBActions.userLogin(req.body());
 
 			dbClose();
 
@@ -1076,7 +1075,7 @@ public class WebCommon {
 			dbInit(prop);
 
 			// log the user in
-			UID uid = Actions.creatorLogin(req.body());
+			UID uid = DBActions.creatorLogin(req.body());
 
 			dbClose();
 
