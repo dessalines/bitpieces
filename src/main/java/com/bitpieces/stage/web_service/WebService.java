@@ -38,7 +38,7 @@ public class WebService {
 	public static void main(String[] args) {
 
 		// Set up coinbase for operations
-		Coinbase cb = setupCoinbase();
+		Coinbase cb = setupCoinbase(DataSources.COINBASE_PROP);
 		
 		// Load the correct db connection
 		Properties prop = Tools.loadProperties(DataSources.STAGE_DB_PROP);
@@ -257,7 +257,7 @@ public class WebService {
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 				WebCommon.verifyUser(uid);
 
-				code = CoinbaseTools.createDepositButton(cb, uid.getUsername());
+				code = CoinbaseTools.fetchOrCreateDepositButton(cb, uid);
 				
 				dbClose();
 
@@ -275,10 +275,10 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				System.out.println(req.body());
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyUser(uid);
+
+
 				
-				WebTools.makeDepositFromCoinbaseCallback(uid, req.body());
+				WebTools.makeDepositFromCoinbaseCallback(req.body());
 				
 			} catch (NoSuchElementException e) {
 				res.status(666);
@@ -292,8 +292,8 @@ public class WebService {
 
 	}
 
-	public static Coinbase setupCoinbase() {
-		Properties prop = Tools.loadProperties(DataSources.COINBASE_PROP);
+	public static Coinbase setupCoinbase(String propLoc) {
+		Properties prop = Tools.loadProperties(propLoc);
 		Coinbase cb = null;
 		try {
 			cb = new CoinbaseBuilder()

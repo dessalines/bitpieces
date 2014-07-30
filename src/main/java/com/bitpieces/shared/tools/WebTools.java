@@ -346,7 +346,7 @@ public class WebTools {
 
 	}
 
-	public static void makeDepositFromCoinbaseCallback(UID uid, String body) {
+	public static void makeDepositFromCoinbaseCallback(String body) {
 
 		// Sample deposit callback
 		String sampleJson = "{\"order\":{\"id\":null,\"created_at\":null,\"status\":\"completed\",\"ev"
@@ -358,11 +358,9 @@ public class WebTools {
 				+ "nsaction\":{\"id\":\"53d9400014f27fed5400000a\",\"hash\":\"4a5e1e4baab"
 				+ "89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\",\"confirmat"
 				+ "ions\":0}}}";
-
-		JsonNode root;
 		
 		try {
-			root = Tools.JACKSON.readTree(sampleJson);
+			JsonNode root = Tools.JACKSON.readTree(sampleJson);
 
 			JsonNode order = root.get("order");
 
@@ -372,6 +370,9 @@ public class WebTools {
 
 				String cb_tid = order.get("transaction").get("id").asText();
 
+				// See if you can use the button ID to link to a user, and have a users_buttons table
+				
+				
 				System.out.println(bitcents + "|" + btcAmount + "|" + "cb_tid");
 				// First fetch from the table
 //				DBActions.makeDeposit(uid.getId(),btcAmount,cb_tid);
