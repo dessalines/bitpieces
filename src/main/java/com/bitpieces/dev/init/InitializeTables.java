@@ -50,14 +50,13 @@ import com.bitpieces.shared.tools.Tools;
  * + Make user pages transparent
  * Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
  * Make 3 column creator pages
+ * Take authid out of all post urls for security(just pick it up from the req.cookies)
  * 
  * 
  * @author tyler
  *
  */
 public class InitializeTables {
-
-
 
 
 	public static void main(String[] args) {

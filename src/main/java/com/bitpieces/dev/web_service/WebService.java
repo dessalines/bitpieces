@@ -3,17 +3,12 @@ package com.bitpieces.dev.web_service;
 import static spark.Spark.post;
 import static spark.SparkBase.setPort;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
-
-import spark.Request;
-import spark.Response;
 
 import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.actions.Actions;
@@ -105,11 +100,14 @@ public class WebService {
 			}
 
 		});
-		
-		post("/:auth/placebid", (req, res) -> {
+
+		post("/placebid", (req, res) -> {
 			String message = null;
 			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+
 				WebCommon.verifyUser(uid);
 
 				message = WebTools.placeBid(uid, req.body(), sf);
@@ -124,7 +122,7 @@ public class WebService {
 
 		});
 
-		post("/:auth/placeask", (req, res) -> {
+		post("/placeask", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 
 			dbInit(prop);
@@ -146,10 +144,12 @@ public class WebService {
 
 		});
 
-		post("/:auth/placebuy", (req, res) -> {
+		post("/placebuy", (req, res) -> {
 			String message = null;
 			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 				WebCommon.verifyUser(uid);
 
 				message = WebTools.placeBuy(uid, req.body());
@@ -164,10 +164,12 @@ public class WebService {
 
 		});
 
-		post("/:auth/issue_pieces", (req, res) -> {
+		post("/issue_pieces", (req, res) -> {
 			String message = null;
 			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 				WebCommon.verifyCreator(uid);
 
 				message = WebTools.issuePieces(uid, req.body(), sf);
@@ -182,10 +184,12 @@ public class WebService {
 
 		});
 
-		post("/:auth/new_reward", (req, res) -> {
+		post("/new_reward", (req, res) -> {
 			String message = null;
 			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 				WebCommon.verifyCreator(uid);
 
 				message = WebTools.newReward(uid, req.body(), sf);
@@ -200,10 +204,12 @@ public class WebService {
 
 		});
 
-		post("/:auth/raise_funds", (req, res) -> {
+		post("/raise_funds", (req, res) -> {
 			String message = null;
 			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 				WebCommon.verifyCreator(uid);
 
 				message = WebTools.raiseFunds(uid, req.body(), sf);
@@ -218,10 +224,12 @@ public class WebService {
 
 		});
 
-		post("/:auth/delete_bid_ask", (req, res) -> {
+		post("/delete_bid_ask", (req, res) -> {
 			String message = null;
 			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 				WebCommon.verifyUser(uid);
 
 				message = WebTools.deleteBidAsk(uid, req.body());
@@ -236,10 +244,12 @@ public class WebService {
 
 		});
 
-		post("/:auth/make_deposit_fake", (req, res) -> {
+		post("/make_deposit_fake", (req, res) -> {
 			String message = null;
 			try {
-				UID uid = standardInit(prop, res, req, SESSION_TO_USER_MAP);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 				WebCommon.verifyUser(uid);
 
 				message = WebTools.makeDepositFake(uid, req.body(), sf);
@@ -294,23 +304,23 @@ public class WebService {
 		Base.close();
 	}
 
-	private static final UID standardInit(Properties prop, Response res, Request req, Cache<String, UID> cache) {
-		try {
-			Base.open("com.mysql.jdbc.Driver", 
-					prop.getProperty("dburl"), 
-					prop.getProperty("dbuser"), 
-					prop.getProperty("dbpassword"));
-		} catch (DBException e) {
-			dbClose();
-			dbInit(prop);
-		}
-
-		WebCommon.allowResponseHeaders(req, res);
-
-		UID uid = cache.getIfPresent(req.params(":auth"));
-
-		return uid;
-	}
+	//	private static final UID standardInit(Properties prop, Response res, Request req, Cache<String, UID> cache) {
+	//		try {
+	//			Base.open("com.mysql.jdbc.Driver", 
+	//					prop.getProperty("dburl"), 
+	//					prop.getProperty("dbuser"), 
+	//					prop.getProperty("dbpassword"));
+	//		} catch (DBException e) {
+	//			dbClose();
+	//			dbInit(prop);
+	//		}
+	//
+	//		WebCommon.allowResponseHeaders(req, res);
+	//
+	//		UID uid = cache.getIfPresent(req.params(":auth"));
+	//
+	//		return uid;
+	//	}
 
 
 

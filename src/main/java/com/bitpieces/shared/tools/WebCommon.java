@@ -20,11 +20,11 @@ import com.bitpieces.shared.tools.Tools.UserType;
 import com.google.common.cache.Cache;
 
 public class WebCommon {
-	
+
 	// How long to keep the cookies
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(180);
-	
-	
+
+
 	/**
 	 * This needs the cache, to get the correct user, a properties file for making the 
 	 * correct db connections, and a unit converter to convert everything correctly
@@ -51,17 +51,14 @@ public class WebCommon {
 			return null;
 		});
 
-		get("/:auth/testauth", (req, res) -> {
-			allowResponseHeaders(req, res);
-			return "Heyyy u!";
 
-		});
-
-		get("/:auth/get_users_settings", (req, res) -> {
+		get("/get_users_settings", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req, cache);
-//				verifyUser(uid);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache);
+				//				verifyUser(uid);
 
 				// get currency if one exists
 				json = WebTools.getUsersSettingsJson(uid);
@@ -109,7 +106,7 @@ public class WebCommon {
 			UID uid = getUserFromCookie(req, cache);
 			try {
 
-			
+
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, uid, sf);
 
@@ -158,7 +155,7 @@ public class WebCommon {
 				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
 				UID uid = getUserFromCookie(req, cache);
-			
+
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedCurrentSeriesJson(userName, creatorName, uid, sf);
 
@@ -205,7 +202,7 @@ public class WebCommon {
 				String userName = req.params(":user");
 				UID uid = getUserFromCookie(req, cache);
 
-				
+
 				dbInit(prop);
 				json = WebTools.getRewardsEarnedAccumSeriesJson(userName, uid, sf);
 
@@ -221,7 +218,7 @@ public class WebCommon {
 
 
 		});
-		
+
 		get("/:user/get_rewards_earned_total", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
@@ -352,7 +349,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_creators_funds_current", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
@@ -452,11 +449,11 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/creators_search/:query", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
-			
+
 			String query = req.params(":query");
 
 			String json = WebTools.creatorsSearchJson(query);
@@ -468,7 +465,7 @@ public class WebCommon {
 
 
 		});
-		
+
 		get("/get_categories", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
@@ -482,7 +479,7 @@ public class WebCommon {
 
 
 		});
-		
+
 		get("/get_currencies", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
@@ -496,11 +493,13 @@ public class WebCommon {
 
 
 		});
-		
+
 		get("/:auth/getcreatorpage", (req, res) -> {
 			String json = null;
 			try {			
-				UID cid = standardInit(prop, res, req, cache);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID cid = WebCommon.getUserFromCookie(req, cache);
 				verifyCreator(cid);
 
 				// get the creator id from the token		
@@ -577,7 +576,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_pieces_owned_value_current_creator", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
@@ -603,7 +602,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			
+
 			try {			
 
 				dbInit(prop);
@@ -688,14 +687,14 @@ public class WebCommon {
 			String json = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
-			
+
 			UID uid = WebCommon.getUserFromCookie(req, cache);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				
+
 				json = WebTools.getBidsAsksCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
@@ -706,8 +705,8 @@ public class WebCommon {
 			return json;
 
 		});
-		
-		
+
+
 
 		get("/:creator/get_rewards/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
@@ -730,12 +729,12 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_rewards_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			
+
 			UID uid = WebCommon.getUserFromCookie(req, cache);
 			try {			
 
@@ -823,7 +822,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			
+
 			try {			
 
 				dbInit(prop);
@@ -923,7 +922,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_creators_funds_accum", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
@@ -966,16 +965,18 @@ public class WebCommon {
 
 		});
 	}
-	
+
 	public static void commonPosts(Cache<String, UID> cache, 
 			Properties prop, 
 			UnitConverter sf,
 			String cacheFile) {
-		
+
 		post("/:auth/save_settings", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req, cache);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache);
 
 				// get currency if one exists
 				json = WebTools.saveSettings(uid, req.body());
@@ -990,11 +991,13 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		post("/:auth/save_creators_categories", (req, res) -> {
 			String json = null;
 			try {
-				UID uid = standardInit(prop, res, req, cache);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache);
 				WebCommon.verifyCreator(uid);
 
 				// get currency if one exists
@@ -1012,8 +1015,8 @@ public class WebCommon {
 		});
 
 
-		
-		
+
+
 		post("/discover", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
@@ -1044,8 +1047,8 @@ public class WebCommon {
 			return "Logged out";
 
 		});
-		
-		
+
+
 
 
 
@@ -1092,7 +1095,9 @@ public class WebCommon {
 		post("/:auth/savecreatorpage", (req, res) -> {
 			String message = null;
 			try {			
-				UID cid = standardInit(prop, res, req, cache);
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID cid = WebCommon.getUserFromCookie(req, cache);
 				WebCommon.verifyCreator(cid);
 
 
@@ -1110,18 +1115,18 @@ public class WebCommon {
 
 		});
 	}
-	
-	
+
+
 	public static void allowResponseHeaders(Request req, Response res) {
 		String origin = req.headers("Origin");
 		res.header("Access-Control-Allow-Credentials", "true");
-//		System.out.println(origin);
+		//		System.out.println(origin);
 		if (DataSources.ALLOW_ACCESS_ADDRESSES.contains(req.headers("Origin"))) {
 			res.header("Access-Control-Allow-Origin", origin);
 		}
 
 	}
-	
+
 	public static UID getUserFromCookie(Request req, Cache<String, UID> cache) {
 		String authId = req.cookie("authenticated_session_id");
 
@@ -1135,7 +1140,7 @@ public class WebCommon {
 
 		return uid;
 	}
-	
+
 	private static final void dbInit(Properties prop) {
 		try {
 			Base.open("com.mysql.jdbc.Driver", 
@@ -1146,31 +1151,14 @@ public class WebCommon {
 			dbClose();
 			dbInit(prop);
 		}
-	
+
 	}
 
 	private static final void dbClose() {
 		Base.close();
 	}
-	
 
-	private static final UID standardInit(Properties prop, Response res, Request req, Cache<String, UID> cache) {
-		try {
-			Base.open("com.mysql.jdbc.Driver", 
-					prop.getProperty("dburl"), 
-					prop.getProperty("dbuser"), 
-					prop.getProperty("dbpassword"));
-		} catch (DBException e) {
-			dbClose();
-			dbInit(prop);
-		}
 
-		WebCommon.allowResponseHeaders(req, res);
-
-		UID uid = cache.getIfPresent(req.params(":auth"));
-
-		return uid;
-	}
 	public static void verifyUser(UID uid) throws NoSuchElementException {
 		if (uid.getType() != UserType.User) {
 			throw new NoSuchElementException("Sorry, not a user");
@@ -1184,12 +1172,12 @@ public class WebCommon {
 		}
 
 	}
-	
+
 	private static void writeCacheToFile(Cache<String, UID> cache, String file) {
 		Map<String, UID> serializableMap = new HashMap<String, UID>(cache.asMap());
 		Tools.writeObjectToFile(serializableMap, file);
 	}
-	
+
 	public static String verifyLoginAndSetCookies(UID uid, Response res, Cache<String, UID> cache, String cacheFile) {
 		if (uid != null) {
 			String authenticatedSession = Tools.generateSecureRandom();
@@ -1218,10 +1206,10 @@ public class WebCommon {
 		}
 
 	}
-	
+
 
 	public static Integer cookieExpiration(Integer minutes) {
 		return minutes*60;
 	}
-	
+
 }
