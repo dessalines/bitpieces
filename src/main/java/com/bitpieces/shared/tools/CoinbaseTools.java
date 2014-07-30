@@ -54,7 +54,7 @@ public class CoinbaseTools {
 		b.setName("Deposit");
 		b.setType(Type.BUY_NOW);
 		b.setPriceCurrencyIso(currencyIso);
-		b.setCallbackUrl("http://" + DataSources.IP_ADDRESS + ":4567/coinbase_deposit_callback");
+		b.setCallbackUrl("http://" + DataSources.IP_ADDRESS + ":4568/coinbase_deposit_callback");
 		b.setDescription("Make a deposit to be able to buy and bid on pieces");
 		b.setStyle(Style.NONE);
 		b.setIncludeEmail(true);
