@@ -13,6 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<activejdbc.version>1.4.10-SNAPSHOT</activejdbc.version>
+		<version>0.0.1</version>
 	</properties>
 
 <repositories>
@@ -47,6 +48,26 @@
 
 	<build>
 		<plugins>
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.2</version>
+            <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+
+            </configuration>
+            <executions>
+                <execution>
+                    <id>assemble-all</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
 			<plugin>
 				<groupId>org.javalite</groupId>
 				<artifactId>activejdbc-instrumentation</artifactId>
