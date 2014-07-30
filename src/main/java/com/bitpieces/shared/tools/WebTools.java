@@ -342,10 +342,6 @@ public class WebTools {
 
 		return message;
 
-
-
-
-
 	}
 
 	public static String getPiecesOwnedValueAccumSeriesJson(String userName, UID uid,UnitConverter sf) {

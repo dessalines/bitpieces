@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+  <title>Dashboard Template for Bootstrap</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="darkly.bootstrap.min.css" rel="stylesheet">
+
+  <!-- Link to font awesome -->
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+  <!-- Bootstrap social css -->
+  <link href="bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
+
+  <!--   Bootstrap validator -->
+  <link rel="stylesheet" href="bootstrap-validator/dist/css/bootstrapValidator.min.css"/>
+
+  <!--   toastr css -->
+  <link href="toastr/toastr.css" rel="stylesheet"/>
+
+  <!-- This main css -->
+  <link href="userdashboard.css" rel="stylesheet">
+
+  <!-- Summernote -->
+  <link href="summernote/dist/summernote.css" rel="stylesheet"/>
+
+  <!-- Just for debugging purposes. Don't actually copy this line! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+      <!-- Navbar -->
+    <!-- NAVBAR
+    ================================================== -->
+    <body>
+      <div class="navbar-wrapper">
+        <div class="container">
+
+          <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">BitPieces</a>
+              </div>
+              <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="/carousel">Home</a></li>
+                  <li><a href="discover">Discover</a></li>
+                  <li><a href="creators">Creators</a></li> 
+                  <li><a href="/userdashboard" id="userdashboardhref" class="hide">Dashboard</a></li>
+                  <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+                  <li><a href="#logout" id="logouthref" class="hide">Log Out</a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Action</a></li>
+                      <li><a href="#">Another action</a></li>
+                      <li><a href="#">Something else here</a></li>
+                      <li class="divider"></li>
+                      <li class="dropdown-header">Nav header</li>
+                      <li><a href="#">Separated link</a></li>
+                      <li><a href="#">One more separated link</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                  <input type="text" class="form-control" placeholder="Search...">
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+      <!-- Sidebar -->
+      <!-- <div class="container-fluid"> -->
+      <!-- <div class="sidebar-wrapper"> -->
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar" >
+          <li><a href="creatordashboard.html">Overview</a></li>
+          <li class="active"><a href="creatordashboardcustomize.html"><i class="fa fa-edit"></i> Customize</a></li>
+          <li><a href="#">Reports</a></li>
+          <li><a href="#">Analytics</a></li>
+          <li><a href="#">Export</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="">Nav item</a></li>
+          <li><a href="">Nav item again</a></li>
+          <li><a href="">One more nav</a></li>
+          <li><a href="">Another nav item</a></li>
+          <li><a href="">More navigation</a></li>
+        </ul>
+        <ul class="nav nav-sidebar">
+          <li><a href="">Nav item again</a></li>
+          <li><a href="">One more nav</a></li>
+          <li><a href="">Another nav item</a></li>
+        </ul>
+        <!-- </div> -->
+        <!-- </div> -->
+      </div>
+
+
+
+      <!-- Main -->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <h1 class="page-header">Dashboard</h1>
+
+
+        <!-- <form id="customizeForm" class="form-horizontal" role="form"> -->
+        <!-- <div class="form-group"> -->
+        <!-- <label>Text area</label> -->
+        <!-- textarea id="main_body" name="main_body" class="form-control" rows="3"></textarea>--> 
+         <!--<script id="main_body_template" type="x-tmpl-mustache"> </script>--> 
+        <div id="main_body"></div>
+        
+          
+
+        <!-- </div> -->
+ 
+        <!-- <div class="form-group"> -->
+        <div class="col-sm-offset-2 col-sm-10">
+          <button id="saveBtn" type="submit" class="btn btn-default">Save</button>
+        </div>
+      </div>
+      <!-- </form> -->
+
+    </div>
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="bootstrap-dist/js/bootstrap.min.js"></script>
+      
+      <script type="text/javascript" src="bootstrap-validator/dist/js/bootstrapValidator.js"></script>
+      <script src="toastr/toastr.js"></script>
+      <script src="mustache/mustache.js"></script>
+      <script src="holder/holder.js"></script>
+      <script src="typeahead.js/typeahead.bundle.js"></script>
+      <script src="summernote/dist/summernote.min.js"></script>
+
+
+
+      <!-- my scripts -->
+      <script src="tools.js"></script>
+      <script src="userdashboard.js"></script>
+      <script src="login.js"></script>
+      <script src="creatordashboardcustomize.js"></script>
+
+    </body>
+    </html>
+

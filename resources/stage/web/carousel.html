@@ -1,0 +1,519 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+  <title>Derp Template for Bootstrap</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="darkly.bootstrap.min.css" rel="stylesheet">
+
+  <!-- Link to font awesome -->
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+  <!-- Bootstrap social css -->
+  <link href="bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
+
+  <!--   Bootstrap validator -->
+  <link rel="stylesheet" href="bootstrap-validator/dist/css/bootstrapValidator.min.css"/>
+
+  <!--   toastr css -->
+  <link href="toastr/toastr.css" rel="stylesheet"/>
+
+    <!--   typeahead css -->
+  <link href="typeaheadjs.css" rel="stylesheet"/>
+
+  <!-- Just for debugging purposes. Don't actually copy this line! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Custom styles for this template -->
+        <link href="carousel.css" rel="stylesheet" />
+      </head>
+
+
+  <!-- NAVBAR
+  ================================================== -->
+  <body>
+    <!-- plug into here -->
+    <nav class="navbar navbar-default" role="navigation">
+     <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">BitPieces</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+     <ul class="nav navbar-nav">
+      <li><a href="carousel">Home</a></li>
+      <li><a href="discover">Discover</a></li>
+      <li><a href="creators">Creators</a></li> 
+      <li><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+      <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li class="dropdown-header">Nav header</li>
+          <li><a href="#">Separated link</a></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+    <form id="creator_search" class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+       <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
+     </div>
+     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+   </form>
+
+
+   <ul class="nav navbar-nav navbar-right">
+    <li class="dropdown messages-dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <li class="dropdown-header">7 New Messages</li>
+        <li class="message-preview">
+          <a href="#">
+            <span class="avatar"><img src="http://placehold.it/50x50"></span>
+            <span class="name">John Smith:</span>
+            <span class="message">Hey there, I wanted to ask you something...</span>
+            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li class="message-preview">
+          <a href="#">
+            <span class="avatar"><img src="http://placehold.it/50x50"></span>
+            <span class="name">John Smith:</span>
+            <span class="message">Hey there, I wanted to ask you something...</span>
+            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li class="message-preview">
+          <a href="#">
+            <span class="avatar"><img src="http://placehold.it/50x50"></span>
+            <span class="name">John Smith:</span>
+            <span class="message">Hey there, I wanted to ask you something...</span>
+            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
+          </a>
+        </li>
+        <li class="divider"></li>
+        <li><a href="#">View Inbox <span class="badge">7</span></a></li>
+      </ul>
+    </li>
+
+
+    <li id="userDropdown" class="dropdown user-dropdown">
+
+      <script id="usernameTemplate" type="x-tmpl-mustache">  
+       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+
+
+       <ul class="dropdown-menu">
+         <li><a id="settings" href="userdashboard_settings"><i class="fa fa-gear"></i> Settings</a></li>
+         <li class="divider"></li>
+         <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+
+       </ul>
+     </script>
+   </li>
+ </ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+
+
+<!-- Login Modal -->
+
+<div class="modal fade bs-example-modal-lg" id="userloginModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="userloginModalLabel">Sign in or Register</h4>
+      </div>
+
+      <div class="modal-body">
+
+        <h3> Sign in </h3>
+        <form id="loginForm" class="form-horizontal" role="form">
+          <div id="userLoginDiv" class="form-group">
+            <label for="inputUsername3" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-10">
+              <input name="username" type="Username" class="form-control" id="inputUsername3" placeholder="Username"
+              data-bv-message="The username is not valid"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="The username is required and cannot be empty"
+
+              data-bv-regexp="true"
+              data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+              data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+
+              data-bv-stringlength="true"
+              data-bv-stringlength-min="6"
+              data-bv-stringlength-max="30"
+              data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+              <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="The password is required and cannot be empty"
+
+              data-bv-different="true"
+              data-bv-different-field="username"
+              data-bv-different-message="The password cannot be the same as username" 
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+                <label>
+                  <input name="remember" type="checkbox"> Remember me
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <div class="checkbox">
+
+               <label>
+                <input name="creatorCheckbox" type="checkbox" id="creatorCheckbox" value="creator"> I'm a Creator
+              </label>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="signinBtn" type="submit" class="btn btn-default">Sign in</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- The different sign ins -->
+      <table style="width:100%">
+        <tr>
+          <td>
+            <a class="btn btn-primary btn-social btn-facebook">
+              <i class="fa fa-facebook"></i> Sign in with Facebook
+            </a>
+          </td>
+          <td>
+           <a class="btn btn-primary btn-social btn-twitter">
+            <i class="fa fa-twitter"></i> Sign in with Twitter
+          </a>
+        </td>
+        <td>
+         <a class="btn btn-primary btn-social btn-google-plus">
+          <i class="fa fa-google-plus"></i> Sign in with Google
+        </a>
+      </td>
+    </td>
+    <td>
+     <a class="btn btn-primary btn-social btn-reddit">
+      <i class="fa fa-reddit"></i> Sign in with Reddit
+    </a>
+  </td>
+</tr>
+</table>
+<hr>
+<h3> Register </h3>
+
+<form id="registerForm" class="form-horizontal" role="form"
+data-bv-message="This value is not valid"
+data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+
+<div class="form-group">
+ <label for="inputUsername4" class="col-sm-2 control-label">Username</label>
+ <div class="col-sm-10">
+  <input name="username" type="Username" class="form-control" id="inputUsername4" placeholder="Username"
+  data-bv-message="The username is not valid"
+
+  data-bv-notempty="true"
+  data-bv-notempty-message="The username is required and cannot be empty"
+
+  data-bv-regexp="true"
+  data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+  data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+
+  data-bv-stringlength="true"
+  data-bv-stringlength-min="6"
+  data-bv-stringlength-max="30"
+  data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+
+  />
+
+</div>
+</div>
+<div class="form-group">
+  <label for="inputEmail3" class="col-sm-2 control-label">Email address</label>
+  <div class="col-sm-10">
+    <input name="email" type="inputEmail3" class="form-control" id="inputEmail3" placeholder="Email"
+    data-bv-emailaddress="true"
+    data-bv-emailaddress-message="The input is not a valid email address"  />
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+  <div class="col-sm-10">
+    <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+    data-bv-notempty="true"
+    data-bv-notempty-message="The password is required and cannot be empty"
+
+    data-bv-identical="true"
+    data-bv-identical-field="verifyPassword"
+    data-bv-identical-message="The password and its confirm are not the same"
+
+    data-bv-different="true"
+    data-bv-different-field="username"
+    data-bv-different-message="The password cannot be the same as username" />
+
+
+
+  </div>
+</div>
+<div class="form-group">
+ <label for="inputPassword3" class="col-sm-2 control-label">Verify password</label>
+ <div class="col-sm-10">
+  <input name="verifyPassword" type="password" class="form-control" id="inputPassword3" placeholder="Verify Password"
+  data-bv-notempty="true"
+  data-bv-notempty-message="The confirm password is required and cannot be empty"
+
+  data-bv-identical="true"
+  data-bv-identical-field="password"
+  data-bv-identical-message="The password and its confirm are not the same"
+
+  data-bv-different="true"
+  data-bv-different-field="username"
+  data-bv-different-message="The password cannot be the same as username" />
+
+
+</div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="checkbox">
+      <label>
+        <input name="remember" type="checkbox"> Remember me
+      </label>
+    </div>
+  </div>
+</div>
+
+TODO some kinda captcha thing
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <button id="registerBtn" type="submit" class="btn btn-default">Register</button>
+  </div>
+</div>
+</form>
+
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+      <!-- Carousel
+      ================================================== -->
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="item active">
+            <img data-src="holder/holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide">
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>Example headline.</h1>
+                <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+                <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <img data-src="holder/holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide">
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>Another example headline.</h1>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <img data-src="holder/holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide">
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>One more for good measure.</h1>
+                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+      </div><!-- /.carousel -->
+
+
+
+      <!-- Marketing messaging and featurettes
+      ================================================== -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
+
+      <div class="container marketing">
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+          <div class="col-lg-4">
+            <img class="img-circle" data-src="holder/holder.js/140x140" alt="Generic placeholder image">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
+
+
+            </p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img class="img-circle" data-src="holder/holder.js/140x140" alt="Generic placeholder image">
+            <h2>Heading</h2>
+            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img class="img-circle" data-src="holder/holder.js/140x140" alt="Generic placeholder image">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+
+
+        <!-- START THE FEATURETTES -->
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+              <!-- Button trigger modal -->
+              <!-- Standard button -->
+
+
+            </p>
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-5">
+            <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
+          </div>
+          <div class="col-md-7">
+            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div id="last" class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+            <!--#include virtual="virtual_file.html"-->
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <!-- /END THE FEATURETTES -->
+
+
+        <!-- FOOTER -->
+        <footer>
+          <p class="pull-right"><a href="#">Back to top</a></p>
+          <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </footer>
+
+      </div><!-- /.container -->
+
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="jquery-1.11.1.min.js"></script>
+      <script src="bootstrap-dist/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="bootstrap-validator/dist/js/bootstrapValidator.js"></script>
+      <script src="toastr/toastr.js"></script>
+      <script src="mustache/mustache.js"></script>
+      <script src="holder/holder.js"></script>
+      <script src="json.date-extensions.js"></script>
+      <script src="tablesorter/jquery.tablesorter.js"></script> 
+      <script src="highcharts/js/highcharts.js"></script>
+      <script src="highcharts/js//modules/exporting.js"></script>
+      <script src="highcharts/js/themes/dark-unica.js"></script>
+      <script src="typeahead.js/typeahead.bundle.js"></script>
+      
+
+      <!--   My scripts -->
+      <script src="tools.js"></script>
+      <script src="carousel.js"></script>
+      <script src="login.js"></script>
+
+
+    </body>
+    </html>
+

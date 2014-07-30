@@ -449,7 +449,7 @@ public class DBActions {
 
 	}
 
-	public static UID createUserFromAjax(Coinbase cb, String reqBody) {
+	public static UID createUserRealFromAjax(Coinbase cb, String reqBody) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// create a coinbase account for that user(This is necessary for payment buttons and such)
@@ -512,7 +512,7 @@ public class DBActions {
 	}
 
 
-	public static UID createCreatorFromAjax(Coinbase cb, String reqBody) {
+	public static UID createCreatorRealFromAjax(Coinbase cb, String reqBody) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 		// create a coinbase account for that user(This is necessary for payment buttons and such)
