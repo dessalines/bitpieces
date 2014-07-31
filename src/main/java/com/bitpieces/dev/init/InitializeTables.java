@@ -51,6 +51,7 @@ import com.bitpieces.shared.tools.Tools;
  * Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
  * Make 3 column creator pages
  * Take authid out of all post urls for security(just pick it up from the req.cookies)
+ * 'This creator has enough in their account to reward their funders for X years
  * 
  * 
  * @author tyler
@@ -170,7 +171,7 @@ public class InitializeTables {
 	private static void creator_withdrawal() {
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
 
-		DBActions.creatorWithdrawal(leo.getId().toString(), .08d);
+		DBActions.creatorWithdrawalFake(leo.getId().toString(), .08d);
 
 
 	}

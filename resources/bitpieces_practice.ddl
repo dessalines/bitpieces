@@ -689,7 +689,7 @@ order by creators_name, time_ desc;
 
 
 CREATE VIEW rewards_view as 
-select username as creators_name, time_, reward_per_piece_per_year
+select rewards.creators_id, username as creators_name, time_, reward_per_piece_per_year
 from rewards
 inner join creators
 on rewards.creators_id = creators.id
@@ -1206,13 +1206,16 @@ creators
 on creators_page_fields.creators_id = creators.id;
 
 CREATE VIEW pieces_available_view as
-select creators.username as creators_name, 
+select pieces_available.creators_id, 
+creators.username as creators_name, 
 pieces_total, 
 pieces_owned_total,
 pieces_available 
 from pieces_available
 inner join creators
 on pieces_available.creators_id = creators.id;
+
+
 
 
 -- TODO not sure what the time column on this should be
@@ -1296,8 +1299,40 @@ currencies
 on creators.local_currency_id = currencies.id;
 
 
+-- This is X ye
+CREATE VIEW creators_safety_current as
+select
+creators_funds_current.creators_id,
+creators_funds_current.creators_name,
+creators_funds_current.current_funds,
+pieces_owned_total,
+reward_per_piece_per_year,
+pieces_owned_total * reward_per_piece_per_year as rewards_total_per_year,
+creators_funds_current.current_funds/(reward_per_piece_per_year * pieces_owned_total) as x_years_of_payments_to_funders
+from creators_funds_current
+inner join pieces_available_view
+on pieces_available_view.creators_id = creators_funds_current.creators_id
+inner join rewards_current
+on rewards_current.creators_id = creators_funds_current.creators_id;
 
 
+CREATE VIEW creators_safety as 
+select
+creators_funds_accum.creators_id,
+creators_funds_accum.creators_name,
+creators_funds_accum.time_,
+creators_funds_accum.funds_accum,
+pieces_owned_by_creator.pieces_owned_sum as pieces_by_creator_sum,
+reward_per_piece_per_year,
+pieces_owned_by_creator.pieces_owned_sum * reward_per_piece_per_year as rewards_total_per_year,
+creators_funds_accum.funds_accum/(reward_per_piece_per_year * pieces_owned_by_creator.pieces_owned_sum) as x_years_of_payments_to_funders
+from creators_funds_accum
+inner join pieces_owned_by_creator
+on pieces_owned_by_creator.creators_id = creators_funds_accum.creators_id
+inner join rewards_current
+on rewards_current.creators_id = creators_funds_accum.creators_id
+--where (creators_funds_accum.time_ >= pieces_owned_by_creator.start_time_ and creators_funds_accum.time_ <= pieces_owned_by_creator.end_time_)
+where creators_funds_accum.time_ >= pieces_owned_by_creator.start_time_;
 
 
 
@@ -1336,7 +1371,7 @@ and pieces_owned_value_first.owners_id = rewards_earned_total.owners_id
 
 /*
 
-insert into users_deposits (users_id, cb_tid, time_, btc_amount, status) values(2, 'fake', '2014-07-30 13:08:37.0', 0.01021, 'completed')
+insert into users_deposits (users_id, cb_tid, time_, btc_amount, status) values(2, 'fake', '2014-07-30 13:08:37.0', 0.001811, 'completed')
 1F2Kcd7b2RKVXdR4b7WFa5tAgvtv4RNPbK
 select * from pieces_total;
 select * from pieces_available;

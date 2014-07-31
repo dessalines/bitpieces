@@ -377,7 +377,7 @@ public class DBActions {
 		}
 
 	}
-	
+
 
 	public static Users_deposits makeDepositFake(String usersId, Double btc_amount) {
 
@@ -397,16 +397,16 @@ public class DBActions {
 	public static Users_deposits makeOrUpdateDeposit(String userId, Double btc_amount, String cb_tid, String status) {
 
 		String timeStr = SDF.format(new Date());
-		
+
 		Users_deposits dep = Users_deposits.findFirst("cb_tid=?", cb_tid);
-	
+
 		if (dep == null) {
-		return Users_deposits.createIt("users_id", userId,
-				"cb_tid", cb_tid, 
-				"time_", timeStr, 
-				"btc_amount", btc_amount, 
-				"status", status);
-		
+			return Users_deposits.createIt("users_id", userId,
+					"cb_tid", cb_tid, 
+					"time_", timeStr, 
+					"btc_amount", btc_amount, 
+					"status", status);
+
 		} else {
 			dep.set("users_id", userId,
 					"cb_tid", cb_tid, 
@@ -415,64 +415,40 @@ public class DBActions {
 					"status", status).saveIt();
 			return dep;
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 	public static Orders makeOrUpdateOrder(String cb_tid, String order_number) {
-		
+
 		Orders order = Orders.findFirst("cb_tid=?", cb_tid);
-	
+
 		if (order == null) {
-		return Orders.createIt("cb_tid", cb_tid,
-				"order_number", order_number);
-		
+			return Orders.createIt("cb_tid", cb_tid,
+					"order_number", order_number);
+
 		} else {
 			order.set("cb_tid", cb_tid,
 					"order_number", order_number).saveIt();
 			return order;
 		}
-		
 
-	
+
+
 
 	}
 
+	public static void checkUsersFunds(String userId, Double btcAmount) {
+		Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
 
-	public static Users_withdrawals userWithdrawal(String userId, String cb_tid, Double btcAmount, String status) {
-		String timeStr = SDF.format(new Date());
-		
-		// Make sure the user has enough to cover the withdraw
-				try {
-					Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
+		if (userFunds < btcAmount) {
+			throw new NoSuchElementException("You have only " + userFunds + " BTC, but are trying to withdraw " +
+					btcAmount);
+		}
 
-					if (userFunds < btcAmount) {
-						throw new NoSuchElementException("You have only " + userFunds + " $, but are trying to withdraw " +
-								btcAmount);
-					}
-				} catch(NullPointerException e) {
-					throw new NoSuchElementException("You have no funds");
-				}
-
-				return Users_withdrawals.createIt("users_id",userId,
-						"cb_tid", cb_tid,
-						"time_", timeStr,
-						"btc_amount", btcAmount, 
-						"status", status);
-		
 	}
 	
-
-
-
-
-
-
-
-
-
-
 	public static UID createUserDevFromAjax(String reqBody) {
 
 
@@ -670,37 +646,94 @@ public class DBActions {
 
 	}
 
-	public static void creatorWithdrawal(String creatorId, Double amount) {
+	public static Users_withdrawals userWithdrawal(String userId, String cb_tid, Double btcAmount, String status) {
+		String timeStr = SDF.format(new Date());
+	
+	
+		try {
+			// Make sure the user has enough to cover the withdraw
+			checkUsersFunds(userId, btcAmount);
+	
+			return Users_withdrawals.createIt("users_id",userId,
+					"cb_tid", cb_tid,
+					"time_", timeStr,
+					"btc_amount", btcAmount, 
+					"status", status);
+		} catch(NullPointerException e) {
+			throw new NoSuchElementException("You have no funds");
+		}
+	}
+
+	public static void checkCreatorFunds(String creatorId, Double btcAmount) {
+
+		Double creatorsFunds = Creators_funds_current.findFirst("creators_id = ?", creatorId).getDouble("current_funds");
+		Double rewardPerPiecePerYear = Rewards_current.findFirst(
+				"creators_id = ?", creatorId).getDouble("reward_per_piece_per_year")/100d;
+
+		// This is based on the value of the current pieces
+		//			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
+		//					getDouble("value_total_current");
+
+		Integer piecesOwnedTotal = Pieces_available.findFirst("creators_id = ?", creatorId).getInteger("pieces_owned_total");
+		Double rewardsOwedForOneYear = rewardPerPiecePerYear * piecesOwnedTotal;
+
+		Double availableFunds = creatorsFunds - rewardsOwedForOneYear;
+
+
+		Double fee = SERVICE_FEE_PCT * btcAmount;
+
+		Double amountAfterFee = btcAmount - fee;
+
+		if (availableFunds < amountAfterFee) {
+			throw new NoSuchElementException("You have only " + availableFunds + " available, but are trying to withdraw " +
+					btcAmount +"\nNote: For users safety, a years worth of rewards can't be withdrawn, which is $" 
+					+ rewardsOwedForOneYear);
+		}
+
+
+	}
+	public static Creators_withdrawals creatorWithdrawalFake(String creatorId, String cb_tid, 
+			Double btcAmount, String status) {
+
+
+		try {
+			// Make sure the creator has enough to cover the withdraw
+			checkCreatorFunds(creatorId, btcAmount);
+
+			Double fee = SERVICE_FEE_PCT * btcAmount;
+
+			Double amountAfterFee = btcAmount - fee;
+
+			return Creators_withdrawals.createIt("creators_id",creatorId,
+					"cb_tid", cb_tid,
+					"time_", SDF.format(new Date()),
+					"btc_amount_before_fee", btcAmount, 
+					"fee", fee,
+					"btc_amount_after_fee", amountAfterFee,
+					"status", status);
+
+
+		} catch(NullPointerException e) {
+			throw new NoSuchElementException("You have no funds");
+		}
+
+	}
+	
+	public static Creators_withdrawals creatorWithdrawalFake(String creatorId, Double btcAmount) {
 
 		// Make sure the creator has enough to cover the withdraw
 		try {
-			Double creatorsFunds = Creators_funds_current.findFirst("creators_id = ?", creatorId).getDouble("current_funds");
-			Double rewardPerPiecePerYear = Rewards_current.findFirst(
-					"creators_id = ?", creatorId).getDouble("reward_per_piece_per_year")/100d;
 
-			// This is based on the value of the current pieces
-			//			Double creatorsValue = Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId).
-			//					getDouble("value_total_current");
+			checkCreatorFunds(creatorId, btcAmount);
 
-			Integer piecesOwnedTotal = Pieces_available.findFirst("creators_id = ?", creatorId).getInteger("pieces_owned_total");
-			Double rewardsOwedForOneYear = rewardPerPiecePerYear * piecesOwnedTotal;
+			Double fee = SERVICE_FEE_PCT * btcAmount;
 
-			Double availableFunds = creatorsFunds - rewardsOwedForOneYear;
+			Double amountAfterFee = btcAmount - fee;
 
-			if (availableFunds < amount) {
-				throw new NoSuchElementException("You have only " + availableFunds + " available, but are trying to withdraw " +
-						amount +"\nNote: For users safety, a years worth of rewards can't be withdrawn, which is $" 
-						+ rewardsOwedForOneYear);
-			}
-
-			Double fee = SERVICE_FEE_PCT * amount;
-
-			Double amountAfterFee = amount - fee;
-
-			Creators_withdrawals.createIt("creators_id",creatorId,
+			return Creators_withdrawals.createIt("creators_id",creatorId,
 					"cb_tid", "fake",
 					"time_", SDF.format(new Date()),
-					"btc_amount_before_fee", amount, 
+					"btc_amount_before_fee", btcAmount, 
 					"fee", fee,
 					"btc_amount_after_fee", amountAfterFee,
 					"status", "completed");
@@ -710,25 +743,24 @@ public class DBActions {
 			throw new NoSuchElementException("You have no funds");
 		}
 
-
 	}
-	
+
 	public static void updateTransactionStatuses(Coinbase cb) {
-		
+
 		System.out.println("updating statuses...");
 		// Go through the users_withdrawals table
 		List<Users_withdrawals> withdrawals = Users_withdrawals.where("status=?", "pending");
-		
+
 		for (Users_withdrawals cW : withdrawals) {
 			String cb_tid = cW.getString("cb_tid");
 			String updatedStatus = CoinbaseTools.getTransactionStatus(cb, cb_tid);
-			
+
 			cW.set("status", updatedStatus).saveIt();
-			
+
 			System.out.println("updated status of " + cb_tid + " to " + updatedStatus);
-			
+
 		}
-		
+
 	}
 
 

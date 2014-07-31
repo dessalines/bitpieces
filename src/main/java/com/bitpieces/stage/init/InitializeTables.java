@@ -136,7 +136,7 @@ public class InitializeTables {
 	private static void creator_withdrawal() {
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
 
-		DBActions.creatorWithdrawal(leo.getId().toString(), .08d);
+		DBActions.creatorWithdrawalFake(leo.getId().toString(), .08d);
 
 
 	}

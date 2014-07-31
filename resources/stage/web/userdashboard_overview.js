@@ -63,9 +63,9 @@ function setupWithdrawForm() {
 
                 $('#fundsLeft').text('$' + fundsLeft);
 
-                if (fundsLeft <= 0) {
+                if (fundsLeft < 0) {
 
-                    // $('#placeWithdrawBtn').prop('disabled', true);
+                    $('#placeWithdrawBtn').prop('disabled', true);
                     $('#fundsLeft').addClass("text-danger");
                     $('#fundsLeft').removeClass("text-success");
 

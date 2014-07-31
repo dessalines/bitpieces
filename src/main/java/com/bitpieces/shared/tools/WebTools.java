@@ -385,7 +385,7 @@ public class WebTools {
 		String addr = postMap.get("address");
 		Double amount = Double.valueOf(postMap.get("withdrawAmount"));
 		
-		// For safety, convert the amount and make sure the user has that much
+		// For safety, convert the amount to BTC and make sure the user has that much
 		Double btcAmount = amount;
 		String message = null;
 		if (!settings.getIso().equals("BTC")) {
