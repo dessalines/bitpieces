@@ -294,7 +294,6 @@ public class WebService {
 	post("/user_withdraw", (req, res) -> {
 		String message = null;
 		try {
-			System.out.println("I got to the user withdrawal");
 			WebCommon.allowResponseHeaders(req, res);
 			UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 			WebCommon.verifyUser(uid);
@@ -306,10 +305,8 @@ public class WebService {
 		} catch (NoSuchElementException e) {
 			res.status(666);
 			e.printStackTrace();
-			System.out.println("got to an exception");
 			return e.getMessage();
 		}
-		System.out.println("got to the message");
 		return message;
 
 	});

@@ -417,10 +417,11 @@ public class WebTools {
 			
 			} catch (CoinbaseException | IOException e) {
 
-				e.printStackTrace();
+				throw new NoSuchElementException(e.getMessage());
 			}
 		} else {
-			throw new NoSuchElementException("Not correct withdraw amount");
+			throw new NoSuchElementException("You only have " + currentFunds + " BTC, "
+					+ "but are trying to withdraw " + btcAmount + " BTC");
 		}
 				
 				
