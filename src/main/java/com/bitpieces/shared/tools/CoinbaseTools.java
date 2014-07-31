@@ -1,13 +1,17 @@
 package com.bitpieces.shared.tools;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
+import org.joda.money.BigMoney;
 import org.joda.money.Money;
 
 import com.bitpieces.shared.DataSources;
@@ -17,6 +21,7 @@ import com.bitpieces.shared.Tables.Users_buttons;
 import com.bitpieces.shared.Tables.Users_deposits;
 import com.bitpieces.shared.Tables.Users_settings;
 import com.coinbase.api.Coinbase;
+import com.coinbase.api.CoinbaseBuilder;
 import com.coinbase.api.entity.Account;
 import com.coinbase.api.entity.Button;
 import com.coinbase.api.entity.Button.Style;
@@ -27,7 +32,20 @@ import com.coinbase.api.exception.CoinbaseException;
 
 public class CoinbaseTools {
 
-
+	public static Coinbase setupCoinbase(String propLoc) {
+		Properties prop = Tools.loadProperties(propLoc);
+		Coinbase cb = null;
+		try {
+			cb = new CoinbaseBuilder()
+			.withApiKey(prop.getProperty("apiKey"), prop.getProperty("apiSecret"))
+			.build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cb;
+		
+	}
+	
 	@Deprecated // because it costs to transfer between accounts, have to keep track of funds other ways
 	public static String createCoinbaseAccount(Coinbase cb, String userName) {
 		Account account = new Account();
@@ -112,21 +130,47 @@ public class CoinbaseTools {
 
 		Transaction t = new Transaction();
 		t.setTo(btcOrEmailAddress);
-		Money moneyAmount = Money.parse("BTC " + btcAmount);
+
+        
+	
+        DecimalFormat df = new DecimalFormat("#");
+        df.setMaximumFractionDigits(8);
+    	String btcString =  df.format(btcAmount);
+    	
+    	
+		Money moneyAmount = Money.parse("BTC " + btcString);
+		t.setAmountCurrencyIso("BTC");
+		t.setAmountString(btcString);
 		t.setAmount(moneyAmount);
 
+		
+	
 		Transaction r = cb.sendMoney(t);
+		
 		
 		Map<String, String> map = new HashMap<>();
 		
 		map.put("status", r.getStatus().toString());
 		map.put("cb_tid", r.getId());
 		
+		System.out.println(Tools.GSON2.toJson(r));
+		
 		return map;
 
 
+	}
+	
+	public static String getTransactionStatus(Coinbase cb, String cb_tid) {
 
-
+		try {
+			Transaction t = cb.getTransaction(cb_tid);
+			return t.getStatus().toString();
+		} catch (IOException | CoinbaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 

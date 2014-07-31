@@ -712,6 +712,24 @@ public class DBActions {
 
 
 	}
+	
+	public static void updateTransactionStatuses(Coinbase cb) {
+		
+		System.out.println("updating statuses...");
+		// Go through the users_withdrawals table
+		List<Users_withdrawals> withdrawals = Users_withdrawals.where("status=?", "pending");
+		
+		for (Users_withdrawals cW : withdrawals) {
+			String cb_tid = cW.getString("cb_tid");
+			String updatedStatus = CoinbaseTools.getTransactionStatus(cb, cb_tid);
+			
+			cW.set("status", updatedStatus).saveIt();
+			
+			System.out.println("updated status of " + cb_tid + " to " + updatedStatus);
+			
+		}
+		
+	}
 
 
 

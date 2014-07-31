@@ -684,7 +684,7 @@ function standardFormPost(shortUrl, formId) {
 
     var url = sparkService + shortUrl; // the script where you handle the form input.
     console.log(url);
-    var post = $.ajax({
+    $.ajax({
         type: "POST",
         url: url,
         xhrFields: {
@@ -693,7 +693,7 @@ function standardFormPost(shortUrl, formId) {
         data: formData,
         success: function(data, status, xhr) {
 
-
+            console.log('posted the data');
             xhr.getResponseHeader('Set-Cookie');
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)

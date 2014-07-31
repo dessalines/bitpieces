@@ -875,8 +875,10 @@ select users_id, users.username as owners_name, time_, -1*btc_amount as funds fr
 users_withdrawals
 inner join users
 on users_withdrawals.users_id = users.id
-where status='completed'
+--where status='completed' Pending withdrawals must still show up as missing funds, it takes like 40 minutes to confirm them
 order by users_id, time_, funds;
+
+
 
 
 
@@ -1334,12 +1336,14 @@ and pieces_owned_value_first.owners_id = rewards_earned_total.owners_id
 
 /*
 
+insert into users_deposits (users_id, cb_tid, time_, btc_amount, status) values(2, 'fake', '2014-07-30 13:08:37.0', 0.01021, 'completed')
+1F2Kcd7b2RKVXdR4b7WFa5tAgvtv4RNPbK
 select * from pieces_total;
 select * from pieces_available;
 select * from pieces_owned order by owners_id, creators_id, time_;
 select * from pieces_owned_span
 select * from prices_span
-select * from pieces_owned_total;
+select * from pieces_owned_total;u
 select * from pieces_owned_accum;
 select * from pieces_owned_value_accum;
 select * from pieces_issued;

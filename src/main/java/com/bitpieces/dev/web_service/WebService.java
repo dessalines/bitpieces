@@ -36,7 +36,6 @@ public class WebService {
 
 	public static void main(String[] args) {
 
-
 		// Load the correct db connection
 		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 

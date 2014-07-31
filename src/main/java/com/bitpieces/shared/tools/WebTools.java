@@ -392,21 +392,21 @@ public class WebTools {
 			Double spotRate = sf.getSpotRate(settings.getIso());
 			btcAmount = amount / spotRate;
 			System.out.println(amount + " / " + spotRate + " = " + btcAmount);
-			message = "withdrawal at " + btcAmount + " BTC" + "(or "  + 
+			message = "withdrawal(pending) at " + btcAmount + " BTC" + "(or "  + 
 					amount + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
 		} else {
-			message = "withdrawal  at " + btcAmount + " BTC";
+			message = "withdrawal(pending)  at " + btcAmount + " BTC";
 		}
 		
 		Double currentFunds = 
-				Users_funds_current.findById(uid.getId()).getDouble("current_funds");
+				Users_funds_current.findFirst("users_id=?", uid.getId()).getDouble("current_funds");
 		
 		if (currentFunds >= btcAmount) {
 			try {
 			// Do the coinbase half, with the btc amount
 			Map<String, String> results;
 		
-				results = CoinbaseTools.userWithdrawal(cb, btcAmount, addr);
+			results = CoinbaseTools.userWithdrawal(cb, btcAmount, addr);
 
 			
 			String cb_tid = results.get("cb_tid");

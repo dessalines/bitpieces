@@ -178,6 +178,7 @@ public class UnitConverter {
 			if (iso != null && !iso.contains("BTC")) {
 				DateTime now = new DateTime();
 				DateTime startOfToday = getStartOfDay(now);
+			
 				todayRate = getBtcRatesCache().get(iso).get(startOfToday);
 
 
@@ -533,9 +534,19 @@ public class UnitConverter {
 		String lines[] = res.split("\\r?\\n");
 
 		String lastLine[] = lines[lines.length-1].split(cvsSplit);
-
-		DateTime time = Tools.DTF.parseDateTime(lastLine[0]);
-		Double value = Double.parseDouble(lastLine[1]);
+		
+		// had a weird error where the date in the csv file looked like this: 2014-07-
+		DateTime time = null;
+		Double value = null;
+		try {
+			time = Tools.DTF.parseDateTime(lastLine[0]);
+			value = Double.parseDouble(lastLine[1]);
+		} catch (IllegalArgumentException e) {
+			String lastLine2[]  =  lines[lines.length-2].split(cvsSplit);
+			time = Tools.DTF.parseDateTime(lastLine2[0]);
+			value = Double.parseDouble(lastLine2[1]);
+		}
+	
 
 		// Normalize time to today
 		LocalDate today = time.toLocalDate();

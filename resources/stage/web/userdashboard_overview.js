@@ -65,12 +65,12 @@ function setupWithdrawForm() {
 
                 if (fundsLeft <= 0) {
 
-                    $('#withdrawBtn').prop('disabled', false);
+                    $('#placeWithdrawBtn').prop('disabled', true);
                     $('#fundsLeft').addClass("text-danger");
                     $('#fundsLeft').removeClass("text-success");
 
                 } else {
-                    $('#withdrawBtn').prop('disabled', true);
+                    $('#placeWithdrawBtn').prop('disabled', false);
                     $('#fundsLeft').addClass("text-success");
                     $('#fundsLeft').removeClass("text-danger");
                 }
@@ -78,6 +78,12 @@ function setupWithdrawForm() {
 
         });
     });
+    $("#placeWithdrawBtn").click(function(event) {
+        standardFormPost('user_withdraw', '#withdrawForm');
+        event.preventDefault();
+    });
+
+
 }
 
 function showHideDepositButton() {
