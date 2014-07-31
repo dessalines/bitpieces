@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.javalite.activejdbc.Model;
+
 import com.bitpieces.shared.Tables.Ask;
 import com.bitpieces.shared.Tables.Ask_bid_accept_checker;
 import com.bitpieces.shared.Tables.Badge;
@@ -14,6 +16,7 @@ import com.bitpieces.shared.Tables.Creator;
 import com.bitpieces.shared.Tables.Creators_funds_current;
 import com.bitpieces.shared.Tables.Creators_withdrawals;
 import com.bitpieces.shared.Tables.Currencies;
+import com.bitpieces.shared.Tables.Orders;
 import com.bitpieces.shared.Tables.Pieces_available;
 import com.bitpieces.shared.Tables.Pieces_issued;
 import com.bitpieces.shared.Tables.Pieces_owned;
@@ -374,6 +377,7 @@ public class DBActions {
 		}
 
 	}
+	
 
 	public static Users_deposits makeDepositFake(String usersId, Double btc_amount) {
 
@@ -390,15 +394,45 @@ public class DBActions {
 	}
 
 
-	public static Users_deposits makeDeposit(String userId, Double btc_amount, String cb_tid) {
+	public static Users_deposits makeOrUpdateDeposit(String userId, Double btc_amount, String cb_tid, String status) {
 
 		String timeStr = SDF.format(new Date());
+		
+		Users_deposits dep = Users_deposits.findFirst("cb_tid=?", cb_tid);
 	
+		if (dep == null) {
 		return Users_deposits.createIt("users_id", userId,
 				"cb_tid", cb_tid, 
 				"time_", timeStr, 
 				"btc_amount", btc_amount, 
-				"status", "completed");
+				"status", status);
+		
+		} else {
+			dep.set("users_id", userId,
+					"cb_tid", cb_tid, 
+					"time_", timeStr, 
+					"btc_amount", btc_amount, 
+					"status", status).saveIt();
+			return dep;
+		}
+		
+
+	}
+	
+	public static Orders makeOrUpdateOrder(String cb_tid, String order_number) {
+		
+		Orders order = Orders.findFirst("cb_tid=?", cb_tid);
+	
+		if (order == null) {
+		return Orders.createIt("cb_tid", cb_tid,
+				"order_number", order_number);
+		
+		} else {
+			order.set("cb_tid", cb_tid,
+					"order_number", order_number).saveIt();
+			return order;
+		}
+		
 
 	}
 
@@ -452,15 +486,12 @@ public class DBActions {
 	public static UID createUserRealFromAjax(Coinbase cb, String reqBody) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
-		// create a coinbase account for that user(This is necessary for payment buttons and such)
-		String cbAcctId = CoinbaseTools.createCoinbaseAccount(cb, postMap.get("username"));
 
 		try {
 			User user = User.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
-					"email", postMap.get("email"),
-					"cb_acct_id", cbAcctId);
+					"email", postMap.get("email"));
 
 			// Give them the padowan badge
 			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
@@ -515,8 +546,7 @@ public class DBActions {
 	public static UID createCreatorRealFromAjax(Coinbase cb, String reqBody) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
-		// create a coinbase account for that user(This is necessary for payment buttons and such)
-		String cbAcctId = CoinbaseTools.createCoinbaseAccount(cb, postMap.get("username"));
+
 
 		// Create the required fields 
 		try {
@@ -528,8 +558,7 @@ public class DBActions {
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"),
-					"local_currency_id", btc.getId(),
-					"cb_acct_id", cbAcctId);
+					"local_currency_id", btc.getId());
 
 
 

@@ -289,8 +289,6 @@ public class WebService {
 
 		});
 		
-		
-
 	}
 
 	public static Coinbase setupCoinbase(String propLoc) {

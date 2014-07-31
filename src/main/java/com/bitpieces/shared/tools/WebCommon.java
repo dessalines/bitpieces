@@ -1138,7 +1138,7 @@ public class WebCommon {
 		return uid;
 	}
 
-	private static final void dbInit(Properties prop) {
+	public static final void dbInit(Properties prop) {
 		try {
 			Base.open("com.mysql.jdbc.Driver", 
 					prop.getProperty("dburl"), 
@@ -1151,7 +1151,7 @@ public class WebCommon {
 
 	}
 
-	private static final void dbClose() {
+	public static final void dbClose() {
 		Base.close();
 	}
 

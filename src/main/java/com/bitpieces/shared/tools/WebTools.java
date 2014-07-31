@@ -348,36 +348,30 @@ public class WebTools {
 
 	public static void makeDepositFromCoinbaseCallback(String userId, String body) {
 
-		// Sample deposit callback
-		String sampleJson = "{\"order\":{\"id\":null,\"created_at\":null,\"status\":\"completed\",\"ev"
-				+ "ent\":null,\"total_btc\":{\"cents\":100000000,\"currency_iso\":\"BTC\"},\"t"
-				+ "otal_native\":{\"cents\":57250,\"currency_iso\":\"USD\"},\"total_payout\":{\"c"
-				+ "ents\":57250,\"currency_iso\":\"USD\"},\"custom\":\"123456789\",\"rece"
-				+ "ive_address\":\"1JteEueJTjvgTmb6ppYXv8Pab2yNyTuuo1\",\"button\":{\"ty"
-				+ "pe\":\"buy_now\",\"name\":\"Test Item\",\"description\":null,\"id\":null},\"tra"
-				+ "nsaction\":{\"id\":\"53d9400014f27fed5400000a\",\"hash\":\"4a5e1e4baab"
-				+ "89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\",\"confirmat"
-				+ "ions\":0}}}";
-		
+
 		try {
 			JsonNode root = Tools.JACKSON.readTree(body);
 
 			JsonNode order = root.get("order");
 
-			if (order.get("status").asText().equals("completed")) {
-				String bitcents = order.get("total_btc").get("cents").asText();
-				Double btcAmount = Double.valueOf(Double.parseDouble(bitcents)/1E6d);
 
-				String cb_tid = order.get("transaction").get("id").asText();
+			String bitcents = order.get("total_btc").get("cents").asText();
+			Double btcAmount = Double.valueOf(Double.parseDouble(bitcents)/1E8);
 
-				// See if you can use the button ID to link to a user, and have a users_buttons table
-				
-				
-				System.out.println(bitcents + "|" + btcAmount + "|" + "cb_tid");
-				// First fetch from the table
-				DBActions.makeDeposit(userId,btcAmount,cb_tid);
+			String cb_tid = order.get("transaction").get("id").asText();
+			String orderNumber = order.get("id").asText();
+			String status = order.get("status").asText();
 
-			}		
+			System.out.println(bitcents + "|" + btcAmount + "|" + "cb_tid");
+			
+			DBActions.makeOrUpdateOrder(cb_tid, orderNumber);
+
+
+			DBActions.makeOrUpdateDeposit(userId,btcAmount,cb_tid, status);
+
+
+
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

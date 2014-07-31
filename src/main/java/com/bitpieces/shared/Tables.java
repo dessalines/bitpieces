@@ -195,6 +195,9 @@ public class Tables {
 	@Table("users_buttons")
 	public static class Users_buttons extends Model {}
 	
+	@Table("orders")
+	public static class Orders extends Model {}
+	
 
 	
 	

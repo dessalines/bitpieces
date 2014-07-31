@@ -4,23 +4,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.Model;
 import org.joda.money.Money;
 
 import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.Tables.Currencies;
 import com.bitpieces.shared.Tables.User;
 import com.bitpieces.shared.Tables.Users_buttons;
+import com.bitpieces.shared.Tables.Users_deposits;
 import com.bitpieces.shared.Tables.Users_settings;
 import com.coinbase.api.Coinbase;
 import com.coinbase.api.entity.Account;
 import com.coinbase.api.entity.Button;
 import com.coinbase.api.entity.Button.Style;
 import com.coinbase.api.entity.Button.Type;
+import com.coinbase.api.entity.Transaction;
+import com.coinbase.api.entity.TransactionsResponse;
 import com.coinbase.api.exception.CoinbaseException;
 
 public class CoinbaseTools {
 
 
+	@Deprecated // because it costs to transfer between accounts, have to keep track of funds other ways
 	public static String createCoinbaseAccount(Coinbase cb, String userName) {
 		Account account = new Account();
 		account.setName(userName);
@@ -69,6 +75,7 @@ public class CoinbaseTools {
 			b.setIncludeAddress(true);
 			b.setId(cbAcctId);
 			
+			
 			b.setChoosePrice(true);
 			b.setPrice(Money.parse(currencyIso + " 0.01"));
 			b.setPriceString("52");
@@ -78,8 +85,9 @@ public class CoinbaseTools {
 
 			try {
 				Button resultButton = cb.createButton(b);
-
+				
 				System.out.println(Tools.GSON2.toJson(resultButton));
+				System.out.println(resultButton);
 				String buttonCode = resultButton.getCode();
 
 //				Users_buttons.createIt("users_id", uid.getId(),
@@ -95,8 +103,42 @@ public class CoinbaseTools {
 
 		return null;
 
-
-
+	}
+	
+	public static voiasdfd withdrawal(Coinbase cb, String userName, String asdf) {
+		
+	}
+	
+	
+	public static void  getUsersDeposits(Coinbase cb, String userName) {
+		try {
+			// First get the user
+			User user = User.findFirst("username = ?", userName);
+			List<Users_deposits> deposits = Users_deposits.find("users_id = ?", user.getId());
+			
+			List<String> depositIds = new ArrayList<>();
+			
+			for (Users_deposits cDep : deposits) {
+				depositIds.add(cDep.getString("cb_tid"));
+			}
+			
+			TransactionsResponse res = cb.getTransactions();
+			
+			List<Transaction> transactions = res.getTransactions();
+			
+			for (Transaction cT : transactions) {
+				if (depositIds.contains(cT.getId())) {
+					System.out.println(cT.getAmount());
+				}
+			}
+			
+			
+		} catch (IOException | CoinbaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	public static void deleteAccountNames(Coinbase cb, List<String> names) {

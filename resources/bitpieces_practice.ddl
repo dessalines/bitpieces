@@ -34,7 +34,7 @@ currencies,
 timezones,
 creators_coinbase_acct_id,
 users_coinbase_acct_id,
-users_buttons
+orders
 ;
 
 
@@ -184,17 +184,7 @@ CREATE TABLE users_btc_addresses
 )
 ;
 
-CREATE TABLE users_buttons
-(
-   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
-   users_id int(11) UNIQUE NOT NULL,
-   FOREIGN KEY (users_id) REFERENCES users(id),
-   button_code VARCHAR(56) UNIQUE NOT NULL,
-   created_at TIMESTAMP NOT NULL DEFAULT 0,
-   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
-   UPDATE CURRENT_TIMESTAMP
-)
-;
+
 
 CREATE TABLE host_btc_addresses
 (
@@ -218,12 +208,24 @@ CREATE TABLE creators_btc_addresses
 )
 ;
 
+CREATE TABLE orders
+(
+	id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+	cb_tid VARCHAR(56) UNIQUE NOT NULL,
+	order_number VARCHAR(56) UNIQUE NOT NULL,
+	created_at TIMESTAMP NOT NULL DEFAULT 0,
+     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+     UPDATE CURRENT_TIMESTAMP
+)
+;
+
 CREATE TABLE users_deposits
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
    users_id int(11) NOT NULL,
    FOREIGN KEY (users_id) REFERENCES users(id),
    cb_tid VARCHAR(56) UNIQUE NOT NULL,
+   FOREIGN KEY (cb_tid) REFERENCES orders(cb_tid),
    time_ DATETIME NOT NULL,
    btc_amount DOUBLE UNSIGNED NOT NULL,
    status VARCHAR(56) NOT NULL,
@@ -232,6 +234,9 @@ CREATE TABLE users_deposits
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
+
+	
 
 
 CREATE TABLE users_withdrawals

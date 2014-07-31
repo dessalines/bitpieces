@@ -61,8 +61,9 @@ public class CoinbaseTesting {
 
 
 //		WebTools.makeDepositFromCoinbaseCallback(null);
-
-
+		WebCommon.dbInit(Tools.loadProperties(DataSources.STAGE_DB_PROP));
+		CoinbaseTools.getUsersDeposits(cb, "narwhal");
+		WebCommon.dbClose();
 
 		//		cb.createAccount(a);
 
