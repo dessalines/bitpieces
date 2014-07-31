@@ -1,7 +1,5 @@
 package com.bitpieces.shared.tools;
 
-import static spark.Spark.get;
-
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -12,13 +10,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
 import org.codehaus.jackson.JsonNode;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.Paginator;
 
-import com.bitpieces.dev.web_service.WebService;
 import com.bitpieces.shared.Tables.Ask;
 import com.bitpieces.shared.Tables.Backers_current;
 import com.bitpieces.shared.Tables.Backers_current_count;
@@ -62,6 +60,8 @@ import com.bitpieces.shared.Tables.Users_settings;
 import com.bitpieces.shared.Tables.Users_transactions;
 import com.bitpieces.shared.Tables.Worth;
 import com.bitpieces.shared.tools.Tools.UserType;
+import com.coinbase.api.Coinbase;
+import com.coinbase.api.exception.CoinbaseException;
 
 public class WebTools {
 
@@ -376,16 +376,66 @@ public class WebTools {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
-
-
-
-
-
-
-
 	}
+		
+	public static String makeUserWithdrawal(Coinbase cb, UID uid, String body, UnitConverter sf) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		UsersSettings settings = new UsersSettings(uid);
+		
+		String addr = postMap.get("address");
+		Double amount = Double.valueOf(postMap.get("withdrawAmount"));
+		
+		// For safety, convert the amount and make sure the user has that much
+		Double btcAmount = amount;
+		String message = null;
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcAmount = amount / spotRate;
+			System.out.println(amount + " / " + spotRate + " = " + btcAmount);
+			message = "withdrawal at " + btcAmount + " BTC" + "(or "  + 
+					amount + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = "withdrawal  at " + btcAmount + " BTC";
+		}
+		
+		Double currentFunds = 
+				Users_funds_current.findById(uid.getId()).getDouble("current_funds");
+		
+		if (currentFunds >= btcAmount) {
+			try {
+			// Do the coinbase half, with the btc amount
+			Map<String, String> results;
+		
+				results = CoinbaseTools.userWithdrawal(cb, btcAmount, addr);
+
+			
+			String cb_tid = results.get("cb_tid");
+			String status = results.get("status");
+			
+			// Do the DB side
+			DBActions.userWithdrawal(uid.getId(), cb_tid, btcAmount, status);
+			
+			} catch (CoinbaseException | IOException e) {
+
+				e.printStackTrace();
+			}
+		} else {
+			throw new NoSuchElementException("Not correct withdraw amount");
+		}
+				
+				
+		return message;
+	}
+
+
+
+
+
+
+
+
+
+	
 
 
 

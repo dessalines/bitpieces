@@ -183,7 +183,7 @@ public class InitializeTables {
 
 		User terry = User.findFirst("username like 'Terry%'");
 
-		DBActions.userWithdrawal(terry.getId().toString(), .140d);
+		DBActions.userWithdrawalFake(terry.getId().toString(), .140d);
 
 
 

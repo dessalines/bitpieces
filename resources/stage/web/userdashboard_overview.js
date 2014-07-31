@@ -35,7 +35,50 @@ $(document).ready(function() {
     // pageNumbers['#users_bids_asks_current_table'] = 1;
     // setupPagedTable(creatorName + '/get_users_bids_asks_current/', template, '#users_bids_asks_current', '#users_bids_asks_current_table');
 
+
+
+    setupWithdrawForm();
+
 });
+
+function setupWithdrawForm() {
+    $('#withdrawForm').bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+
+    });
+
+    var userName = getCookie('username');
+    simpleFetch(userName + '/get_users_funds_current').done(function(result) {
+        var fundsNum = result.replace(/[^0-9\.]+/g, "");
+        var usersFunds = parseFloat(fundsNum);
+
+        $("#funds").text(result);
+        $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + result);
+        $('[name="withdrawAmount"]').bind('keyup', function(f) {
+            var withdrawAmount = parseFloat($(this).val());
+
+            var fundsLeft = usersFunds - withdrawAmount;
+            if (!isNaN(fundsLeft)) {
+
+                $('#fundsLeft').text('$' + fundsLeft);
+
+                if (fundsLeft <= 0) {
+
+                    $('#withdrawBtn').prop('disabled', false);
+                    $('#fundsLeft').addClass("text-danger");
+                    $('#fundsLeft').removeClass("text-success");
+
+                } else {
+                    $('#withdrawBtn').prop('disabled', true);
+                    $('#fundsLeft').addClass("text-success");
+                    $('#fundsLeft').removeClass("text-danger");
+                }
+            }
+
+        });
+    });
+}
 
 function showHideDepositButton() {
     var userName = getParameterByName('user');

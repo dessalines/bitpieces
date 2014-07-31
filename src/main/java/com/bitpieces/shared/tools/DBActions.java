@@ -416,8 +416,9 @@ public class DBActions {
 			return dep;
 		}
 		
-
 	}
+	
+	
 	
 	public static Orders makeOrUpdateOrder(String cb_tid, String order_number) {
 		
@@ -434,10 +435,33 @@ public class DBActions {
 		}
 		
 
+	
+
 	}
 
 
-	
+	public static Users_withdrawals userWithdrawal(String userId, String cb_tid, Double btcAmount, String status) {
+		String timeStr = SDF.format(new Date());
+		
+		// Make sure the user has enough to cover the withdraw
+				try {
+					Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
+
+					if (userFunds < btcAmount) {
+						throw new NoSuchElementException("You have only " + userFunds + " $, but are trying to withdraw " +
+								btcAmount);
+					}
+				} catch(NullPointerException e) {
+					throw new NoSuchElementException("You have no funds");
+				}
+
+				return Users_withdrawals.createIt("users_id",userId,
+						"cb_tid", cb_tid,
+						"time_", timeStr,
+						"btc_amount", btcAmount, 
+						"status", status);
+		
+	}
 	
 
 
@@ -624,7 +648,7 @@ public class DBActions {
 
 	}
 
-	public static void userWithdrawal(String userId, Double amount) {
+	public static void userWithdrawalFake(String userId, Double amount) {
 
 		// Make sure the user has enough to cover the withdraw
 		try {

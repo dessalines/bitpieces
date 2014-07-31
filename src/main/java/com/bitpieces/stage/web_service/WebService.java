@@ -289,7 +289,27 @@ public class WebService {
 
 		});
 		
-	}
+	
+	
+	post("/user_withdraw", (req, res) -> {
+		String message = null;
+		try {
+			WebCommon.allowResponseHeaders(req, res);
+			UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+			WebCommon.verifyUser(uid);
+			dbInit(prop);
+			
+			WebTools.makeUserWithdrawal(cb, uid, req.body(), sf);
+			dbClose();
+		} catch (NoSuchElementException e) {
+			res.status(666);
+			return e.getMessage();
+		}
+		return message;
+
+	});
+	
+}
 
 	public static Coinbase setupCoinbase(String propLoc) {
 		Properties prop = Tools.loadProperties(propLoc);
