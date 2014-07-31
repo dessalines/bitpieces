@@ -346,7 +346,7 @@ public class WebTools {
 
 	}
 
-	public static void makeDepositFromCoinbaseCallback(String body) {
+	public static void makeDepositFromCoinbaseCallback(String userId, String body) {
 
 		// Sample deposit callback
 		String sampleJson = "{\"order\":{\"id\":null,\"created_at\":null,\"status\":\"completed\",\"ev"
@@ -360,7 +360,7 @@ public class WebTools {
 				+ "ions\":0}}}";
 		
 		try {
-			JsonNode root = Tools.JACKSON.readTree(sampleJson);
+			JsonNode root = Tools.JACKSON.readTree(body);
 
 			JsonNode order = root.get("order");
 
@@ -375,7 +375,7 @@ public class WebTools {
 				
 				System.out.println(bitcents + "|" + btcAmount + "|" + "cb_tid");
 				// First fetch from the table
-//				DBActions.makeDeposit(uid.getId(),btcAmount,cb_tid);
+				DBActions.makeDeposit(userId,btcAmount,cb_tid);
 
 			}		
 		} catch (IOException e) {

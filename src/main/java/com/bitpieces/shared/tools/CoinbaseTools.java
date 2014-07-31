@@ -43,16 +43,16 @@ public class CoinbaseTools {
 	public static String fetchOrCreateDepositButton(Coinbase cb, UID uid) {
 
 		// Fetch from users_buttons, if its not there, make it
-		Users_buttons ub = Users_buttons.findFirst("users_id=?", uid.getId());
-		if (ub != null) {
-			return ub.getString("button_code");
-		} else {
+//		Users_buttons ub = Users_buttons.findFirst("users_id=?", uid.getId());
+//		if (ub != null) {
+//			return ub.getString("button_code");
+//		} else {
 
 			// The acct id is stored in the users table row
 			User user = User.findById(uid.getId());
 
 			String cbAcctId = user.getString("cb_acct_id");
-
+			System.out.println(cbAcctId);
 			// Get the currency ISO code
 			String currencyIso = Currencies.findById(user.getString("local_currency_id")).getString("iso");
 
@@ -61,26 +61,29 @@ public class CoinbaseTools {
 			b.setName("Deposit");
 			b.setType(Type.BUY_NOW);
 			b.setPriceCurrencyIso(currencyIso);
-			b.setCallbackUrl("http://" + DataSources.IP_ADDRESS + ":4567/coinbase_deposit_callback");
+			b.setCallbackUrl("http://" + DataSources.IP_ADDRESS + ":4567/" + user.getId().toString()
+					+ "/coinbase_deposit_callback");
 			b.setDescription("Make a deposit to be able to buy and bid on pieces");
 			b.setStyle(Style.NONE);
 			b.setIncludeEmail(true);
 			b.setIncludeAddress(true);
 			b.setId(cbAcctId);
+			
 			b.setChoosePrice(true);
 			b.setPrice(Money.parse(currencyIso + " 0.01"));
 			b.setPriceString("52");
-	
+		
 		
 
 
 			try {
 				Button resultButton = cb.createButton(b);
 
+				System.out.println(Tools.GSON2.toJson(resultButton));
 				String buttonCode = resultButton.getCode();
 
-				Users_buttons.createIt("users_id", uid.getId(),
-						"button_code", buttonCode);
+//				Users_buttons.createIt("users_id", uid.getId(),
+//						"button_code", buttonCode);
 
 				return buttonCode;
 			} catch (CoinbaseException | IOException e) {
@@ -88,7 +91,7 @@ public class CoinbaseTools {
 			}
 
 
-		}
+//		}
 
 		return null;
 

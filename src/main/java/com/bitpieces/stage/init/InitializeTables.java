@@ -79,6 +79,7 @@ public class InitializeTables {
 		setup_badges();
 
 
+		System.out.println("done");
 
 	}
 

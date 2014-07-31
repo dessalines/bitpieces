@@ -60,7 +60,7 @@ public class CoinbaseTesting {
 //		CoinbaseTools.deleteAccountNames(cb, Arrays.asList("jul_29", "falwell"));
 
 
-		WebTools.makeDepositFromCoinbaseCallback(null);
+//		WebTools.makeDepositFromCoinbaseCallback(null);
 
 
 

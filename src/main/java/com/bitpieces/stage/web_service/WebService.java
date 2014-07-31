@@ -270,16 +270,17 @@ public class WebService {
 
 		});
 		
-		post("/coinbase_deposit_callback", (req, res) -> {
+		post("/:user_id/coinbase_deposit_callback", (req, res) -> {
 			String message = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				System.out.println(req.body());
-
+				dbInit(prop);
+				String userId = req.params(":user_id");
 
 				
-				WebTools.makeDepositFromCoinbaseCallback(req.body());
-				
+				WebTools.makeDepositFromCoinbaseCallback(userId, req.body());
+				dbClose();
 			} catch (NoSuchElementException e) {
 				res.status(666);
 				return e.getMessage();

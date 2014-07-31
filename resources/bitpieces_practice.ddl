@@ -86,7 +86,7 @@ CREATE TABLE users
    precision_ int(11) NOT NULL DEFAULT 6 ,
    cb_acct_id VARCHAR(56) UNIQUE NOT NULL,
 --   local_timezone_id int(11) DEFAULT 1 NOT NULL,
---   FOREIGN KEY (local_timezone_id) REFERENCES timezones(id),
+--   FOREIGN KEY (local_timdezone_id) REFERENCES timezones(id),
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -223,7 +223,7 @@ CREATE TABLE users_deposits
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
    users_id int(11) NOT NULL,
    FOREIGN KEY (users_id) REFERENCES users(id),
-   cb_tid VARCHAR(56) NOT NULL,
+   cb_tid VARCHAR(56) UNIQUE NOT NULL,
    time_ DATETIME NOT NULL,
    btc_amount DOUBLE UNSIGNED NOT NULL,
    status VARCHAR(56) NOT NULL,
