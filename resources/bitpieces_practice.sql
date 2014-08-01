@@ -1407,13 +1407,13 @@ select * from users_transactions
 select * from creators_transactions order by creators_name, time_ 
 
 select * from pieces_owned order by owners_id, time_ desc
-*/
+
 
 --grant select on bitpieces.* to 'river'@'%' identified by 'asdf';
 
 -- the audit tables and triggers
-
+ss
 
 --ALTER TABLE employees ADD unique INDEX name (first_name, last_name)
-
+*/
 
