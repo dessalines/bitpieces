@@ -1099,7 +1099,17 @@ time_,
 concat('withdrawal(', status, ')') as type, 
 '' as recipient, 
 '' as pieces, 
--1*btc_amount_before_fee as funds from 
+-1*btc_amount_after_fee as funds from 
+creators_withdrawals
+inner join creators
+on creators_withdrawals.creators_id = creators.id
+union
+select creators.username as creators_name,
+time_,
+concat('withdrawal fee(', status, ')') as type, 
+'' as recipient, 
+'' as pieces, 
+-1*fee as funds from 
 creators_withdrawals
 inner join creators
 on creators_withdrawals.creators_id = creators.id
@@ -1117,6 +1127,8 @@ on sales_from_creators.from_creators_id = creators.id
 inner join users
 on to_users_id = users.id
 order by creators_name, time_ desc;
+
+
 
 
 
@@ -1368,9 +1380,12 @@ and pieces_owned_value_first.owners_id = rewards_earned_total.owners_id
 
 
 /*
-select * from creators
+select * from creators, users
 insert into users_deposits (users_id, cb_tid, time_, btc_amount, status) values(2, 'fake', '2014-07-30 13:08:37.0', 0.001811, 'completed')
-insert into sales_from_creators (from_creators_id, to_users_id, time_, pieces_, price_per_piece, total) VALUES (1, 2, NOW(), 0.0017, 1, 0.0084)
+
+insert into sales_from_creators (from_creators_id, to_users_id, time_, pieces, price_per_piece, total) VALUES (1, 1, NOW(), 5, 0.0017, 0.0084)
+insert into pieces_owned (owners_id, creators_id, time_, pieces_owned) VALUES (1, 1, NOW(), 5)
+
 1F2Kcd7b2RKVXdR4b7WFa5tAgvtv4RNPbK
 select * from pieces_total;
 select * from pieces_available;

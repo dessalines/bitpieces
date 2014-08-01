@@ -443,14 +443,11 @@ public class WebTools {
 			Double spotRate = sf.getSpotRate(settings.getIso());
 			btcAmount = amount / spotRate;
 			
-			Double fee = DBActions.SERVICE_FEE_PCT * btcAmount;
-
-			Double amountAfterFee = btcAmount - fee;
 			
-			message = "withdrawal(pending) at " + amountAfterFee + " BTC" + "(or "  + 
-					amount + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+			message = "withdrawal(pending) at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)" + "(or "  + 
+					amount*(1d-DBActions.SERVICE_FEE_PCT)+ " (after fee) " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
 		} else {
-			message = "withdrawal(pending)  at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC";
+			message = "withdrawal(pending)  at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)";
 		}
 		
 		Double currentFunds = 

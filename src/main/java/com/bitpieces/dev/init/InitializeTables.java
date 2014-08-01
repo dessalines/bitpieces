@@ -52,6 +52,7 @@ import com.bitpieces.shared.tools.Tools;
  * Make 3 column creator pages
  * Take authid out of all post urls for security(just pick it up from the req.cookies)
  * 'This creator has enough in their account to reward their funders for X years
+ * Use disqus, and use the creators name as the disqus Identifier for each creators page
  * 
  * 
  * @author tyler
