@@ -63,16 +63,16 @@ CREATE TABLE currencies
 )
 ;
 --
---CREATE TABLE timezones
---(
+-- CREATE TABLE timezones
+-- (
 --   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
 --   name VARCHAR(56) NOT NULL,
 --   offset VARCHAR(56) NOT NULL,
 --   created_at TIMESTAMP NOT NULL DEFAULT 0,
 --   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
 --   UPDATE CURRENT_TIMESTAMP
---)
---;
+-- )
+-- ;
 
 
 CREATE TABLE users
@@ -522,8 +522,8 @@ group by creators_id
 
 CREATE VIEW ask_bid_accept_checker as 
 select 
---*,
---sum(bids.pieces)
+-- *,
+-- sum(bids.pieces)
 asks.creators_id,
 asks.id as ask_id,
 asks.users_id as askers_id,
@@ -566,7 +566,7 @@ a.start_time_,
 a.end_time_, 
 TIMESTAMPDIFF(SECOND,a.start_time_,IFNULL(a.end_time_, NOW())) as timediff_seconds,
 a.pieces_owned,
---b.pieces_owned,
+-- b.pieces_owned,
 sum(b.pieces_owned) as pieces_accum
 from pieces_owned_span a, pieces_owned_span b, creators, users
 WHERE b.owners_id = a.owners_id
@@ -654,7 +654,7 @@ inner join creators
 on bids.creators_id = creators.id
 inner join users
 on bids.users_id = users.id
---where bids.valid_until >= NOW()
+-- where bids.valid_until >= NOW()
 union
 select creators.username as creators_name,
 time_, 
@@ -670,7 +670,7 @@ inner join creators
 on asks.creators_id = creators.id
 inner join users
 on asks.users_id = users.id
---where asks.valid_until >= NOW()
+-- where asks.valid_until >= NOW()
 order by creators_name, time_ desc;
 
 
@@ -736,10 +736,10 @@ on pieces_owned_accum.owners_id = users.id
 order by pieces_owned_accum.owners_id,
 pieces_owned_accum.creators_id,
 prices_span.time_
---and (prices_span.time_ >= pieces_owned_accum.time_ and prices_span.end_time_ >= pieces_owned_accum.time_)
---and prices_span.end_time_ >= pieces_owned_accum.time_
---group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, pieces_accum
---group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, pieces_owned_accum.time_
+-- and (prices_span.time_ >= pieces_owned_accum.time_ and prices_span.end_time_ >= pieces_owned_accum.time_)
+-- and prices_span.end_time_ >= pieces_owned_accum.time_
+-- group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, pieces_accum
+-- group by pieces_owned_accum.owners_id,pieces_owned_accum.creators_id, pieces_owned_accum.time_
 ;
 
 CREATE VIEW worth AS
@@ -873,7 +873,7 @@ select users_id, users.username as owners_name, time_, -1*btc_amount as funds fr
 users_withdrawals
 inner join users
 on users_withdrawals.users_id = users.id
---where status='completed' Pending withdrawals must still show up as missing funds, it takes like 40 minutes to confirm them
+-- where status='completed' Pending withdrawals must still show up as missing funds, it takes like 40 minutes to confirm them
 order by users_id, time_, funds;
 
 
@@ -889,7 +889,7 @@ group by users_id, time_;
 
 CREATE VIEW users_funds_accum as 
 select a.users_id, a.owners_name, a.time_, 
---a.funds, 
+-- a.funds, 
 sum(b.funds) as funds_accum
 from users_funds_grouped a, users_funds_grouped b
 WHERE b.users_id = a.users_id
@@ -930,7 +930,7 @@ group by creators_id, time_;
 
 CREATE VIEW creators_funds_accum as 
 select a.creators_id, creators.username as creators_name, a.time_, 
---a.funds, 
+-- a.funds, 
 sum(b.funds) as funds_accum
 from creators_funds_grouped a, creators_funds_grouped b, creators
 WHERE b.creators_id = a.creators_id
@@ -1343,7 +1343,7 @@ inner join pieces_owned_by_creator
 on pieces_owned_by_creator.creators_id = creators_funds_accum.creators_id
 inner join rewards_current
 on rewards_current.creators_id = creators_funds_accum.creators_id
---where (creators_funds_accum.time_ >= pieces_owned_by_creator.start_time_ and creators_funds_accum.time_ <= pieces_owned_by_creator.end_time_)
+-- where (creators_funds_accum.time_ >= pieces_owned_by_creator.start_time_ and creators_funds_accum.time_ <= pieces_owned_by_creator.end_time_)
 where creators_funds_accum.time_ >= pieces_owned_by_creator.start_time_;
 
 
@@ -1409,11 +1409,11 @@ select * from creators_transactions order by creators_name, time_
 select * from pieces_owned order by owners_id, time_ desc
 
 
---grant select on bitpieces.* to 'river'@'%' identified by 'asdf';
+-- grant select on bitpieces.* to 'river'@'%' identified by 'asdf';
 
 -- the audit tables and triggers
 ss
 
---ALTER TABLE employees ADD unique INDEX name (first_name, last_name)
+-- ALTER TABLE employees ADD unique INDEX name (first_name, last_name)
 */
 
