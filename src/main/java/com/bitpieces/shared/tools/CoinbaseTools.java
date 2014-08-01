@@ -76,9 +76,7 @@ public class CoinbaseTools {
 
 		// The acct id is stored in the users table row
 		User user = User.findById(uid.getId());
-
-		String cbAcctId = user.getString("cb_acct_id");
-		System.out.println(cbAcctId);
+		
 		// Get the currency ISO code
 		String currencyIso = Currencies.findById(user.getString("local_currency_id")).getString("iso");
 
@@ -93,7 +91,6 @@ public class CoinbaseTools {
 		b.setStyle(Style.NONE);
 		b.setIncludeEmail(true);
 		b.setIncludeAddress(true);
-		b.setId(cbAcctId);
 
 
 		b.setChoosePrice(true);

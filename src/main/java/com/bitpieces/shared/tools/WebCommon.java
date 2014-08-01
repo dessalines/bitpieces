@@ -499,7 +499,7 @@ public class WebCommon {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID cid = WebCommon.getUserFromCookie(req, cache);
-				verifyCreator(cid);
+				cid.verifyCreator();
 
 				// get the creator id from the token		
 				json = WebTools.getCreatorPageJson(cid.getId(), req.body());
@@ -996,11 +996,11 @@ public class WebCommon {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, cache);
-				WebCommon.verifyCreator(uid);
+				UID cid = WebCommon.getUserFromCookie(req, cache);
+				cid.verifyCreator();
 
 				// get currency if one exists
-				json = WebTools.saveCreatorsCategories(uid, req.body());
+				json = WebTools.saveCreatorsCategories(cid, req.body());
 
 				dbClose();
 
@@ -1095,7 +1095,7 @@ public class WebCommon {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID cid = WebCommon.getUserFromCookie(req, cache);
-				WebCommon.verifyCreator(cid);
+				cid.verifyCreator();
 
 
 
@@ -1155,20 +1155,6 @@ public class WebCommon {
 		Base.close();
 	}
 
-
-	public static void verifyUser(UID uid) throws NoSuchElementException {
-		if (uid.getType() != UserType.User) {
-			throw new NoSuchElementException("Sorry, not a user");
-		}
-
-	}
-
-	public static void verifyCreator(UID uid) throws NoSuchElementException {
-		if (uid.getType() != UserType.Creator) {
-			throw new NoSuchElementException("Sorry, not a creator");
-		}
-
-	}
 
 	private static void writeCacheToFile(Cache<String, UID> cache, String file) {
 		Map<String, UID> serializableMap = new HashMap<String, UID>(cache.asMap());

@@ -45,7 +45,7 @@ pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_o
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
 users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user, pieces_owned_by_creator,
 bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped,
-rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings, max_price_times, prices_current
+rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings, max_price_times, prices_current, creators_safety_current, creators_safety
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -84,7 +84,6 @@ CREATE TABLE users
    local_currency_id int(11) NOT NULL DEFAULT 1,
    FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
    precision_ int(11) NOT NULL DEFAULT 6 ,
-   cb_acct_id VARCHAR(56) UNIQUE NOT NULL,
 --   local_timezone_id int(11) DEFAULT 1 NOT NULL,
 --   FOREIGN KEY (local_timdezone_id) REFERENCES timezones(id),
    created_at TIMESTAMP NOT NULL DEFAULT 0,
@@ -102,7 +101,6 @@ CREATE TABLE creators
    local_currency_id int(11) NOT NULL DEFAULT 1,
    FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
    precision_ int(11) NOT NULL DEFAULT 6 ,
-   cb_acct_id VARCHAR(56) UNIQUE NOT NULL,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -1299,7 +1297,7 @@ currencies
 on creators.local_currency_id = currencies.id;
 
 
--- This is X ye
+-- This is years = current funds / (reward/piece/year * pieces_owned_total)
 CREATE VIEW creators_safety_current as
 select
 creators_funds_current.creators_id,
@@ -1370,8 +1368,9 @@ and pieces_owned_value_first.owners_id = rewards_earned_total.owners_id
 
 
 /*
-
+select * from creators
 insert into users_deposits (users_id, cb_tid, time_, btc_amount, status) values(2, 'fake', '2014-07-30 13:08:37.0', 0.001811, 'completed')
+insert into sales_from_creators (from_creators_id, to_users_id, time_, pieces_, price_per_piece, total) VALUES (1, 2, NOW(), 0.0017, 1, 0.0084)
 1F2Kcd7b2RKVXdR4b7WFa5tAgvtv4RNPbK
 select * from pieces_total;
 select * from pieces_available;

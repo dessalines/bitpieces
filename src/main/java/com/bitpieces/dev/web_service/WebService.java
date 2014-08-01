@@ -107,7 +107,7 @@ public class WebService {
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 
-				WebCommon.verifyUser(uid);
+				uid.verifyUser();
 
 				message = WebTools.placeBid(uid, req.body(), sf);
 
@@ -149,7 +149,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyUser(uid);
+				uid.verifyUser();
 
 				message = WebTools.placeBuy(uid, req.body());
 
@@ -168,10 +168,10 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyCreator(uid);
+				UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				cid.verifyCreator();
 
-				message = WebTools.issuePieces(uid, req.body(), sf);
+				message = WebTools.issuePieces(cid, req.body(), sf);
 
 				dbClose();
 
@@ -188,10 +188,10 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyCreator(uid);
+				UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				cid.verifyCreator();
 
-				message = WebTools.newReward(uid, req.body(), sf);
+				message = WebTools.newReward(cid, req.body(), sf);
 
 				dbClose();
 
@@ -208,10 +208,10 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyCreator(uid);
+				UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				cid.verifyCreator();
 
-				message = WebTools.raiseFunds(uid, req.body(), sf);
+				message = WebTools.raiseFunds(cid, req.body(), sf);
 
 				dbClose();
 
@@ -229,7 +229,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyUser(uid);
+				uid.verifyUser();
 
 				message = WebTools.deleteBidAsk(uid, req.body());
 
@@ -249,7 +249,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyUser(uid);
+				uid.verifyUser();
 
 				message = WebTools.makeDepositFake(uid, req.body(), sf);
 

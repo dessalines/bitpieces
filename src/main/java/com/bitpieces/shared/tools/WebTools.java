@@ -427,6 +427,63 @@ public class WebTools {
 				
 		return message;
 	}
+	
+	public static String makeCreatorWithdrawal(Coinbase cb, UID uid, String body, UnitConverter sf) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		UsersSettings settings = new UsersSettings(uid);
+		
+		String addr = postMap.get("address");
+		Double amount = Double.valueOf(postMap.get("withdrawAmount"));
+		
+		// For safety, convert the amount to BTC and make sure the user has that much
+		Double btcAmount = amount;
+		String message = null;
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcAmount = amount / spotRate;
+			System.out.println(amount + " / " + spotRate + " = " + btcAmount);
+			message = "withdrawal(pending) at " + btcAmount + " BTC" + "(or "  + 
+					amount + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = "withdrawal(pending)  at " + btcAmount + " BTC";
+		}
+		
+		Double currentFunds = 
+				Creators_funds_current.findFirst("creators_id=?", uid.getId()).getDouble("current_funds");
+		
+		Double fee = DBActions.SERVICE_FEE_PCT * btcAmount;
+
+		Double amountAfterFee = btcAmount - fee;
+		
+		
+		if (currentFunds >= amountAfterFee) {
+			try {
+			// Do the coinbase half, with the btc amount
+			Map<String, String> results;
+		
+			// Give this one the amount after the fee
+			results = CoinbaseTools.userWithdrawal(cb, amountAfterFee, addr);
+
+			
+			String cb_tid = results.get("cb_tid");
+			String status = results.get("status");
+			
+			// Do the DB side
+			// give this one the full amount, because it does the fee on its own
+			DBActions.creatorWithdrawal(uid.getId(), cb_tid, btcAmount, status);
+			
+			} catch (CoinbaseException | IOException e) {
+
+				throw new NoSuchElementException(e.getMessage());
+			}
+		} else {
+			throw new NoSuchElementException("You only have " + currentFunds + " BTC, "
+					+ "but are trying to withdraw " + btcAmount + " BTC");
+		}
+				
+				
+		return message;
+	}
 
 
 

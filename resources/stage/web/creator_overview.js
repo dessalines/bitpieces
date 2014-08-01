@@ -46,15 +46,18 @@ $(document).ready(function() {
     console.log('un = ' + userName);
     if (userName == creatorName) {
         // show the save btn
-        setupModal("/issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
-        setupIssueForm(creatorName);
-        setupSummerNote('/getcreatorpage', '#main_body', 'main_body');
+        setupModal("issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
 
-        saveSummerNote('/savecreatorpage', '#saveBtn', '#main_body');
+        setupIssueForm(creatorName);
+        setupSummerNote('getcreatorpage', '#main_body', 'main_body');
+
+        saveSummerNote('savecreatorpage', '#saveBtn', '#main_body');
 
         setupChangeRewardForm(creatorName);
-        setupModal("/new_reward", '#rewardForm', "#placeChangeRewardBtn", "#rewardModal");
+        setupModal("new_reward", '#rewardForm', "#placeChangeRewardBtn", "#rewardModal");
 
+        setupWithdrawalForm(creatorName);
+        setupModal("creator_withdraw", '#withdrawForm', "#placeWithdrawBtn", "#withdrawModal");
         showHideCreatorButtons();
 
 
@@ -113,6 +116,60 @@ function setupChangeRewardForm(creatorName) {
 
 }
 
+function setupWithdrawalForm(creatorName) {
+    var url = creatorName + '/get_rewards_current';
+    // Need totals, get_rewards current, get_pieces_owned_total, get_creators_funds_current'
+    $.when(getJson(creatorName + '/get_creators_funds_current'),
+        getJson(creatorName + '/get_pieces_owned_total'),
+        getJson(creatorName + '/get_rewards_current')).done(function(a1, a2, a3) {
+        // the code here will be executed when all four ajax requests resolve.
+        // a1, a2, a3 and a4 are lists of length 3 containing the response text,
+        // status, and jqXHR object for each of the four ajax calls respectively.
+
+        // var creatorsFundsStr = JSON.parse(a1[0]);
+        var creatorsFundsStr = a1[0];
+        var piecesOwnedTotalStr = a2[0];
+        var rewardsPerPiecePerYearStr = a3[0];
+
+
+
+
+        var creatorsFunds = parseFloat(creatorsFundsStr.replace(/^\D+/g, ''));
+        var piecesOwnedTotal = parseFloat(piecesOwnedTotalStr.replace(/^\D+/g, ''));
+        var rewardsPerPiecePerYear = parseFloat(rewardsPerPiecePerYearStr.replace(/^\D+/g, ''));
+
+        console.log(piecesOwnedTotalStr);
+        console.log(creatorsFunds + '|' + piecesOwnedTotal + '|' + rewardsPerPiecePerYear);
+        // $("#creatorsFunds").text(result);
+        $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + creatorsFunds);
+        $('#funds').text(creatorsFundsStr);
+        $('[name="withdrawAmount"]').bind('keyup', function(f) {
+            var withdrawAmount = parseFloat($(this).val());
+            var withdrawAmountAfterFee = withdrawAmount * .95;
+            var fundsLeft = creatorsFunds - withdrawAmountAfterFee;
+            safetyRatingAfter = fundsLeft / (piecesOwnedTotal * rewardsPerPiecePerYear);
+
+            if (!isNaN(withdrawAmountAfterFee) && fundsLeft > 0) {
+                $('#withdrawAmountAfterFee').text('$' + withdrawAmountAfterFee);
+                $('#safetyRatingAfter').text(safetyRatingAfter);
+                $('#fundsLeft').text('$' + fundsLeft);
+
+                $('#placeWithdrawBtn').prop('disabled', false);
+                $('#fundsLeft').addClass("text-success");
+                $('#fundsLeft').removeClass("text-danger");
+            } else {
+
+                $('#placeWithdrawBtn').prop('disabled', true);
+                $('#fundsLeft').addClass("text-danger");
+                $('#fundsLeft').removeClass("text-success");
+            }
+
+        });
+
+    });
+
+}
+
 
 function setupIssueForm(creatorName) {
     // Stuff with the issue modal
@@ -123,9 +180,9 @@ function setupIssueForm(creatorName) {
 
     });
 
-    simpleFetch('/get_creators_funds_current').done(function(result) {
-        var fundsNum = result.replace(/^\D+/g, '')
-        var creatorsFunds = parseFloat(fundsNum);
+    simpleFetch(creatorName + '/get_creators_funds_current').done(function(result) {
+
+        var creatorsFunds = parseFloat(result.replace(/^\D+/g, ''));
         $('[name="creatorsFunds"]').text(result);
 
         $('[name="issuePieces"]').bind('keyup', function(f) {

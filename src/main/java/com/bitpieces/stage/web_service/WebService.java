@@ -111,7 +111,7 @@ public class WebService {
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
 
-				WebCommon.verifyUser(uid);
+				uid.verifyUser();
 
 				message = WebTools.placeBid(uid, req.body(), sf);
 
@@ -155,7 +155,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyUser(uid);
+				uid.verifyUser();
 
 				message = WebTools.placeBuy(uid, req.body());
 
@@ -175,7 +175,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyCreator(uid);
+				uid.verifyCreator();
 
 				message = WebTools.issuePieces(uid, req.body(), sf);
 
@@ -195,7 +195,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyCreator(uid);
+				uid.verifyCreator();
 
 				message = WebTools.newReward(uid, req.body(), sf);
 
@@ -215,7 +215,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyCreator(uid);
+				uid.verifyCreator();
 
 				message = WebTools.raiseFunds(uid, req.body(), sf);
 
@@ -235,7 +235,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyUser(uid);
+				uid.verifyUser();
 
 				message = WebTools.deleteBidAsk(uid, req.body());
 
@@ -255,7 +255,7 @@ public class WebService {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-				WebCommon.verifyUser(uid);
+				uid.verifyUser();
 
 				code = CoinbaseTools.fetchOrCreateDepositButton(cb, uid);
 				
@@ -296,10 +296,31 @@ public class WebService {
 		try {
 			WebCommon.allowResponseHeaders(req, res);
 			UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-			WebCommon.verifyUser(uid);
+			uid.verifyUser();
 			dbInit(prop);
 			
 			message = WebTools.makeUserWithdrawal(cb, uid, req.body(), sf);
+			dbClose();
+			
+		} catch (NoSuchElementException e) {
+			res.status(666);
+			e.printStackTrace();
+			return e.getMessage();
+		}
+		return message;
+
+	});
+	
+	post("/creator_withdraw", (req, res) -> {
+		String message = null;
+		try {
+			WebCommon.allowResponseHeaders(req, res);
+			UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+			cid.verifyCreator();
+
+			dbInit(prop);
+			
+			message = WebTools.makeCreatorWithdrawal(cb, cid, req.body(), sf);
 			dbClose();
 			
 		} catch (NoSuchElementException e) {

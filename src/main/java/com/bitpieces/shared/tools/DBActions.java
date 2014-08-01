@@ -36,7 +36,7 @@ import com.google.gson.Gson;
 
 public class DBActions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private static final Double SERVICE_FEE_PCT = .05d;
+	public static final Double SERVICE_FEE_PCT = .05d;
 	private static final Double MINIMUM_REWARD_PCT = 1d;
 	private static final Gson GSON = new Gson();
 
@@ -692,7 +692,7 @@ public class DBActions {
 
 
 	}
-	public static Creators_withdrawals creatorWithdrawalFake(String creatorId, String cb_tid, 
+	public static Creators_withdrawals creatorWithdrawal(String creatorId, String cb_tid, 
 			Double btcAmount, String status) {
 
 
