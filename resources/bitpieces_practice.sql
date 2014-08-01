@@ -1132,6 +1132,8 @@ order by creators_name, time_ desc;
 
 
 
+
+
 -- Their transactions(sales, withdrawals), Their bids and asks, sales amongst their users, and their pieces issued
 CREATE VIEW creators_activity as
 select creators_name, time_, type, recipient, pieces, funds
