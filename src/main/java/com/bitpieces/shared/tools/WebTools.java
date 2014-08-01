@@ -438,14 +438,19 @@ public class WebTools {
 		// For safety, convert the amount to BTC and make sure the user has that much
 		Double btcAmount = amount;
 		String message = null;
+		
 		if (!settings.getIso().equals("BTC")) {
 			Double spotRate = sf.getSpotRate(settings.getIso());
 			btcAmount = amount / spotRate;
-			System.out.println(amount + " / " + spotRate + " = " + btcAmount);
-			message = "withdrawal(pending) at " + btcAmount + " BTC" + "(or "  + 
+			
+			Double fee = DBActions.SERVICE_FEE_PCT * btcAmount;
+
+			Double amountAfterFee = btcAmount - fee;
+			
+			message = "withdrawal(pending) at " + amountAfterFee + " BTC" + "(or "  + 
 					amount + " " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
 		} else {
-			message = "withdrawal(pending)  at " + btcAmount + " BTC";
+			message = "withdrawal(pending)  at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC";
 		}
 		
 		Double currentFunds = 
