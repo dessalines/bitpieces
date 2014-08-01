@@ -1134,7 +1134,7 @@ order by creators_name, time_ desc;
 
 
 
--- Their transactions(sales, withdrawals), Their bids and asks, sales amongst their users, and their pieces issued
+-- Their transactions(sales, withdrawals), Their bids and asks, sales amongst their users, and their pieces issued, AND todo reward changes
 CREATE VIEW creators_activity as
 select creators_name, time_, type, recipient, pieces, funds
 from creators_transactions
@@ -1159,6 +1159,14 @@ inner join creators
 on sales_from_users.creators_id = creators.id
 inner join users
 on sales_from_users.to_users_id = users.id
+union
+select creators_name,
+time_,
+'reward change(per piece per year)' as type,
+'' as recipient, 
+'' as pieces,
+reward_per_piece_per_year as funds
+from rewards_view
 order by creators_name, time_ desc;
 
 
