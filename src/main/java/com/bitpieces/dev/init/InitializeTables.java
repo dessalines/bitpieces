@@ -186,30 +186,21 @@ public class InitializeTables {
 		User terry = User.findFirst("username like 'Terry%'");
 
 
-		Users_deposits dickDep = Users_deposits.createIt("users_id", dick.getId().toString(),
-				"cb_tid", "fake",
-				"time_", Tools.SDF.get().format(new Date()),
-				"btc_amount", .15d, 
-				"status", "completed");
+		DBActions.makeOrUpdateOrder("fake1", "ofake1");
+		DBActions.makeDepositFake(dick.getId().toString(), .15d, "fake1");
 
 		// an exact amount, or a straight up pieces buy
-		Users_deposits johnDep = Users_deposits.createIt("users_id", john.getId().toString(),
-				"cb_tid", "fake",
-				"time_", Tools.SDF.get().format(new Date()),
-				"btc_amount", .17d, 
-				"status", "completed");
+		DBActions.makeOrUpdateOrder("fake2", "ofake2");
+		DBActions.makeDepositFake(john.getId().toString(), .17d, "fake2");
 
-		Users_deposits billDep = Users_deposits.createIt("users_id", bill.getId().toString(),
-				"cb_tid", "fake",
-				"time_", Tools.SDF.get().format(new Date()),
-				"btc_amount", .015d, 
-				"status", "completed");
 
-		Users_deposits terryDep = Users_deposits.createIt("users_id", terry.getId().toString(),
-				"cb_tid", "fake",
-				"time_", Tools.SDF.get().format(new Date()),
-				"btc_amount", .3d, 
-				"status", "completed");
+		DBActions.makeOrUpdateOrder("fake3", "ofake3");
+		DBActions.makeDepositFake(bill.getId().toString(), .015d, "fake3");
+
+
+		DBActions.makeOrUpdateOrder("fake4", "ofake4");
+		DBActions.makeDepositFake(terry.getId().toString(), .3d, "fake4");
+
 
 		Tools.Sleep(1000L);
 	}
@@ -396,13 +387,11 @@ public class InitializeTables {
 		Creator leo = Creator.createIt("username", "Leonardo_Davinci",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 				"email", "asdf1@gmail.com",
-				"local_currency_id", btc.getId(),
-				"cb_acct_id", "fakeleo");
+				"local_currency_id", btc.getId());
 		Creator dusty = Creator.createIt("username", "Dusty_Springfield",
 				"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 				"email", "asdf2@gmail.com",
-				"local_currency_id", btc.getId(),
-				"cb_acct_id", "fakedusty");
+				"local_currency_id", btc.getId());
 
 		Creators_btc_address.createIt("creators_id", leo.getId(), "btc_addr", "fake");
 		Creators_btc_address.createIt("creators_id", dusty.getId(), "btc_addr", "fake");
@@ -435,8 +424,7 @@ public class InitializeTables {
 			User cUser = User.createIt("username", name, 
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword("dog"),
 					"email", name + "22@gmail.com", 
-					"local_currency_id", btc.getId(),
-					"cb_acct_id", "fake" + name);
+					"local_currency_id", btc.getId());
 			Users_btc_address.createIt("users_id", cUser.getId().toString(), "btc_addr", "fake");
 		}
 

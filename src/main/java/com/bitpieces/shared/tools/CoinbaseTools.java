@@ -1,7 +1,6 @@
 package com.bitpieces.shared.tools;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,17 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
-import org.joda.money.BigMoney;
 import org.joda.money.Money;
 
 import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.Tables.Currencies;
 import com.bitpieces.shared.Tables.User;
-import com.bitpieces.shared.Tables.Users_buttons;
 import com.bitpieces.shared.Tables.Users_deposits;
-import com.bitpieces.shared.Tables.Users_settings;
 import com.coinbase.api.Coinbase;
 import com.coinbase.api.CoinbaseBuilder;
 import com.coinbase.api.entity.Account;

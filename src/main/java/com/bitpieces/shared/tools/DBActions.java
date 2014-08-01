@@ -379,14 +379,14 @@ public class DBActions {
 	}
 
 
-	public static Users_deposits makeDepositFake(String usersId, Double btc_amount) {
+	public static Users_deposits makeDepositFake(String usersId, Double btc_amount, String fakecbTid) {
 
 		String timeStr = SDF.format(new Date());
 
 
 
 		return Users_deposits.createIt("users_id", usersId,
-				"cb_tid", "fake", 
+				"cb_tid", fakecbTid, 
 				"time_", timeStr, 
 				"btc_amount", btc_amount, 
 				"status", "completed");
@@ -467,7 +467,7 @@ public class DBActions {
 			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
 
 			// Give them $100BTC in play money
-			makeDepositFake(user.getId().toString(), .1d);
+			makeDepositFake(user.getId().toString(), .1d, "fakeCbTid" + postMap.get("username"));
 
 
 			UID uid = new UID(UserType.User, 
