@@ -340,7 +340,7 @@ public class WebTools {
 
 
 		// First fetch from the table
-		DBActions.makeDepositFake(uid.getId(),btcAmount, "fakeCbTid" + btcAmount);
+		DBActions.makeDepositFake(uid.getId(),btcAmount, "fake1");
 
 		return message;
 
