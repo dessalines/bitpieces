@@ -123,7 +123,7 @@ function setupIssueForm(creatorName) {
 
     });
 
-    simpleFetch('/get_creators_funds_current').done(function(result) {
+    simpleFetch(creatorName + '/get_creators_funds_current').done(function(result) {
         var fundsNum = result.replace(/^\D+/g, '')
         var creatorsFunds = parseFloat(fundsNum);
         $('[name="creatorsFunds"]').text(result);
