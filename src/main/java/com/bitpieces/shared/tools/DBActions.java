@@ -483,15 +483,17 @@ public class DBActions {
 
 	}
 
-	public static UID createUserRealFromAjax(Coinbase cb, String reqBody) {
+	public static UID createUserRealFromAjax(String reqBody) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 
 		try {
+			Currencies btc = Currencies.findFirst("iso=?", "BTC");
 			User user = User.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
-					"email", postMap.get("email"));
+					"email", postMap.get("email"),
+					"local_currency_id", btc.getId());
 
 			// Give them the padowan badge
 			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");

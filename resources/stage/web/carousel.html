@@ -26,7 +26,7 @@
   <!--   toastr css -->
   <link href="toastr/toastr.css" rel="stylesheet"/>
 
-    <!--   typeahead css -->
+  <!--   typeahead css -->
   <link href="typeaheadjs.css" rel="stylesheet"/>
 
   <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -338,7 +338,9 @@ data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
   </div>
 </div>
 
-TODO some kinda captcha thing
+<div class="form-group">
+  <div id="recaptcha_div" class="col-sm-offset-2 col-sm-10"> </div>
+</div>
 <div class="form-group">
   <div class="col-sm-offset-2 col-sm-10">
     <button id="registerBtn" type="submit" class="btn btn-default">Register</button>
@@ -506,6 +508,7 @@ TODO some kinda captcha thing
       <script src="highcharts/js//modules/exporting.js"></script>
       <script src="highcharts/js/themes/dark-unica.js"></script>
       <script src="typeahead.js/typeahead.bundle.js"></script>
+      <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
       
 
       <!--   My scripts -->

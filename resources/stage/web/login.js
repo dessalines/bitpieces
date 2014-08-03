@@ -32,7 +32,7 @@ $(document).ready(function() {
     });
 
     showHideElementsLoggedIn();
-
+    showRecaptcha("recaptcha_div");
 
     $('#registerBtn').button();
 
@@ -190,3 +190,10 @@ $(document).ready(function() {
 
 
 });
+
+function showRecaptcha(element) {
+    Recaptcha.create("6LfgKvcSAAAAAJGQDr6NtYgCqfKAshsFqZDDNJ-N", element, {
+        theme: "blackglass",
+        callback: Recaptcha.focus_response_field
+    });
+}

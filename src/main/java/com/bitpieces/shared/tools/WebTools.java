@@ -12,6 +12,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
 import org.codehaus.jackson.JsonNode;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
@@ -1306,6 +1309,24 @@ public class WebTools {
 		} else {
 			return "0";
 		}
+	}
+	
+	public static Boolean recaptcha(String remoteAddr, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+        reCaptcha.setPrivateKey("6LfgKvcSAAAAAGGzX4vvIjzVS6RPizYrr-cP7MJE");
+
+        
+        String challenge = postMap.get("recaptcha_challenge_field");
+        String uresponse = postMap.get("recaptcha_response_field");
+        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+
+        if (reCaptchaResponse.isValid()) {
+         return true;
+        } else {
+          throw new NoSuchElementException("Recaptcha wrong");
+        }
 	}
 
 	public static List<Map<String, String>> doUnitConversions(List<Model> list,

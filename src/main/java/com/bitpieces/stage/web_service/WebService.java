@@ -20,7 +20,6 @@ import com.bitpieces.shared.tools.UnitConverter;
 import com.bitpieces.shared.tools.WebCommon;
 import com.bitpieces.shared.tools.WebTools;
 import com.coinbase.api.Coinbase;
-import com.coinbase.api.CoinbaseBuilder;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
@@ -39,7 +38,7 @@ public class WebService {
 
 		// Set up coinbase for operations
 		Coinbase cb = CoinbaseTools.setupCoinbase(DataSources.COINBASE_PROP);
-		
+
 		// Load the correct db connection
 		Properties prop = Tools.loadProperties(DataSources.STAGE_DB_PROP);
 
@@ -63,21 +62,29 @@ public class WebService {
 		post("/registeruser", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
+			try {
+				// Verify the recaptcha
+				WebTools.recaptcha(req.url(), req.body());
 
-			// Create the user
-			UID uid = DBActions.createUserRealFromAjax(cb, req.body());
+				// Create the user
+				UID uid = DBActions.createUserRealFromAjax(req.body());
 
-			dbClose();
+				dbClose();
 
-			// Its null if it couldn't create the user, usually cause of constraints
-			if (uid != null) {
-				WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
+				// Its null if it couldn't create the user, usually cause of constraints
+				if (uid != null) {
+					WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
 
-				return "user registered";
-			} else {
+					return "user registered";
+				} else {
 
+					res.status(666);
+					return "User already exists";
+				}
+
+			} catch (NoSuchElementException e) {
 				res.status(666);
-				return "User already exists";
+				return e.getMessage();
 			}
 
 		});
@@ -146,8 +153,8 @@ public class WebService {
 			return message;
 
 		});
-		
-		
+
+
 
 		post("/placebuy", (req, res) -> {
 			String message = null;
@@ -258,18 +265,18 @@ public class WebService {
 				uid.verifyUser();
 
 				code = CoinbaseTools.fetchOrCreateDepositButton(cb, uid);
-				
+
 				dbClose();
 
 			} catch (NoSuchElementException e) {
 				res.status(666);
 				return e.getMessage();
 			}
-			
+
 			return code;
 
 		});
-		
+
 		post("/:user_id/coinbase_deposit_callback", (req, res) -> {
 			String message = null;
 			try {
@@ -278,7 +285,7 @@ public class WebService {
 				dbInit(prop);
 				String userId = req.params(":user_id");
 
-				
+
 				WebTools.makeDepositFromCoinbaseCallback(userId, req.body());
 				dbClose();
 			} catch (NoSuchElementException e) {
@@ -288,51 +295,51 @@ public class WebService {
 			return message;
 
 		});
-		
-	
-	
-	post("/user_withdraw", (req, res) -> {
-		String message = null;
-		try {
-			WebCommon.allowResponseHeaders(req, res);
-			UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-			uid.verifyUser();
-			dbInit(prop);
-			
-			message = WebTools.makeUserWithdrawal(cb, uid, req.body(), sf);
-			dbClose();
-			
-		} catch (NoSuchElementException e) {
-			res.status(666);
-			e.printStackTrace();
-			return e.getMessage();
-		}
-		return message;
 
-	});
-	
-	post("/creator_withdraw", (req, res) -> {
-		String message = null;
-		try {
-			WebCommon.allowResponseHeaders(req, res);
-			UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
-			cid.verifyCreator();
 
-			dbInit(prop);
-			
-			message = WebTools.makeCreatorWithdrawal(cb, cid, req.body(), sf);
-			dbClose();
-			
-		} catch (NoSuchElementException e) {
-			res.status(666);
-			e.printStackTrace();
-			return e.getMessage();
-		}
-		return message;
 
-	});
-	
-}
+		post("/user_withdraw", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				uid.verifyUser();
+				dbInit(prop);
+
+				message = WebTools.makeUserWithdrawal(cb, uid, req.body(), sf);
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				e.printStackTrace();
+				return e.getMessage();
+			}
+			return message;
+
+		});
+
+		post("/creator_withdraw", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				cid.verifyCreator();
+
+				dbInit(prop);
+
+				message = WebTools.makeCreatorWithdrawal(cb, cid, req.body(), sf);
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				e.printStackTrace();
+				return e.getMessage();
+			}
+			return message;
+
+		});
+
+	}
 
 
 
