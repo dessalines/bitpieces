@@ -78,7 +78,7 @@
                 </ul>
               </li>
             </ul>
-            <form id="creator_search" class="navbar-form navbar-left" role="search">
+            <form id="creator_search" class="navbar-form navbar-left navbar-input-group" role="search">
               <div class="form-group">
                <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
              </div>
@@ -122,7 +122,7 @@
           <span class="icon-bar"></span>
         </div>
         <div id="scroll-nav" class="list-group">
-     
+
           <li class="list-group-item">
             <a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a>
             <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
@@ -132,7 +132,7 @@
           <a class="list-group-item" href="#categories"><i class="fa fa-table"></i> Categories</a>
           <a class="list-group-item" href="#units"><i class="fa fa-table"></i> Units</a>
           <a class="list-group-item" href="#raiseFunds"><i class="fa fa-table"></i> Raise Funds</a>
-         
+
         </div>
       </div>        
     </div>
@@ -248,7 +248,9 @@
                   </div>
                 </div>
               </div>
-              TODO some kinda captcha thing
+              <div class="form-group">
+                <div id="recaptcha_div" class="col-sm-offset-2 col-sm-10"> </div>
+              </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <button id="creatorRegisterBtn" type="submit" class="btn btn-primary"
@@ -518,6 +520,7 @@
        <script src="highcharts/js//modules/exporting.js"></script>
        <script src="highcharts/js/themes/dark-unica.js"></script>
        <script src="typeahead.js/typeahead.bundle.js"></script>
+       <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 
 
        <!-- my scripts -->

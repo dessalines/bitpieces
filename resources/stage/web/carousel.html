@@ -39,13 +39,14 @@
         <![endif]-->
 
         <!-- Custom styles for this template -->
-        <link href="carousel.css" rel="stylesheet" />
+        <!-- <link href="carousel.css" rel="stylesheet" /> -->
+        <link href="userdashboard.css" rel="stylesheet" />
       </head>
 
 
   <!-- NAVBAR
   ================================================== -->
-  <body>
+  <body class="carousel-body" >
     <!-- plug into here -->
     <nav class="navbar navbar-default" role="navigation">
      <div class="container-fluid">
@@ -81,7 +82,7 @@
         </ul>
       </li>
     </ul>
-    <form id="creator_search" class="navbar-form navbar-left" role="search">
+    <form id="creator_search" class="navbar-form navbar-left navbar-input-group" role="search">
       <div class="form-group">
        <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
      </div>
@@ -90,42 +91,6 @@
 
 
    <ul class="nav navbar-nav navbar-right">
-    <li class="dropdown messages-dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">7</span> <b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <li class="dropdown-header">7 New Messages</li>
-        <li class="message-preview">
-          <a href="#">
-            <span class="avatar"><img src="http://placehold.it/50x50"></span>
-            <span class="name">John Smith:</span>
-            <span class="message">Hey there, I wanted to ask you something...</span>
-            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-          </a>
-        </li>
-        <li class="divider"></li>
-        <li class="message-preview">
-          <a href="#">
-            <span class="avatar"><img src="http://placehold.it/50x50"></span>
-            <span class="name">John Smith:</span>
-            <span class="message">Hey there, I wanted to ask you something...</span>
-            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-          </a>
-        </li>
-        <li class="divider"></li>
-        <li class="message-preview">
-          <a href="#">
-            <span class="avatar"><img src="http://placehold.it/50x50"></span>
-            <span class="name">John Smith:</span>
-            <span class="message">Hey there, I wanted to ask you something...</span>
-            <span class="time"><i class="fa fa-clock-o"></i> 4:34 PM</span>
-          </a>
-        </li>
-        <li class="divider"></li>
-        <li><a href="#">View Inbox <span class="badge">7</span></a></li>
-      </ul>
-    </li>
-
-
     <li id="userDropdown" class="dropdown user-dropdown">
 
       <script id="usernameTemplate" type="x-tmpl-mustache">  
@@ -370,8 +335,8 @@ data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
             <img data-src="holder/holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide">
             <div class="container">
               <div class="carousel-caption">
-                <h1>Example headline.</h1>
-                <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+                <h1>The next generation of crowd funding is here</h1>
+                <p></p>
                 <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
               </div>
             </div>
@@ -380,8 +345,8 @@ data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
             <img data-src="holder/holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide">
             <div class="container">
               <div class="carousel-caption">
-                <h1>Another example headline.</h1>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                <h1>Helping content creators do what they do best</h1>
+                <p></p>
                 <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
               </div>
             </div>
@@ -390,8 +355,8 @@ data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
             <img data-src="holder/holder.js/900x500/auto/#555:#5a5a5a/text:Third slide" alt="Third slide">
             <div class="container">
               <div class="carousel-caption">
-                <h1>One more for good measure.</h1>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                <h1>Get creative projects in motion</h1>
+                <p></p>
                 <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
               </div>
             </div>
@@ -413,84 +378,95 @@ data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
         <div class="row">
           <div class="col-lg-4">
             <img class="img-circle" data-src="holder/holder.js/140x140" alt="Generic placeholder image">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.
-
-
+            <h2>Register</h2>
+            <p>Signing up is quick, easy, and free. Learn about the <a href="#">creators</a> you could potentially fund, or head over to our <a href="#">test site</a> to learn the ropes, with no real money involved.
             </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <p><a class="btn btn-default" href="#" role="button">Sign up &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4">
             <img class="img-circle" data-src="holder/holder.js/140x140" alt="Generic placeholder image">
-            <h2>Heading</h2>
-            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <h2>Buy pieces</h2>
+            <p>Fund your favorite bands, artists, creators, and small businesses by buying pieces of their brand. Your pieces continuously earn <a href="#">rewards</a> from the moment they are bought, which build up over time. After a creator has sold their initial pieces, users can bid and sell their pieces to other users if they choose. </p>
+            <p><a class="btn btn-default" href="#" role="button">Learn more about pieces &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4">
             <img class="img-circle" data-src="holder/holder.js/140x140" alt="Generic placeholder image">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
+            <h2>Earn rewards</h2>
+            <p>Creators are <b>required</b> to pay <a href="#">rewards</a> to their funders, starting out small, and growing as they grow their brand. This, along with a 
+              <a href="#">verification system</a>, <a href="#">creator safety ratings</a>, and a commenting system that provides a dialog between creators and their funders, builds a <a href="#">history of trust</a>. Also, funders of projects earn <a href="#">badges</a>  and points for various objectives.</p>
+              <p><a class="btn btn-default" href="#" role="button">Learn more about rewards &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+          </div><!-- /.row -->
 
 
-        <!-- START THE FEATURETTES -->
+          <!-- START THE FEATURETTES -->
 
-        <hr class="featurette-divider">
+          <hr class="featurette-divider">
 
-        <div class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
-              <!-- Button trigger modal -->
-              <!-- Standard button -->
+          <div class="row featurette">
+            <div class="col-md-5">
+              <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
+            </div>
+            <div class="col-md-7">
+              <h2 class="featurette-heading">Fund <span class="text-muted">creativity </span></h2>
+              <p class="lead"> A local band needs some equipment to go on the road, but doesn't have the cash. <span class="text-muted">An educational youtuber needs to quit their job to make more videos.</span> An artist needs supplies. <span class="text-muted">A community organization is raising funds to throw events.</span> <b>Bitpieces</b> gives content creators, small businesses, and community projects a way to raise funding by <a href="#">issuing pieces</a> of their brand, and repaying their funders with monetary <a href="#">rewards</a> over time. 
+              Fund projects in the Visual Arts, Comics, Design, Dance, Education, Film and Video, Environment, Music, Fashion, Tech, Photography, Theatre, Food, Health, Writing and Lit, Sports, Small Business, Gaming, Crafts, and Journalism. </p>
+              </div>
+            </div>
 
-
-            </p>
-          </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-          <div class="col-md-5">
-            <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
-          </div>
-          <div class="col-md-7">
-            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div id="last" class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-            <!--#include virtual="virtual_file.html"-->
-          </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <!-- /END THE FEATURETTES -->
+            <hr class="featurette-divider">
+            <div class="row featurette">
+              <div class="col-md-7">
+                <h2 class="featurette-heading">The world's first <span class="text-muted">International</span> funding platform</h2>
+                <p class="lead">Using the bitcoin network as a universal payment processor ensures that anyone can fund who they want, anywhere in the world. Display the value of your pieces in any one of <b>20 currencies</b>, on an interactive, funding <b>dashboard</b>. Coinbase is used as the payment processor, which ensures free transactions within the bitcoin network.
+                  <!-- Button trigger modal -->
+                  <!-- Standard button -->
 
 
-        <!-- FOOTER -->
-        <footer>
-          <p class="pull-right"><a href="#">Back to top</a></p>
-          <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-        </footer>
+                </p>
+              </div>
+              <div class="col-md-5">
+                <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
+              </div>
+            </div>
 
-      </div><!-- /.container -->
+            <hr class="featurette-divider">
+
+            <div class="row featurette">
+              <div class="col-md-5">
+                <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
+              </div>
+              <div class="col-md-7">
+                <h2 class="featurette-heading">Zero fees on a <span class="text-muted">Secure platform </span></h2>
+                <p class="lead">Similar to other funding sites, content-creators pay a <b>5%</b> fee, but for funders, the experience of buying and trading pieces is entirely <b>free</b>. </p>
+              </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <div id="last" class="row featurette">
+              <div class="col-md-7">
+                <h2 class="featurette-heading">The first <span class="text-muted">Open Source</span> funding platform</h2>
+                <p class="lead">The source code of the entire project is open-source, hosted on <a href="#">github</a>. In addition, an open trading API is in development, to allow funders to buy and sell pieces programmatically. </p>
+
+              </div>
+              <div class="col-md-5">
+                <img class="featurette-image img-responsive" data-src="holder/holder.js/500x500/auto" alt="Generic placeholder image">
+              </div>
+            </div>
+
+            <hr class="featurette-divider">
+
+            <!-- /END THE FEATURETTES -->
+
+
+            <!-- FOOTER -->
+            <footer>
+              <p class="pull-right"><a href="#">Back to top</a></p>
+              <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+            </footer>
+
+          </div><!-- /.container -->
 
 
       <!-- Bootstrap core JavaScript

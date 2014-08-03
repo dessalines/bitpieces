@@ -92,21 +92,28 @@ public class WebService {
 		post("/registercreator", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
+			try {
+				// Verify the recaptcha
+				WebTools.recaptcha(req.url(), req.body());
 
-			// Create the user
-			UID uid = DBActions.createCreatorRealFromAjax(cb, req.body());
+				// Create the user
+				UID uid = DBActions.createCreatorRealFromAjax(cb, req.body());
 
-			dbClose();
+				dbClose();
 
-			// Its null if it couldn't create the user, usually cause of constraints
-			if (uid != null) {
-				WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
+				// Its null if it couldn't create the user, usually cause of constraints
+				if (uid != null) {
+					WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
 
-				return "creator registered";
-			} else {
+					return "creator registered";
+				} else {
 
+					res.status(666);
+					return "Creator already exists";
+				}
+			} catch (NoSuchElementException e) {
 				res.status(666);
-				return "Creator already exists";
+				return e.getMessage();
 			}
 
 		});

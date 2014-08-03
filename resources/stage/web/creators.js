@@ -7,7 +7,7 @@ $(document).ready(function() {
         standardFormPost('registercreator', "#creatorRegisterForm");
 
     });
-
+    showRecaptcha("recaptcha_div");
 
     setupSaveCategories();
 
