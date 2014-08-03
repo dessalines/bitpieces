@@ -35,24 +35,6 @@ import com.bitpieces.shared.tools.DBActions;
 import com.bitpieces.shared.tools.Tools;
 
 /**
- * TODO
- * + Do a deposit / withdrawal check
- * + Before buying anything, do a users funds check
- * + Before buying creators pieces, make sure users have deposited
- * - implement recaptcha
- * + Start using jsoup to write creators and users pages
- * + Do a logout post method
- * - badges page
- * - rewards page
- * - settings page
- * + make sure you can't issue pieces with first having a reward pct
- *	+ Add new reward system based on div/(share*year)
- * + Make user pages transparent
- * Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
- * Make 3 column creator pages
- * Take authid out of all post urls for security(just pick it up from the req.cookies)
- * 'This creator has enough in their account to reward their funders for X years
- * Use disqus, and use the creators name as the disqus Identifier for each creators page
  * 
  * 
  * @author tyler
