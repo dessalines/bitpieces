@@ -138,6 +138,7 @@
          <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
        </li>
 
+       <a class="list-group-item" href="creator_main" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Main</a>
        <a class="list-group-item" href="creator_pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
        <a class="list-group-item" href="creator_worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
        <a class="list-group-item" href="creator_rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
@@ -262,335 +263,90 @@
     </div>
 
   </div>
-  <div> <hr></div>
+
 
 
   <!-- The main body -->
 
-  <div id="main_body" class="col-md-10">
-    <div class="row">
-      <script id="main_body_template" type="x-tmpl-mustache">
-        <p class="lead">{{.}}</p>
-      </script>
-    </div>
-  </div>
-  <div class="row">
-    <button id="saveBtn" type="submit" class="btn btn-primary hide">Save</button>
-  </div>
-
-  <div class="row">
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  
-  name = 'creator'.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-  results = regex.exec(location.search);
-  var creatorName = decodeURIComponent(results[1].replace(/\+/g, " "));
 
 
-    var disqus_shortname = 'bitpieces'; // Required - Replace example with your forum shortname
-    var disqus_identifier = creatorName;
-    var disqus_title = creatorName;
-    // var disqus_url = 'a unique URL for each page where Disqus is present';
-    console.log(disqus_shortname);
-        // var disqus_shortname = 'bitpieces';
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <!-- Modals -->
+  <div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
 
-      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-  </div>
-</div>
-
-
-</div>
-
-<div class="col-md-2 col-md-offset-10">  
-
-  <!-- <div class="span2 col-md-2 col-md-offset-10">   -->
-  <!-- The boxes on the right this time-->
-
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-bank fa-5x"></i>
-            </div>
-            <div id ="worth_current" class="col-xs-8 text-right">
-              <script id="worth_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Worth</p>
-              </script>
-            </div>
-          </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Bid</h4>
         </div>
-        <a href="creator_worth" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Worth
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-money fa-5x"></i>
-            </div>
-            <div id="price_per_piece_current" class="col-xs-8 text-right">
-              <script id="price_per_piece_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading">{{.}}</p>
+        <div class="modal-body">
+          <form id="bidForm" class="form-horizontal" role="form">
+            <div class="form-group form-group-lg">
+              <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <span id="bidSymbol" class="input-group-addon">$</span>    
+                  <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+                  data-bv-greaterthan="true"
+                  data-bv-greaterthan-value=".01"
+                  data-bv-greaterthan-message="Must be > .01"
 
-                <p class="announcement-text">Price per piece</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="creator_pricing" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Pricing
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
+                  >
+                  <span class="input-group-addon">per piece</span>
+                </div>
               </div>
             </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-cubes fa-5x"></i>
-            </div>
-            <div id="pieces_held_current" class="col-xs-8 text-right">
-              <script id="pieces_held_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading">{{.}}</p>
 
-                <p class="announcement-text">Pieces held</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="creator_pieces" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View pieces
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-money fa-5x"></i>
-            </div>
-            <div id="rewards_paid" class="col-xs-8 text-right">
-              <script id="rewards_paid_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Rewards Paid</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="creator_rewards" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Rewards
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-danger">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-empire fa-5x"></i>
-            </div>
-            <div id="backers_current_count" class="col-xs-8 text-right">
-
-              <script id="backers_current_count_template" type="x-tmpl-mustache">
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text"># of Backers</p>
-              </script> 
-            </div>
-          </div>
-        </div>
-        <a href="creator_pieces" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Backers
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-empire fa-5x"></i>
-            </div>
-            <div id="creators_reputation" class="col-xs-8 text-right">
-
-              <script id="creators_reputation_template" type="x-tmpl-mustache">
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Reputation</p>
-              </script> 
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_pieces" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Backers
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
-</div>
-
-<!-- Modals -->
-<div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Bid</h4>
-      </div>
-      <div class="modal-body">
-        <form id="bidForm" class="form-horizontal" role="form">
-          <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-            <div class="col-sm-10">
-              <div class="input-group">
-                <span id="bidSymbol" class="input-group-addon">$</span>    
-                <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-                data-bv-greaterthan="true"
-                data-bv-greaterthan-value=".01"
-                data-bv-greaterthan-message="Must be > .01"
+            <div class="form-group form-group-lg">
+              <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+              <div class="col-sm-10">
+                <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+                type="text" 
+                data-bv-integer="true"
+                data-bv-integer-message="Must be a whole number"
 
                 >
-                <span class="input-group-addon">per piece</span>
               </div>
             </div>
-          </div>
 
-          <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-            <div class="col-sm-10">
-              <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-              type="text" 
-              data-bv-integer="true"
-              data-bv-integer-message="Must be a whole number"
-
-              >
+            <div class="form-group form-group-lg">
+              <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+              <div class="col-sm-10">
+                <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+              </div>
             </div>
-          </div>
+            <div class="form-group form-group-lg">
 
-          <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-            <div class="col-sm-10">
-              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-            </div>
-          </div>
-          <div class="form-group form-group-lg">
+             <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+             <div id="bidTotal" class="col-sm-10 form-control-static">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-           <div id="bidTotal" class="col-sm-10 form-control-static">
-
+             </div>
            </div>
-         </div>
 
-         <div class="form-group form-group-lg">
+           <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
-           <div name="usersFunds" class="col-sm-10 form-control-static">
+             <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+             <div name="usersFunds" class="col-sm-10 form-control-static">
 
+             </div>
            </div>
-         </div>
 
-         <div class="form-group form-group-lg">
+           <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
-           <div id="bidFundsLeft" class="col-sm-10 form-control-static">
+             <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+             <div id="bidFundsLeft" class="col-sm-10 form-control-static">
 
+             </div>
            </div>
-         </div>
-         <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
-         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
-       </form>
+           <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+           <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+         </form>
+
+       </div>
 
      </div>
-
    </div>
  </div>
-</div>
-<div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+ <div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -931,7 +687,7 @@
 
 
 
-    </div>
+</div>
 
 
 

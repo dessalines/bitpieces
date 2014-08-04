@@ -6,6 +6,20 @@
 /*body {
   padding-top: 50px;
   }*/
+  
+  #midCol.affix-top {
+    position:fixed;
+    margin-left:-18px;
+    margin-right:10px;
+  }
+
+  #midCol.affix-bottom {
+    position:static;
+  }
+
+  #midCol.affix {
+    position:static;
+  }
 
   @font-face {
     font-family: 'Glyphicons Halflings';
@@ -118,6 +132,10 @@
 
  /* Hide for mobile, show later */
  @media (min-width: 768px) {
+  .affix,.affix-top,#midCol.affix,#midCol.affix-top {
+    position:static;
+  }
+
   .navbar {
     height: 60px;
   }
@@ -270,4 +288,4 @@
   color: #DBDBDB; ;
   background-color: #222222;
 }
-  
+

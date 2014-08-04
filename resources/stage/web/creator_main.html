@@ -137,8 +137,7 @@
          <a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
          <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
        </li>
-
-       <a class="list-group-item" href="creator_main" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Main</a>
+       <a class="list-group-item active" href="creator_main" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Main</a>
        <a class="list-group-item" href="creator_pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
        <a class="list-group-item" href="creator_worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
        <a class="list-group-item" href="creator_rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
@@ -166,11 +165,12 @@
   
 
   <!-- The sidebar -->
-  <div class="row col-md-10 col-md-offset-2"> 
 
 
-    <!-- The Page -->
-    <div id="main_col" class="col-md-12 main">
+
+  <!-- The Page -->
+  <div class="row-fluid">
+    <div class="col-md-8 col-md-offset-2" >
 
 
 
@@ -187,7 +187,7 @@
          <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
          <button id="issueBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
          <button id="changeRewardBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
-
+         <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
        </div>
      </div>
    </div>
@@ -195,98 +195,119 @@
     <div class="col-md-12">
 
       <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Overview</a></li>
+        <li><a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a></li>
+        <li class="active"><i class="fa fa-table"></i> Main</li>
       </ol>
     </div>
   </div>
 
-
-  <!-- The two top tables -->
-  <div class="row"> 
-    <div class="col-md-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
-        </div>
-        <div id="creators_activity" class="panel-body"  style="height: 276px;overflow:auto;">
-          <script id="creators_activity_template" type="x-tmpl-mustache"> 
-            <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
-              <thead>
-                <tr>
-                  <th>Time <i class="fa fa-sort"></i></th>
-                  <th>Type <i class="fa fa-sort"></th>
-                  <th>Recipient <i class="fa fa-sort"></th>
-                  <th>Pieces <i class="fa fa-sort"></th>
-                  <th>Total <i class="fa fa-sort"></th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                {{#.}}
-
-                <tr> 
-                  <td>{{time_}}</td>
-                  <td>{{type}}</td>
-                  <td>{{recipient}}</td>
-                  <td>{{pieces}}</td>
-                  <td>{{funds}}</td>
-                </tr>
-                {{/.}}
-
-              </tbody>
-            </script>
-
-          </table>
-
-
-        </div>
-        <div class="panel-footer">
-          <ul class="pager">
-          <li id="creators_activity_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
-            <li id="creators_activity_pager_next" ><a href="javascript:void(0);">Next</a></li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="col-lg-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Price per piece history</h3>
-        </div>
-        <div class="panel-body">
-          <div class = "small-chart" id="pricing"></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
   <div> <hr></div>
 
 
-  <!-- The main body -->
-
-  <div id="main_body" class="col-md-10">
-    <div class="row">
-      <script id="main_body_template" type="x-tmpl-mustache">
-        <p class="lead">{{.}}</p>
-      </script>
-    </div>
+  <div class="row">
+    <script id="main_body_template" type="x-tmpl-mustache">
+      <p class="lead">{{.}}</p>
+    </script>
   </div>
   <div class="row">
     <button id="saveBtn" type="submit" class="btn btn-primary hide">Save</button>
   </div>
-</div>
+
+  <div class="row">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+
+      name = 'creator'.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+      results = regex.exec(location.search);
+      var creatorName = decodeURIComponent(results[1].replace(/\+/g, " "));
 
 
-</div>
+    var disqus_shortname = 'bitpieces'; // Required - Replace example with your forum shortname
+    var disqus_identifier = creatorName;
+    var disqus_title = creatorName;
+    // var disqus_url = 'a unique URL for each page where Disqus is present';
+    console.log(disqus_shortname);
+        // var disqus_shortname = 'bitpieces';
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
-<div class="col-md-2 col-md-offset-10">  
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  </div>
 
-  <!-- <div class="span2 col-md-2 col-md-offset-10">   -->
-  <!-- The boxes on the right this time-->
+
+
+
+
+  <!-- <div class="col-md-2 col-md-offset-10">   -->
+  <div id="midCol" class="col-md-2" data-spy="affix">
+
+    <!-- <div class="span2 col-md-2 col-md-offset-10">   -->
+    <!-- The boxes on the right this time-->
+    <!-- a main one -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel">
+          <div class="panel-heading">
+            <div class="row">
+
+              <div class="col-xs-12 text-left">
+
+               <p id ="worth_current" class="announcement-heading">?</p>
+               <p class="announcement-text">Verified</p>
+
+               <p id ="worth_current" class="announcement-heading">?</p>
+               <p class="announcement-text">Net worth</p>
+
+               <p id="price_per_piece_current" class="announcement-heading">?2</p>
+               <p class="announcement-text">Price per piece current</p>
+
+               <p id="pieces_held_current" class="announcement-heading">?2</p>
+               <p class="announcement-text">Pieces held</p>
+
+               <p id="rewards_paid" class="announcement-heading">?2</p>
+               <p class="announcement-text">Rewards paid</p>
+
+               <p id="backers_current_count" class="announcement-heading">?2</p>
+               <p class="announcement-text">Backers</p>
+
+               <p id="creators_safety_current" class="announcement-heading">?2</p>
+               <p class="announcement-text">Safety rating</p>
+
+               <p id="creators_reputation" class="announcement-heading">?2</p>
+               <p class="announcement-text">Reputation</p>
+
+               
+
+
+             </div>
+           </div>
+         </div>
+         <a href="creator_overview" rel="keep-params">
+          <div class="panel-footer announcement-bottom">
+            <div class="row">
+              <div class="col-xs-6">
+                View Overview
+              </div>
+              <div class="col-xs-6 text-right">
+                <i class="fa fa-arrow-circle-right"></i>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
 
   <div class="row">
     <div class="col-lg-12">
@@ -483,7 +504,7 @@
     </div>
   </div>
 </div>
-
+</div>
 </div>
 
 <!-- Modals -->
@@ -499,12 +520,16 @@
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
             <div class="col-sm-10">
-              <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-              data-bv-greaterthan="true"
-              data-bv-greaterthan-value=".01"
-              data-bv-greaterthan-message="Must be > .01"
+              <div class="input-group">
+                <span id="bidSymbol" class="input-group-addon">$</span>    
+                <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+                data-bv-greaterthan="true"
+                data-bv-greaterthan-value=".01"
+                data-bv-greaterthan-message="Must be > .01"
 
-              >
+                >
+                <span class="input-group-addon">per piece</span>
+              </div>
             </div>
           </div>
 
@@ -569,10 +594,12 @@
         <form id="buyForm" class="form-horizontal" role="form">
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-            <div class="col-sm-10 input-group">
-              <span class="input-group-addon">$</span>
-              <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
-              <span class="input-group-addon">per piece</span>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span id="buySymbol" class="input-group-addon">$</span>
+                <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
+                <span class="input-group-addon">per piece</span>
+              </div>
             </div>
           </div>
 
@@ -650,64 +677,68 @@
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
             <div class="col-sm-10">
+             <div class="input-group">
+              <span id="askSymbol" class="input-group-addon">$</span>             
               <input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
               data-bv-greaterthan="true"
               data-bv-greaterthan-value=".01"
               data-bv-greaterthan-message="Must be > .01"
 
               >
+              <span class="input-group-addon">per piece</span>
             </div>
           </div>
+        </div>
 
-          <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-            <div class="col-sm-10">
-              <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-              type="text" 
-              data-bv-integer="true"
-              data-bv-integer-message="Must be a whole number"
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+          <div class="col-sm-10">
+            <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+            type="text" 
+            data-bv-integer="true"
+            data-bv-integer-message="Must be a whole number"
 
-              >
-            </div>
+            >
           </div>
+        </div>
 
-          <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-            <div class="col-sm-10">
-              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-            </div>
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+          <div class="col-sm-10">
+            <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
           </div>
-          <div class="form-group form-group-lg">
+        </div>
+        <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-           <div id="askTotal" class="col-sm-10 form-control-static">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+         <div id="askTotal" class="col-sm-10 form-control-static">
 
-           </div>
          </div>
+       </div>
 
-         <div class="form-group form-group-lg">
+       <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
-           <div name="usersFunds" class="col-sm-10 form-control-static">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+         <div name="usersFunds" class="col-sm-10 form-control-static">
 
-           </div>
          </div>
+       </div>
 
-         <div class="form-group form-group-lg">
+       <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
-           <div id="askFundsLeft" class="col-sm-10 form-control-static">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+         <div id="askFundsLeft" class="col-sm-10 form-control-static">
 
-           </div>
          </div>
-         <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+       </div>
+       <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
 
-       </form>
-
-     </div>
+     </form>
 
    </div>
+
  </div>
+</div>
 </div>
 
 
@@ -777,6 +808,79 @@
  </div>
 </div>
 
+<div id="withdrawModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">withdraw</h4>
+      </div>
+      <div class="modal-body">
+        <form id="withdrawForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Amount</label>
+            <div class="col-sm-10">
+             <div class="input-group">
+              <div id="withdrawSymbol" class="input-group-addon">?</div>
+              <input name="withdrawAmount" class="form-control" type="text" id="formGroupInputLarge" placeholder="Current funds"
+
+              >
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="form-group form-group-lg">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Bitcoin Address</label>
+
+
+         <div class="col-sm-10">
+           <input name="address" type="text" class="form-control" placeholder="Bitcoin Address or Coinbase Email"
+           >
+         </div>
+       </div>
+
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total after 5% fee</label>
+         <div id="withdrawAmountAfterFee" class="col-sm-10 form-control-static">
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Your Funds</label>
+         <div id="funds" class="col-sm-10 form-control-static">
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds After</label>
+         <div id="fundsLeft" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Safety Rating After</label>
+         <div id="safetyRatingAfter" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <button id="placeWithdrawBtn" type="submit" class="btn btn-primary">Withdraw</button>
+
+     </form>
+   </div>
+
+ </div>
+</div>
+</div>
+
 <div id="rewardModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 
@@ -812,11 +916,18 @@
   </div>
 
 
+
+
+
   <!-- end of wrapper -->
 </div>
 
 
+
 </div>
+
+
+
 
 
 
@@ -839,12 +950,13 @@
       <script src="pickadate/lib/picker.js"></script>
       <script src="pickadate/lib/picker.date.js"></script>
       <script src="summernote/dist/summernote.min.js"></script>
+      <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 
       <!-- my scripts -->
       <script src="tools.js"></script>
       <script src="highcharts_templates.js"></script>
       <script src="creatorpage.js"></script>
-      <script src="creator_overview.js"></script>
+      <script src="creator_main.js"></script>
       <script src="login.js"></script>
 
 
