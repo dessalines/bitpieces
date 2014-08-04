@@ -18,7 +18,7 @@ $(document).ready(function() {
         bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
 
 
-        setupDepositButton("/make_deposit", '#placedepositBtn', '#depositForm', '#depositModal');
+        fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
     }
     navigateWithParams();
 

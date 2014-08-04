@@ -134,6 +134,7 @@ public class CoinbaseTools {
 		t.setAmountString(btcString);
 		t.setAmount(moneyAmount);
 
+
 		
 	
 		Transaction r = cb.sendMoney(t);
