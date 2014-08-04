@@ -67,11 +67,13 @@ function setupWithdrawForm() {
                 if (fundsLeft < 0) {
 
                     $('#placeWithdrawBtn').prop('disabled', true);
+                    $('#withdrawAmountGroup').addClass('has-error');
                     $('#fundsLeft').addClass("text-danger");
                     $('#fundsLeft').removeClass("text-success");
 
                 } else {
                     $('#placeWithdrawBtn').prop('disabled', false);
+                    $('#withdrawAmountGroup').addClass('has-success');
                     $('#fundsLeft').addClass("text-success");
                     $('#fundsLeft').removeClass("text-danger");
                 }
