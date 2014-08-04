@@ -907,7 +907,8 @@
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
         results = regex.exec(location.search);
       var creatorName = decodeURIComponent(results[1].replace(/\+/g, " "));
-        var disqus_shortname = 'bitpieces' + '_' + creatorName; 
+        var disqus_shortname = 'bitpieces'
+        var disqus_identifier = creatorName;
         console.log(disqus_shortname);
         // var disqus_shortname = 'bitpieces';
         /* * * DON'T EDIT BELOW THIS LINE * * */
