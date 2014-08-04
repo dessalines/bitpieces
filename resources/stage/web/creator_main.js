@@ -16,13 +16,28 @@ $(document).ready(function() {
 
     fillSimpleText(creatorName + '/get_pieces_owned_value_current_by_creator', '#worth_current');
     fillSimpleText(creatorName + '/get_funds_raised', '#funds_raised');
-    fillSimpleText(creatorName + '/get_price_per_piece_current', '#price_per_piece_current');
+
     fillSimpleText(creatorName + '/get_pieces_owned_total', '#pieces_held_current');
     fillSimpleText(creatorName + '/get_rewards_owed', '#rewards_paid');
     fillSimpleText(creatorName + '/get_backers_current_count', '#backers_current_count');
     fillSimpleText(creatorName + '/get_creators_reputation', '#creators_reputation');
     fillSimpleText(creatorName + '/get_safety_current', '#creators_safety_current');
+    fillSimpleText(creatorName + '/get_price_per_piece_current', '#price_per_piece_current');
     fillSimpleText(creatorName + '/get_rewards_current', '#rewards_current');
+
+    $.when(getJson(creatorName + '/get_price_per_piece_current'),
+        getJson(creatorName + '/get_rewards_current')).done(function(a1, a2) {
+        var pppCurrent = parseFloat(a1[0]);
+        var rewards_current = parseFloat(a2[0]);
+
+        var rewards_current_yield = (rewards_current * 100 / pppCurrent).toFixed(2) + '%';
+
+        $('#rewards_current_yield').text(rewards_current_yield);
+
+    });
+
+
+
 
     simpleFetch(creatorName + '/get_verified').done(function(result) {
         console.log('verified = ' + result);
