@@ -497,15 +497,17 @@
         <form id="bidForm" class="form-horizontal" role="form">
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-            <div class="col-sm-10 input-group">
-              <span id="bidSymbol" class="input-group-addon">$</span>    
-              <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-              data-bv-greaterthan="true"
-              data-bv-greaterthan-value=".01"
-              data-bv-greaterthan-message="Must be > .01"
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span id="bidSymbol" class="input-group-addon">$</span>    
+                <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+                data-bv-greaterthan="true"
+                data-bv-greaterthan-value=".01"
+                data-bv-greaterthan-message="Must be > .01"
 
-              >
-              <span class="input-group-addon">per piece</span>
+                >
+                <span class="input-group-addon">per piece</span>
+              </div>
             </div>
           </div>
 
@@ -570,10 +572,12 @@
         <form id="buyForm" class="form-horizontal" role="form">
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-            <div class="col-sm-10 input-group">
-              <span id="buySymbol" class="input-group-addon">$</span>
-              <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
-              <span class="input-group-addon">per piece</span>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span id="buySymbol" class="input-group-addon">$</span>
+                <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
+                <span class="input-group-addon">per piece</span>
+              </div>
             </div>
           </div>
 
@@ -650,7 +654,8 @@
         <form id="askForm" class="form-horizontal" role="form">
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-            <div class="col-sm-10 input-group">
+            <div class="col-sm-10">
+             <div class="input-group">
               <span id="askSymbol" class="input-group-addon">$</span>             
               <input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
               data-bv-greaterthan="true"
@@ -661,56 +666,57 @@
               <span class="input-group-addon">per piece</span>
             </div>
           </div>
+        </div>
 
-          <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-            <div class="col-sm-10">
-              <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-              type="text" 
-              data-bv-integer="true"
-              data-bv-integer-message="Must be a whole number"
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+          <div class="col-sm-10">
+            <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+            type="text" 
+            data-bv-integer="true"
+            data-bv-integer-message="Must be a whole number"
 
-              >
-            </div>
+            >
           </div>
+        </div>
 
-          <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-            <div class="col-sm-10">
-              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-            </div>
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+          <div class="col-sm-10">
+            <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
           </div>
-          <div class="form-group form-group-lg">
+        </div>
+        <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-           <div id="askTotal" class="col-sm-10 form-control-static">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+         <div id="askTotal" class="col-sm-10 form-control-static">
 
-           </div>
          </div>
+       </div>
 
-         <div class="form-group form-group-lg">
+       <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
-           <div name="usersFunds" class="col-sm-10 form-control-static">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+         <div name="usersFunds" class="col-sm-10 form-control-static">
 
-           </div>
          </div>
+       </div>
 
-         <div class="form-group form-group-lg">
+       <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
-           <div id="askFundsLeft" class="col-sm-10 form-control-static">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+         <div id="askFundsLeft" class="col-sm-10 form-control-static">
 
-           </div>
          </div>
-         <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+       </div>
+       <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
 
-       </form>
-
-     </div>
+     </form>
 
    </div>
+
  </div>
+</div>
 </div>
 
 
