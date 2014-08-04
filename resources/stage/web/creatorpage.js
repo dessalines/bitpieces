@@ -68,7 +68,7 @@ function showHideButtons(creatorName) {
         simpleFetch(creatorName + "/get_pieces_owned_total").done(function(result) {
             console.log('result = ' + result);
             if (result > 0) {
-                $('[name="buyPieces"]').attr('placeholder', 'There are ' + result + ' pieces left');
+                $('[name="bidPieces"]').attr('placeholder', 'There are ' + result + ' pieces owned');
             }
         });
 
