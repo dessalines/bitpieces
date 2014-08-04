@@ -131,7 +131,9 @@ function setupWithdrawalForm(creatorName) {
         var piecesOwnedTotalStr = a2[0];
         var rewardsPerPiecePerYearStr = a3[0];
 
-
+        if (creatorsFundsStr != "0") {
+            $('#withdrawBtn').removeClass('hide');
+        }
 
 
         var creatorsFunds = parseFloat(creatorsFundsStr.replace(/^\D+/g, ''));
