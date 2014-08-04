@@ -128,7 +128,7 @@ function setupIssueForm(creatorName) {
         var creatorsFunds = parseFloat(fundsNum);
         $('[name="creatorsFunds"]').text(result);
 
-        $('[name="issuePieces"]').bind('keyup', function(f) {
+        $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
 
             var pieces = parseFloat($(this).val());
 

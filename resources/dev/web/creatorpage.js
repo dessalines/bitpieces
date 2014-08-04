@@ -105,7 +105,7 @@ function showHideButtons(creatorName) {
                 var usersFunds = parseFloat(fundsNum);
                 $('[name="usersFunds"]').text(result);
 
-                $('[name="' + e + 'Pieces' + '"]').bind('keyup', function(f) {
+                $('[name="' + e + 'Pieces' + '"],[name="' + e + '"]').bind('keyup', function(f) {
 
                     var buyPieces = parseFloat($(this).val());
 

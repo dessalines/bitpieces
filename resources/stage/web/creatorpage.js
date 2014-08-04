@@ -126,7 +126,7 @@ function showHideButtons(creatorName) {
                 // $('[name="usersFunds"]').text(result);
                 $('[name="usersFunds"]').text(result);
                 $('#' + e + 'Symbol').text(currSymbol);
-                $('[name="' + e + 'Pieces' + '"]').bind('keyup', function(f) {
+                $('[name="' + e + 'Pieces' + '"],[name="' + e + '"]').bind('keyup', function(f) {
 
                     var buyPieces = parseFloat($(this).val());
 
@@ -338,7 +338,7 @@ function setupIssueForm(creatorName) {
         var creatorsFunds = parseFloat(result.replace(/^\D+/g, ''));
         $('[name="creatorsFunds"]').text(result);
 
-        $('[name="issuePieces"]').bind('keyup', function(f) {
+        $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
 
             var pieces = parseFloat($(this).val());
 
