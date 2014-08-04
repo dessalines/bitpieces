@@ -399,21 +399,26 @@ public class DBActions {
 		String timeStr = SDF.format(new Date());
 
 		Users_deposits dep = Users_deposits.findFirst("cb_tid=?", cb_tid);
+		
+		// only do this if the status is not complete, its confusing to see the pointless updates to rows in the DB
+		if (!status.equals("complete")) {
+			if (dep == null) {
+				return Users_deposits.createIt("users_id", userId,
+						"cb_tid", cb_tid, 
+						"time_", timeStr, 
+						"btc_amount", btc_amount, 
+						"status", status);
 
-		if (dep == null) {
-			return Users_deposits.createIt("users_id", userId,
-					"cb_tid", cb_tid, 
-					"time_", timeStr, 
-					"btc_amount", btc_amount, 
-					"status", status);
-
+			} else {
+				dep.set("users_id", userId,
+						"cb_tid", cb_tid, 
+						"time_", timeStr, 
+						"btc_amount", btc_amount, 
+						"status", status).saveIt();
+				return dep;
+			}
 		} else {
-			dep.set("users_id", userId,
-					"cb_tid", cb_tid, 
-					"time_", timeStr, 
-					"btc_amount", btc_amount, 
-					"status", status).saveIt();
-			return dep;
+			return null;
 		}
 
 	}
@@ -448,7 +453,7 @@ public class DBActions {
 		}
 
 	}
-	
+
 	public static UID createUserDevFromAjax(String reqBody) {
 
 
@@ -650,12 +655,12 @@ public class DBActions {
 
 	public static Users_withdrawals userWithdrawal(String userId, String cb_tid, Double btcAmount, String status) {
 		String timeStr = SDF.format(new Date());
-	
-	
+
+
 		try {
 			// Make sure the user has enough to cover the withdraw
 			checkUsersFunds(userId, btcAmount);
-	
+
 			return Users_withdrawals.createIt("users_id",userId,
 					"cb_tid", cb_tid,
 					"time_", timeStr,
@@ -720,7 +725,7 @@ public class DBActions {
 		}
 
 	}
-	
+
 	public static Creators_withdrawals creatorWithdrawalFake(String creatorId, Double btcAmount) {
 
 		// Make sure the creator has enough to cover the withdraw

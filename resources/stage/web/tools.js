@@ -346,6 +346,9 @@ function setupCreatorSearch() {
         name: 'creators_list',
         displayKey: 'username',
         source: creatorsList.ttAdapter()
+
+    }).on('typeahead:selected', function(e, data) {
+        $(this).submit();
     });
 
     $("#creator_search").submit(function(event) {
