@@ -143,6 +143,7 @@ function setupWithdrawalForm(creatorName) {
         // $("#creatorsFunds").text(result);
         $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + creatorsFunds);
         $('#funds').text(creatorsFundsStr);
+        $("#withdrawSymbol").text(rewardsPerPiecePerYearStr[0]);
         $('[name="withdrawAmount"]').bind('keyup', function(f) {
             var withdrawAmount = parseFloat($(this).val());
             var withdrawAmountAfterFee = withdrawAmount * .95;
