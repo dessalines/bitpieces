@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     // fillFieldFromMustache(creatorName + '/get_main_body', 
     //     '#worth_current_template' , '#worth_current', true);
-
+    setupDisqus(creatorName);
 
 
     // fillFieldFromMustache(creatorName + '/get_pieces_owned_value_current_by_creator', 
