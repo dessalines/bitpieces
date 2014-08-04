@@ -14,7 +14,7 @@ import com.bitpieces.shared.tools.Tools;
 
 public class AskBidAccepter implements Job {
 	public static void main(String[] args) {
-		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
+		Properties prop = Tools.loadProperties(DataSources.STAGE_DB_PROP);
 		dbInit(prop);
 		DBActions.askBidAccepter();
 		dbClose();
