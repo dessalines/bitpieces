@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     simpleFetch(creatorName + '/get_verified').done(function(result) {
         console.log('verified = ' + result);
-        if (result == 0) {
+        if (result == false) {
             $('#verified').addClass('text-danger');
             $('#verified').html('<i class="fa fa-exclamation"></i> Unverified');
         } else {
