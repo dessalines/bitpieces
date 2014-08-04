@@ -31,6 +31,7 @@ import com.bitpieces.shared.Tables.Creators_activity;
 import com.bitpieces.shared.Tables.Creators_categories;
 import com.bitpieces.shared.Tables.Creators_funds_accum;
 import com.bitpieces.shared.Tables.Creators_funds_current;
+import com.bitpieces.shared.Tables.Creators_funds_raised;
 import com.bitpieces.shared.Tables.Creators_page_fields;
 import com.bitpieces.shared.Tables.Creators_page_fields_view;
 import com.bitpieces.shared.Tables.Creators_reputation;
@@ -965,6 +966,26 @@ public class WebTools {
 
 		if (p != null) {
 			String val = p.getString("value_total_current");
+
+			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+			return json;
+		} else {
+			return "0";
+		}
+
+	}
+	
+	public static String getFundsRaisedJson(
+			String creatorName, UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(null);
+		if (uid != null) {
+			settings = new UsersSettings(uid);
+		}
+		Creators_funds_raised p = 
+				Creators_funds_raised.findFirst("creators_name = ?", creatorName);
+
+		if (p != null) {
+			String val = p.getString("funds_raised");
 
 			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
 			return json;

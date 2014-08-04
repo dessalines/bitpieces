@@ -15,6 +15,7 @@ $(document).ready(function() {
     }
 
     fillSimpleText(creatorName + '/get_pieces_owned_value_current_by_creator', '#worth_current');
+    fillSimpleText(creatorName + '/get_funds_raised', '#funds_raised');
     fillSimpleText(creatorName + '/get_price_per_piece_current', '#price_per_piece_current');
     fillSimpleText(creatorName + '/get_pieces_owned_total', '#pieces_held_current');
     fillSimpleText(creatorName + '/get_rewards_owed', '#rewards_paid');

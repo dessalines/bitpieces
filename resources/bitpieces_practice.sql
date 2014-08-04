@@ -45,7 +45,8 @@ pieces_owned_value_sum_by_creator, pieces_owned_value_current_by_owner, pieces_o
 rewards_span, pieces_owned_value_current, prices_for_user,pieces_owned_value_first, users_funds_grouped, users_transactions, rewards_earned_total_by_user, users_activity,
 users_reputation, backers_current, backers_current_count, creators_page_fields_view, pieces_issued_view, rewards_owed_to_user, pieces_owned_by_creator,
 bids_asks, rewards_view, creators_reputation, creators_transactions, creators_activity, pieces_available_view, bids_asks_current, creators_funds_accum, creators_funds_grouped,
-rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings, max_price_times, prices_current, creators_safety_current, creators_safety
+rewards_earned_by_owner_accum, creators_funds_view, creators_search_view, users_settings, creators_settings, max_price_times, prices_current, creators_safety_current, creators_safety,
+creators_funds_raised
 ;
 SET FOREIGN_KEY_CHECKS=1
 ;
@@ -1354,6 +1355,12 @@ on rewards_current.creators_id = creators_funds_accum.creators_id
 -- where (creators_funds_accum.time_ >= pieces_owned_by_creator.start_time_ and creators_funds_accum.time_ <= pieces_owned_by_creator.end_time_)
 where creators_funds_accum.time_ >= pieces_owned_by_creator.start_time_;
 
+
+CREATE VIEW creators_funds_raised as 
+select from_creators_id as id, username as creators_name, sum(total) as funds_raised from sales_from_creators
+inner join creators 
+on from_creators_id = creators.id
+group by from_creators_id;
 
 
 /*

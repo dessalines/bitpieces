@@ -170,6 +170,8 @@ public class WebCommon {
 
 
 		});
+		
+		
 
 		get("/:user/get_prices_for_user", (req, res) -> {
 			allowResponseHeaders(req, res);
@@ -524,6 +526,27 @@ public class WebCommon {
 
 				// get the creator id from the token		
 				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, uid, sf);
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
+		
+		get("/:creator/get_funds_raised", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			String json = null;
+			String creator = req.params(":creator");
+			UID uid = WebCommon.getUserFromCookie(req, cache);
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token		
+				json = WebTools.getFundsRaisedJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
