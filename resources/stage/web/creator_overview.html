@@ -907,8 +907,12 @@
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
         results = regex.exec(location.search);
       var creatorName = decodeURIComponent(results[1].replace(/\+/g, " "));
-        var disqus_shortname = 'bitpieces'
-        var disqus_identifier = creatorName;
+
+
+    var disqus_shortname = 'bitpieces'; // Required - Replace example with your forum shortname
+    var disqus_identifier = creatorName;
+    var disqus_title = creatorName;
+    // var disqus_url = 'a unique URL for each page where Disqus is present';
         console.log(disqus_shortname);
         // var disqus_shortname = 'bitpieces';
         /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -919,6 +923,7 @@
         })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
     
 
