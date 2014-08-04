@@ -105,7 +105,7 @@ function showHideButtons(creatorName) {
                 var currSymbol = result[0];
                 var usersFunds = parseFloat(fundsNum);
                 // $('[name="usersFunds"]').text(result);
-                $('[name="usersFunds"]').text("asdf");
+                $('[name="usersFunds"]').text(result);
                 $('[name="' + e + 'Pieces' + '"]').bind('keyup', function(f) {
 
                     var buyPieces = parseFloat($(this).val());
