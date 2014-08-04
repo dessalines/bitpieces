@@ -24,6 +24,7 @@ $(document).ready(function() {
     fillSimpleText(creatorName + '/get_safety_current', '#creators_safety_current');
 
     simpleFetch(creatorName + '/get_verified').done(function(result) {
+        console.log('verified = ' + result);
         if (result == 0) {
             $('#verified').addClass('text-danger');
             $('#verified').html('<i class="fa fa-exclamation"></i> Unverified');
