@@ -88,8 +88,8 @@ function showHideButtons(creatorName) {
             var url = creatorName + '/get_price_per_piece_current';
             simpleFetch(url).done(function(result) {
 
-                $('[name="bid"]').attr('placeholder', 'Last Price was $' + result + '/piece');
-                $('[name="ask"]').attr('placeholder', 'Last Price was $' + result + '/piece');
+                $('[name="bid"]').attr('placeholder', 'Last Price was ' + result + '/piece');
+                $('[name="ask"]').attr('placeholder', 'Last Price was ' + result + '/piece');
             });
 
         }
@@ -117,7 +117,7 @@ function showHideButtons(creatorName) {
 
 
                     if (!isNaN(total)) {
-                        $('#' + e + 'Total').text('$' + total);
+                        $('#' + e + 'Total').text(total);
                         var fundsLeft;
                         if (e == 'ask') {
                             fundsLeft = usersFunds + total;
@@ -128,7 +128,7 @@ function showHideButtons(creatorName) {
                         // console.log(fundsNum);
                         //     console.log(usersFunds);
                         //     console.log(e);
-                        $('#' + e + 'FundsLeft').text('$' + fundsLeft);
+                        $('#' + e + 'FundsLeft').text(fundsLeft);
 
                         if (fundsLeft <= 0) {
                             $('button[href="#depositModal"]').removeClass("hide");
