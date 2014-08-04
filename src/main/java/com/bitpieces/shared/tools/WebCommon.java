@@ -726,12 +726,13 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
+			UID uid = WebCommon.getUserFromCookie(req, cache);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getSafetyJson(creator);
+				json = WebTools.getSafetyJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {

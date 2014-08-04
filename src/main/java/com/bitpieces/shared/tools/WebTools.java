@@ -93,7 +93,7 @@ public class WebTools {
 		}
 
 		// Save the html page
-//		HTMLTools.saveCreatorHTMLPage(username, page);
+		//		HTMLTools.saveCreatorHTMLPage(username, page);
 
 		return "Successful";
 
@@ -370,7 +370,7 @@ public class WebTools {
 			String status = order.get("status").asText();
 
 			System.out.println(bitcents + "|" + btcAmount + "|" + "cb_tid");
-			
+
 			DBActions.makeOrUpdateOrder(cb_tid, orderNumber);
 
 
@@ -384,14 +384,14 @@ public class WebTools {
 			e.printStackTrace();
 		}
 	}
-		
+
 	public static String makeUserWithdrawal(Coinbase cb, UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		UsersSettings settings = new UsersSettings(uid);
-		
+
 		String addr = postMap.get("address");
 		Double amount = Double.valueOf(postMap.get("withdrawAmount"));
-		
+
 		// For safety, convert the amount to BTC and make sure the user has that much
 		Double btcAmount = amount;
 		String message = null;
@@ -404,24 +404,24 @@ public class WebTools {
 		} else {
 			message = "withdrawal(pending)  at " + btcAmount + " BTC";
 		}
-		
+
 		Double currentFunds = 
 				Users_funds_current.findFirst("users_id=?", uid.getId()).getDouble("current_funds");
-		
+
 		if (currentFunds >= btcAmount) {
 			try {
-			// Do the coinbase half, with the btc amount
-			Map<String, String> results;
-		
-			results = CoinbaseTools.userWithdrawal(cb, btcAmount, addr);
+				// Do the coinbase half, with the btc amount
+				Map<String, String> results;
 
-			
-			String cb_tid = results.get("cb_tid");
-			String status = results.get("status");
-			
-			// Do the DB side
-			DBActions.userWithdrawal(uid.getId(), cb_tid, btcAmount, status);
-			
+				results = CoinbaseTools.userWithdrawal(cb, btcAmount, addr);
+
+
+				String cb_tid = results.get("cb_tid");
+				String status = results.get("status");
+
+				// Do the DB side
+				DBActions.userWithdrawal(uid.getId(), cb_tid, btcAmount, status);
+
 			} catch (CoinbaseException | IOException e) {
 
 				throw new NoSuchElementException(e.getMessage());
@@ -430,57 +430,57 @@ public class WebTools {
 			throw new NoSuchElementException("You only have " + currentFunds + " BTC, "
 					+ "but are trying to withdraw " + btcAmount + " BTC");
 		}
-				
-				
+
+
 		return message;
 	}
-	
+
 	public static String makeCreatorWithdrawal(Coinbase cb, UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		UsersSettings settings = new UsersSettings(uid);
-		
+
 		String addr = postMap.get("address");
 		Double amount = Double.valueOf(postMap.get("withdrawAmount"));
-		
+
 		// For safety, convert the amount to BTC and make sure the user has that much
 		Double btcAmount = amount;
 		String message = null;
-		
+
 		if (!settings.getIso().equals("BTC")) {
 			Double spotRate = sf.getSpotRate(settings.getIso());
 			btcAmount = amount / spotRate;
-			
-			
+
+
 			message = "withdrawal(pending) at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)" + "(or "  + 
 					amount*(1d-DBActions.SERVICE_FEE_PCT)+ " (after fee) " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
 		} else {
 			message = "withdrawal(pending)  at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)";
 		}
-		
+
 		Double currentFunds = 
 				Creators_funds_current.findFirst("creators_id=?", uid.getId()).getDouble("current_funds");
-		
+
 		Double fee = DBActions.SERVICE_FEE_PCT * btcAmount;
 
 		Double amountAfterFee = btcAmount - fee;
-		
-		
+
+
 		if (currentFunds >= amountAfterFee) {
 			try {
-			// Do the coinbase half, with the btc amount
-			Map<String, String> results;
-		
-			// Give this one the amount after the fee
-			results = CoinbaseTools.userWithdrawal(cb, amountAfterFee, addr);
+				// Do the coinbase half, with the btc amount
+				Map<String, String> results;
 
-			
-			String cb_tid = results.get("cb_tid");
-			String status = results.get("status");
-			
-			// Do the DB side
-			// give this one the full amount, because it does the fee on its own
-			DBActions.creatorWithdrawal(uid.getId(), cb_tid, btcAmount, status);
-			
+				// Give this one the amount after the fee
+				results = CoinbaseTools.userWithdrawal(cb, amountAfterFee, addr);
+
+
+				String cb_tid = results.get("cb_tid");
+				String status = results.get("status");
+
+				// Do the DB side
+				// give this one the full amount, because it does the fee on its own
+				DBActions.creatorWithdrawal(uid.getId(), cb_tid, btcAmount, status);
+
 			} catch (CoinbaseException | IOException e) {
 
 				throw new NoSuchElementException(e.getMessage());
@@ -489,8 +489,8 @@ public class WebTools {
 			throw new NoSuchElementException("You only have " + currentFunds + " BTC, "
 					+ "but are trying to withdraw " + btcAmount + " BTC");
 		}
-				
-				
+
+
 		return message;
 	}
 
@@ -502,7 +502,7 @@ public class WebTools {
 
 
 
-	
+
 
 
 
@@ -976,7 +976,7 @@ public class WebTools {
 		}
 
 	}
-	
+
 	public static String getFundsRaisedJson(
 			String creatorName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(null);
@@ -996,7 +996,7 @@ public class WebTools {
 		}
 
 	}
-	
+
 	public static String getSafetyCurrentJson(
 			String creatorName) {
 
@@ -1012,13 +1012,13 @@ public class WebTools {
 		}
 
 	}
-	
+
 	public static String getVerifiedJson(
 			String creatorName) {
 
 		Creator p = 
 				Creator.findFirst("username = ?", creatorName);
-		
+
 
 		if (p != null) {
 			String val = p.getString("verified");
@@ -1116,15 +1116,18 @@ public class WebTools {
 		}
 
 	}
-	
-	public static String getSafetyJson(
-			String creatorName) {
 
+	public static String getSafetyJson(
+			String creatorName, UID uid, UnitConverter sf) {
+		UsersSettings settings = new UsersSettings(null);
+		if (uid != null) {
+			settings = new UsersSettings(uid);
+		}
 
 		List<Model> list = Creators_safety.find("creators_name=?", creatorName);
 		if (list.size() > 0) {
 			return createHighChartsJSONForSingleCreatorV2(list, "time_", "x_years_of_payments_to_funders", "BLURP",
-					null,null,null);
+					sf, settings.getPrecision(), settings.getIso());
 		} else {
 			return "0";
 		}
@@ -1380,23 +1383,23 @@ public class WebTools {
 			return "0";
 		}
 	}
-	
+
 	public static Boolean recaptcha(String remoteAddr, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
-		
-        ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-        reCaptcha.setPrivateKey("6LfgKvcSAAAAAGGzX4vvIjzVS6RPizYrr-cP7MJE");
 
-        
-        String challenge = postMap.get("recaptcha_challenge_field");
-        String uresponse = postMap.get("recaptcha_response_field");
-        ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+		ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
+		reCaptcha.setPrivateKey("6LfgKvcSAAAAAGGzX4vvIjzVS6RPizYrr-cP7MJE");
 
-        if (reCaptchaResponse.isValid()) {
-         return true;
-        } else {
-          throw new NoSuchElementException("Recaptcha wrong");
-        }
+
+		String challenge = postMap.get("recaptcha_challenge_field");
+		String uresponse = postMap.get("recaptcha_response_field");
+		ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
+
+		if (reCaptchaResponse.isValid()) {
+			return true;
+		} else {
+			throw new NoSuchElementException("Recaptcha wrong");
+		}
 	}
 
 	public static List<Map<String, String>> doUnitConversions(List<Model> list,
