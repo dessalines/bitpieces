@@ -195,6 +195,9 @@ public class Tables {
 	@Table("creators_funds_raised")
 	public static class Creators_funds_raised extends Model {}
 	
+	@Table("creators_safety_current")
+	public static class Creators_safety_current extends Model {}
+	
 
 	
 	@Table("orders")

@@ -35,6 +35,7 @@ import com.bitpieces.shared.Tables.Creators_funds_raised;
 import com.bitpieces.shared.Tables.Creators_page_fields;
 import com.bitpieces.shared.Tables.Creators_page_fields_view;
 import com.bitpieces.shared.Tables.Creators_reputation;
+import com.bitpieces.shared.Tables.Creators_safety_current;
 import com.bitpieces.shared.Tables.Creators_search_view;
 import com.bitpieces.shared.Tables.Creators_settings;
 import com.bitpieces.shared.Tables.Creators_transactions;
@@ -989,6 +990,22 @@ public class WebTools {
 
 			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
 			return json;
+		} else {
+			return "0";
+		}
+
+	}
+	
+	public static String getSafetyCurrentJson(
+			String creatorName) {
+
+		Creators_safety_current p = 
+				Creators_safety_current.findFirst("creators_name = ?", creatorName);
+
+		if (p != null) {
+			String val = p.getString("x_years_of_payments_to_funders");
+
+			return val;
 		} else {
 			return "0";
 		}
