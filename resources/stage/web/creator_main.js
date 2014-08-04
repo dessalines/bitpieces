@@ -27,9 +27,9 @@ $(document).ready(function() {
 
     $.when(getJson(creatorName + '/get_price_per_piece_current'),
         getJson(creatorName + '/get_rewards_current')).done(function(a1, a2) {
-        var pppCurrent = parseFloat(a1[0]);
-        var rewards_current = parseFloat(a2[0]);
-
+        var pppCurrent = parseFloat(a1[0].replace(/[^0-9\.]+/g, ""));
+        var rewards_current = parseFloat(a2[0].replace(/[^0-9\.]+/g, ""));
+        console.log('ppp = ' + pppCurrent);
         var rewards_current_yield = (rewards_current * 100 / pppCurrent).toFixed(2) + '%';
 
         $('#rewards_current_yield').text(rewards_current_yield);
