@@ -357,7 +357,7 @@ function setupCreatorSearch() {
         var searchString = formData[0].value;
 
         console.log(searchString);
-        var url = "creator_overview?creator=" + searchString;
+        var url = "creator_main?creator=" + searchString;
         window.location.replace(url);
 
         event.preventDefault();
