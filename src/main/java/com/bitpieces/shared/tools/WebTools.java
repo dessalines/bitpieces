@@ -35,6 +35,7 @@ import com.bitpieces.shared.Tables.Creators_funds_raised;
 import com.bitpieces.shared.Tables.Creators_page_fields;
 import com.bitpieces.shared.Tables.Creators_page_fields_view;
 import com.bitpieces.shared.Tables.Creators_reputation;
+import com.bitpieces.shared.Tables.Creators_safety;
 import com.bitpieces.shared.Tables.Creators_safety_current;
 import com.bitpieces.shared.Tables.Creators_search_view;
 import com.bitpieces.shared.Tables.Creators_settings;
@@ -1110,6 +1111,20 @@ public class WebTools {
 		if (list.size() > 0) {
 			return createHighChartsJSONForSingleCreatorV2(list, "time_", "price_per_piece", "Pricing",
 					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
+
+	}
+	
+	public static String getSafetyJson(
+			String creatorName) {
+
+
+		List<Model> list = Creators_safety.find("creators_name=?", creatorName);
+		if (list.size() > 0) {
+			return createHighChartsJSONForSingleCreatorV2(list, "time_", "x_years_of_payments_to_funders", "BLURP",
+					null,null,null);
 		} else {
 			return "0";
 		}

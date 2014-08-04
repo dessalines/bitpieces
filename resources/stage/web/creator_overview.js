@@ -14,25 +14,11 @@ $(document).ready(function() {
     //     '#worth_current_template' , '#worth_current', true);
 
 
-    fillFieldFromMustache(creatorName + '/get_pieces_owned_value_current_by_creator',
-        '#worth_current_template', '#worth_current', true);
 
-    fillFieldFromMustache(creatorName + '/get_price_per_piece_current',
-        '#price_per_piece_current_template', '#price_per_piece_current', true);
-
-    fillFieldFromMustache(creatorName + "/get_pieces_owned_total",
-        '#pieces_held_current_template', '#pieces_held_current', true);
-
-    fillFieldFromMustache(creatorName + '/get_rewards_owed',
-        '#rewards_paid_template', '#rewards_paid', true);
-
-    fillFieldFromMustache(creatorName + '/get_backers_current_count',
-        '#backers_current_count_template', '#backers_current_count', false);
-
-    fillFieldFromMustache(creatorName + '/get_creators_reputation',
-        '#creators_reputation_template', '#creators_reputation', false);
 
     fillUserHighChartStandardTemplate(creatorName + '/get_pricing', '#pricing', 'Price ($/piece)', '$');
+
+    fillUserHighChartStandardTemplate(creatorName + '/get_safety', '#creators_safety', 'Able to pay X years of rewards to funders', 'Years');
 
 
     var template = $('#creators_activity_template').html();
