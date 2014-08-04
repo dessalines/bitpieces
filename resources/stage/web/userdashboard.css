@@ -6,7 +6,11 @@
 /*body {
   padding-top: 50px;
   }*/
-  
+/*  .alert {
+    margin-left: 18px;
+     margin-right: 18px;
+
+  }*/
   #midCol.affix-top {
     position:fixed;
     margin-left:-18px;
