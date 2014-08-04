@@ -576,6 +576,26 @@ public class WebCommon {
 			return json;
 
 		});
+		
+		get("/:creator/get_verified", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			String json = null;
+			String creator = req.params(":creator");
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token		
+				json = WebTools.getVerifiedJson(creator);
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
 
 		get("/:creator/get_price_per_piece_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);

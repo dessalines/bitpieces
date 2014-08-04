@@ -102,11 +102,13 @@ CREATE TABLE creators
    local_currency_id int(11) NOT NULL DEFAULT 1,
    FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
    precision_ int(11) NOT NULL DEFAULT 6 ,
+   verified TINYINT(1) NOT  NULL DEFAULT 0,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
 )
 ;
+
 
 
 CREATE TABLE creators_page_fields
@@ -1329,12 +1331,14 @@ creators_funds_current.current_funds,
 pieces_owned_total,
 reward_per_piece_per_year,
 pieces_owned_total * reward_per_piece_per_year as rewards_total_per_year,
-creators_funds_current.current_funds/(reward_per_piece_per_year * pieces_owned_total) as x_years_of_payments_to_funders
+format(creators_funds_current.current_funds/(reward_per_piece_per_year * pieces_owned_total),2) as x_years_of_payments_to_funders
 from creators_funds_current
 inner join pieces_available_view
 on pieces_available_view.creators_id = creators_funds_current.creators_id
 inner join rewards_current
 on rewards_current.creators_id = creators_funds_current.creators_id;
+
+
 
 
 CREATE VIEW creators_safety as 
@@ -1361,6 +1365,8 @@ select from_creators_id as id, username as creators_name, sum(total) as funds_ra
 inner join creators 
 on from_creators_id = creators.id
 group by from_creators_id;
+
+
 
 
 /*

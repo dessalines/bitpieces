@@ -1011,6 +1011,23 @@ public class WebTools {
 		}
 
 	}
+	
+	public static String getVerifiedJson(
+			String creatorName) {
+
+		Creator p = 
+				Creator.findFirst("username = ?", creatorName);
+		
+
+		if (p != null) {
+			String val = p.getString("verified");
+
+			return val;
+		} else {
+			return "0";
+		}
+
+	}
 
 	public static String getPricePerPieceCurrentJson(
 			String creatorName, UID uid, UnitConverter sf) {

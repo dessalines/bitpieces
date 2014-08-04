@@ -23,5 +23,14 @@ $(document).ready(function() {
     fillSimpleText(creatorName + '/get_creators_reputation', '#creators_reputation');
     fillSimpleText(creatorName + '/get_safety_current', '#creators_safety_current');
 
+    simpleFetch(creatorName + '/get_verified').done(function(result) {
+        if (result == 0) {
+            $('#verified').addClass('text-danger');
+            $('#verified').html('<i class="fa fa-exclamation"></i> Unverified');
+        } else {
+            $('#verified').addClass('text-success');
+            $('#verified').html('<i class="fa fa-check"></i> Verified');
+        }
+    });
 
 });
