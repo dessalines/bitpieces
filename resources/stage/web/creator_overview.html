@@ -904,9 +904,9 @@
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         
             name = 'creator'.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
         results = regex.exec(location.search);
-      var creatorName == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      var creatorName = decodeURIComponent(results[1].replace(/\+/g, " "));
         var disqus_shortname = 'bitpieces' + '_' + creatorName; // required: replace example with your forum shortname
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
