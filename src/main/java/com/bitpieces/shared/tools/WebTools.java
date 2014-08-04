@@ -90,7 +90,7 @@ public class WebTools {
 		}
 
 		// Save the html page
-		HTMLTools.saveCreatorHTMLPage(username, page);
+//		HTMLTools.saveCreatorHTMLPage(username, page);
 
 		return "Successful";
 

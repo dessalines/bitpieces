@@ -204,7 +204,7 @@
   <div> <hr></div>
 
 
-  <div class="row">
+  <div id="main_body" class="row">
     <script id="main_body_template" type="x-tmpl-mustache">
       <p class="lead">{{.}}</p>
     </script>
@@ -261,11 +261,15 @@
 
               <div class="col-xs-12 text-left">
 
-               <p id ="worth_current" class="announcement-heading">?</p>
+               <p id ="verified" class="announcement-heading">?</p>
                <p class="announcement-text">Verified</p>
 
+
+               <p id ="funds_raised" class="announcement-heading">?</p>
+               <p class="announcement-text">Funds raised</p>
+
                <p id ="worth_current" class="announcement-heading">?</p>
-               <p class="announcement-text">Net worth</p>
+               <p class="announcement-text">Worth</p>
 
                <p id="price_per_piece_current" class="announcement-heading">?2</p>
                <p class="announcement-text">Price per piece current</p>
@@ -306,203 +310,8 @@
       </div>
     </div>
   </div>
+  
 
-
-
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-info">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-bank fa-5x"></i>
-            </div>
-            <div id ="worth_current" class="col-xs-8 text-right">
-              <script id="worth_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Worth</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="creator_worth" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Worth
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-money fa-5x"></i>
-            </div>
-            <div id="price_per_piece_current" class="col-xs-8 text-right">
-              <script id="price_per_piece_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Price per piece</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="creator_pricing" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Pricing
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-warning">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-cubes fa-5x"></i>
-            </div>
-            <div id="pieces_held_current" class="col-xs-8 text-right">
-              <script id="pieces_held_current_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Pieces held</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="creator_pieces" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View pieces
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-success">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-money fa-5x"></i>
-            </div>
-            <div id="rewards_paid" class="col-xs-8 text-right">
-              <script id="rewards_paid_template" type="x-tmpl-mustache"> 
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Rewards Paid</p>
-              </script>
-            </div>
-          </div>
-        </div>
-        <a href="creator_rewards" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Rewards
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-danger">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-empire fa-5x"></i>
-            </div>
-            <div id="backers_current_count" class="col-xs-8 text-right">
-
-              <script id="backers_current_count_template" type="x-tmpl-mustache">
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text"># of Backers</p>
-              </script> 
-            </div>
-          </div>
-        </div>
-        <a href="creator_pieces" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Backers
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="panel">
-        <div class="panel-heading">
-          <div class="row">
-            <div class="col-xs-4">
-              <i class="fa fa-empire fa-5x"></i>
-            </div>
-            <div id="creators_reputation" class="col-xs-8 text-right">
-
-              <script id="creators_reputation_template" type="x-tmpl-mustache">
-                <p class="announcement-heading">{{.}}</p>
-
-                <p class="announcement-text">Reputation</p>
-              </script> 
-            </div>
-          </div>
-        </div>
-        <a href="userdashboard_pieces" rel="keep-params">
-          <div class="panel-footer announcement-bottom">
-            <div class="row">
-              <div class="col-xs-6">
-                View Backers
-              </div>
-              <div class="col-xs-6 text-right">
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
 </div>
 </div>
 </div>

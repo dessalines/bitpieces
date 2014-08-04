@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var creatorName = getParameterByName('creator');
+
     fillSimpleText(creatorName + '/get_main_body', '#main_body');
 
     // if you're this creator, then set up summer note, issue pieces button
