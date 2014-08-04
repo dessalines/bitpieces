@@ -28,9 +28,19 @@ $(document).ready(function() {
         if (result == 'false') {
             $('#verified').addClass('text-danger');
             $('#verified').html('<i class="fa fa-exclamation"></i> Unverified');
+            $("#verified").popover({
+                trigger: "hover",
+                content: 'This creator is unverified, they may not be authentic',
+                placement: 'auto'
+            });
         } else {
             $('#verified').addClass('text-success');
             $('#verified').html('<i class="fa fa-check"></i> Verified');
+            $("#verified").popover({
+                trigger: "hover",
+                content: 'This creator has been verified by BitPieces',
+                placement: 'auto'
+            });
         }
     });
 
