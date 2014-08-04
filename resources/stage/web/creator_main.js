@@ -22,6 +22,7 @@ $(document).ready(function() {
     fillSimpleText(creatorName + '/get_backers_current_count', '#backers_current_count');
     fillSimpleText(creatorName + '/get_creators_reputation', '#creators_reputation');
     fillSimpleText(creatorName + '/get_safety_current', '#creators_safety_current');
+    fillSimpleText(creatorName + '/get_rewards_current', '#rewards_current');
 
     simpleFetch(creatorName + '/get_verified').done(function(result) {
         console.log('verified = ' + result);
