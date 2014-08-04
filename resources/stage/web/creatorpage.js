@@ -102,6 +102,7 @@ function showHideButtons(creatorName) {
             var types = ['bid', 'ask', 'buy'];
             types.forEach(function(e) {
                 var fundsNum = result.replace(/[^0-9\.]+/g, "");
+                var currSymbol = result[0];
                 var usersFunds = parseFloat(fundsNum);
                 $('[name="usersFunds"]').text(result);
 
@@ -117,7 +118,7 @@ function showHideButtons(creatorName) {
 
 
                     if (!isNaN(total)) {
-                        $('#' + e + 'Total').text(total);
+                        $('#' + e + 'Total').text(currSymbol + total);
                         var fundsLeft;
                         if (e == 'ask') {
                             fundsLeft = usersFunds + total;
@@ -128,7 +129,7 @@ function showHideButtons(creatorName) {
                         // console.log(fundsNum);
                         //     console.log(usersFunds);
                         //     console.log(e);
-                        $('#' + e + 'FundsLeft').text(fundsLeft);
+                        $('#' + e + 'FundsLeft').text(currSymbol + fundsLeft);
 
                         if (fundsLeft <= 0) {
                             $('button[href="#depositModal"]').removeClass("hide");
