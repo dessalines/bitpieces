@@ -1126,7 +1126,7 @@ public class WebTools {
 
 		List<Model> list = Creators_safety.find("creators_name=?", creatorName);
 		if (list.size() > 0) {
-			return createHighChartsJSONForSingleCreatorV2(list, "time_", "x_years_of_payments_to_funders", "BLURP",
+			return createHighChartsJSONForSingleCreatorV2(list, "time_", "x_years_of_payments_to_funders", "Safety rating",
 					sf, settings.getPrecision(), settings.getIso());
 		} else {
 			return "0";

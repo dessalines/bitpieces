@@ -13,12 +13,12 @@ $(document).ready(function() {
     // fillFieldFromMustache(creatorName + '/get_main_body_by_creator', 
     //     '#worth_current_template' , '#worth_current', true);
 
-
+    $('#creator_safety_popover').popover();
 
 
     fillUserHighChartStandardTemplate(creatorName + '/get_pricing', '#pricing', 'Price ($/piece)', '$');
 
-    fillUserHighChartStandardTemplate(creatorName + '/get_safety', '#creators_safety', 'Able to pay X years of rewards to funders', 'Years');
+    fillUserHighChartStandardTemplate(creatorName + '/get_safety', '#creators_safety', 'Able to pay X years of rewards to funders', '');
 
 
     var template = $('#creators_activity_template').html();
