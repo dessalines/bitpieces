@@ -37,7 +37,7 @@ public class ScheduledProcessing {
                 .startNow()
                 .withSchedule(simpleSchedule()
                         .withIntervalInSeconds(60)
-                        .repeatForever())            
+                        .repeatForever())
                 .build();
             
             Trigger trigger2 = newTrigger()
