@@ -25,11 +25,11 @@ $(document).ready(function() {
     fillSimpleText(creatorName + '/get_price_per_piece_current', '#price_per_piece_current');
     fillSimpleText(creatorName + '/get_rewards_current', '#rewards_current');
 
+    // the reward yield
     $.when(getJson(creatorName + '/get_price_per_piece_current'),
         getJson(creatorName + '/get_rewards_current')).done(function(a1, a2) {
         var pppCurrent = parseFloat(a1[0].replace(/[^0-9\.]+/g, ""));
         var rewards_current = parseFloat(a2[0].replace(/[^0-9\.]+/g, ""));
-        console.log('ppp = ' + pppCurrent);
         var rewards_current_yield = (rewards_current * 100 / pppCurrent).toFixed(2) + '%';
 
         $('#rewards_current_yield').text(rewards_current_yield);
