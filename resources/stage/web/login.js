@@ -9,7 +9,7 @@ $(document).ready(function() {
     var userName = getCookie('username');
     // set up the correct dashboard if its a creator
     if (userType == 'Creator') {
-        $("#dashboardhref").prop("href", "creator_overview?creator=" + userName);
+        $("#dashboardhref").prop("href", "creator_main?creator=" + userName);
     } else if (userType == 'User') {
         $("#dashboardhref").prop("href", "userdashboard_overview?user=" + userName);
     }
@@ -190,4 +190,3 @@ $(document).ready(function() {
 
 
 });
-
