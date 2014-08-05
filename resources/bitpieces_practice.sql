@@ -111,6 +111,7 @@ CREATE TABLE creators
 
 
 
+
 CREATE TABLE creators_page_fields
 (
    id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
