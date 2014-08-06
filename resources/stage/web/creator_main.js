@@ -47,18 +47,16 @@ $(document).ready(function() {
             $('#creators_safety_current').addClass('text-danger');
             // $('#creators_safety_current').html('<i class="fa fa-exclamation"></i> ' + result);
             $("#creators_safety_current").popover({
-                html: true,
                 trigger: "hover",
-                content: 'This creator cannot pay rewards to its funders for more than 5 years. Read about Bitpieces <a href="FAQ#how_do_i_know_if_a_creator_is_safe>security</a> measures.',
+                content: 'This creator cannot pay rewards to its funders for more than 5 years.',
                 placement: 'auto'
             });
         } else {
             $('#creators_safety_current').addClass('text-success');
             // $('#creators_safety_current').html('<i class="fa fa-check"></i> ' + result);
             $("#creators_safety_current").popover({
-                html: true,
                 trigger: "hover",
-                content: 'This creator can currently pay rewards to its funders for more than 5 years. Read about Bitpieces <a href="FAQ#how_do_i_know_if_a_creator_is_safe>security</a> measures.',
+                content: 'This creator can currently pay rewards to its funders for more than 5 years.',
                 placement: 'auto'
             });
         }
