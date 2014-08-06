@@ -14,7 +14,7 @@ $(document).ready(function() {
 
         simpleFetch('getcreatorpage').done(function(result) {
             console.log('page = ' + result);
-            if (result != null) {
+            if (result != JSON.parse('{"main_body": "Nothing here yet"}')) {
                 $('.first-timers').removeClass('hide');
             }
         });
