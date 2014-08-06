@@ -14,7 +14,7 @@ $(document).ready(function() {
 
         simpleFetch('getcreatorpage').done(function(result) {
 
-            var emptyObj = '{"main_body":"Nothing here yet"}';
+            var emptyObj = '{"main_body": "Nothing here yet"}';
             console.log('page = ' + result);
             console.log('emptyObj = ' + emptyObj);
             if (result == emptyObj) {
