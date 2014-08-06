@@ -51,7 +51,7 @@ $(document).ready(function() {
         var total = issuePrice * pieces;
 
         if (!isNaN(total)) {
-            $('#issueTotal').text(total + ' ' + currIso);
+            $('#issueTotal').text(total);
 
 
         }
@@ -85,8 +85,7 @@ function setupSaveCategories() {
                 getJson('/get_users_settings').done(function(e) {
                     console.log(sessionId);
                     full();
-                    var f = JSON.parse(e);
-                    currIso = f['curr_iso'];
+
                 });
             });
 
