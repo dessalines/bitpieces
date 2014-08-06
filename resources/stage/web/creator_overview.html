@@ -167,200 +167,213 @@
 
 
 
-    <!-- The Page -->
-    <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+  <!-- The Page -->
+  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
 
 
 
-     <div class="row">
-
-
-      <div class="col-md-6">
-        <h1 id="page_title"> </h1>
-      </div>
-      <div class="col-md-6">
-        <div class="col-md-12">
-         <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
-         <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
-         <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
-         <button id="issueBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
-         <button id="changeRewardBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
-         <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
-       </div>
-     </div>
-   </div>
    <div class="row">
-    <div class="col-md-12">
-
-      <ol class="breadcrumb">
-        <li><i class="fa fa-dashboard"></i> Overview</a></li>
-      </ol>
-    </div>
-  </div>
 
 
-  <!-- The two top tables -->
-  <div class="row"> 
     <div class="col-md-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
-        </div>
-        <div id="creators_activity" class="panel-body"  style="height: 276px;overflow:auto;">
-          <script id="creators_activity_template" type="x-tmpl-mustache"> 
-            <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
-              <thead>
-                <tr>
-                  <th>Time <i class="fa fa-sort"></i></th>
-                  <th>Type <i class="fa fa-sort"></th>
-                  <th>Recipient <i class="fa fa-sort"></th>
-                  <th>Pieces <i class="fa fa-sort"></th>
-                  <th>Total <i class="fa fa-sort"></th>
-                </tr>
-              </thead>
-
-              <tbody>
-
-                {{#.}}
-
-                <tr> 
-                  <td>{{time_}}</td>
-                  <td>{{type}}</td>
-                  <td>{{recipient}}</td>
-                  <td>{{pieces}}</td>
-                  <td>{{funds}}</td>
-                </tr>
-                {{/.}}
-
-              </tbody>
-            </script>
-
-          </table>
-
-
-        </div>
-        <div class="panel-footer">
-          <ul class="pager">
-            <li id="creators_activity_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
-            <li id="creators_activity_pager_next" ><a href="javascript:void(0);">Next</a></li>
-          </ul>
-        </div>
-
-      </div>
+      <h1 id="page_title"> </h1>
     </div>
-
-    <div class="col-lg-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Price per piece history</h3>
-        </div>
-        <div class="panel-body">
-          <div class = "small-chart" id="pricing"></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 id="creator_safety_popover" class="panel-title" data-trigger="hover"
-          data-container="body" data-toggle="popover" data-placement="bottom" 
-          data-content="The number of years a creator can pay their funders rewards, with the money they currently have
-          in their account. A history of greater than 5 is best."><i class="fa fa-bar-chart-o"></i> Creators safety rating</h3>
-        </div>
-        <div class="panel-body">
-          <div class = "small-chart" id="creators_safety"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- The main body -->
-
-
-
-  <!-- Modals -->
-  <div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Bid</h4>
-        </div>
-        <div class="modal-body">
-          <form id="bidForm" class="form-horizontal" role="form">
-            <div class="form-group form-group-lg">
-              <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-              <div class="col-sm-10">
-                <div class="input-group">
-                  <span id="bidSymbol" class="input-group-addon">$</span>    
-                  <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-                  data-bv-greaterthan="true"
-                  data-bv-greaterthan-value=".01"
-                  data-bv-greaterthan-message="Must be > .01"
-
-                  >
-                  <span class="input-group-addon">per piece</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group form-group-lg">
-              <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-              <div class="col-sm-10">
-                <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-                type="text" 
-                data-bv-integer="true"
-                data-bv-integer-message="Must be a whole number"
-
-                >
-              </div>
-            </div>
-
-            <div class="form-group form-group-lg">
-              <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-              <div class="col-sm-10">
-                <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-              </div>
-            </div>
-            <div class="form-group form-group-lg">
-
-             <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-             <div id="bidTotal" class="col-sm-10 form-control-static">
-
-             </div>
-           </div>
-
-           <div class="form-group form-group-lg">
-
-             <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
-             <div name="usersFunds" class="col-sm-10 form-control-static">
-
-             </div>
-           </div>
-
-           <div class="form-group form-group-lg">
-
-             <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
-             <div id="bidFundsLeft" class="col-sm-10 form-control-static">
-
-             </div>
-           </div>
-           <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
-           <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
-         </form>
-
-       </div>
-
+    <div class="col-md-6">
+      <div class="col-md-12">
+       <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+       <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+       <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+       <button id="issueBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
+       <button id="changeRewardBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
+       <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
      </div>
    </div>
  </div>
- <div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+ <div class="row">
+  <div class="col-md-12">
+
+    <ol class="breadcrumb">
+      <li><i class="fa fa-dashboard"></i> Overview</a></li>
+    </ol>
+  </div>
+</div>
+
+
+<!-- The two top tables -->
+<div class="row"> 
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Recent Activity</h3>
+      </div>
+      <div id="creators_activity" class="panel-body"  style="height: 276px;overflow:auto;">
+        <script id="creators_activity_template" type="x-tmpl-mustache"> 
+          <table id="creators_activity_table" class="table table-condensed table-hover table-striped tablesorter">
+            <thead>
+              <tr>
+                <th>Time <i class="fa fa-sort"></i></th>
+                <th>Type <i class="fa fa-sort"></th>
+                <th>Recipient <i class="fa fa-sort"></th>
+                <th>Pieces <i class="fa fa-sort"></th>
+                <th>Total <i class="fa fa-sort"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {{#.}}
+
+              <tr> 
+                <td>{{time_}}</td>
+                <td>{{type}}</td>
+                <td>{{recipient}}</td>
+                <td>{{pieces}}</td>
+                <td>{{funds}}</td>
+              </tr>
+              {{/.}}
+
+            </tbody>
+          </script>
+
+        </table>
+
+
+      </div>
+      <div class="panel-footer">
+        <ul class="pager">
+          <li id="creators_activity_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
+          <li id="creators_activity_pager_next" ><a href="javascript:void(0);">Next</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Price per piece history</h3>
+      </div>
+      <div class="panel-body">
+        <div class = "small-chart" id="pricing"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 id="creator_safety_popover" class="panel-title" data-trigger="hover"
+        data-container="body" data-toggle="popover" data-placement="bottom" 
+        data-content="The number of years a creator can pay their funders rewards, with the money they currently have
+        in their account. A history of greater than 5 is best."><i class="fa fa-bar-chart-o"></i> Creators safety rating</h3>
+      </div>
+      <div class="panel-body">
+        <div class = "small-chart" id="creators_safety"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- The main body -->
+
+
+
+<!-- Modals -->
+<div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Bid</h4>
+      </div>
+      <div class="modal-body">
+        <form id="bidForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span id="bidSymbol" class="input-group-addon">$</span>    
+                <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+                
+                data-bv-notempty="true"
+                data-bv-notempty-message="Must be > 0"
+
+                data-bv-greaterthan="true"
+                data-bv-greaterthan-inclusive="false"
+                data-bv-greaterthan-value="0"
+                data-bv-greaterthan-message="Must be > 0" 
+
+                >
+                <span class="input-group-addon">per piece</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+              <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              type="text" 
+              data-bv-integer="true"
+              data-bv-integer-message="Must be a whole number"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be a whole number"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0"
+
+              >
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+            <div class="col-sm-10">
+              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+            </div>
+          </div>
+          <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="bidTotal" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+           <div id="bidFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+         <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
+</div>
+<div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -387,6 +400,14 @@
              type="text" 
              data-bv-integer="true"
              data-bv-integer-message="Must be a whole number"
+
+             data-bv-notempty="true"
+             data-bv-notempty-message="Must be a whole number"
+
+             data-bv-greaterthan="true"
+             data-bv-greaterthan-inclusive="false"
+             data-bv-greaterthan-value="0"
+             data-bv-greaterthan-message="Must be > 0"
 
              >
            </div>
@@ -457,9 +478,14 @@
              <div class="input-group">
               <span id="askSymbol" class="input-group-addon">$</span>             
               <input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-              data-bv-greaterthan="true"
-              data-bv-greaterthan-value=".01"
-              data-bv-greaterthan-message="Must be > .01"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be > 0"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0" 
 
               >
               <span class="input-group-addon">per piece</span>
@@ -474,6 +500,14 @@
             type="text" 
             data-bv-integer="true"
             data-bv-integer-message="Must be a whole number"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be a whole number"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0"
 
             >
           </div>
@@ -532,9 +566,14 @@
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
             <div class="col-sm-10">
               <input name="issuePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-              data-bv-greaterthan="true"
-              data-bv-greaterthan-value=".01"
-              data-bv-greaterthan-message="Must be > .01"
+           
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be > 0"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0" 
 
               >
             </div>
@@ -547,6 +586,14 @@
               type="text" 
               data-bv-integer="true"
               data-bv-integer-message="Must be a whole number"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be a whole number"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0"
 
               >
             </div>
@@ -675,9 +722,14 @@
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
             <div class="col-sm-10">
               <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last reward"
-              data-bv-greaterthan="true"
-              data-bv-greaterthan-value="0"
-              data-bv-greaterthan-message="Must be > 0" 
+    
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be > 0"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0" 
 
               >
             </div>
