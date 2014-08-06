@@ -54,7 +54,7 @@ $(document).ready(function() {
 
         var rewardPct = 100.0 * reward / issuePrice;
         var rewardsOwed = reward * pieces;
-        if (!isNaN(total)) {
+        if (!isNaN(total) && !isNaN(rewardPct)) {
             $('#issueTotal').text(total);
             $('#rewardPct').text(rewardPct + '%');
             $('#rewardsOwedPerYear').text(rewardsOwed + ' / year');
