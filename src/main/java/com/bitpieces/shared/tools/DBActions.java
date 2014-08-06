@@ -37,27 +37,18 @@ import com.google.gson.Gson;
 public class DBActions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final Double SERVICE_FEE_PCT = .05d;
-	private static final Double MINIMUM_REWARD_PCT = 1d;
-	private static final Gson GSON = new Gson();
 
-	public static Reward issueReward(String creatorId, Double reward_per_piece_per_year) {
+	public static void issueReward(String creatorId, Double reward_per_piece_per_year) {
 		String now = Tools.SDF.get().format(new Date());
 
-		// TODO Make sure the reward is at least one percent of the current pieces value, unless that's ZERO
-		// and its the initial reward. Maybe think about this some more. Maybe let them choose whatever 
-		// reward they want, and let the users pick the highest ones
-		//		Pieces_owned_value_current_by_creator currentWorth = 
-		//				Pieces_owned_value_current_by_creator.findFirst("creators_id = ?", creatorId);
 
-
-
-		//		Double rewardPct = reward_per_piece_per_year
-
-		Reward reward = Reward.createIt("creators_id", creatorId,
+		if (reward_per_piece_per_year > 0) {
+		Reward.createIt("creators_id", creatorId,
 				"time_", now,
 				"reward_per_piece_per_year", reward_per_piece_per_year);
-
-		return reward;
+		} else {
+			throw new NoSuchElementException("Reward must be greater than zero");
+		}
 	}
 
 	public static void issuePieces(String creatorId, Integer pieces, Double pricePerPiece) {
