@@ -46,9 +46,6 @@ $(document).ready(function() {
         setupSigninAjax();
     });
 
-
-
-
 });
 
 function setupRegisterAjax() {

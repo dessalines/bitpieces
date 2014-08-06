@@ -3,38 +3,35 @@ $(document).ready(function() {
 
 
     // setupCreatorRegister("#creatorRegisterBtn", "#creatorRegisterForm");
-    $("#creatorRegisterBtn").click(function(event) {
-        standardFormPost('registercreator', "#creatorRegisterForm");
 
-    });
     showRecaptcha("recaptcha_div");
 
     setupSaveCategories();
 
     console.log(document.cookie);
 
-    $("#settingsSaveBtn").click(function(event) {
-
-    });
-
-    $("#raiseFundsBtn").click(function(event) {
-        var sessionId = getCookie("authenticated_session_id");
-
-        raiseFundsPost('/raise_funds', "#raiseFundsForm");
-    });
-
-
 
     $('#creatorRegisterForm').bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
 
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        standardFormPost('registercreator', "#creatorRegisterForm");
     });
+
+
     $("#raiseFundsForm").bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
 
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        raiseFundsPost('/raise_funds', "#raiseFundsForm");
     });
+
 
     $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
 
