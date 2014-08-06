@@ -109,215 +109,6 @@
 </nav>
 
 
-<!-- Login Modal -->
-
-<div class="modal fade bs-example-modal-lg" id="userloginModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="userloginModalLabel">Sign in or Register</h4>
-      </div>
-
-      <div class="modal-body">
-
-        <h3> Sign in </h3>
-        <form id="loginForm" class="form-horizontal" role="form">
-          <div id="userLoginDiv" class="form-group">
-            <label for="inputUsername3" class="col-sm-2 control-label">Username</label>
-            <div class="col-sm-10">
-              <input name="username" type="Username" class="form-control" id="inputUsername3" placeholder="Username"
-              data-bv-message="The username is not valid"
-
-              data-bv-notempty="true"
-              data-bv-notempty-message="The username is required and cannot be empty"
-
-              data-bv-regexp="true"
-              data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
-              data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
-
-              data-bv-stringlength="true"
-              data-bv-stringlength-min="6"
-              data-bv-stringlength-max="30"
-              data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
-
-              >
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-10">
-              <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
-
-              data-bv-notempty="true"
-              data-bv-notempty-message="The password is required and cannot be empty"
-
-              data-bv-different="true"
-              data-bv-different-field="username"
-              data-bv-different-message="The password cannot be the same as username" 
-              >
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <div class="checkbox">
-                <label>
-                  <input name="remember" type="checkbox"> Remember me
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <div class="checkbox">
-
-               <label>
-                <input name="creatorCheckbox" type="checkbox" id="creatorCheckbox" value="creator"> I'm a Creator
-              </label>
-
-            </div>
-          </div>
-        </div>
-
-
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button id="signinBtn" type="submit" class="btn btn-default">Sign in</button>
-          </div>
-        </div>
-      </form>
-
-      <!-- The different sign ins -->
-      <table style="width:100%">
-        <tr>
-          <td>
-            <a class="btn btn-primary btn-social btn-facebook">
-              <i class="fa fa-facebook"></i> Sign in with Facebook
-            </a>
-          </td>
-          <td>
-           <a class="btn btn-primary btn-social btn-twitter">
-            <i class="fa fa-twitter"></i> Sign in with Twitter
-          </a>
-        </td>
-        <td>
-         <a class="btn btn-primary btn-social btn-google-plus">
-          <i class="fa fa-google-plus"></i> Sign in with Google
-        </a>
-      </td>
-    </td>
-    <td>
-     <a class="btn btn-primary btn-social btn-reddit">
-      <i class="fa fa-reddit"></i> Sign in with Reddit
-    </a>
-  </td>
-</tr>
-</table>
-<hr>
-<h3> Register </h3>
-
-<form id="registerForm" class="form-horizontal" role="form"
-data-bv-message="This value is not valid"
-data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
-data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
-data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
-
-<div class="form-group">
- <label for="inputUsername4" class="col-sm-2 control-label">Username</label>
- <div class="col-sm-10">
-  <input name="username" type="Username" class="form-control" id="inputUsername4" placeholder="Username"
-  data-bv-message="The username is not valid"
-
-  data-bv-notempty="true"
-  data-bv-notempty-message="The username is required and cannot be empty"
-
-  data-bv-regexp="true"
-  data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
-  data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
-
-  data-bv-stringlength="true"
-  data-bv-stringlength-min="6"
-  data-bv-stringlength-max="30"
-  data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
-
-  />
-
-</div>
-</div>
-<div class="form-group">
-  <label for="inputEmail3" class="col-sm-2 control-label">Email address</label>
-  <div class="col-sm-10">
-    <input name="email" type="inputEmail3" class="form-control" id="inputEmail3" placeholder="Email"
-    data-bv-emailaddress="true"
-    data-bv-emailaddress-message="The input is not a valid email address"  />
-  </div>
-</div>
-
-<div class="form-group">
-  <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-  <div class="col-sm-10">
-    <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
-    data-bv-notempty="true"
-    data-bv-notempty-message="The password is required and cannot be empty"
-
-    data-bv-identical="true"
-    data-bv-identical-field="verifyPassword"
-    data-bv-identical-message="The password and its confirm are not the same"
-
-    data-bv-different="true"
-    data-bv-different-field="username"
-    data-bv-different-message="The password cannot be the same as username" />
-
-
-
-  </div>
-</div>
-<div class="form-group">
- <label for="inputPassword3" class="col-sm-2 control-label">Verify password</label>
- <div class="col-sm-10">
-  <input name="verifyPassword" type="password" class="form-control" id="inputPassword3" placeholder="Verify Password"
-  data-bv-notempty="true"
-  data-bv-notempty-message="The confirm password is required and cannot be empty"
-
-  data-bv-identical="true"
-  data-bv-identical-field="password"
-  data-bv-identical-message="The password and its confirm are not the same"
-
-  data-bv-different="true"
-  data-bv-different-field="username"
-  data-bv-different-message="The password cannot be the same as username" />
-
-
-</div>
-</div>
-
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-10">
-    <div class="checkbox">
-      <label>
-        <input name="remember" type="checkbox"> Remember me
-      </label>
-    </div>
-  </div>
-</div>
-
-<div class="form-group">
-  <div id="recaptcha_div" class="col-sm-offset-2 col-sm-10"> </div>
-</div>
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-10">
-    <button id="registerBtn" type="submit" class="btn btn-default">Register</button>
-  </div>
-</div>
-</form>
-
-
-
-</div>
-
-</div>
-</div>
-</div>
 
       <!-- Carousel
       ================================================== -->
@@ -475,7 +266,258 @@ data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
             <p>&copy; 2014 Bitpieces, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
           </footer>
 
-        </div><!-- /.container -->
+
+
+
+          <!-- Login Modal -->
+
+          <div class="modal fade bs-example-modal-lg" id="userloginModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="userloginModalLabel">Sign in or Register</h4>
+                </div>
+
+                <div class="modal-body">
+
+                  <h3> Sign in </h3>
+                  <form id="loginForm" class="form-horizontal" role="form">
+                    <div id="userLoginDiv" class="form-group">
+                      <label for="inputUsername3" class="col-sm-2 control-label">Username</label>
+                      <div class="col-sm-10">
+                        <input name="username" type="Username" class="form-control" id="inputUsername3" placeholder="Username"
+                        data-bv-message="The username is not valid"
+
+                        data-bv-notempty="true"
+                        data-bv-notempty-message="The username is required and cannot be empty"
+
+                        data-bv-regexp="true"
+                        data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+                        data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+
+                        data-bv-stringlength="true"
+                        data-bv-stringlength-min="6"
+                        data-bv-stringlength-max="30"
+                        data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                      <div class="col-sm-10">
+                        <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+
+                        data-bv-notempty="true"
+                        data-bv-notempty-message="The password is required and cannot be empty"
+
+                        data-bv-different="true"
+                        data-bv-different-field="username"
+                        data-bv-different-message="The password cannot be the same as username" 
+                        >
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                          <label>
+                            <input name="remember" type="checkbox"> Remember me
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+
+                         <label>
+                          <input name="creatorCheckbox" type="checkbox" id="creatorCheckbox" value="creator"> I'm a Creator
+                        </label>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button id="signinBtn" type="submit" class="btn btn-default">Sign in</button>
+                    </div>
+                  </div>
+                </form>
+
+                <!-- The different sign ins -->
+                <table style="width:100%">
+                  <tr>
+                    <td>
+                      <a class="btn btn-primary btn-social btn-facebook">
+                        <i class="fa fa-facebook"></i> Sign in with Facebook
+                      </a>
+                    </td>
+                    <td>
+                     <a class="btn btn-primary btn-social btn-twitter">
+                      <i class="fa fa-twitter"></i> Sign in with Twitter
+                    </a>
+                  </td>
+                  <td>
+                   <a class="btn btn-primary btn-social btn-google-plus">
+                    <i class="fa fa-google-plus"></i> Sign in with Google
+                  </a>
+                </td>
+              </td>
+              <td>
+               <a class="btn btn-primary btn-social btn-reddit">
+                <i class="fa fa-reddit"></i> Sign in with Reddit
+              </a>
+            </td>
+          </tr>
+        </table>
+        <hr>
+        <h3> Register </h3>
+
+        <form id="registerForm" class="form-horizontal" role="form"
+        data-bv-message="This value is not valid"
+        data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+        data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+        data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+
+        <div class="form-group">
+         <label for="inputUsername4" class="col-sm-2 control-label">Username</label>
+         <div class="col-sm-10">
+          <input name="username" type="Username" class="form-control" id="inputUsername4" placeholder="Username"
+          data-bv-message="The username is not valid"
+
+          data-bv-notempty="true"
+          data-bv-notempty-message="The username is required and cannot be empty"
+
+          data-bv-regexp="true"
+          data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+          data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+
+          data-bv-stringlength="true"
+          data-bv-stringlength-min="6"
+          data-bv-stringlength-max="30"
+          data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+
+          />
+
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Email address</label>
+        <div class="col-sm-10">
+          <input name="email" type="inputEmail3" class="form-control" id="inputEmail3" placeholder="Email"
+          data-bv-emailaddress="true"
+          data-bv-emailaddress-message="The input is not a valid email address"  />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+          <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+          data-bv-notempty="true"
+          data-bv-notempty-message="The password is required and cannot be empty"
+
+          data-bv-identical="true"
+          data-bv-identical-field="verifyPassword"
+          data-bv-identical-message="The password and its confirm are not the same"
+
+          data-bv-different="true"
+          data-bv-different-field="username"
+          data-bv-different-message="The password cannot be the same as username" />
+
+
+
+        </div>
+      </div>
+      <div class="form-group">
+       <label for="inputPassword3" class="col-sm-2 control-label">Verify password</label>
+       <div class="col-sm-10">
+        <input name="verifyPassword" type="password" class="form-control" id="inputPassword3" placeholder="Verify Password"
+        data-bv-notempty="true"
+        data-bv-notempty-message="The confirm password is required and cannot be empty"
+
+        data-bv-identical="true"
+        data-bv-identical-field="password"
+        data-bv-identical-message="The password and its confirm are not the same"
+
+        data-bv-different="true"
+        data-bv-different-field="username"
+        data-bv-different-message="The password cannot be the same as username" />
+
+
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label>
+            <input name="remember" type="checkbox"> Remember me
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label>
+            <input name="terms" type="checkbox"
+            data-bv-notempty="true"
+            data-bv-notempty-message="You must accept the terms and conditions"
+  
+
+            > 
+            <a href="#" data-toggle="modal" data-target="#userDisclaimerModal">I accept these terms and conditions </a>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div id="recaptcha_div" class="col-sm-offset-2 col-sm-10"> </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button id="registerBtn" type="submit" class="btn btn-default">Register</button>
+      </div>
+    </div>
+  </form>
+
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="userDisclaimerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Disclaimer</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text">
+         blah blah blah, a disclaimer
+       </div>
+
+
+     </div> 
+     <div class="modal-footer">
+       <button type="button" class="btn btn-default" data-dismiss="modal">Okay, I accept</button>
+     </div>
+
+   </div>
+ </div>
+</div>
+
+
+</div><!-- /.container -->
 
 
       <!-- Bootstrap core JavaScript

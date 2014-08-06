@@ -1,9 +1,48 @@
 (function($) {
+    $.fn.bootstrapValidator.i18n.id = $.extend($.fn.bootstrapValidator.i18n.id || {}, {
+        'default': 'Please enter a valid identification number',
+        countryNotSupported: 'The country code %s is not supported',
+        country: 'Please enter a valid %s identification number',
+        countries: {
+            BA: 'Bosnia and Herzegovina',
+            BG: 'Bulgarian',
+            BR: 'Brazilian',
+            CH: 'Swiss',
+            CL: 'Chilean',
+            CZ: 'Czech',
+            DK: 'Danish',
+            EE: 'Estonian',
+            ES: 'Spanish',
+            FI: 'Finnish',
+            HR: 'Croatian',
+            IE: 'Irish',
+            IS: 'Iceland',
+            LT: 'Lithuanian',
+            LV: 'Latvian',
+            ME: 'Montenegro',
+            MK: 'Macedonian',
+            NL: 'Dutch',
+            RO: 'Romanian',
+            RS: 'Serbian',
+            SE: 'Swedish',
+            SI: 'Slovenian',
+            SK: 'Slovak',
+            SM: 'San Marino',
+            ZA: 'South African'
+        }
+    });
+
     $.fn.bootstrapValidator.validators.id = {
         html5Attributes: {
             message: 'message',
             country: 'country'
         },
+
+        // Supported country codes
+        COUNTRY_CODES: [
+            'BA', 'BG', 'BR', 'CH', 'CL', 'CZ', 'DK', 'EE', 'ES', 'FI', 'HR', 'IE', 'IS', 'LT', 'LV', 'ME', 'MK', 'NL',
+            'RO', 'RS', 'SE', 'SI', 'SK', 'SM', 'ZA'
+        ],
 
         /**
          * Validate identification number in different countries
@@ -13,22 +52,38 @@
          * @param {jQuery} $field Field element
          * @param {Object} options Consist of key:
          * - message: The invalid message
-         * - country: The ISO 3166-1 country code
-         * @returns {Boolean}
+         * - country: The ISO 3166-1 country code. It can be
+         *      - One of country code defined in COUNTRY_CODES
+         *      - Name of field which its value defines the country code
+         *      - Name of callback function that returns the country code
+         *      - A callback function that returns the country code
+         * @returns {Boolean|Object}
          */
         validate: function(validator, $field, options) {
             var value = $field.val();
-            if (value == '') {
+            if (value === '') {
                 return true;
             }
 
-            var country = options.country || value.substr(0, 2),
-                method  = ['_', country.toLowerCase()].join('');
-            if (this[method] && 'function' == typeof this[method]) {
-                return this[method](value);
+            var country = options.country;
+            if (!country) {
+                country = value.substr(0, 2);
+            } else if (typeof country !== 'string' || $.inArray(country.toUpperCase(), this.COUNTRY_CODES) === -1) {
+                // Determine the country code
+                country = validator.getDynamicOption($field, country);
             }
 
-            return true;
+            if ($.inArray(country, this.COUNTRY_CODES) === -1) {
+                return { valid: false, message: $.fn.bootstrapValidator.helpers.format($.fn.bootstrapValidator.i18n.id.countryNotSupported, country) };
+            }
+
+            var method  = ['_', country.toLowerCase()].join('');
+            return this[method](value)
+                    ? true
+                    : {
+                        valid: false,
+                        message: $.fn.bootstrapValidator.helpers.format(options.message || $.fn.bootstrapValidator.i18n.id.country, $.fn.bootstrapValidator.i18n.id.countries[country.toUpperCase()])
+                    };
         },
 
         /**
@@ -63,13 +118,13 @@
             // Validate checksum
             var sum = 0;
             for (var i = 0; i < 6; i++) {
-                sum += (7 - i) * (parseInt(value.charAt(i)) + parseInt(value.charAt(i + 6)));
+                sum += (7 - i) * (parseInt(value.charAt(i), 10) + parseInt(value.charAt(i + 6), 10));
             }
             sum = 11 - sum % 11;
-            if (sum == 10 || sum == 11) {
+            if (sum === 10 || sum === 11) {
                 sum = 0;
             }
-            if (sum != k) {
+            if (sum !== k) {
                 return false;
             }
 
@@ -153,10 +208,10 @@
             var sum    = 0,
                 weight = [2, 4, 8, 5, 10, 9, 7, 3, 6];
             for (var i = 0; i < 9; i++) {
-                sum += parseInt(value.charAt(i)) * weight[i];
+                sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = (sum % 11) % 10;
-            return (sum == value.substr(9, 1));
+            return (sum + '' === value.substr(9, 1));
         },
 
         /**
@@ -180,26 +235,26 @@
 
             var d1 = 0;
             for (var i = 0; i < 9; i++) {
-                d1 += (10 - i) * parseInt(value.charAt(i));
+                d1 += (10 - i) * parseInt(value.charAt(i), 10);
             }
             d1 = 11 - d1 % 11;
-            if (d1 == 10 || d1 == 11) {
+            if (d1 === 10 || d1 === 11) {
                 d1 = 0;
             }
-            if (d1 != value.charAt(9)) {
+            if (d1 + '' !== value.charAt(9)) {
                 return false;
             }
 
             var d2 = 0;
             for (i = 0; i < 10; i++) {
-                d2 += (11 - i) * parseInt(value.charAt(i));
+                d2 += (11 - i) * parseInt(value.charAt(i), 10);
             }
             d2 = 11 - d2 % 11;
-            if (d2 == 10 || d2 == 11) {
+            if (d2 === 10 || d2 === 11) {
                 d2 = 0;
             }
 
-            return (d2 == value.charAt(10));
+            return (d2 + '' === value.charAt(10));
         },
 
         /**
@@ -219,12 +274,12 @@
             value = value.replace(/\D/g, '').substr(3);
             var length = value.length,
                 sum    = 0,
-                weight = (length == 8) ? [3, 1] : [1, 3];
+                weight = (length === 8) ? [3, 1] : [1, 3];
             for (var i = 0; i < length - 1; i++) {
-                sum += parseInt(value.charAt(i)) * weight[i % 2];
+                sum += parseInt(value.charAt(i), 10) * weight[i % 2];
             }
             sum = 10 - sum % 10;
-            return (sum == value.charAt(length - 1));
+            return (sum + '' === value.charAt(length - 1));
         },
 
         /**
@@ -238,25 +293,25 @@
          * @returns {Boolean}
          */
         _cl: function(value) {
-            if (!/^\d{7,8}[-]{0,1}[0-9K]$/.test(value)) {
+            if (!/^\d{7,8}[-]{0,1}[0-9K]$/i.test(value)) {
                 return false;
             }
-            value = value.replace(/\D/g, '');
+            value = value.replace(/\-/g, '');
             while (value.length < 9) {
                 value = '0' + value;
             }
             var sum    = 0,
                 weight = [3, 2, 7, 6, 5, 4, 3, 2];
             for (var i = 0; i < 8; i++) {
-                sum += parseInt(value.charAt(i)) * weight[i];
+                sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = 11 - sum % 11;
-            if (sum == 11) {
+            if (sum === 11) {
                 sum = 0;
-            } else if (sum == 10) {
+            } else if (sum === 10) {
                 sum = 'K';
             }
-            return sum == value.charAt(8);
+            return sum + '' === value.charAt(8).toUpperCase();
         },
 
         /**
@@ -272,10 +327,10 @@
             if (!/^\d{9,10}$/.test(value)) {
                 return false;
             }
-            var year  = 1900 + parseInt(value.substr(0, 2)),
-                month = parseInt(value.substr(2, 2)) % 50 % 20,
-                day   = parseInt(value.substr(4, 2));
-            if (value.length == 9) {
+            var year  = 1900 + parseInt(value.substr(0, 2), 10),
+                month = parseInt(value.substr(2, 2), 10) % 50 % 20,
+                day   = parseInt(value.substr(4, 2), 10);
+            if (value.length === 9) {
                 if (year >= 1980) {
                     year -= 100;
                 }
@@ -291,12 +346,12 @@
             }
 
             // Check that the birth date is not in the future
-            if (value.length == 10) {
+            if (value.length === 10) {
                 var check = parseInt(value.substr(0, 9), 10) % 11;
                 if (year < 1985) {
                     check = check % 10;
                 }
-                return (check == value.substr(9, 1));
+                return (check + '' === value.substr(9, 1));
             }
 
             return true;
@@ -322,11 +377,11 @@
                 year  = parseInt(value.substr(4, 2), 10);
 
             switch (true) {
-                case ('5678'.indexOf(value.charAt(6)) != -1 && year >= 58):
+                case ('5678'.indexOf(value.charAt(6)) !== -1 && year >= 58):
                     year += 1800;
                     break;
-                case ('0123'.indexOf(value.charAt(6)) != -1):
-                case ('49'.indexOf(value.charAt(6)) != -1 && year >= 37):
+                case ('0123'.indexOf(value.charAt(6)) !== -1):
+                case ('49'.indexOf(value.charAt(6)) !== -1 && year >= 37):
                     year += 1900;
                     break;
                 default:
@@ -371,14 +426,14 @@
 
             value = value.replace(/-/g, '');
             var index = 'XYZ'.indexOf(value.charAt(0));
-            if (index != -1) {
+            if (index !== -1) {
                 // It is NIE number
                 value = index + value.substr(1) + '';
             }
 
             var check = parseInt(value.substr(0, 8), 10);
             check = 'TRWAGMYFPDXBNJZSQVHLCKE'[check % 23];
-            return (check == value.substr(8, 1));
+            return (check === value.substr(8, 1));
         },
 
         /**
@@ -408,13 +463,13 @@
                 return false;
             }
 
-            var individual = parseInt(value.substr(7, 3));
+            var individual = parseInt(value.substr(7, 3), 10);
             if (individual < 2) {
                 return false;
             }
             var n = value.substr(0, 6) + value.substr(7, 3) + '';
-            n = parseInt(n);
-            return '0123456789ABCDEFHJKLMNPRSTUVWXY'.charAt(n % 31) == value.charAt(10);
+            n = parseInt(n, 10);
+            return '0123456789ABCDEFHJKLMNPRSTUVWXY'.charAt(n % 31) === value.charAt(10);
         },
 
         /**
@@ -430,7 +485,7 @@
             if (!/^[0-9]{11}$/.test(value)) {
                 return false;
             }
-            return $.fn.bootstrapValidator.helpers.mod_11_10(value);
+            return $.fn.bootstrapValidator.helpers.mod11And10(value);
         },
 
         /**
@@ -455,19 +510,19 @@
                 var alphabet = 'WABCDEFGHIJKLMNOPQRSTUV',
                     sum      = 0;
                 for (var i = 0; i < 7; i++) {
-                    sum += parseInt(value.charAt(i)) * (8 - i);
+                    sum += parseInt(value.charAt(i), 10) * (8 - i);
                 }
                 sum += 9 * alphabet.indexOf(value.substr(7));
                 return alphabet[sum % 23];
             };
 
             // 2013 format
-            if (value.length == 9 && ('A' == value.charAt(8) || 'H' == value.charAt(8))) {
-                return value.charAt(7) == getCheckDigit(value.substr(0, 7) + value.substr(8) + '');
+            if (value.length === 9 && ('A' === value.charAt(8) || 'H' === value.charAt(8))) {
+                return value.charAt(7) === getCheckDigit(value.substr(0, 7) + value.substr(8) + '');
             }
             // The old format
             else {
-                return value.charAt(7) == getCheckDigit(value.substr(0, 7));
+                return value.charAt(7) === getCheckDigit(value.substr(0, 7));
             }
         },
 
@@ -488,9 +543,9 @@
             var day     = parseInt(value.substr(0, 2), 10),
                 month   = parseInt(value.substr(2, 2), 10),
                 year    = parseInt(value.substr(4, 2), 10),
-                century = parseInt(value.charAt(9));
+                century = parseInt(value.charAt(9), 10);
 
-            year = (century == 9) ? (1900 + year) : ((20 + century) * 100 + year);
+            year = (century === 9) ? (1900 + year) : ((20 + century) * 100 + year);
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day, true)) {
                 return false;
             }
@@ -498,10 +553,10 @@
             var sum    = 0,
                 weight = [3, 2, 7, 6, 5, 4, 3, 2];
             for (var i = 0; i < 8; i++) {
-                sum += parseInt(value.charAt(i)) * weight[i];
+                sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = 11 - sum % 11;
-            return (sum == value.charAt(8));
+            return (sum + '' === value.charAt(8));
         },
 
         /**
@@ -519,11 +574,11 @@
             if (!/^[0-9]{11}$/.test(value)) {
                 return false;
             }
-            var gender  = parseInt(value.charAt(0)),
+            var gender  = parseInt(value.charAt(0), 10),
                 year    = parseInt(value.substr(1, 2), 10),
                 month   = parseInt(value.substr(3, 2), 10),
                 day     = parseInt(value.substr(5, 2), 10),
-                century = (gender % 2 == 0) ? (17 + gender / 2) : (17 + (gender + 1) / 2);
+                century = (gender % 2 === 0) ? (17 + gender / 2) : (17 + (gender + 1) / 2);
             year = century * 100 + year;
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day, true)) {
                 return false;
@@ -533,24 +588,24 @@
             var sum    = 0,
                 weight = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
             for (var i = 0; i < 10; i++) {
-                sum += parseInt(value.charAt(i)) * weight[i];
+                sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = sum % 11;
-            if (sum != 10) {
-                return sum == value.charAt(10);
+            if (sum !== 10) {
+                return sum + '' === value.charAt(10);
             }
 
             // Re-calculate the check digit
             sum    = 0;
             weight = [3, 4, 5, 6, 7, 8, 9, 1, 2, 3];
             for (i = 0; i < 10; i++) {
-                sum += parseInt(value.charAt(i)) * weight[i];
+                sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = sum % 11;
-            if (sum == 10) {
+            if (sum === 10) {
                 sum = 0;
             }
-            return (sum == value.charAt(10));
+            return (sum + '' === value.charAt(10));
         },
 
         /**
@@ -569,10 +624,10 @@
             }
             value = value.replace(/\D/g, '');
             // Check birth date
-            var day   = parseInt(value.substr(0, 2)),
-                month = parseInt(value.substr(2, 2)),
-                year  = parseInt(value.substr(4, 2));
-            year = year + 1800 + parseInt(value.charAt(6)) * 100;
+            var day   = parseInt(value.substr(0, 2), 10),
+                month = parseInt(value.substr(2, 2), 10),
+                year  = parseInt(value.substr(4, 2), 10);
+            year = year + 1800 + parseInt(value.charAt(6), 10) * 100;
 
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day, true)) {
                 return false;
@@ -582,10 +637,10 @@
             var sum    = 0,
                 weight = [10, 5, 8, 4, 2, 1, 6, 3, 7, 9];
             for (var i = 0; i < 10; i++) {
-                sum += parseInt(value.charAt(i)) * weight[i];
+                sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = (sum + 1) % 11 % 10;
-            return (sum == value.charAt(10));
+            return (sum + '' === value.charAt(10));
         },
 
         /**
@@ -606,19 +661,19 @@
                 return false;
             }
             value = value.replace(/\./g, '');
-            if (parseInt(value, 10) == 0) {
+            if (parseInt(value, 10) === 0) {
                 return false;
             }
             var sum    = 0,
                 length = value.length;
             for (var i = 0; i < length - 1; i++) {
-                sum += (9 - i) * parseInt(value.charAt(i));
+                sum += (9 - i) * parseInt(value.charAt(i), 10);
             }
             sum = sum % 11;
-            if (sum == 10) {
+            if (sum === 10) {
                 sum = 0;
             }
-            return (sum == value.charAt(length - 1));
+            return (sum + '' === value.charAt(length - 1));
         },
 
         /**
@@ -635,8 +690,8 @@
             if (!/^[0-9]{13}$/.test(value)) {
                 return false;
             }
-            var gender = parseInt(value.charAt(0));
-            if (gender == 0 || gender == 7 || gender == 8) {
+            var gender = parseInt(value.charAt(0), 10);
+            if (gender === 0 || gender === 7 || gender === 8) {
                 return false;
             }
 
@@ -656,7 +711,7 @@
             if (day > 31 && month > 12) {
                 return false;
             }
-            if (gender != 9) {
+            if (gender !== 9) {
                 year = centuries[gender + ''] + year;
                 if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {
                     return false;
@@ -668,13 +723,13 @@
                 weight = [2, 7, 9, 1, 4, 6, 3, 5, 8, 2, 7, 9],
                 length = value.length;
             for (var i = 0; i < length - 1; i++) {
-                sum += parseInt(value.charAt(i)) * weight[i];
+                sum += parseInt(value.charAt(i), 10) * weight[i];
             }
             sum = sum % 11;
-            if (sum == 10) {
+            if (sum === 10) {
                 sum = 1;
             }
-            return (sum == value.charAt(length - 1));
+            return (sum + '' === value.charAt(length - 1));
         },
 
         /**
@@ -693,9 +748,9 @@
             }
             value = value.replace(/[^0-9]/g, '');
 
-            var year  = parseInt(value.substr(0, 2)) + 1900,
-                month = parseInt(value.substr(2, 2)),
-                day   = parseInt(value.substr(4, 2));
+            var year  = parseInt(value.substr(0, 2), 10) + 1900,
+                month = parseInt(value.substr(2, 2), 10),
+                day   = parseInt(value.substr(4, 2), 10);
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {
                 return false;
             }
@@ -743,10 +798,10 @@
             if (!/^[0-9]{10}[0|1][8|9][0-9]$/.test(value)) {
                 return false;
             }
-            var year        = parseInt(value.substr(0, 2)),
+            var year        = parseInt(value.substr(0, 2), 10),
                 currentYear = new Date().getFullYear() % 100,
-                month       = parseInt(value.substr(2, 2)),
-                day         = parseInt(value.substr(4, 2));
+                month       = parseInt(value.substr(2, 2), 10),
+                day         = parseInt(value.substr(4, 2), 10);
             year = (year >= currentYear) ? (year + 1900) : (year + 2000);
 
             if (!$.fn.bootstrapValidator.helpers.date(year, month, day)) {

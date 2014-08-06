@@ -20,21 +20,29 @@ $(document).ready(function() {
     setupLogout();
 
     console.log(document.cookie);
-    $('#registerForm').bootstrapValidator({
+    a = $('#registerForm').bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+
+    }).on('success.form.bv', function(event) {
+        event.preventDefault;
+        alert('hai2');
+        setupRegisterBtn();
 
     });
+
+
     $('#loginForm').bootstrapValidator({
         message: 'This value is not valid',
-        excluded: [':disabled'],
+        excluded: [':disabled']
 
     });
 
     showHideElementsLoggedIn();
     showRecaptcha("recaptcha_div");
 
-    $('#registerBtn').button();
+
 
     // $('#registerForm').submit(function(){
     //  $.each($('#registerForm').serializeArray(), function(i, field) {
@@ -46,57 +54,7 @@ $(document).ready(function() {
     // });
 
 
-    // !!!!!!They must have names unfortunately
-    $("#registerBtn").click(function(event) {
 
-        // serializes the form's elements.
-        var formData = $("#registerForm").serializeArray();
-        console.log(formData);
-
-        // Loading
-        $(this).button('loading');
-
-        var url = sparkService + "registeruser"; // the script where you handle the form input.
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            xhrFields: {
-                withCredentials: true
-            },
-            data: formData,
-            success: function(data, status, xhr) {
-
-                xhr.getResponseHeader('Set-Cookie');
-                // document.cookie="authenticated_session_id=" + data + 
-                // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
-                // Hide the modal, reset the form, show successful
-                $("#userloginModal").modal('hide');
-                $('#registerForm')[0].reset();
-
-                toastr.success('Registered and logged in.')
-                showHideElementsLoggedIn();
-
-
-                console.log(document.cookie);
-                setTimeout(
-                    function() {
-                        window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
-
-                    }, 1000);
-
-
-            },
-            error: function(request, status, error) {
-                delete_cookie("authenticated_session_id");
-                toastr.error(request.responseText);
-            }
-        });
-
-
-
-        event.preventDefault();
-    });
 
 
     $("#signinBtn").click(function(event) {
@@ -190,3 +148,57 @@ $(document).ready(function() {
 
 
 });
+
+function setupRegisterBtn() {
+    // !!!!!!They must have names unfortunately
+    // $("#registerBtn").click(function(event) {
+
+    // serializes the form's elements.
+    var formData = $("#registerForm").serializeArray();
+    console.log(formData);
+
+    // Loading
+    $(this).button('loading');
+
+    var url = sparkService + "registeruser"; // the script where you handle the form input.
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        xhrFields: {
+            withCredentials: true
+        },
+        data: formData,
+        success: function(data, status, xhr) {
+
+            xhr.getResponseHeader('Set-Cookie');
+            // document.cookie="authenticated_session_id=" + data + 
+            // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
+            // Hide the modal, reset the form, show successful
+            $("#userloginModal").modal('hide');
+            $('#registerForm')[0].reset();
+
+            toastr.success('Registered and logged in.')
+            showHideElementsLoggedIn();
+
+
+            console.log(document.cookie);
+            setTimeout(
+                function() {
+                    window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
+
+                }, 1000);
+
+
+        },
+        error: function(request, status, error) {
+            delete_cookie("authenticated_session_id");
+            toastr.error(request.responseText);
+        }
+    });
+
+
+
+    event.preventDefault();
+    // });
+}
