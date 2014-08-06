@@ -57,7 +57,7 @@ $(document).ready(function() {
         if (!isNaN(total)) {
             $('#issueTotal').text(total);
             $('#rewardPct').text(rewardPct + '%');
-            $('#rewardsOwedPerYear').text(total + ' / year');
+            $('#rewardsOwedPerYear').text(rewardsOwed + ' / year');
         }
     });
 
