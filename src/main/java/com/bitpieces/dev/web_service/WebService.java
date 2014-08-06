@@ -3,6 +3,7 @@ package com.bitpieces.dev.web_service;
 import static spark.Spark.post;
 import static spark.SparkBase.setPort;
 
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +30,7 @@ public class WebService {
 
 	// Use an expiring map to store the authenticated sessions
 	private static Cache<String, UID> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
-			.maximumSize(10000)
+//			.maximumSize(10000)
 			.expireAfterAccess(WebCommon.COOKIE_EXPIRE_SECONDS, TimeUnit.SECONDS) // expire it after its been accessed
 			.build();
 
@@ -67,7 +68,7 @@ public class WebService {
 
 			// Its null if it couldn't create the user, usually cause of constraints
 			if (uid != null) {
-				WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.DEV_SESSION_FILE);
+				WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, DataSources.DEV_SESSION_FILE);
 
 				return "user registered";
 			} else {
@@ -89,7 +90,8 @@ public class WebService {
 
 			// Its null if it couldn't create the user, usually cause of constraints
 			if (uid != null) {
-				WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.DEV_SESSION_FILE);
+				
+				WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, DataSources.DEV_SESSION_FILE);
 
 				return "creator registered";
 			} else {

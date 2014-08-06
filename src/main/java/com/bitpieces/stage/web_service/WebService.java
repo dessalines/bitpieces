@@ -73,7 +73,7 @@ public class WebService {
 
 				// Its null if it couldn't create the user, usually cause of constraints
 				if (uid != null) {
-					WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
+					WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
 
 					return "user registered";
 				} else {
@@ -103,7 +103,7 @@ public class WebService {
 
 				// Its null if it couldn't create the user, usually cause of constraints
 				if (uid != null) {
-					WebCommon.verifyLoginAndSetCookies(uid, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
+					WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
 
 					return "creator registered";
 				} else {

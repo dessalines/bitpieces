@@ -409,7 +409,7 @@ function setupLogout() {
                 delete_cookie("usertype");
                 setTimeout(
                     function() {
-                        var url = "carousel";
+                        var url = "landing";
                         window.location.replace(url);
 
                     }, 1500);

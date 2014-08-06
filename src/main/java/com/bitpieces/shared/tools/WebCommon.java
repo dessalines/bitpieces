@@ -23,7 +23,7 @@ import com.google.common.cache.Cache;
 public class WebCommon {
 
 	// How long to keep the cookies
-	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(180);
+	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(1440);
 
 	static final Logger log = LoggerFactory.getLogger(WebCommon.class);
 	/**
@@ -1169,8 +1169,8 @@ public class WebCommon {
 			UID uid = DBActions.userLogin(req.body());
 
 			dbClose();
-
-			String message = verifyLoginAndSetCookies(uid, res, cache, cacheFile);
+			
+			String message = verifyLoginAndSetCookies(uid, req, res, cache, cacheFile);
 
 			return message;
 
@@ -1187,7 +1187,7 @@ public class WebCommon {
 			dbClose();
 
 
-			String message = verifyLoginAndSetCookies(uid, res, cache, cacheFile);
+			String message = verifyLoginAndSetCookies(uid, req, res, cache, cacheFile);
 
 			return message;
 
@@ -1268,8 +1268,9 @@ public class WebCommon {
 		Tools.writeObjectToFile(serializableMap, file);
 	}
 
-	public static String verifyLoginAndSetCookies(UID uid, Response res, Cache<String, UID> cache, String cacheFile) {
+	public static String verifyLoginAndSetCookies(UID uid, Request req, Response res, Cache<String, UID> cache, String cacheFile) {
 		if (uid != null) {
+			Integer expireSeconds = Tools.getExpireTime(req.body());
 			String authenticatedSession = Tools.generateSecureRandom();
 			// Put the users ID in the session
 			//				req.session().attribute("userId", userId); // put the user id in the session data
@@ -1280,9 +1281,9 @@ public class WebCommon {
 
 
 			// Set some cookies for that users login
-			res.cookie("authenticated_session_id", authenticatedSession, COOKIE_EXPIRE_SECONDS, false);
-			res.cookie("username", uid.getUsername(), COOKIE_EXPIRE_SECONDS, false);
-			res.cookie("usertype", uid.getType().toString(), COOKIE_EXPIRE_SECONDS, false);
+			res.cookie("authenticated_session_id", authenticatedSession, expireSeconds, false);
+			res.cookie("username", uid.getUsername(), expireSeconds, false);
+			res.cookie("usertype", uid.getType().toString(), expireSeconds, false);
 
 			String json = Tools.GSON2.toJson(cache);
 			System.out.println(json);
