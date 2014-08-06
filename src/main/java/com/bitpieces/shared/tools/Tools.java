@@ -199,7 +199,7 @@ public class Tools {
 		} else {
 			return WebCommon.cookieExpiration(20);
 		}
-	}
+	}// another
 	
 	public static final List<String> createArrayFromAjaxPostSelect(String reqBody) {
 //		System.out.println(reqBody);
