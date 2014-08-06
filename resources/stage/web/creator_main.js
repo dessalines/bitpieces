@@ -13,8 +13,11 @@ $(document).ready(function() {
         saveSummerNote('savecreatorpage', '#saveBtn', '#main_body');
 
         simpleFetch('getcreatorpage').done(function(result) {
+
+            var emptyObj = JSON.parse('{"main_body": "Nothing here yet"}');
             console.log('page = ' + result);
-            if (result != JSON.parse('{"main_body": "Nothing here yet"}')) {
+            console.log('emptyObj = ' + emptyObj);
+            if (result != emptyObj) {
                 $('.first-timers').removeClass('hide');
             }
         });
