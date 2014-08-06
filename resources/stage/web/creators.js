@@ -2,7 +2,7 @@ $(document).ready(function() {
     setupMiniSubmenu();
 
 
-    // setupCreatorRegister("#creatorRegisterBtn", "#creatorRegisterForm");
+
 
     showRecaptcha("recaptcha_div");
 
@@ -31,9 +31,10 @@ $(document).ready(function() {
         excluded: [':disabled'],
         submitButtons: 'button[type="submit"]'
 
-    }).on('success.form.bv', function(event) {
-        event.preventDefault();
-        raiseFundsPost('/raise_funds', "#raiseFundsForm");
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        console.log('test');
+        raiseFundsPost('raise_funds', "#raiseFundsForm");
     });
 
 
@@ -101,7 +102,7 @@ function raiseFundsPost(shortUrl, formId) {
     console.log(formData);
 
     // Loading
-    $(this).button('loading');
+    // $(this).button('loading');
 
     var url = sparkService + shortUrl; // the script where you handle the form input.
     console.log(url);
