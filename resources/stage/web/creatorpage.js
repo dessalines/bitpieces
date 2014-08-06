@@ -178,11 +178,9 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
     $(formId).bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
-
-    });
-
-    // Placing the Ask
-    $(buttonId).click(function(event) {
+        submitButtons: 'button[type="submit"]'
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
 
         // serializes the form's elements.
         var formData = $(formId).serializeArray();
@@ -244,6 +242,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
         $(buttonId).button('reset');
         event.preventDefault();
         return false;
+
     });
 
 
@@ -367,12 +366,10 @@ function setupModal(shortUrl, formId, buttonId, modalId) {
     $(formId).bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
 
-    });
-
-    // Placing the issue
-    $(buttonId).click(function(event) {
-
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
         // serializes the form's elements.
         var formData = $(formId).serializeArray();
 
@@ -426,6 +423,7 @@ function setupModal(shortUrl, formId, buttonId, modalId) {
         $(buttonId).button('reset');
         event.preventDefault();
         return false;
+
     });
 
 
