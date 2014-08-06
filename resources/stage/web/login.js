@@ -163,7 +163,7 @@ function setupSigninAjax() {
                 window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
             } else {
                 console.log(formData);
-                var url = "creator_overview?creator=" + formData[0]['value'];
+                var url = "creator_main?creator=" + formData[0]['value'];
                 console.log(url);
                 window.location.replace(url);
 
