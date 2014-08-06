@@ -12,7 +12,7 @@ $(document).ready(function() {
 
         saveSummerNote('savecreatorpage', '#saveBtn', '#main_body');
 
-        simpleFetch(getcreatorpage).done(function(result) {
+        simpleFetch('getcreatorpage').done(function(result) {
             console.log('page = ' + result);
             if (result != null) {
                 $('.first-timers.').removeClass('hide');
