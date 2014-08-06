@@ -31,6 +31,7 @@ $(document).ready(function() {
     fillSimpleText(creatorName + '/get_funds_raised', '#funds_raised');
 
     fillSimpleText(creatorName + '/get_pieces_owned_total', '#pieces_held_current');
+    fillSimpleText(creatorName + '/get_pieces_available', '#pieces_available_current');
     fillSimpleText(creatorName + '/get_rewards_owed', '#rewards_paid');
     fillSimpleText(creatorName + '/get_backers_current_count', '#backers_current_count');
     fillSimpleText(creatorName + '/get_creators_reputation', '#creators_reputation');

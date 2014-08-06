@@ -433,6 +433,7 @@ CREATE TABLE creators_badges
 
 -- Views
 
+-- also include the initial issue pieces price
 CREATE VIEW prices AS
 SELECT
 creators_id, creators.username as creators_name, time_, price_per_piece
@@ -445,7 +446,11 @@ from_creators_id as creators_id, creators.username as creators_name, time_, pric
 FROM sales_from_creators
 inner join creators
 on sales_from_creators.from_creators_id = creators.id
-
+select
+creators_id as creators_id, creators.username as creators_name, time_, price_per_piece as price_per_piece
+from pieces_issued
+inner join creators
+on pieces_issued.creators_id = creators.id
 order by creators_id, time_
 ;
 
@@ -1404,6 +1409,9 @@ and pieces_owned_value_first.owners_id = rewards_earned_total.owners_id
 
 
 /*
+
+SELECT User,Host,Password FROM mysql.user;
+
 select * from creators, users
 insert into users_deposits (users_id, cb_tid, time_, btc_amount, status) values(2, 'fake', '2014-07-30 13:08:37.0', 0.001811, 'completed')
 
