@@ -12,7 +12,16 @@ $(document).ready(function() {
 
         saveSummerNote('savecreatorpage', '#saveBtn', '#main_body');
 
+        simpleFetch(getcreatorpage).done(function(result) {
+            console.log('page = ' + result);
+            if (result != null) {
+                $('.first-timers.').removeClass('hide');
+            }
+        });
+
     }
+
+
 
     fillSimpleText(creatorName + '/get_pieces_owned_value_current_by_creator', '#worth_current');
     fillSimpleText(creatorName + '/get_funds_raised', '#funds_raised');

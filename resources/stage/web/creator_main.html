@@ -199,6 +199,16 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="first-timers alert alert-warning alert-dismissible hide" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <strong>Your main page is empty.</strong> Create one below.
+        </div>
+      </div>
+    </div>
+
+
     <div id="main_body" class="row">
       <script id="main_body_template" type="x-tmpl-mustache">
         <p class="lead">{{.}}</p>
@@ -512,13 +522,13 @@
               <span id="askSymbol" class="input-group-addon">$</span>             
               <input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
 
-            data-bv-notempty="true"
-            data-bv-notempty-message="Must be > 0"
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be > 0"
 
-            data-bv-greaterthan="true"
-            data-bv-greaterthan-inclusive="false"
-            data-bv-greaterthan-value="0"
-            data-bv-greaterthan-message="Must be > 0" 
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0" 
 
               >
               <span class="input-group-addon">per piece</span>
@@ -599,14 +609,14 @@
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
             <div class="col-sm-10">
               <input name="issuePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-           
-            data-bv-notempty="true"
-            data-bv-notempty-message="Must be > 0"
 
-            data-bv-greaterthan="true"
-            data-bv-greaterthan-inclusive="false"
-            data-bv-greaterthan-value="0"
-            data-bv-greaterthan-message="Must be > 0" 
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be > 0"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0" 
 
               >
             </div>
@@ -755,14 +765,14 @@
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
             <div class="col-sm-10">
               <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last reward"
-    
-            data-bv-notempty="true"
-            data-bv-notempty-message="Must be > 0"
 
-            data-bv-greaterthan="true"
-            data-bv-greaterthan-inclusive="false"
-            data-bv-greaterthan-value="0"
-            data-bv-greaterthan-message="Must be > 0" 
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be > 0"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0" 
 
               >
             </div>
