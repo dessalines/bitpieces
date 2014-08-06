@@ -127,7 +127,7 @@ function raiseFundsPost(shortUrl, formId) {
 
             setTimeout(
                 function() {
-                    var url = "creator_overview?creator=" + creatorName;
+                    var url = "creator_main?creator=" + creatorName;
                     window.location.replace(url);
 
                 }, 2000);
