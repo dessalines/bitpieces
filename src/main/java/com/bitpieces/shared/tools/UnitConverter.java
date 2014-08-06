@@ -1,11 +1,9 @@
 package com.bitpieces.shared.tools;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -43,9 +41,6 @@ public class UnitConverter {
 	public static String bitcoinCurrentCurrQuery(String ISO) {
 		return "https://api.bitcoinaverage.com/history/" + ISO + "/per_minute_24h_sliding_window.csv";
 	}
-
-	//	public static final String regex = "(?<=Rate\":\")[^\"]*";
-	//	public static final String regex2 = "[^\"]";
 
 
 	// The map of toCurrency, and the given currency service
@@ -140,8 +135,6 @@ public class UnitConverter {
 		for (int i = 0; i < precision; i++) {
 			dfPattern +="#";
 		}
-
-		System.out.println(dfPattern);
 
 		DecimalFormat df = new DecimalFormat(dfPattern);
 
@@ -311,7 +304,7 @@ public class UnitConverter {
 					// Convert the time columns to the correct format
 					for (String cCol : timeCols) {
 						String prevValue = cMap.get(cCol);
-						System.out.println(prevValue);
+//						System.out.println(prevValue);
 						//						System.out.println(dt);
 						//						Date timeBefore = Tools.SDF2.get().parse(prevValue);
 						DateTime timeAfter = Tools.DTF2.parseDateTime(prevValue);
@@ -367,7 +360,7 @@ public class UnitConverter {
 					}
 				}
 			}
-			System.out.println(listOfMaps);
+//			System.out.println(listOfMaps);
 
 		} catch (ExecutionException  e) {
 			// TODO Auto-generated catch block

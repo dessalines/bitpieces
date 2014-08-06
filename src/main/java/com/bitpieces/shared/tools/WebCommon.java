@@ -10,6 +10,8 @@ import java.util.Properties;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import spark.Request;
 import spark.Response;
@@ -23,7 +25,7 @@ public class WebCommon {
 	// How long to keep the cookies
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(180);
 
-
+	static final Logger log = LoggerFactory.getLogger(WebCommon.class);
 	/**
 	 * This needs the cache, to get the correct user, a properties file for making the 
 	 * correct db connections, and a unit converter to convert everything correctly
@@ -38,6 +40,7 @@ public class WebCommon {
 
 		get("/hello", (req, res) -> {
 			allowResponseHeaders(req, res);
+			log.debug("okay wrote that");
 			return "hi from the bitpieces web service";
 		});
 		get("/help", (req, res) -> {

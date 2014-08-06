@@ -132,6 +132,12 @@
 
 
 	<dependencies>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.13</version>
+		</dependency>
 		<dependency>
 			<groupId>net.tanesha.recaptcha4j</groupId>
 			<artifactId>recaptcha4j</artifactId>
