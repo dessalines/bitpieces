@@ -107,11 +107,8 @@ public class InitializeTables {
 
 
 	private static void setup_categories() {
-		List<String> categories = Arrays.asList("Visual Arts", "Comics", "Design", "Dance", "Education", "Film and Video", 
-				"Environment", "Music", "Fashion", "Tech", "Photography", "Theatre", "Food", "Health", "Writing and Lit", "Sports",
-				"Small Business", "Gaming", "Crafts", "Journalism");
 
-		for (String e : categories) {
+		for (String e : Tools.CATEGORIES) {
 			Categories.createIt("name", e);
 		}
 

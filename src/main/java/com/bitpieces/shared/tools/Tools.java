@@ -19,6 +19,7 @@ import java.net.URLDecoder;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,10 +68,13 @@ public class Tools {
 	// Instead of using session ids, use a java secure random ID
 	private static final SecureRandom RANDOM = new SecureRandom();
 
+	public static final List<String> CATEGORIES = Arrays.asList("Visual Arts", "Comics", "Design", "Dance", "Education", "Film and Video", 
+			"Environment", "Music", "Fashion", "Tech", "Photography", "Theatre", "Food", "Health", "Writing and Lit", "Sports",
+			"Small Business", "Gaming", "Crafts", "Journalism");
 	
 	public static final Map<String, String> CURRENCY_MAP = ImmutableMap.<String, String>builder()
 			.put("BTC", "Bitcoin")
-			.put("mBTC", "MilliBits")
+//			.put("mBTC", "MilliBits")
 			.put("AUD","Australian Dollar")
 			.put( "BRL", "Brazilian Real")
 			.put( "CAD", "Canadian Dollar")
@@ -96,7 +100,7 @@ public class Tools {
 	
 	public static final Map<String, String> CURRENCY_UNICODES =  ImmutableMap.<String, String>builder()
 			.put("BTC", "\u0E3F")
-			.put("mBTC", "m\u0E3F")
+//			.put("mBTC", "m\u0E3F")
 			.put("AUD","\u0024")
 			.put( "BRL", "R\u0024")
 			.put( "CAD", "\u0024")
