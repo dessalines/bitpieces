@@ -284,7 +284,7 @@ function setupWithdrawalForm(creatorName) {
             $('#withdrawBtn').removeClass('hide');
         }
 
-
+        var currSymbol = creatorsFundsStr[0];
         var creatorsFunds = parseFloat(creatorsFundsStr.replace(/^\D+/g, ''));
         var piecesOwnedTotal = parseFloat(piecesOwnedTotalStr.replace(/^\D+/g, ''));
         var rewardsPerPiecePerYear = parseFloat(rewardsPerPiecePerYearStr.replace(/^\D+/g, ''));
@@ -302,9 +302,9 @@ function setupWithdrawalForm(creatorName) {
             safetyRatingAfter = fundsLeft / (piecesOwnedTotal * rewardsPerPiecePerYear);
 
             if (!isNaN(withdrawAmountAfterFee) && fundsLeft > 0) {
-                $('#withdrawAmountAfterFee').text('$' + withdrawAmountAfterFee);
+                $('#withdrawAmountAfterFee').text(currSymbol + withdrawAmountAfterFee);
                 $('#safetyRatingAfter').text(safetyRatingAfter);
-                $('#fundsLeft').text('$' + fundsLeft);
+                $('#fundsLeft').text(currSymbol + fundsLeft);
 
                 $('#placeWithdrawBtn').prop('disabled', false);
                 $('#fundsLeft').addClass("text-success");
@@ -335,6 +335,7 @@ function setupIssueForm(creatorName) {
     simpleFetch(creatorName + '/get_creators_funds_current').done(function(result) {
 
         var creatorsFunds = parseFloat(result.replace(/^\D+/g, ''));
+        var currSymbol = result[0];
         $('[name="creatorsFunds"]').text(result);
 
         $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
@@ -348,10 +349,10 @@ function setupIssueForm(creatorName) {
             var total = issuePrice * pieces;
 
             if (!isNaN(total)) {
-                $('#issueTotal').text('$' + total);
+                $('#issueTotal').text(currSymbol + total);
                 var fundsLeft = creatorsFunds + total;
 
-                $('#creatorsFundsLeft').text('$' + fundsLeft);
+                $('#creatorsFundsLeft').text(currSymbol + fundsLeft);
 
             }
         });
