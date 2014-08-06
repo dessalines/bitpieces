@@ -2,7 +2,7 @@ $(document).ready(function() {
     setupMiniSubmenu();
 
 
-
+    var currIso = null;
 
     showRecaptcha("recaptcha_div");
 
@@ -26,6 +26,7 @@ $(document).ready(function() {
     });
 
 
+
     $("#raiseFundsForm").bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
@@ -37,28 +38,25 @@ $(document).ready(function() {
         raiseFundsPost('raise_funds', "#raiseFundsForm");
     });
 
-    simpleFetch('/get_users_settings').done(function(e) {
-        var f = JSON.parse(e);
-        var currIso = f['curr_iso'];
-        console.log('e = ' + e);
-        console.log(currIso);
-        $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
-
-            var pieces = parseFloat($('[name="issuePieces"]').val());
-
-            // var issuePrice = $('[name="buy"]').text();
-            // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
-            var issuePrice = parseFloat($('[name="issuePrice"]').val());
-            // alert(pieces + ' ' + issuePrice)
-            var total = issuePrice * pieces;
-
-            if (!isNaN(total)) {
-                $('#issueTotal').text(total + ' ' + currIso);
 
 
-            }
-        });
+    $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
+
+        var pieces = parseFloat($('[name="issuePieces"]').val());
+
+        // var issuePrice = $('[name="buy"]').text();
+        // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
+        var issuePrice = parseFloat($('[name="issuePrice"]').val());
+        // alert(pieces + ' ' + issuePrice)
+        var total = issuePrice * pieces;
+
+        if (!isNaN(total)) {
+            $('#issueTotal').text(total + ' ' + currIso);
+
+
+        }
     });
+
 
 
 
@@ -87,6 +85,8 @@ function setupSaveCategories() {
                 getJson('/get_users_settings').done(function(e) {
                     console.log(sessionId);
                     full();
+                    var f = JSON.parse(e);
+                    currIso = f['curr_iso'];
                 });
             });
 
