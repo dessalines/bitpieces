@@ -38,7 +38,8 @@ $(document).ready(function() {
     });
 
     simpleFetch('/get_users_settings').done(function(e) {
-        var currIso = e['curr_iso'];
+        var f = JSON.parse(e);
+        var currIso = f['curr_iso'];
         console.log('e = ' + e);
         console.log(currIso);
         $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
