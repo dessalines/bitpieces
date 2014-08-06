@@ -15,7 +15,7 @@ $(document).ready(function() {
         simpleFetch('getcreatorpage').done(function(result) {
             console.log('page = ' + result);
             if (result != null) {
-                $('.first-timers.').removeClass('hide');
+                $('.first-timers').removeClass('hide');
             }
         });
 
