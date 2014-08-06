@@ -17,8 +17,8 @@ $(document).ready(function() {
             var emptyObj = '{"main_body":"Nothing here yet"}';
             console.log('page = ' + result);
             console.log('emptyObj = ' + emptyObj);
-            if (result != emptyObj) {
-                console.log('removing derp');
+            if (result == emptyObj) {
+                console.log('unhiding');
                 $('.first-timers').removeClass('hide');
             }
         });
