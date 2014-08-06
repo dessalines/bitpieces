@@ -1,8 +1,5 @@
 package com.bitpieces.shared.tools;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -12,10 +9,8 @@ import com.bitpieces.shared.DataSources;
 import com.coinbase.api.Coinbase;
 import com.coinbase.api.CoinbaseBuilder;
 import com.coinbase.api.entity.Account;
-import com.coinbase.api.entity.AccountsResponse;
 import com.coinbase.api.entity.Transaction;
 import com.coinbase.api.entity.TransactionsResponse;
-import com.coinbase.api.exception.CoinbaseException;
 
 /**
  * TODO here

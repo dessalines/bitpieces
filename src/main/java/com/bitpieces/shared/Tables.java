@@ -1,7 +1,6 @@
 package com.bitpieces.shared;
 
 import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.Table;
 
 public class Tables {

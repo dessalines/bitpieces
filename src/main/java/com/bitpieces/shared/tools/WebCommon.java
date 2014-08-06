@@ -17,7 +17,6 @@ import spark.Request;
 import spark.Response;
 
 import com.bitpieces.shared.DataSources;
-import com.bitpieces.shared.tools.Tools.UserType;
 import com.google.common.cache.Cache;
 
 public class WebCommon {

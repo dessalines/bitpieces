@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.javalite.activejdbc.Model;
-
 import com.bitpieces.shared.Tables.Ask;
 import com.bitpieces.shared.Tables.Ask_bid_accept_checker;
 import com.bitpieces.shared.Tables.Badge;
@@ -32,7 +30,6 @@ import com.bitpieces.shared.Tables.Users_funds_current;
 import com.bitpieces.shared.Tables.Users_withdrawals;
 import com.bitpieces.shared.tools.Tools.UserType;
 import com.coinbase.api.Coinbase;
-import com.google.gson.Gson;
 
 public class DBActions {
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

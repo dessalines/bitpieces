@@ -194,7 +194,7 @@ public class Tools {
 	public static final Integer getExpireTime(String reqBody) {
 		Map<String, String> map = createMapFromAjaxPost(reqBody);
 		
-		if (map.get("remember").equals("true")) {
+		if (map.get("remember") != null) {
 			return WebCommon.cookieExpiration(1440);
 		} else {
 			return WebCommon.cookieExpiration(20);
