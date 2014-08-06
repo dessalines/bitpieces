@@ -20,7 +20,7 @@ $(document).ready(function() {
         event.preventDefault();
         standardFormPost('registercreator', "#creatorRegisterForm");
 
-        $('#creatorRegisterBtn').collapse();
+        $('#registerCreator').collapse();
         // data-target="#registerCreator,#categories" 
     });
 
