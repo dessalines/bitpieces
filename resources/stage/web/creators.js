@@ -40,20 +40,24 @@ $(document).ready(function() {
 
 
 
-    $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
+    $('[name="issuePieces"],[name="issuePrice"],[name="reward_per_piece_per_year"]').bind('keyup', function(f) {
 
         var pieces = parseFloat($('[name="issuePieces"]').val());
 
         // var issuePrice = $('[name="buy"]').text();
         // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
         var issuePrice = parseFloat($('[name="issuePrice"]').val());
+
+        var reward = parseFloat($('[name="reward_per_piece_per_year"]').val());
         // alert(pieces + ' ' + issuePrice)
         var total = issuePrice * pieces;
 
+        var rewardPct = 100.0 * reward / issuePrice;
+        var rewardsOwed = reward * pieces;
         if (!isNaN(total)) {
             $('#issueTotal').text(total);
-
-
+            $('#rewardPct').text(rewardPct + '%');
+            $('#rewardsOwedPerYear').text(total + ' / year');
         }
     });
 

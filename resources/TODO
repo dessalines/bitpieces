@@ -21,7 +21,7 @@
 'This creator has enough in their account to reward their funders for X years
 Use disqus, and use the creators name as the disqus Identifier for each creators page
 
-- Work on main page
++ Work on main page
 	- Use fiverr to get a front thing to look like kickstarter
 + Prepending currency to input boxes
 - show alerts on dashboards if results come back zero
@@ -29,5 +29,7 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 - disclaimers when signing up, just have a check box, still need to write them
 + FAQ
 + front page
+- The mod rewrite stuff
+- Creator register page issuing pieces reward percent/total/all that
 
  
