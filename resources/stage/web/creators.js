@@ -38,7 +38,8 @@ $(document).ready(function() {
     });
 
     getJson('/get_users_settings').done(function(e) {
-        var currIso = e[0]['curr_iso'];
+        var currIso = e['curr_iso'];
+        console.log('e = ' + e);
         $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
 
             var pieces = parseFloat($('[name="issuePieces"]').val());
