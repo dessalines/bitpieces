@@ -85,6 +85,7 @@ $(document).ready(function() {
                 content: 'This creator is unverified, they may not be authentic',
                 placement: 'auto'
             });
+            $('.unverified').removeClass('hide');
         } else {
             $('#verified').addClass('text-success');
             $('#verified').html('<i class="fa fa-check"></i> Verified');
@@ -93,7 +94,7 @@ $(document).ready(function() {
                 content: 'This creator has been verified by BitPieces',
                 placement: 'auto'
             });
-            $('.unverified').removeClass('hide');
+
         }
     });
 
