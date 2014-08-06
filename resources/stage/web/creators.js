@@ -37,22 +37,24 @@ $(document).ready(function() {
         raiseFundsPost('raise_funds', "#raiseFundsForm");
     });
 
+    getJson('/get_users_settings').done(function(e) {
+        var currIso = e[0]['curr_iso'];
+        $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
 
-    $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
+            var pieces = parseFloat($('[name="issuePieces"]').val());
 
-        var pieces = parseFloat($('[name="issuePieces"]').val());
+            // var issuePrice = $('[name="buy"]').text();
+            // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
+            var issuePrice = parseFloat($('[name="issuePrice"]').val());
+            // alert(pieces + ' ' + issuePrice)
+            var total = issuePrice * pieces;
 
-        // var issuePrice = $('[name="buy"]').text();
-        // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
-        var issuePrice = parseFloat($('[name="issuePrice"]').val());
-        // alert(pieces + ' ' + issuePrice)
-        var total = issuePrice * pieces;
-
-        if (!isNaN(total)) {
-            $('#issueTotal').text('$' + total);
+            if (!isNaN(total)) {
+                $('#issueTotal').text(total + ' ' + currIso);
 
 
-        }
+            }
+        });
     });
 
 
