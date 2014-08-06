@@ -1310,6 +1310,26 @@ public class WebTools {
 		return json;
 
 	}
+	
+	public static String getPiecesAvailableTotalJson(String creatorName) {
+
+
+		String json = null;
+
+		try {
+			Pieces_available_view value = Pieces_available_view.findFirst("creators_name=?",  creatorName);
+
+			json = value.getString("pieces_total");
+
+			// If they have no reputation, then return a 0
+		} catch (NullPointerException e) {
+			return "0";
+		}
+
+		System.out.println(json);
+		return json;
+
+	}
 
 	public static String getPiecesOwnedTotalJson(String creatorName) {
 
