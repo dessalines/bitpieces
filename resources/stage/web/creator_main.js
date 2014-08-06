@@ -18,6 +18,7 @@ $(document).ready(function() {
             console.log('page = ' + result);
             console.log('emptyObj = ' + emptyObj);
             if (result != emptyObj) {
+                console.log('removing derp');
                 $('.first-timers').removeClass('hide');
             }
         });
