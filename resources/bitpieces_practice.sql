@@ -434,6 +434,7 @@ CREATE TABLE creators_badges
 -- Views
 
 -- also include the initial issue pieces price
+
 CREATE VIEW prices AS
 SELECT
 creators_id, creators.username as creators_name, time_, price_per_piece
@@ -446,6 +447,7 @@ from_creators_id as creators_id, creators.username as creators_name, time_, pric
 FROM sales_from_creators
 inner join creators
 on sales_from_creators.from_creators_id = creators.id
+union
 select
 creators_id as creators_id, creators.username as creators_name, time_, price_per_piece as price_per_piece
 from pieces_issued
