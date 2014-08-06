@@ -93,6 +93,7 @@ $(document).ready(function() {
                 content: 'This creator has been verified by BitPieces',
                 placement: 'auto'
             });
+            $('.unverified').removeClass('hide');
         }
     });
 
