@@ -1414,6 +1414,8 @@ and pieces_owned_value_first.owners_id = rewards_earned_total.owners_id
 
 SELECT User,Host,Password FROM mysql.user;
 
+
+
 select * from creators, users
 insert into users_deposits (users_id, cb_tid, time_, btc_amount, status) values(2, 'fake', '2014-07-30 13:08:37.0', 0.001811, 'completed')
 
