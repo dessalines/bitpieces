@@ -6,6 +6,7 @@ RewriteEngine on
 
 
 #Think i finally got it, but it don't work cause the port is fucked
-RewriteRule ([^/.]+)/([^/.]+)/creator_main/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
+#RewriteRule ([^/.]+)/([^/.]+)/creator_main/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
 
-
+# try this
+RewriteRule ([^/.]+)/([^/.]+)/creator/main/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
