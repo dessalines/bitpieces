@@ -40,26 +40,6 @@ public class CoinbaseTools {
 		
 	}
 	
-	@Deprecated // because it costs to transfer between accounts, have to keep track of funds other ways
-	public static String createCoinbaseAccount(Coinbase cb, String userName) {
-		Account account = new Account();
-		account.setName(userName);
-
-		Account cbAccountDetails = null;
-		try {
-			System.out.println("creating cb account...");
-			cbAccountDetails = cb.createAccount(account);
-			System.out.println("after account...");
-		} catch (CoinbaseException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		String fetchedAccountId = cbAccountDetails.getId();
-
-		return fetchedAccountId;
-	}
-
 	public static String fetchOrCreateDepositButton(Coinbase cb, UID uid) {
 
 		// Fetch from users_buttons, if its not there, make it
@@ -221,6 +201,26 @@ public class CoinbaseTools {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Deprecated // because it costs to transfer between accounts, have to keep track of funds other ways
+	public static String createCoinbaseAccount(Coinbase cb, String userName) {
+		Account account = new Account();
+		account.setName(userName);
+	
+		Account cbAccountDetails = null;
+		try {
+			System.out.println("creating cb account...");
+			cbAccountDetails = cb.createAccount(account);
+			System.out.println("after account...");
+		} catch (CoinbaseException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		String fetchedAccountId = cbAccountDetails.getId();
+	
+		return fetchedAccountId;
 	}
 
 
