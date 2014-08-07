@@ -744,9 +744,9 @@ public class DBActions {
 
 		System.out.println("updating statuses...");
 		// Go through the users_withdrawals table
-		List<Users_withdrawals> withdrawals = Users_withdrawals.where("status=?", "pending");
+		List<Users_withdrawals> userWithdrawals = Users_withdrawals.where("status=?", "pending");
 
-		for (Users_withdrawals cW : withdrawals) {
+		for (Users_withdrawals cW : userWithdrawals) {
 			String cb_tid = cW.getString("cb_tid");
 			String updatedStatus = CoinbaseTools.getTransactionStatus(cb, cb_tid);
 
@@ -755,6 +755,21 @@ public class DBActions {
 			System.out.println("updated status of " + cb_tid + " to " + updatedStatus);
 
 		}
+		
+		List<Creators_withdrawals> creatorWithdrawals = Creators_withdrawals.where("status=?", "pending");
+
+		for (Creators_withdrawals cW : creatorWithdrawals) {
+			String cb_tid = cW.getString("cb_tid");
+			String updatedStatus = CoinbaseTools.getTransactionStatus(cb, cb_tid);
+
+			cW.set("status", updatedStatus).saveIt();
+
+			System.out.println("updated status of " + cb_tid + " to " + updatedStatus);
+
+		}
+		
+		
+		
 
 	}
 

@@ -423,7 +423,6 @@ function setupLogout() {
 
 
 
-
     });
 }
 
@@ -444,7 +443,6 @@ function setupSummerNote(url, id, sqlColName) {
             // var jsonObj = jQuery.parseJSON(data);
             // JSON.useDateParser();
             var jsonObj = JSON.parse(data);
-
 
 
 
@@ -702,7 +700,6 @@ function standardFormPost(shortUrl, formId) {
             $(formId)[0].reset();
 
             toastr.success(data);
-
 
 
 
