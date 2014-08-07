@@ -8,7 +8,8 @@ RewriteBase /
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule .* index.php/$0 [PT,L] 
+
+RewriteRule .* index.a/$0 [PT,L] 
 
 # RewriteBase /stage/web/
 
