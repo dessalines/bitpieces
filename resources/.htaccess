@@ -1,10 +1,13 @@
 
 
 RewriteEngine on
+
+RewriteRule ^(.*)$ /index.php/$1 [L]
+
 RewriteBase /stage/web/
 
 
-RewriteRule ^(.*)$ /index.php/$1 [L]
+
 
 Options -Indexes +FollowSymLinks
 # Options +FollowSymLinks
