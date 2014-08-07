@@ -87,7 +87,8 @@ function setupSaveCategories() {
                 console.log('getting the users settings');
                 // $('.collapse').collapse();
                 getJson('/get_users_settings').done(function(e) {
-                    console.log(sessionId);
+                    console.log('got the users settings');
+                    // this is handled in userdashboard_settings.js
                     full();
 
                 });
@@ -135,7 +136,7 @@ function raiseFundsPost(shortUrl, formId) {
 
             setTimeout(
                 function() {
-                    var url = "creator_main?creator=" + creatorName;
+                    var url = "/creators/main/" + creatorName;
                     window.location.replace(url);
 
                 }, 2000);
