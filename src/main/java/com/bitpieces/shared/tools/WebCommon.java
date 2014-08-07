@@ -172,8 +172,8 @@ public class WebCommon {
 
 
 		});
-		
-		
+
+
 
 		get("/:user/get_prices_for_user", (req, res) -> {
 			allowResponseHeaders(req, res);
@@ -537,7 +537,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_funds_raised", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
@@ -558,7 +558,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_safety_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
@@ -578,7 +578,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_verified", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
@@ -723,7 +723,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_safety", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
@@ -943,7 +943,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_pieces_available_total", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
@@ -1150,17 +1150,23 @@ public class WebCommon {
 			return "Logged out";
 
 		});
-		
+
 		post("/change_password", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			dbInit(prop);
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			try {
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache);
 
-			
-			String message = WebTools.verifyAndChangePassword(uid, req.body());
-			
-			dbClose();
-			return message;
+
+				String message = WebTools.verifyAndChangePassword(uid, req.body());
+
+				dbClose();
+
+				return message;
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
 
 		});
 
@@ -1181,7 +1187,7 @@ public class WebCommon {
 			UID uid = DBActions.userLogin(req.body());
 
 			dbClose();
-			
+
 			String message = verifyLoginAndSetCookies(uid, req, res, cache, cacheFile);
 
 			return message;

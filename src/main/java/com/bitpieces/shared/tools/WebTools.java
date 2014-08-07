@@ -759,7 +759,7 @@ public class WebTools {
 			user.saveIt();
 			return "New password saved.";
 		} else {
-			return "Incorrect password";
+			throw new NoSuchElementException("Incorrect password.");
 		}
 
 
