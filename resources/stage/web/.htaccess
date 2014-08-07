@@ -38,6 +38,20 @@ RewriteRule ^creators/worth/([^/.]+)/?$ /creator_worth.html?creator=$1 [L]
 RewriteRule ^creators/worth/(.*) $1  [L]
 
 # The users rewrites
+RewriteRule ^users/funds/([^/.]+)/?$ /userdashboard_funds.html?user=$1 [L]
+RewriteRule ^users/funds/(.*) $1  [L]
+
+RewriteRule ^users/overview/([^/.]+)/?$ /userdashboard_overview.html?user=$1 [L]
+RewriteRule ^users/overview/(.*) $1  [L]
+
+RewriteRule ^users/pieces/([^/.]+)/?$ /userdashboard_pieces.html?user=$1 [L]
+RewriteRule ^users/pieces/(.*) $1  [L]
+
+RewriteRule ^users/prices/([^/.]+)/?$ /userdashboard_prices.html?user=$1 [L]
+RewriteRule ^users/prices/(.*) $1  [L]
+
+RewriteRule ^users/settings/([^/.]+)/?$ /userdashboard_settings.html?user=$1 [L]
+RewriteRule ^users/settings/(.*) $1  [L]
 
 
 
