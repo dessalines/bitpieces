@@ -6,5 +6,5 @@ RewriteEngine on
 
 
 #Think i finally got it
-RewriteRule ([^/.]+)/([^/.]+)/creator_main/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
+RewriteRule ([^/.]+)/([^/.]+)/creator_main.html/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
 
