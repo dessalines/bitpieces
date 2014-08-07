@@ -1,10 +1,13 @@
 $(document).ready(function() {
-    var creatorName = getParameterByName('creator');
+    // var creatorName = getParameterByName('creator');
+    var creatorName = window.location.hash;
+    console.log('cname = ' + creatorName);
 
     fillSimpleText(creatorName + '/get_main_body', '#main_body');
 
     // if you're this creator, then set up summer note, issue pieces button
     var userName = getCookie('username');
+
 
     if (userName == creatorName) {
         // show the save btn
@@ -42,23 +45,23 @@ $(document).ready(function() {
     // the reward yield
     $.when(getJson(creatorName + '/get_price_per_piece_current'),
         getJson(creatorName + '/get_rewards_current')).done(function(a1, a2) {
-            var pppCurrent = parseFloat(a1[0].replace(/[^0-9\.]+/g, ""));
-            var rewards_current = parseFloat(a2[0].replace(/[^0-9\.]+/g, ""));
-            if (pppCurrent > 0) {
-                var rewards_current_yield = (rewards_current * 100 / pppCurrent).toFixed(2) + '%';
-                $('#rewards_current_yield').text(rewards_current_yield);
-            } else {
-                $('#rewards_current_yield').text('0%');
-            }
+        var pppCurrent = parseFloat(a1[0].replace(/[^0-9\.]+/g, ""));
+        var rewards_current = parseFloat(a2[0].replace(/[^0-9\.]+/g, ""));
+        if (pppCurrent > 0) {
+            var rewards_current_yield = (rewards_current * 100 / pppCurrent).toFixed(2) + '%';
+            $('#rewards_current_yield').text(rewards_current_yield);
+        } else {
+            $('#rewards_current_yield').text('0%');
+        }
 
-        });
+    });
 
 
 
-        simpleFetch(creatorName + '/get_safety_current').done(function(result) {
-            var safetyRating = parseFloat(result);
-            if (safetyRating < 5.0) {
-                $('#creators_safety_current').addClass('text-danger');
+    simpleFetch(creatorName + '/get_safety_current').done(function(result) {
+        var safetyRating = parseFloat(result);
+        if (safetyRating < 5.0) {
+            $('#creators_safety_current').addClass('text-danger');
             // $('#creators_safety_current').html('<i class="fa fa-exclamation"></i> ' + result);
             $("#creators_safety_current").popover({
                 trigger: "hover",
@@ -76,29 +79,29 @@ $(document).ready(function() {
         }
     });
 
-        simpleFetch(creatorName + '/get_verified').done(function(result) {
-            console.log('verified = ' + result);
-            if (result == 'false') {
-                $('#verified').addClass('text-danger');
-                $('#verified').html('<i class="fa fa-exclamation"></i> Unverified');
-                $("#verified").popover({
-                    trigger: "hover",
-                    content: 'This creator is unverified, they may not be authentic',
-                    placement: 'auto'
-                });
-                if (userName == creatorName) {
-                    $('.unverified').removeClass('hide');
-                }
-            } else {
-                $('#verified').addClass('text-success');
-                $('#verified').html('<i class="fa fa-check"></i> Verified');
-                $("#verified").popover({
-                    trigger: "hover",
-                    content: 'This creator has been verified by BitPieces',
-                    placement: 'auto'
-                });
-
+    simpleFetch(creatorName + '/get_verified').done(function(result) {
+        console.log('verified = ' + result);
+        if (result == 'false') {
+            $('#verified').addClass('text-danger');
+            $('#verified').html('<i class="fa fa-exclamation"></i> Unverified');
+            $("#verified").popover({
+                trigger: "hover",
+                content: 'This creator is unverified, they may not be authentic',
+                placement: 'auto'
+            });
+            if (userName == creatorName) {
+                $('.unverified').removeClass('hide');
             }
-        });
+        } else {
+            $('#verified').addClass('text-success');
+            $('#verified').html('<i class="fa fa-check"></i> Verified');
+            $("#verified").popover({
+                trigger: "hover",
+                content: 'This creator has been verified by BitPieces',
+                placement: 'auto'
+            });
 
+        }
     });
+
+});
