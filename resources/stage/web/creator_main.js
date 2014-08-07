@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // var creatorName = getParameterByName('creator');
-    var creatorName = window.location.hash;
+    var creatorName = window.location.pathname.split('/').pop();
     console.log('cname = ' + creatorName);
 
     fillSimpleText(creatorName + '/get_main_body', '#main_body');
