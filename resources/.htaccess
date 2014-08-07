@@ -11,4 +11,4 @@ RewriteEngine on
 # try this
 # RewriteRule ([^/.]+)/([^/.]+)/creator/main/([^/.]+)/?$ /stage/web/creator_main?creator=$3 [L]
 
-RewriteRule stage/web/^creator/main/([^/.]+)/?$ stage/web/creator_main?creator=$1 [L]
+RewriteRule /stage/web/creator/main/([^/.]+)/?$ stage/web/creator_main?creator=$1 [L]
