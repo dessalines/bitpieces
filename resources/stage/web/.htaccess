@@ -9,7 +9,7 @@ RewriteBase /stage/web
 RewriteEngine On
 
 # make landing look like the root
-RewriteRule ^$ /landing.html
+RewriteRule ^$ /stage/web/landing.html
 
 
 # The creators rewrites
