@@ -681,6 +681,7 @@ function getJson(shortUrl) {
 
 function standardFormPost(shortUrl, formId, modalId) {
     // !!!!!!They must have names unfortunately
+    // An optional arg
     modalId = (typeof modalId === "undefined") ? "defaultValue" : modalId;
 
     // serializes the form's elements.
