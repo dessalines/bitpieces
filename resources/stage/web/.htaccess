@@ -9,33 +9,14 @@ RewriteBase /
 RewriteEngine On
 
 
+# The creators rewrites
+RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
+RewriteRule ^creators/main/(.*) $1  [L]
 
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-
-# RewriteRule .* index.a/$0 [PT,L] 
-
-# RewriteBase /stage/web/
-
+RewriteRule ^creators/overview/([^/.]+)/?$ /creator_overview.html?creator=$1 [L]
+RewriteRule ^creators/overview/(.*) $1  [L]
 
 
-
-# Options -Indexes +FollowSymLinks
-# Options +FollowSymLinks
-
-# testing a redirect: 
-# redirect 301 /index http://68.56.177.238:8080/stage/web/landing.html
-
-
-# Think i finally got it, but it don't work cause the port is fucked
-# RewriteRule ([^/.]+)/([^/.]+)/creator_main/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
-
-# try this
-# RewriteRule ([^/.]+)/([^/.]+)/creator/main/([^/.]+)/?$ /stage/web/creator_main?creator=$3 [L]
-
-
-RewriteRule ^creator/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
-RewriteRule ^creator/main/(.*) $1  [L]
 
 
 
