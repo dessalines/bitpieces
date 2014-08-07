@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 
 
-    var userName = getParameterByName('user');
+    var userName = window.location.pathname.split('/').pop();
 
     fillUserHighChartStandardTemplate(userName + '/get_pieces_owned_value_accum', "#pieces_owned_value", 'Value ($)', '$');
     fillUserHighChartStandardTemplate(userName + '/get_pieces_owned_accum', '#pieces_owned', '# of Pieces owned', '');

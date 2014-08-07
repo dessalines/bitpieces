@@ -10,7 +10,7 @@ $(document).ready(function() {
 
     // fillUserHighChartStandardTemplate('get_users_funds_accum', '#users_funds', 'Funds ($)', '$');
 
-    var userName = getParameterByName('user');
+    var userName = window.location.pathname.split('/').pop();
 
 
     var template = $('#recent_activity_template').html();
@@ -92,7 +92,7 @@ function setupWithdrawForm() {
 }
 
 function showHideDepositButton() {
-    var userName = getParameterByName('user');
+    var userName = window.location.pathname.split('/').pop();
     var sessionUserName = getCookie("username");
 
     if (userName == sessionUserName) {

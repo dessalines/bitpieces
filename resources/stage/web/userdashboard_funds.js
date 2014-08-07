@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var userName = getParameterByName('user');
+    var userName = window.location.pathname.split('/').pop();
 
     fillUserHighChartStandardTemplate(userName + '/get_users_funds_accum', '#users_funds', 'Funds ($)', '$');
 

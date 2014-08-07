@@ -84,7 +84,7 @@ function setupRegisterAjax() {
             console.log(document.cookie);
             setTimeout(
                 function() {
-                    window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
+                    window.location.replace("users/overview/" + formData[0]['value']);
 
                 }, 1000);
 
@@ -160,7 +160,7 @@ function setupSigninAjax() {
 
             // GO to the dashboard
             if (!isCreator) {
-                window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
+                window.location.replace("users/overview/" + formData[0]['value']);
             } else {
                 console.log(formData);
                 var url = "/creators/main/" + formData[0]['value'];
