@@ -2,7 +2,8 @@
 Options +FollowSymLinks
 RewriteEngine on
 RewriteBase /stage/web/
-# testing a redirect: redirect 301 /index http://68.56.177.238:8080/stage/web/landing.html
+# testing a redirect: 
+redirect 301 /index http://68.56.177.238:8080/stage/web/landing.html
 
 
 # Think i finally got it, but it don't work cause the port is fucked
