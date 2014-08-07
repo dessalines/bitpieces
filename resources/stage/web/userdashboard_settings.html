@@ -70,7 +70,7 @@
                <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
                <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
                <li><a href="#logout" class="hide">Log Out</a></li> -->
-                             <li class="dropdown">
+               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="/about">About Bitpieces</a></li>
@@ -96,15 +96,15 @@
             <li id="userDropdown" class="dropdown user-dropdown">
 
              <script id="usernameTemplate" type="x-tmpl-mustache">  
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
 
 
-             <ul class="dropdown-menu">
-             <li><a id="settings" href="userdashboard_settings" rel="keep-params"><i class="fa fa-gear"></i> Settings</a></li>
-             <li class="divider"></li>
-             <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+               <ul class="dropdown-menu">
+                 <li><a id="settings" href="userdashboard_settings" rel="keep-params"><i class="fa fa-gear"></i> Settings</a></li>
+                 <li class="divider"></li>
+                 <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
 
-             </ul>
+               </ul>
              </script>
            </li>
          </ul>
@@ -124,7 +124,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </div>
-         <div class="list-group">
+        <div class="list-group">
           <li class="list-group-item">
             <a href="/users/overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
             <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
@@ -167,93 +167,94 @@
     </div><!-- /.row -->
 
     <div id="users_settings" class="row col-md-6">
- <script id="users_settings_template" type="x-tmpl-mustache"> 
+     <script id="users_settings_template" type="x-tmpl-mustache"> 
       <h3> Users Settings </h3>
       <hr></hr>
 
       <!-- 2 Forms, user settings, and notifications -->
       <form id="settingsForm" class="form-horizontal" role="form">
-         
+       
        <div   class="form-group">
-     
-               
+         
+         
          <label for="email" class="col-sm-2 control-label">Email address</label>
          <div class="col-sm-10">
-         <input name="email" type="email" class="form-control" id="email" value={{email}}
-         data-bv-emailaddress="true"
-         data-bv-emailaddress-message="The input is not a valid email address"  />
+           <input name="email" type="email" class="form-control" id="email" value={{email}}
+           data-bv-emailaddress="true"
+           data-bv-emailaddress-message="The input is not a valid email address"  />
          </div>
-        
+         
        </div>
+       <a class="btn btn-default" href="#" role="button" data-toggle="modal" data-target="#changePasswordModal" role="button">Change password</a>
 
-<!--       <div class="form-group">
-        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-        <div class="col-sm-10">
-          <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
-          data-bv-notempty="true"
-          data-bv-notempty-message="The password is required and cannot be empty"
-          />
-
-        </div>
-      </div> 
-      <div class="form-group">
-        <label for="inputTimeZone" class="col-sm-2 control-label">Time zone</label>
-       
-        <div class="col-sm-10">
-          <select name="timeZone" class="form-control"  id="inputTimeZone" role="menu">
-            <option value="UTC">(GMT+00:00) UTC</option>
-            <option value="Mexico City">(GMT-06:00) Mexico City</option>
-            <option value="Copenhagen">(GMT+01:00) Copenhagen</option>
-            <option value='{{name}}'>{{name}}</option>
-
-          </select>
-
-
-        </div>
-      </div>
-      -->
-      <div id="currency" class="form-group">
-      
-       <label for="inputCurrency" class="col-sm-2 control-label">Currency</label>
-
+       <!--       <div class="form-group">
+       <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
        <div class="col-sm-10">
-       <select name="currency" class="form-control"  id="inputCurrency" role="menu">
-       {{#currencies}}
-       <option value="{{iso}}">{{name}} ({{iso}})</option>
-       {{/currencies}}
+        <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+        data-bv-notempty="true"
+        data-bv-notempty-message="The password is required and cannot be empty"
+        />
 
-       </select>
-
-
-       </div>
-     
-     </div>
-
-     <div class="form-group">
-      <label for="inputPrecision" class="col-sm-2 control-label">Precision</label>
+      </div>
+    </div> 
+    <div class="form-group">
+      <label for="inputTimeZone" class="col-sm-2 control-label">Time zone</label>
       
       <div class="col-sm-10">
-        <select name="precision" class="form-control"  id="inputPrecision" role="menu">
-          <option value="2">2 Decimal Places</option>
-          <option value="4">4 Decimal Places</option>
-          <option value="6">6 Decimal Places</option>
-          <option value="8">8 Decimal Places</option>
-
+        <select name="timeZone" class="form-control"  id="inputTimeZone" role="menu">
+          <option value="UTC">(GMT+00:00) UTC</option>
+          <option value="Mexico City">(GMT-06:00) Mexico City</option>
+          <option value="Copenhagen">(GMT+01:00) Copenhagen</option>
+          <option value='{{name}}'>{{name}}</option>
 
         </select>
 
 
       </div>
     </div>
+  -->
+  <div id="currency" class="form-group">
+    
+   <label for="inputCurrency" class="col-sm-2 control-label">Currency</label>
 
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button id="settingsSaveBtn" type="submit" class="btn btn-primary">Save</button>
-      </div>
-    </div>
+   <div class="col-sm-10">
+     <select name="currency" class="form-control"  id="inputCurrency" role="menu">
+       {{#currencies}}
+       <option value="{{iso}}">{{name}} ({{iso}})</option>
+       {{/currencies}}
 
-  </form>
-     </script>
+     </select>
+
+
+   </div>
+   
+ </div>
+
+ <div class="form-group">
+  <label for="inputPrecision" class="col-sm-2 control-label">Precision</label>
+  
+  <div class="col-sm-10">
+    <select name="precision" class="form-control"  id="inputPrecision" role="menu">
+      <option value="2">2 Decimal Places</option>
+      <option value="4">4 Decimal Places</option>
+      <option value="6">6 Decimal Places</option>
+      <option value="8">8 Decimal Places</option>
+
+
+    </select>
+
+
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <button id="settingsSaveBtn" type="submit" class="btn btn-primary">Save</button>
+  </div>
+</div>
+
+</form>
+</script>
 </div>
 <div class="row col-md-6">
  <h3> Notifications </h3>
@@ -270,7 +271,89 @@
 <!-- end of wrapper -->
 </div>
 </div>
+<!-- Change password Modal -->
 
+<div class="modal fade bs-example-modal-lg" id="userloginModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="changePasswordModal">Change Password</h4>
+      </div>
+
+      <div class="modal-body">
+
+        <h3> Register </h3>
+
+        <form id="changePasswordForm" class="form-horizontal" role="form"
+        data-bv-message="This value is not valid"
+        data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+        data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+        data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">Old password</label>
+          <div class="col-sm-10">
+            <input name="oldPassword" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+            data-bv-notempty="true"
+            data-bv-notempty-message="The password is required and cannot be empty"
+            />
+
+
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPassword3" class="col-sm-2 control-label">New Password</label>
+          <div class="col-sm-10">
+            <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+            data-bv-notempty="true"
+            data-bv-notempty-message="The password is required and cannot be empty"
+
+            data-bv-identical="true"
+            data-bv-identical-field="verifyPassword"
+            data-bv-identical-message="The password and its confirm are not the same"
+
+            />
+
+
+
+          </div>
+        </div>
+        <div class="form-group">
+         <label for="inputPassword3" class="col-sm-2 control-label">Verify password</label>
+         <div class="col-sm-10">
+          <input name="verifyPassword" type="password" class="form-control" id="inputPassword3" placeholder="Verify Password"
+          data-bv-notempty="true"
+          data-bv-notempty-message="The confirm password is required and cannot be empty"
+
+          data-bv-identical="true"
+          data-bv-identical-field="password"
+          data-bv-identical-message="The password and its confirm are not the same"
+
+          data-bv-different="true"
+          data-bv-different-field="username"
+          data-bv-different-message="The password cannot be the same as username" />
+
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button id="changePasswordBtn" type="submit" class="btn btn-primary">Change Password</button>
+        </div>
+      </div>
+    </form>
+
+
+
+  </div>
+
+</div>
+</div>
+</div>
 
 
 

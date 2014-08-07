@@ -12,7 +12,7 @@
 + Add new reward system based on div/(share*year)
 + Make user pages transparent
 - Make UID to settings cache, cause right now you're doing hundreds of fetches for settings, on each call
-- Make 3 column creator pages
++ Make 3 column creator pages
 	- Changed mind, break out into 3 pages, a product page, and overview
 - badges page
 - rewards page
@@ -24,16 +24,17 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 + Work on main page
 	- Use fiverr to get a front thing to look like kickstarter
 + Prepending currency to input boxes
-- show alerts on dashboards if results come back zero
++ show alerts on dashboards if results come back zero
 - add correct deposit stuff to creators pages
 - disclaimers when signing up, just have a check box, still need to write them
 + FAQ
 + front page
-- The mod rewrite stuff
++ The mod rewrite stuff
 + Creator register page issuing pieces reward percent/total/all that
 + cookie expiration
 - notifications
 - a redirect on all dashboardy type pages if you're not logged in
 - Badges page
 - I forgot my password
+- change my password
 - Get dev working again
