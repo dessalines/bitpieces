@@ -1,7 +1,7 @@
 
 
 Options +FollowSymLinks
- 
+Options -Indexes
 RewriteEngine On
 RewriteBase /
 
