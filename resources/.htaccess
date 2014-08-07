@@ -1,14 +1,14 @@
 
 
 Options +FollowSymLinks -Indexes
-php_flag engine off
+# php_flag engine off
 RewriteEngine On
-RewriteBase /
+# RewriteBase /
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule .* index.a/$0 [PT,L] 
+# RewriteRule .* index.a/$0 [PT,L] 
 
 # RewriteBase /stage/web/
 
@@ -30,6 +30,6 @@ RewriteRule .* index.a/$0 [PT,L]
 
 # RewriteRule ^creator/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
 
-RewriteRule ^creator/main/ http://google.com [QSA,L]
+# RewriteRule ^creator/main/ http://google.com [QSA,L]
 
 RewriteRule ^creator_funds.html$ http://google.com [R]
