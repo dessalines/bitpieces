@@ -1,5 +1,6 @@
 
-Options +FollowSymLinks
+# #Options -Indexes +FollowSymLinks
+# Options +FollowSymLinks
 RewriteEngine on
 RewriteBase /stage/web/
 # testing a redirect: 
