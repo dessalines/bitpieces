@@ -4,6 +4,6 @@ RewriteEngine on
 
 # testing a redirect: redirect 301 /index http://68.56.177.238:8080/stage/web/landing.html
 
-RewriteRule ^creator/([^/.]+)/?$ creator_main?creator=$1 [L]
+RewriteRule ^creator/([^/.]+)/?$ creator_main.html?creator=$1 [L]
 
 
