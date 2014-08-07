@@ -1180,7 +1180,7 @@ public class WebCommon {
 
 		post("/user_logout", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String auth = req.cookie("authenticated_session_id");
+			String auth = req.cookie("authenticated_session_id" + "_" + cookiePath);
 
 
 			// remove the key, and save the map
