@@ -9,7 +9,7 @@ $(document).ready(function() {
     var userName = getCookie('username');
     // set up the correct dashboard if its a creator
     if (userType == 'Creator') {
-        $("#dashboardhref").prop("href", "creator_main?creator=" + userName);
+        $("#dashboardhref").prop("href", "/creators/main/" + userName);
     } else if (userType == 'User') {
         $("#dashboardhref").prop("href", "userdashboard_overview?user=" + userName);
     }
@@ -163,7 +163,7 @@ function setupSigninAjax() {
                 window.location.replace("userdashboard_overview?user=" + formData[0]['value']);
             } else {
                 console.log(formData);
-                var url = "creator_main?creator=" + formData[0]['value'];
+                var url = "/creators/main/" + formData[0]['value'];
                 console.log(url);
                 window.location.replace(url);
 
