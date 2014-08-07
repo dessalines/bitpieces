@@ -182,7 +182,7 @@ function fillUserInfoMustacheFromCookie() {
         $('#userDropdown').html(rendered);
 
 
-        $("#settings").attr("href", "userdashboard_settings?user=" + jsonObj);
+        $("#settings").attr("href", "/users/settings/" + jsonObj);
         console.log(jsonObj);
         console.log(template);
         console.log(rendered);
