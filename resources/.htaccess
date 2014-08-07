@@ -5,7 +5,6 @@ php_flag engine off
 RewriteEngine On
 RewriteBase /
 
-RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
@@ -31,4 +30,4 @@ RewriteRule .* index.a/$0 [PT,L]
 
 # RewriteRule ^creator/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
 
-RewriteRule ^creator/main/([^/.]+)/?$ /about.html [L]
+RewriteRule ^creator/main/([^/.]+)/?$ http://google.com [R]
