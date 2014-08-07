@@ -1,5 +1,6 @@
 // var sparkService = "http://localhost:4567/";
 var sparkService = "http://68.56.177.238:4567/"
+var cookie_path_name = "prod";
 
 var pageNumbers = {};
 var extractData = function(node) {
@@ -40,11 +41,11 @@ function getCookies() {
 }
 
 function getCookie(name) {
-    return getCookies()[name];
+    return getCookies()[name] + "_" + cookie_path_name;
 }
 
 function delete_cookie(name) {
-    document.cookie = name + '=; path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = name + "_" + cookie_path_name + '=; path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
 }
 
