@@ -13,6 +13,15 @@ $(document).ready(function() {
         full();
     }
 
+    $("#changePasswordForm").bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        standardFormPost('change_password', "#changePasswordForm");
+    });
+
 
 });
 
