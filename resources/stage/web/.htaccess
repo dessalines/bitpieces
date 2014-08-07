@@ -35,7 +35,7 @@ RewriteEngine On
 
 
 RewriteRule ^creator/main/([^/.]+)/?$ /creator_main.html?creator=$1
-RewriteRule ^creator/main/(.*).js $1  [L]
+RewriteRule ^creator/main/(.*)(.js|.css) $1  [L]
 
 
 
