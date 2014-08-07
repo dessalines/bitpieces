@@ -3,6 +3,8 @@
 Options +FollowSymLinks -Indexes
 # php_flag engine off
 RewriteEngine On
+
+
 # RewriteBase /
 
 # RewriteCond %{REQUEST_FILENAME} !-f
