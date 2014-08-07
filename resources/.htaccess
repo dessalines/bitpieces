@@ -1,8 +1,8 @@
 
-
+Options +FollowSymLinks
 RewriteEngine on
 
-
+redirect 301 /index http://68.56.177.238:8080/stage/web/landing.html
 
 
 
