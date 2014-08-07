@@ -9,4 +9,4 @@ RewriteEngine on
 # RewriteRule ([^/.]+)/([^/.]+)/creator_main/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
 
 # try this
-RewriteRule ([^/.]+)/([^/.]+)/creator/main/([^/.]+)/?$ /stage/web/creator_main?creator=$3 [L]
+RewriteRule ([^/.]+)/([^/.]+)/creator/main/([^/.]+)/?$ http://68.56.177.238:8080/stage/web/creator_main?creator=$3 [L]
