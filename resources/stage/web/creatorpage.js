@@ -7,7 +7,7 @@ $(document).ready(function() {
 
 
     // var creatorName = window.location.pathname.split('/').pop();
-    var creatorName = getParameterByName('creator');
+    var creatorName = window.location.pathname.split('/').pop();
     $('#page_title').text(creatorName);
 
 

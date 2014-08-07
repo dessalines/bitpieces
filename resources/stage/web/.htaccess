@@ -10,11 +10,29 @@ RewriteEngine On
 
 
 # The creators rewrites
-RewriteRule ^creators2/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
-RewriteRule ^creators2/main/(.*) $1  [L]
+RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
+RewriteRule ^creators/main/(.*) $1  [L]
 
-RewriteRule ^creator/overview/([^/.]+)/?$ /creator_overview.html?creator=$1 [L]
-RewriteRule ^creator/overview/(.*) $1  [L]
+RewriteRule ^creators/overview/([^/.]+)/?$ /creator_overview.html?creator=$1 [L]
+RewriteRule ^creators/overview/(.*) $1  [L]
+
+RewriteRule ^creators/funds/([^/.]+)/?$ /creator_funds.html?creator=$1 [L]
+RewriteRule ^creators/funds/(.*) $1  [L]
+
+RewriteRule ^creators/pieces/([^/.]+)/?$ /creator_pieces.html?creator=$1 [L]
+RewriteRule ^creators/pieces/(.*) $1  [L]
+
+RewriteRule ^creators/pricing/([^/.]+)/?$ /creator_pricing.html?creator=$1 [L]
+RewriteRule ^creators/pricing/(.*) $1  [L]
+
+RewriteRule ^creators/rewards/([^/.]+)/?$ /creator_rewards.html?creator=$1 [L]
+RewriteRule ^creators/rewards/(.*) $1  [L]
+
+RewriteRule ^creators/settings/([^/.]+)/?$ /creator_settings.html?creator=$1 [L]
+RewriteRule ^creators/settings/(.*) $1  [L]
+
+RewriteRule ^creators/worth/([^/.]+)/?$ /creator_worth.html?creator=$1 [L]
+RewriteRule ^creators/worth/(.*) $1  [L]
 
 
 

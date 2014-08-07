@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // var creatorName = getParameterByName('creator');
+    // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = window.location.pathname.split('/').pop();
     console.log('cname = ' + creatorName);
 

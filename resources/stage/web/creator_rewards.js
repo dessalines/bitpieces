@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var creatorName = getParameterByName('creator');
+    var creatorName = window.location.pathname.split('/').pop();
 
 
     var template = $('#rewards_template').html();
