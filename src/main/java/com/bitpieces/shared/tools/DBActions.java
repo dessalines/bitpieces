@@ -538,7 +538,7 @@ public class DBActions {
 	}
 
 
-	public static UID createCreatorRealFromAjax(Coinbase cb, String reqBody) {
+	public static UID createCreatorRealFromAjax(String reqBody) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 

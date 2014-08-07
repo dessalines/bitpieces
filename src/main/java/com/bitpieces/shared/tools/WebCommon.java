@@ -1246,6 +1246,220 @@ public class WebCommon {
 			return message;
 
 		});
+		
+		
+
+		post("/registeruser", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+			try {
+				// Verify the recaptcha
+				WebTools.recaptcha(req.url(), req.body());
+
+				// Create the user
+				UID uid = DBActions.createUserRealFromAjax(req.body());
+
+				dbClose();
+
+				// Its null if it couldn't create the user, usually cause of constraints
+				if (uid != null) {
+					String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, cache, 
+							cacheFile, cookiePath);
+
+					return "user registered";
+				} else {
+
+					res.status(666);
+					return "User already exists";
+				}
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+
+		});
+
+		post("/registercreator", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+			try {
+				// Verify the recaptcha
+				WebTools.recaptcha(req.url(), req.body());
+
+				// Create the user
+				UID uid = DBActions.createCreatorRealFromAjax(req.body());
+
+				dbClose();
+
+				// Its null if it couldn't create the user, usually cause of constraints
+				if (uid != null) {
+							String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, cache, 
+							cacheFile, cookiePath);
+
+					return "creator registered";
+				} else {
+
+					res.status(666);
+					return "Creator already exists";
+				}
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+
+		});
+
+		post("/placebid", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+
+				uid.verifyUser();
+
+				message = WebTools.placeBid(uid, req.body(), sf);
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+
+		post("/placeask", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+
+			dbInit(prop);
+
+			// get the creator id from the token
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+			String message = null;
+			try {
+				message = WebTools.placeAsk(uid, req.body(), sf);
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+
+			dbClose();
+
+
+			return message;
+
+		});
+
+
+
+		post("/placebuy", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				uid.verifyUser();
+
+				message = WebTools.placeBuy(uid, req.body());
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+
+		post("/issue_pieces", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				uid.verifyCreator();
+
+				message = WebTools.issuePieces(uid, req.body(), sf);
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+
+		post("/new_reward", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				uid.verifyCreator();
+
+				message = WebTools.newReward(uid, req.body(), sf);
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+
+		post("/raise_funds", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				uid.verifyCreator();
+
+				message = WebTools.raiseFunds(uid, req.body(), sf);
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+
+		post("/delete_bid_ask", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				uid.verifyUser();
+
+				message = WebTools.deleteBidAsk(uid, req.body());
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+		
+		
+		
+		
+		
+		
 	}
 
 
