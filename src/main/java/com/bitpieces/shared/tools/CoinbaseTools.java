@@ -47,7 +47,7 @@ public class CoinbaseTools {
 		//		if (ub != null) {
 		//			return ub.getString("button_code");
 		//		} else {
-
+		// nada
 		// The acct id is stored in the users table row
 		User user = User.findById(uid.getId());
 		
