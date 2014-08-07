@@ -4,7 +4,7 @@ RewriteEngine on
 RewriteBase /stage/web/
 
 
-RewriteRule ^(.*)$ /index.php/$1 [L,QSA]
+RewriteRule ^(.*)$ /index.php/$1 [L]
 
 Options -Indexes +FollowSymLinks
 # Options +FollowSymLinks
