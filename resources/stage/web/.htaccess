@@ -10,8 +10,8 @@ RewriteEngine On
 
 
 # The creators rewrites
-RewriteRule ^creator/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
-RewriteRule ^creator/main/(.*) $1  [L]
+RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
+RewriteRule ^creators/main/(.*) $1  [L]
 
 RewriteRule ^creator/overview/([^/.]+)/?$ /creator_overview.html?creator=$1 [L]
 RewriteRule ^creator/overview/(.*) $1  [L]
