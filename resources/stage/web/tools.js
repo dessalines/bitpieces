@@ -635,6 +635,7 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
 
                 toastr.success(data);
                 $(modalId).modal('hide');
+                console.log(modalId);
                 $(formId)[0].reset();
 
 
