@@ -1,6 +1,6 @@
 
 
-Options +FollowSymLinks +Indexes
+Options +FollowSymLinks -Indexes
 
 RewriteEngine On
 RewriteBase /
