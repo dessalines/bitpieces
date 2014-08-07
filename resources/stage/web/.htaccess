@@ -8,6 +8,8 @@ DirectoryIndex derp.php
 RewriteBase /
 RewriteEngine On
 
+# make landing look like home
+RewriteRule / /landing.html  [L]
 
 # The creators rewrites
 RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
