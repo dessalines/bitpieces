@@ -1,7 +1,7 @@
 
 
 Options +FollowSymLinks -Indexes
-
+php_flag engine off
 RewriteEngine On
 RewriteBase /
 
