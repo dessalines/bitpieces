@@ -25,6 +25,10 @@ public class WebCommon {
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(1440);
 
 	static final Logger log = LoggerFactory.getLogger(WebCommon.class);
+	
+	
+	
+	
 	/**
 	 * This needs the cache, to get the correct user, a properties file for making the 
 	 * correct db connections, and a unit converter to convert everything correctly
@@ -35,7 +39,8 @@ public class WebCommon {
 	public static void commonGets(Cache<String, UID> cache, 
 			Properties prop, 
 			UnitConverter sf,
-			String cacheFile) {
+			String cacheFile,
+			String cookiePath) {
 
 		get("/hello", (req, res) -> {
 			allowResponseHeaders(req, res);
@@ -58,7 +63,7 @@ public class WebCommon {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, cache);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				//				verifyUser(uid);
 
 				// get currency if one exists
@@ -79,7 +84,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String userName = req.params(":user");
-			UID uid = getUserFromCookie(req, cache);
+		UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {
 
 				dbInit(prop);
@@ -104,7 +109,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String userName = req.params(":user");
-			UID uid = getUserFromCookie(req, cache);
+		UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {
 
 
@@ -130,7 +135,7 @@ public class WebCommon {
 			try {
 				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, creatorName, uid, sf);
@@ -155,7 +160,7 @@ public class WebCommon {
 			try {
 				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedCurrentSeriesJson(userName, creatorName, uid, sf);
@@ -180,7 +185,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
 				dbInit(prop);
@@ -203,7 +208,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
 				dbInit(prop);
@@ -227,7 +232,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getRewardsEarnedTotalJson(userName, uid, sf);
 
@@ -247,7 +252,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedAccumSeriesJson(userName, uid, sf);
 
@@ -268,7 +273,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersFundsAccumSeriesJson(userName, uid, sf);
 
@@ -292,7 +297,7 @@ public class WebCommon {
 			try {
 				String userName = req.params(":user");
 				Integer pageNum = Integer.parseInt(req.params(":page_num"));
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersTransactionsJson(userName, uid, sf, pageNum);
 
@@ -315,7 +320,7 @@ public class WebCommon {
 			try {
 				String userName = req.params(":user");
 				Integer pageNum = Integer.parseInt(req.params(":page_num"));
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 
 				// get currency if one exists
@@ -338,7 +343,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersFundsCurrentJson(userName, uid, sf);
 
@@ -358,7 +363,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String creatorName = req.params(":creator");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getCreatorsFundsCurrentJson(creatorName, uid, sf);
 
@@ -378,7 +383,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getRewardsEarnedTotalByUserJson(userName, uid, sf);
 
@@ -398,7 +403,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getPiecesValueCurrentByOwnerJson(userName, uid, sf);
 
@@ -438,7 +443,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-				UID uid = getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersBidsAsksCurrentJson(userName, uid, sf);
 
@@ -502,7 +507,7 @@ public class WebCommon {
 			try {			
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID cid = WebCommon.getUserFromCookie(req, cache);
+				UID cid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				cid.verifyCreator();
 
 				// get the creator id from the token		
@@ -521,7 +526,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -542,7 +547,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -603,7 +608,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -624,7 +629,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -645,7 +650,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -707,7 +712,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -728,7 +733,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -750,7 +755,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -773,7 +778,7 @@ public class WebCommon {
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -798,7 +803,7 @@ public class WebCommon {
 			String json = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -820,7 +825,7 @@ public class WebCommon {
 			String json = null;
 			String creator = req.params(":creator");
 
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -842,7 +847,7 @@ public class WebCommon {
 			String json = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -863,7 +868,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			try {			
 
@@ -886,7 +891,7 @@ public class WebCommon {
 			String json = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -989,7 +994,7 @@ public class WebCommon {
 			String json = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -1011,7 +1016,7 @@ public class WebCommon {
 			String json = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -1032,7 +1037,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -1053,7 +1058,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
@@ -1074,14 +1079,51 @@ public class WebCommon {
 	public static void commonPosts(Cache<String, UID> cache, 
 			Properties prop, 
 			UnitConverter sf,
-			String cacheFile) {
+			String cacheFile, 
+			String cookiePath) {
+		
+		post("/userlogin", (req, res) -> {
+			System.out.println(req.headers("Origin"));
+			WebCommon.allowResponseHeaders(req, res);
+
+			dbInit(prop);
+
+			// log the user in
+			UID uid = DBActions.userLogin(req.body());
+
+			dbClose();
+
+			String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, cache, 
+					cacheFile, cookiePath);
+
+			return message;
+
+		});
+
+		post("/creatorlogin", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+
+			dbInit(prop);
+
+			// log the user in
+			UID uid = DBActions.creatorLogin(req.body());
+
+			dbClose();
+
+
+			String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, cache, 
+					cacheFile, cookiePath);
+
+			return message;
+
+		});
 
 		post("/save_settings", (req, res) -> {
 			String json = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, cache);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				// get currency if one exists
 				json = WebTools.saveSettings(uid, req.body());
@@ -1102,7 +1144,7 @@ public class WebCommon {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID cid = WebCommon.getUserFromCookie(req, cache);
+				UID cid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				cid.verifyCreator();
 
 				// get currency if one exists
@@ -1125,7 +1167,7 @@ public class WebCommon {
 		post("/discover", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
-			UID uid = WebCommon.getUserFromCookie(req, cache);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			String json = WebTools.getDiscoverJson(req.body(), uid, sf);
 
 			dbClose();
@@ -1155,7 +1197,7 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			try {
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, cache);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
 				String message = WebTools.verifyAndChangePassword(uid, req.body());
@@ -1187,7 +1229,7 @@ public class WebCommon {
 			try {			
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID cid = WebCommon.getUserFromCookie(req, cache);
+				UID cid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				cid.verifyCreator();
 
 
@@ -1217,8 +1259,8 @@ public class WebCommon {
 
 	}
 
-	public static UID getUserFromCookie(Request req, Cache<String, UID> cache) {
-		String authId = req.cookie("authenticated_session_id");
+	public static UID getUserFromCookie(Request req, Cache<String, UID> cache, String path) {
+		String authId = req.cookie("authenticated_session_id" + "_" + path);
 
 		UID uid = null;
 		try {

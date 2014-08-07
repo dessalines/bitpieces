@@ -52,47 +52,13 @@ public class WebService {
 		UnitConverter sf = new UnitConverter();
 
 		// Setup all the common gets
-		WebCommon.commonGets(SESSION_TO_USER_MAP, prop, sf, DataSources.STAGE_SESSION_FILE);
+		WebCommon.commonGets(SESSION_TO_USER_MAP, prop, sf, DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
 
 		// Setup all the common posts
-		WebCommon.commonPosts(SESSION_TO_USER_MAP, prop, sf, DataSources.STAGE_SESSION_FILE);
+		WebCommon.commonPosts(SESSION_TO_USER_MAP, prop, sf, DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
 
 
-		post("/userlogin", (req, res) -> {
-			System.out.println(req.headers("Origin"));
-			WebCommon.allowResponseHeaders(req, res);
 
-			dbInit(prop);
-
-			// log the user in
-			UID uid = DBActions.userLogin(req.body());
-
-			dbClose();
-
-			String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, 
-					DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
-
-			return message;
-
-		});
-
-		post("/creatorlogin", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-
-			dbInit(prop);
-
-			// log the user in
-			UID uid = DBActions.creatorLogin(req.body());
-
-			dbClose();
-
-
-			String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, 
-					DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
-
-			return message;
-
-		});
 		
 		post("/registeruser", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
@@ -160,7 +126,7 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 
 				uid.verifyUser();
 
@@ -182,7 +148,7 @@ public class WebService {
 			dbInit(prop);
 
 			// get the creator id from the token
-			UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+			UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 			String message = null;
 			try {
 				message = WebTools.placeAsk(uid, req.body(), sf);
@@ -205,7 +171,7 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyUser();
 
 				message = WebTools.placeBuy(uid, req.body());
@@ -225,7 +191,7 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyCreator();
 
 				message = WebTools.issuePieces(uid, req.body(), sf);
@@ -245,7 +211,7 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyCreator();
 
 				message = WebTools.newReward(uid, req.body(), sf);
@@ -265,7 +231,7 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyCreator();
 
 				message = WebTools.raiseFunds(uid, req.body(), sf);
@@ -285,7 +251,7 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyUser();
 
 				message = WebTools.deleteBidAsk(uid, req.body());
@@ -305,7 +271,7 @@ public class WebService {
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyUser();
 
 				code = CoinbaseTools.fetchOrCreateDepositButton(cb, uid);
@@ -346,7 +312,7 @@ public class WebService {
 			String message = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
-				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyUser();
 				dbInit(prop);
 
@@ -366,7 +332,7 @@ public class WebService {
 			String message = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
-				UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP);
+				UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				cid.verifyCreator();
 
 				dbInit(prop);
