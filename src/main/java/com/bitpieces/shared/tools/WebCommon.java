@@ -1150,6 +1150,19 @@ public class WebCommon {
 			return "Logged out";
 
 		});
+		
+		post("/change_password", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+			UID uid = WebCommon.getUserFromCookie(req, cache);
+
+			
+			String message = WebTools.verifyAndChangePassword(uid, req.body());
+			
+			dbClose();
+			return message;
+
+		});
 
 
 

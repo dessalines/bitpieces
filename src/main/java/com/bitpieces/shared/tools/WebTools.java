@@ -737,6 +737,35 @@ public class WebTools {
 
 	}
 
+	public static String verifyAndChangePassword(UID uid, String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+
+		Model user = null;
+		if (uid.getType() == UserType.Creator) {
+			// fetch the required fields
+			user = Creator.findById(uid.getId());
+		} else {
+			user = User.findById(uid.getId());
+		}
+
+
+		String encryptedPassword = user.getString("password_encrypted");
+
+		Boolean correctPass = Tools.PASS_ENCRYPT.checkPassword(postMap.get("oldPassword"), encryptedPassword);
+
+		// If the old password is correct, then change it to the new one
+		if (correctPass) {
+			user.set("password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")));
+			user.saveIt();
+			return "New password saved.";
+		} else {
+			return "Incorrect password";
+		}
+
+
+
+	}
+
 	public static String saveSettings(UID uid, String body) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
@@ -776,6 +805,8 @@ public class WebTools {
 		return "Settings updated";
 
 	}
+
+
 
 	public static String saveCreatorsCategories(UID uid, String body) {
 		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
@@ -1310,7 +1341,7 @@ public class WebTools {
 		return json;
 
 	}
-	
+
 	public static String getPiecesAvailableTotalJson(String creatorName) {
 
 
