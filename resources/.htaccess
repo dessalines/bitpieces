@@ -1,6 +1,9 @@
 
 
-RewriteEngine on
+Options +FollowSymLinks
+ 
+RewriteEngine On
+RewriteBase /
 
 
 # RewriteBase /stage/web/
