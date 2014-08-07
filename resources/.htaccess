@@ -8,7 +8,7 @@ RewriteEngine on
 
 
 
-Options -Indexes +FollowSymLinks
+# Options -Indexes +FollowSymLinks
 # Options +FollowSymLinks
 
 # testing a redirect: 
