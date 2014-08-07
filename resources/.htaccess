@@ -1,6 +1,8 @@
 
 
-
-Options +FollowSymLinks
 RewriteEngine on
+Options +FollowSymLinks
+
+
+
 
