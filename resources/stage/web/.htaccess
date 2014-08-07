@@ -5,7 +5,7 @@ Options +FollowSymLinks -Indexes
 
 DirectoryIndex derp.php
 
-RewriteBase /
+RewriteBase /stage/web
 RewriteEngine On
 
 # make landing look like the root
