@@ -19,7 +19,7 @@ $(document).ready(function() {
         submitButtons: 'button[type="submit"]'
     }).on('success.form.bv', function(event) {
         event.preventDefault();
-        standardFormPost('change_password', "#changePasswordForm");
+        standardFormPost('change_password', "#changePasswordForm", "#changePasswordModal");
     });
 
 

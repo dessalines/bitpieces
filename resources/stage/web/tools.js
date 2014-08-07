@@ -678,9 +678,9 @@ function getJson(shortUrl) {
     });
 }
 
-function standardFormPost(shortUrl, formId) {
+function standardFormPost(shortUrl, formId, modalId) {
     // !!!!!!They must have names unfortunately
-
+    modalId = (typeof optionalArg === "undefined") ? "defaultValue" : optionalArg;
 
     // serializes the form's elements.
     var formData = $(formId).serializeArray();
@@ -707,7 +707,7 @@ function standardFormPost(shortUrl, formId) {
             // Hide the modal, reset the form, show successful
 
             $(formId)[0].reset();
-
+            $(modalId).modal('hide');
             toastr.success(data);
 
 
