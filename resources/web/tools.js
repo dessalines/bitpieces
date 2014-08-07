@@ -41,7 +41,7 @@ function getCookies() {
 }
 
 function getCookie(name) {
-    return getCookies()[name] + "_" + cookie_path_name;
+    return getCookies()[name + "_" + cookie_path_name];
 }
 
 function delete_cookie(name) {
