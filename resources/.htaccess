@@ -10,3 +10,13 @@ RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
+
+# 
+Options +FollowSymLinks
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^yoursite.com
+RewriteRule (.*) http://68.56.177.238:8080/$1 [R=301,L]
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9} /index.html HTTP/
+RewriteRule ^index.html$ http://www.yoursite.com/ [R=301,L]
+
+redirect 301 /index http://68.56.177.238:8080/stage/web/landing
