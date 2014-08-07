@@ -5,6 +5,7 @@ RewriteEngine on
 # testing a redirect: redirect 301 /index http://68.56.177.238:8080/stage/web/landing.html
 
 
-#Think i finally got it
-RewriteRule ([^/.]+)/([^/.]+)/creator_main.html/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
+#Think i finally got it, but it don't work cause the port is fucked
+RewriteRule ([^/.]+)/([^/.]+)/creator_main/([^/.]+)/?$ stage/web/creator_main?creator=$3 [L]
+
 
