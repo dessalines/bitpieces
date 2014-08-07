@@ -238,10 +238,7 @@
       <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 
-        name = 'creator'.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        results = regex.exec(location.search);
-        var creatorName = decodeURIComponent(results[1].replace(/\+/g, " "));
+        var creatorName = window.location.pathname.split('/').pop();
 
 
     var disqus_shortname = 'bitpieces'; // Required - Replace example with your forum shortname
