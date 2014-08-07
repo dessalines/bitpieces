@@ -37,6 +37,8 @@ RewriteRule ^creators/settings/(.*) $1  [L]
 RewriteRule ^creators/worth/([^/.]+)/?$ /creator_worth.html?creator=$1 [L]
 RewriteRule ^creators/worth/(.*) $1  [L]
 
+# The users rewrites
+
 
 
 

@@ -62,7 +62,7 @@ function showHideElementsLoggedIn() {
         if (userType == 'Creator') {
             // Set up the top bar settings to go to a specific place
             var creatorName = getCookie("username");
-            $('#settings').prop("href", "creator_settings?creator=" + creatorName);
+            $('#settings').prop("href", "/creators/settings/" + creatorName);
         } else {
 
         }
