@@ -26,7 +26,7 @@ import com.google.common.cache.CacheBuilder;
 // 
 // java -cp bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar com.bitpieces.dev.web_service.WebService
 public class WebService {
-
+	public static final String COOKIE_PATH = "prod";
 
 	// Use an expiring map to store the authenticated sessions
 	private static Cache<String, UID> SESSION_TO_USER_MAP = CacheBuilder.newBuilder()
@@ -58,7 +58,42 @@ public class WebService {
 		WebCommon.commonPosts(SESSION_TO_USER_MAP, prop, sf, DataSources.STAGE_SESSION_FILE);
 
 
+		post("/userlogin", (req, res) -> {
+			System.out.println(req.headers("Origin"));
+			WebCommon.allowResponseHeaders(req, res);
 
+			dbInit(prop);
+
+			// log the user in
+			UID uid = DBActions.userLogin(req.body());
+
+			dbClose();
+
+			String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, 
+					DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
+
+			return message;
+
+		});
+
+		post("/creatorlogin", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+
+			dbInit(prop);
+
+			// log the user in
+			UID uid = DBActions.creatorLogin(req.body());
+
+			dbClose();
+
+
+			String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, 
+					DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
+
+			return message;
+
+		});
+		
 		post("/registeruser", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
@@ -73,7 +108,8 @@ public class WebService {
 
 				// Its null if it couldn't create the user, usually cause of constraints
 				if (uid != null) {
-					WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
+					String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, 
+							DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
 
 					return "user registered";
 				} else {
@@ -103,7 +139,8 @@ public class WebService {
 
 				// Its null if it couldn't create the user, usually cause of constraints
 				if (uid != null) {
-					WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, DataSources.STAGE_SESSION_FILE);
+					String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, SESSION_TO_USER_MAP, 
+							DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
 
 					return "creator registered";
 				} else {

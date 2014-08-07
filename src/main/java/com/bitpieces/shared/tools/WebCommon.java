@@ -1177,39 +1177,7 @@ public class WebCommon {
 
 
 
-		post("/userlogin", (req, res) -> {
-			System.out.println(req.headers("Origin"));
-			WebCommon.allowResponseHeaders(req, res);
-
-			dbInit(prop);
-
-			// log the user in
-			UID uid = DBActions.userLogin(req.body());
-
-			dbClose();
-
-			String message = verifyLoginAndSetCookies(uid, req, res, cache, cacheFile);
-
-			return message;
-
-		});
-
-		post("/creatorlogin", (req, res) -> {
-			WebCommon.allowResponseHeaders(req, res);
-
-			dbInit(prop);
-
-			// log the user in
-			UID uid = DBActions.creatorLogin(req.body());
-
-			dbClose();
-
-
-			String message = verifyLoginAndSetCookies(uid, req, res, cache, cacheFile);
-
-			return message;
-
-		});
+		
 
 
 
@@ -1286,7 +1254,8 @@ public class WebCommon {
 		Tools.writeObjectToFile(serializableMap, file);
 	}
 
-	public static String verifyLoginAndSetCookies(UID uid, Request req, Response res, Cache<String, UID> cache, String cacheFile) {
+	public static String verifyLoginAndSetCookies(UID uid, Request req, Response res, 
+			Cache<String, UID> cache, String cacheFile, String path) {
 		if (uid != null) {
 			Integer expireSeconds = Tools.getExpireTime(req.body());
 			String authenticatedSession = Tools.generateSecureRandom();
@@ -1299,10 +1268,9 @@ public class WebCommon {
 
 
 			// Set some cookies for that users login
-			res.cookie("authenticated_session_id", authenticatedSession, expireSeconds, false);
-			res.cookie("username", uid.getUsername(), expireSeconds, false);
-			res.cookie("usertype", uid.getType().toString(), expireSeconds, false);
-
+			res.cookie(path, "authenticated_session_id", authenticatedSession, expireSeconds, false);
+			res.cookie(path, "username", uid.getUsername(), expireSeconds, false);
+			res.cookie(path, "usertype", uid.getType().toString(), expireSeconds, false);
 			String json = Tools.GSON2.toJson(cache);
 			System.out.println(json);
 
