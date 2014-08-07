@@ -587,8 +587,10 @@ function navigateWithParams() {
     $("a[rel~='keep-params']").click(function(e) {
         e.preventDefault();
 
-        var params = window.location.search,
-            dest = $(this).attr('href') + params;
+        // var params = window.location.search,
+        // dest = $(this).attr('href') + params;
+        var name = window.location.pathname.split('/').pop();
+        var dest = $(this).attr('href') + '/' + name;
 
         // in my experience, a short timeout has helped overcome browser bugs
         window.setTimeout(function() {
