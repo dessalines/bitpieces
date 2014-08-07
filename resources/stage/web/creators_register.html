@@ -441,7 +441,9 @@
         <div class="form-group form-group-lg">
           <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
           <div class="col-sm-10">
-            <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="reward/piece/year in the currency above"
+           <div class="input-group">
+           <span name="curr_iso" class="input-group-addon">$</span>    
+            <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Reward/piece/year"
 
             data-bv-notempty="true"
             data-bv-notempty-message="Must be > 0"
@@ -452,75 +454,82 @@
             data-bv-greaterthan-message="Must be > 0" 
 
             >
+            <span class="input-group-addon">per piece per year</span>
           </div>
         </div>
-        <div class="form-group form-group-lg">
-          <label class="col-sm-2 control-label" for="formGroupInputLarge">Price per piece</label>
-          <div class="col-sm-10">
-            <input name="issuePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="In the currency above"
-            data-bv-greaterthan="true"
-            data-bv-greaterthan-inclusive="false"
-            data-bv-greaterthan-value="0"
-            data-bv-greaterthan-message="Must be > 0"
+      </div>
+      <div class="form-group form-group-lg">
+        <label class="col-sm-2 control-label" for="formGroupInputLarge">Price per piece</label>
+        <div class="col-sm-10">
+          <div class="input-group">
+           <span name="curr_iso" class="input-group-addon">$</span>    
+            <input name="issuePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Price per piece"
 
             data-bv-notempty="true"
             data-bv-notempty-message="Must be > 0"
 
-            >
-          </div>
-        </div>
-
-        <div class="form-group form-group-lg">
-          <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-          <div class="col-sm-10">
-            <input name="issuePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-            type="text" 
-            data-bv-integer="true"
-            data-bv-integer-message="Must be a whole number"
-
-            data-bv-notempty="true"
-            data-bv-notempty-message="Must be a whole number"
-
             data-bv-greaterthan="true"
             data-bv-greaterthan-inclusive="false"
             data-bv-greaterthan-value="0"
-            data-bv-greaterthan-message="Must be > 0"
+            data-bv-greaterthan-message="Must be > 0" 
 
             >
+            <span class="input-group-addon">per piece </span>
           </div>
-        </div>
-
-        <div class="form-group form-group-lg">
-
-         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-         <div id="issueTotal" class="col-sm-10 form-control-static">
-
-         </div>
-       </div>
-
-       <div class="form-group form-group-lg">
-         <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward %</label>
-         <div id="rewardPct" class="col-sm-10 form-control-static">
-         </div>
-       </div>
-
-       <div class="form-group form-group-lg">
-       <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Rewards owed</label>
-         <div id="rewardsOwedPerYear" class="col-sm-10 form-control-static">
-         </div>
-       </div>
-       
-       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button id="raiseFundsBtn" type="submit" class="btn btn-primary" 
-          >Take me to my page</button>
         </div>
       </div>
 
+      <div class="form-group form-group-lg">
+        <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+        <div class="col-sm-10">
+          <input name="issuePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+          type="text" 
+          data-bv-integer="true"
+          data-bv-integer-message="Must be a whole number"
+
+          data-bv-notempty="true"
+          data-bv-notempty-message="Must be a whole number"
+
+          data-bv-greaterthan="true"
+          data-bv-greaterthan-inclusive="false"
+          data-bv-greaterthan-value="0"
+          data-bv-greaterthan-message="Must be > 0"
+
+          >
+        </div>
+      </div>
+
+      <div class="form-group form-group-lg">
+
+       <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+       <div id="issueTotal" class="col-sm-10 form-control-static">
+
+       </div>
+     </div>
+
+     <div class="form-group form-group-lg">
+       <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward %</label>
+       <div id="rewardPct" class="col-sm-10 form-control-static">
+       </div>
+     </div>
+
+     <div class="form-group form-group-lg">
+       <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Rewards owed</label>
+       <div id="rewardsOwedPerYear" class="col-sm-10 form-control-static">
+       </div>
+     </div>
+
+     <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button id="raiseFundsBtn" type="submit" class="btn btn-primary" 
+        >Take me to my page</button>
+      </div>
+    </div>
 
 
-    </form>
-  </div>
+
+  </form>
+</div>
 </div>
 </div>
 </div>

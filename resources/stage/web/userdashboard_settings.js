@@ -122,6 +122,10 @@ function setupSaveSettings(shortUrl, formId, buttonId) {
                 $('#units').collapse('hide');
                 // $('#raiseFunds').attr("data-toggle", "collapse");
                 $('#units').attr("data-target", "#units,#raiseFunds");
+
+                var currIso = formData[0]['value'];
+                console.log('curr iso = ' + currIso);
+                $('[name="curr_iso"]').text(currIso);
                 // $('#raiseFunds').attr("data-target", "");
                 // alert(data); // show response from the php script.
 

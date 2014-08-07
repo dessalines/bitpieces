@@ -87,7 +87,7 @@ function setupSaveCategories() {
                 console.log('getting the users settings');
                 // $('.collapse').collapse();
                 getJson('/get_users_settings').done(function(e) {
-                    console.log('got the users settings');
+
                     // this is handled in userdashboard_settings.js
                     full();
 
