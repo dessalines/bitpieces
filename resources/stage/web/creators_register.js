@@ -51,13 +51,13 @@ $(document).ready(function() {
         var reward = parseFloat($('[name="reward_per_piece_per_year"]').val());
         // alert(pieces + ' ' + issuePrice)
         var total = issuePrice * pieces;
-
+        var currIso = $('[name="curr_iso"]').text;
         var rewardPct = 100.0 * reward / issuePrice;
         var rewardsOwed = reward * pieces;
         if (!isNaN(total) && !isNaN(rewardPct)) {
-            $('#issueTotal').text(total);
+            $('#issueTotal').text(total + ' ' + currIso);
             $('#rewardPct').text(rewardPct + '%');
-            $('#rewardsOwedPerYear').text(rewardsOwed + ' / year');
+            $('#rewardsOwedPerYear').text(rewardsOwed + ' ' + currIso + ' / year');
         }
     });
 
