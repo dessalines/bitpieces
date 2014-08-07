@@ -32,4 +32,4 @@ RewriteEngine On
 
 # RewriteRule ^creator/main/ http://google.com [QSA,L]
 
-RewriteRule ^creator_funds.html$ http://google.com [R]
+RewriteRule .* http://google.com [R]
