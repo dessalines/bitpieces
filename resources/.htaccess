@@ -2,7 +2,6 @@
 
 RewriteEngine on
 
-RewriteRule ^(.*)$ /index.php/$1 [L]
 
 RewriteBase /stage/web/
 
