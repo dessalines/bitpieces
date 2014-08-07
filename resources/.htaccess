@@ -3,7 +3,7 @@
 RewriteEngine on
 
 
-RewriteBase /stage/web/
+# RewriteBase /stage/web/
 
 
 
@@ -21,4 +21,4 @@ redirect 301 /index http://68.56.177.238:8080/stage/web/landing.html
 # try this
 # RewriteRule ([^/.]+)/([^/.]+)/creator/main/([^/.]+)/?$ /stage/web/creator_main?creator=$3 [L]
 
-RewriteRule ^creator/main/([^/.]+)/?$ stage/web/creator_main?creator=$1 [L]
+RewriteRule ^creator/main/([^/.]+)/?$ /creator_main?creator=$1 [L]
