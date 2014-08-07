@@ -23,4 +23,4 @@ redirect 301 /index http://68.56.177.238:8080/stage/web/landing.html
 
 # RewriteRule ^creator/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
 
-RewriteRule ^creator/main/([^/.]+)/?$ /blarp [L]
+RewriteRule ^creator/main/([^/.]+)/?$ /about.html [L]
