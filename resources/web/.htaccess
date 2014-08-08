@@ -8,8 +8,18 @@ DirectoryIndex derp.php
 RewriteBase /
 RewriteEngine On
 
+
+
+
+# html directs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L,QSA]
+
+
 # make landing look like the root
-RewriteRule ^$ /landing.html
+RewriteRule ^$ /landing.html [L]
 
 
 # The creators rewrites
