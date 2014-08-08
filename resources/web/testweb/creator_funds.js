@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var creatorName = getParameterByName('creator');
+    var creatorName = window.location.pathname.split('/').pop();
 
     fillUserHighChartStandardTemplate(creatorName + '/get_creators_funds_accum', '#creators_funds', 'Funds(accumulated)', '$');
 

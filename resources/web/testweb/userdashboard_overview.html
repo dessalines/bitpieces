@@ -8,7 +8,7 @@
   <meta name="author" content="">
   <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-  <title>Dashboard Template for Bootstrap</title>
+  <title>Bitpieces</title>
 
   <!-- Bootstrap core CSS -->
   <link href="darkly.bootstrap.min.css" rel="stylesheet">
@@ -58,24 +58,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">BitPieces</a>
+              <a class="navbar-brand" href="/">BitPieces</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-               <li><a href="carousel">Home</a></li>
-               <li><a href="discover">Discover</a></li>
-               <li><a href="creators">Creators</a></li> 
+               <li><a href="/">Home</a></li>
+               <li><a href="/discover">Discover</a></li>
+               <li><a href="/creators_register">Creators</a></li> 
                <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
                <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
                <li><a href="#logout" class="hide">Log Out</a></li> -->
-                             <li class="dropdown">
+               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="about">About Bitpieces</a></li>
-                  <li><a href="FAQ">Frequently Asked Questions</a></li>
-                  <li><a href="contact">Contact</a></li>
+                  <li><a href="/about">About Bitpieces</a></li>
+                  <li><a href="/FAQ">Frequently Asked Questions</a></li>
+                  <li><a href="/contact">Contact</a></li>
                   
 
                 </ul>
@@ -124,15 +124,15 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </div>
-        <div class="list-group">
+     <div class="list-group">
           <li class="list-group-item">
-            <a href="userdashboard_overview.html" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
+            <a href="/users/overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
             <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
           </li>
 
-          <a class="list-group-item" href="userdashboard_funds.html" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
-          <a class="list-group-item" href="userdashboard_pieces.html" rel="keep-params"><i class="fa fa-table"></i> Pieces</a>
-          <a class="list-group-item" href="userdashboard_prices.html" rel="keep-params"><i class="fa fa-edit"></i> Prices</a>
+          <a class="list-group-item" href="/users/funds" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
+          <a class="list-group-item" href="/users/pieces" rel="keep-params"><i class="fa fa-table"></i> Pieces</a>
+          <a class="list-group-item" href="/users/prices" rel="keep-params"><i class="fa fa-edit"></i> Prices</a>
         </div>
       </div>        
     </div>
@@ -166,6 +166,7 @@
         </button>
         <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg pull-right hide" data-toggle="modal" data-target="#withdrawModal">Withdraw
         </button>
+
       </div>
       <div class="col-md-12">
         <ol class="breadcrumb">
@@ -174,7 +175,14 @@
       </div>
     </div>
 
-
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="first-timers alert alert-warning alert-dismissible hide" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <strong>You have no pieces!</strong> <a href="discover">Discover</a> some creators to fund.
+        </div>
+      </div>
+    </div>
 
 
 
@@ -419,10 +427,18 @@
 
       </div>
     </div>
-
+    <!-- FOOTER -->
+    <hr class="featurette-divider">
+    <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+      <p>&copy; 2014 Bitpieces, Inc. &middot; <a href="about">About</a> &middot; <a href="contact">Contact</a>
+        &middot; <a href="FAQ">Support</a></p>
+      </footer>
+      
+    </div>
+    <!-- end of wrapper -->
+    
   </div>
-  <!-- end of wrapper -->
-</div>
 </div>
 <!-- Modals -->
 <div id="depositModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -443,6 +459,67 @@
 </div>
 
 
+<div id="withdrawModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Withdraw</h4>
+      </div>
+      <div class="modal-body">
+        <form id="withdrawForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Amount</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <div id="withdrawSymbol" class="input-group-addon">?</div>
+
+                <input name="withdrawAmount" class="form-control" type="text" id="formGroupInputLarge" placeholder="Current funds"
+                data-bv-greaterthan="true"
+                data-bv-greaterthan-value=".01"
+                data-bv-greaterthan-message="Must be > .01"
+                >
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="form-group form-group-lg">
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">To</label>
+
+
+           <div class="col-sm-10">
+             <input name="address" type="text" class="form-control" placeholder="Bitcoin Address or Coinbase Email"
+             >
+           </div>
+         </div>
+
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Your Funds</label>
+           <div id="funds" class="col-sm-10 form-control-static">
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds After</label>
+           <div id="fundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+         <button id="placeWithdrawBtn" type="submit" class="btn btn-primary">Withdraw</button>
+
+       </form>
+     </div>
+
+   </div>
+ </div>
+</div>
+
+
 
       <!-- Bootstrap core JavaScript
       ================================================== -->
@@ -459,6 +536,7 @@
       <script src="highcharts/js//modules/exporting.js"></script>
       <script src="highcharts/js/themes/dark-unica.js"></script>
       <script src="typeahead.js/typeahead.bundle.js"></script>
+      <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 
       <!-- my scripts -->
       <script src="tools.js"></script>

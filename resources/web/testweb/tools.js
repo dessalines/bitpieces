@@ -1,5 +1,6 @@
-//var sparkService = "http://localhost:4566/";
-var sparkService = "http://68.56.177.238:4566/"
+// var sparkService = "http://localhost:4567/";
+var sparkService = "http://68.56.177.238:4567/"
+var cookie_path_name = "prod";
 
 var pageNumbers = {};
 var extractData = function(node) {
@@ -40,11 +41,11 @@ function getCookies() {
 }
 
 function getCookie(name) {
-    return getCookies()[name];
+    return getCookies()[name + "_" + cookie_path_name];
 }
 
 function delete_cookie(name) {
-    document.cookie = name + '=; path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = name + "_" + cookie_path_name + '=; path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
 }
 
@@ -62,7 +63,7 @@ function showHideElementsLoggedIn() {
         if (userType == 'Creator') {
             // Set up the top bar settings to go to a specific place
             var creatorName = getCookie("username");
-            $('#settings').prop("href", "creator_settings?creator=" + creatorName);
+            $('#settings').prop("href", "/creators/settings/" + creatorName);
         } else {
 
         }
@@ -182,7 +183,7 @@ function fillUserInfoMustacheFromCookie() {
         $('#userDropdown').html(rendered);
 
 
-        $("#settings").attr("href", "userdashboard_settings?user=" + jsonObj);
+        $("#settings").attr("href", "/users/settings/" + jsonObj);
         console.log(jsonObj);
         console.log(template);
         console.log(rendered);
@@ -346,6 +347,9 @@ function setupCreatorSearch() {
         name: 'creators_list',
         displayKey: 'username',
         source: creatorsList.ttAdapter()
+
+    }).on('typeahead:selected', function(e, data) {
+        $(this).submit();
     });
 
     $("#creator_search").submit(function(event) {
@@ -354,7 +358,7 @@ function setupCreatorSearch() {
         var searchString = formData[0].value;
 
         console.log(searchString);
-        var url = "creator_overview?creator=" + searchString;
+        var url = "creator_main?creator=" + searchString;
         window.location.replace(url);
 
         event.preventDefault();
@@ -367,6 +371,7 @@ function setupMiniSubmenu() {
             $('.mini-submenu').fadeIn();
         });
         $('#main_col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
+        $('#othermain_col').toggleClass('col-md-offset-2 col-md-10 col-md-8');
         // $('#side_col').toggleClass('span0 span3');
 
     });
@@ -375,6 +380,7 @@ function setupMiniSubmenu() {
         $(this).next('.list-group').toggle('slide');
         $('.mini-submenu').hide();
         $('#main_col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
+        $('#othermain_col').toggleClass('col-md-offset-2 col-md-8 col-md-10');
     });
 }
 
@@ -404,7 +410,7 @@ function setupLogout() {
                 delete_cookie("usertype");
                 setTimeout(
                     function() {
-                        var url = "carousel";
+                        var url = "/";
                         window.location.replace(url);
 
                     }, 1500);
@@ -420,6 +426,7 @@ function setupLogout() {
 
 
         // showHideElementsLoggedIn();
+
 
 
 
@@ -443,6 +450,7 @@ function setupSummerNote(url, id, sqlColName) {
             // var jsonObj = jQuery.parseJSON(data);
             // JSON.useDateParser();
             var jsonObj = JSON.parse(data);
+
 
 
 
@@ -580,8 +588,10 @@ function navigateWithParams() {
     $("a[rel~='keep-params']").click(function(e) {
         e.preventDefault();
 
-        var params = window.location.search,
-            dest = $(this).attr('href') + params;
+        // var params = window.location.search,
+        // dest = $(this).attr('href') + params;
+        var name = window.location.pathname.split('/').pop();
+        var dest = $(this).attr('href') + '/' + name;
 
         // in my experience, a short timeout has helped overcome browser bugs
         window.setTimeout(function() {
@@ -626,6 +636,7 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
 
                 toastr.success(data);
                 $(modalId).modal('hide');
+
                 $(formId)[0].reset();
 
 
@@ -669,9 +680,10 @@ function getJson(shortUrl) {
     });
 }
 
-function standardFormPost(shortUrl, formId) {
+function standardFormPost(shortUrl, formId, modalId) {
     // !!!!!!They must have names unfortunately
-
+    // An optional arg
+    modalId = (typeof modalId === "undefined") ? "defaultValue" : modalId;
 
     // serializes the form's elements.
     var formData = $(formId).serializeArray();
@@ -698,8 +710,10 @@ function standardFormPost(shortUrl, formId) {
             // Hide the modal, reset the form, show successful
 
             $(formId)[0].reset();
-
+            $(modalId).modal('hide');
+            console.log(modalId);
             toastr.success(data);
+
 
 
 
@@ -753,4 +767,17 @@ function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
 
 
     });
+}
+
+function showRecaptcha(element) {
+    Recaptcha.create("6LfgKvcSAAAAAJGQDr6NtYgCqfKAshsFqZDDNJ-N", element, {
+        theme: "blackglass",
+        //callback: Recaptcha.focus_response_field
+    });
+}
+
+function setupDisqus(creatorName) {
+
+
+
 }

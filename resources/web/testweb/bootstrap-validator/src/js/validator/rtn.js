@@ -1,4 +1,8 @@
 (function($) {
+    $.fn.bootstrapValidator.i18n.rtn = $.extend($.fn.bootstrapValidator.i18n.rtn || {}, {
+        'default': 'Please enter a valid RTN number'
+    });
+
     $.fn.bootstrapValidator.validators.rtn = {
         /**
          * Validate a RTN (Routing transit number)
@@ -14,7 +18,7 @@
          */
         validate: function(validator, $field, options) {
             var value = $field.val();
-            if (value == '') {
+            if (value === '') {
                 return true;
             }
 
@@ -28,7 +32,7 @@
                     +  parseInt(value.charAt(i + 1), 10) * 7
                     +  parseInt(value.charAt(i + 2), 10);
             }
-            return (sum != 0 && sum % 10 == 0);
+            return (sum !== 0 && sum % 10 === 0);
         }
     };
 }(window.jQuery));

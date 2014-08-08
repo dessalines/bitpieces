@@ -8,7 +8,7 @@
 	<meta name="author" content="">
 	<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-	<title>Dashboard Template for Bootstrap</title>
+	<title>Bitpieces</title>
 
 	<!-- Bootstrap core CSS -->
 	<link href="darkly.bootstrap.min.css" rel="stylesheet">
@@ -64,24 +64,24 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">BitPieces</a>
+        <a class="navbar-brand" href="/">BitPieces</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
        <ul class="nav navbar-nav">
-        <li><a href="carousel">Home</a></li>
-        <li><a href="discover">Discover</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/discover">Discover</a></li>
         <li><a href="creators">Creators</a></li>
         <li><a href="userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
                <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
                <li><a href="#logout" class="hide">Log Out</a></li> -->
-                             <li class="dropdown">
+               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="about">About Bitpieces</a></li>
-                  <li><a href="FAQ">Frequently Asked Questions</a></li>
-                  <li><a href="contact">Contact</a></li>
+                  <li><a href="/about">About Bitpieces</a></li>
+                  <li><a href="/FAQ">Frequently Asked Questions</a></li>
+                  <li><a href="/contact">Contact</a></li>
                   
 
                 </ul>
@@ -129,16 +129,15 @@
       </div>
       <div class="list-group">
         <li class="list-group-item">
-         <a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
+         <a href="/creators/overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
          <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
        </li>
-
-       <a class="list-group-item" href="creator_main" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Main</a>
-       <a class="list-group-item" href="creator_pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
-       <a class="list-group-item" href="creator_worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
-       <a class="list-group-item" href="creator_rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
-       <a class="list-group-item" href="creator_funds" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
-       <a class="list-group-item active" href="creator_pieces" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Pieces</a>
+       <a class="list-group-item" href="/creators/main" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Main</a>
+       <a class="list-group-item" href="/creators/pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
+       <a class="list-group-item" href="/creators/worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
+       <a class="list-group-item" href="/creators/rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
+       <a class="list-group-item" href="/creators/funds" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
+       <a class="list-group-item active" href="/creators/pieces" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Pieces</a>
        <a class="list-group-item" href="userdashboard_prices.html" rel="keep-params"><i class="fa fa-edit"></i> Badges</a>
      </div>
    </div>        
@@ -176,6 +175,9 @@
          <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
          <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
          <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+         <button id="issueBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
+         <button id="changeRewardBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
+         <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
 
 
        </div>
@@ -293,6 +295,15 @@
     </div>
   </div>
 </div>
+
+ <!-- FOOTER -->
+ <hr class="featurette-divider">
+ <footer>
+  <p class="pull-right"><a href="#">Back to top</a></p>
+  <p>&copy; 2014 Bitpieces, Inc. &middot; <a href="about">About</a> &middot; <a href="contact">Contact</a>
+    &middot; <a href="FAQ">Support</a></p>
+  </footer>
+  
 </div>
 
 
@@ -309,12 +320,21 @@
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
             <div class="col-sm-10">
-              <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-              data-bv-greaterthan="true"
-              data-bv-greaterthan-value=".01"
-              data-bv-greaterthan-message="Must be > .01"
+              <div class="input-group">
+                <span id="bidSymbol" class="input-group-addon">$</span>    
+                <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+                
+                data-bv-notempty="true"
+                data-bv-notempty-message="Must be > 0"
 
-              >
+                data-bv-greaterthan="true"
+                data-bv-greaterthan-inclusive="false"
+                data-bv-greaterthan-value="0"
+                data-bv-greaterthan-message="Must be > 0" 
+
+                >
+                <span class="input-group-addon">per piece</span>
+              </div>
             </div>
           </div>
 
@@ -325,6 +345,14 @@
               type="text" 
               data-bv-integer="true"
               data-bv-integer-message="Must be a whole number"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be a whole number"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0"
 
               >
             </div>
@@ -379,10 +407,12 @@
         <form id="buyForm" class="form-horizontal" role="form">
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-            <div class="col-sm-10 input-group">
-              <span class="input-group-addon">$</span>
-              <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
-              <span class="input-group-addon">per piece</span>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span id="buySymbol" class="input-group-addon">$</span>
+                <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
+                <span class="input-group-addon">per piece</span>
+              </div>
             </div>
           </div>
 
@@ -393,6 +423,14 @@
              type="text" 
              data-bv-integer="true"
              data-bv-integer-message="Must be a whole number"
+
+             data-bv-notempty="true"
+             data-bv-notempty-message="Must be a whole number"
+
+             data-bv-greaterthan="true"
+             data-bv-greaterthan-inclusive="false"
+             data-bv-greaterthan-value="0"
+             data-bv-greaterthan-message="Must be > 0"
 
              >
            </div>
@@ -460,10 +498,105 @@
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
             <div class="col-sm-10">
+             <div class="input-group">
+              <span id="askSymbol" class="input-group-addon">$</span>             
               <input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
-              data-bv-greaterthan="true"
-              data-bv-greaterthan-value=".01"
-              data-bv-greaterthan-message="Must be > .01"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be > 0"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0" 
+
+              >
+              <span class="input-group-addon">per piece</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+          <div class="col-sm-10">
+            <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+            type="text" 
+            data-bv-integer="true"
+            data-bv-integer-message="Must be a whole number"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be a whole number"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0"
+
+            >
+          </div>
+        </div>
+
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+          <div class="col-sm-10">
+            <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+          </div>
+        </div>
+        <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+         <div id="askTotal" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+         <div name="usersFunds" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+         <div id="askFundsLeft" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+       <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+
+     </form>
+
+   </div>
+
+ </div>
+</div>
+</div>
+
+
+<div id="issueModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Issue Pieces</h4>
+      </div>
+      <div class="modal-body">
+        <form id="issueForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <input name="issuePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+           
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be > 0"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0" 
 
               >
             </div>
@@ -472,25 +605,27 @@
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
             <div class="col-sm-10">
-              <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              <input name="issuePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
               type="text" 
               data-bv-integer="true"
               data-bv-integer-message="Must be a whole number"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be a whole number"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0"
 
               >
             </div>
           </div>
 
           <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-            <div class="col-sm-10">
-              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-            </div>
-          </div>
-          <div class="form-group form-group-lg">
 
            <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-           <div id="askTotal" class="col-sm-10 form-control-static">
+           <div id="issueTotal" class="col-sm-10 form-control-static">
 
            </div>
          </div>
@@ -498,19 +633,19 @@
          <div class="form-group form-group-lg">
 
            <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
-           <div name="usersFunds" class="col-sm-10 form-control-static">
+           <div name="creatorsFunds" class="col-sm-10 form-control-static">
 
            </div>
          </div>
 
          <div class="form-group form-group-lg">
 
-           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
-           <div id="askFundsLeft" class="col-sm-10 form-control-static">
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds After</label>
+           <div id="creatorsFundsLeft" class="col-sm-10 form-control-static">
 
            </div>
          </div>
-         <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+         <button id="placeIssuePiecesBtn" type="submit" class="btn btn-primary">Issue Pieces</button>
 
        </form>
 
@@ -519,6 +654,118 @@
    </div>
  </div>
 </div>
+
+<div id="withdrawModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">withdraw</h4>
+      </div>
+      <div class="modal-body">
+        <form id="withdrawForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Amount</label>
+            <div class="col-sm-10">
+             <div class="input-group">
+              <div id="withdrawSymbol" class="input-group-addon">?</div>
+              <input name="withdrawAmount" class="form-control" type="text" id="formGroupInputLarge" placeholder="Current funds"
+
+              >
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="form-group form-group-lg">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Bitcoin Address</label>
+
+
+         <div class="col-sm-10">
+           <input name="address" type="text" class="form-control" placeholder="Bitcoin Address or Coinbase Email"
+           >
+         </div>
+       </div>
+
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total after 5% fee</label>
+         <div id="withdrawAmountAfterFee" class="col-sm-10 form-control-static">
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Your Funds</label>
+         <div id="funds" class="col-sm-10 form-control-static">
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds After</label>
+         <div id="fundsLeft" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Safety Rating After</label>
+         <div id="safetyRatingAfter" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <button id="placeWithdrawBtn" type="submit" class="btn btn-primary">Withdraw</button>
+
+     </form>
+   </div>
+
+ </div>
+</div>
+</div>
+
+<div id="rewardModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Change Reward</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text">
+          Note, this will essentially cash every piece of yours owned out at the current rate at this moment,
+          then all pieces will start earning rewards at the new rate from now on.
+        </div>
+        <form id="rewardForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
+            <div class="col-sm-10">
+              <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last reward"
+    
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be > 0"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0" 
+
+              >
+            </div>
+
+            <button id="placeChangeRewardBtn" type="submit" class="btn btn-primary">Change Reward</button>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 
 <!-- end of wrapper -->
@@ -547,6 +794,7 @@
       <script src="typeahead.js/typeahead.bundle.js"></script>
       <script src="pickadate/lib/picker.js"></script>
       <script src="pickadate/lib/picker.date.js"></script>
+       <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 
       <!-- my scripts -->
       <script src="tools.js"></script>

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var creatorName = getParameterByName('creator');
+    var creatorName = window.location.pathname.split('/').pop();
     fillUserHighChartPieChartTemplate(creatorName + '/get_pieces_owned_value_current_creator', '#pieces_owned_value_current_creator');
 
 

@@ -1,7 +1,6 @@
+$(document).ready(function() {
 
-$(document).ready(function(){
-
-	var creatorName = getParameterByName('creator');
-	fillUserHighChartStandardTemplate(creatorName + '/get_worth', '#worth', 'Worth ($)', '$');
+    var creatorName = window.location.pathname.split('/').pop();
+    fillUserHighChartStandardTemplate(creatorName + '/get_worth', '#worth', 'Worth ($)', '$');
 
 });

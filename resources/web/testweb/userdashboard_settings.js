@@ -13,6 +13,15 @@ $(document).ready(function() {
         full();
     }
 
+    $("#changePasswordForm").bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        standardFormPost('change_password', "#changePasswordForm", "#changePasswordModal");
+    });
+
 
 });
 
@@ -122,6 +131,10 @@ function setupSaveSettings(shortUrl, formId, buttonId) {
                 $('#units').collapse('hide');
                 // $('#raiseFunds').attr("data-toggle", "collapse");
                 $('#units').attr("data-target", "#units,#raiseFunds");
+
+                var currIso = formData[0]['value'];
+                console.log('curr iso = ' + currIso);
+                $('[name="curr_iso"]').text(currIso);
                 // $('#raiseFunds').attr("data-target", "");
                 // alert(data); // show response from the php script.
 

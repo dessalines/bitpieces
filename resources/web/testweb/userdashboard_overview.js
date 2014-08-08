@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    // coinbase stuff
+
 
     sessionId = getCookie("authenticated_session_id");
     console.log(sessionId);
@@ -8,7 +10,7 @@ $(document).ready(function() {
 
     // fillUserHighChartStandardTemplate('get_users_funds_accum', '#users_funds', 'Funds ($)', '$');
 
-    var userName = getParameterByName('user');
+    var userName = window.location.pathname.split('/').pop();
 
 
     var template = $('#recent_activity_template').html();
@@ -26,21 +28,77 @@ $(document).ready(function() {
         '#users_bids_asks_current_table',
         "#remove_button", sessionId);
 
+    fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+
     // TODO do this in a paged way
     // var template = $('#users_bids_asks_current_template').html();
     // pageNumbers['#users_bids_asks_current_table'] = 1;
     // setupPagedTable(creatorName + '/get_users_bids_asks_current/', template, '#users_bids_asks_current', '#users_bids_asks_current_table');
 
+    simpleFetch(userName + '/get_pieces_value_current_by_owner').done(function(result) {
+        if (result == 0) {
+            $('.first-timers').removeClass('hide');
+        }
+    });
+
+    setupWithdrawForm();
+
 });
 
+function setupWithdrawForm() {
+    $('#withdrawForm').bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+
+    });
+
+    var userName = getCookie('username');
+    simpleFetch(userName + '/get_users_funds_current').done(function(result) {
+        var fundsNum = result.replace(/[^0-9\.]+/g, "");
+        var usersFunds = parseFloat(fundsNum);
+        $("#withdrawSymbol").text(result[0]);
+
+        $("#funds").text(result);
+        $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + result);
+        $('[name="withdrawAmount"]').bind('keyup', function(f) {
+            var withdrawAmount = parseFloat($(this).val());
+
+            var fundsLeft = usersFunds - withdrawAmount;
+            if (!isNaN(fundsLeft)) {
+
+                $('#fundsLeft').text('$' + fundsLeft);
+
+                if (fundsLeft < 0) {
+
+                    $('#placeWithdrawBtn').prop('disabled', true);
+                    $('#fundsLeft').addClass("text-danger");
+                    $('#fundsLeft').removeClass("text-success");
+
+                } else {
+                    $('#placeWithdrawBtn').prop('disabled', false);
+                    $('#fundsLeft').addClass("text-success");
+                    $('#fundsLeft').removeClass("text-danger");
+                }
+            }
+
+        });
+    });
+    $("#placeWithdrawBtn").click(function(event) {
+        standardFormPost('user_withdraw', '#withdrawForm');
+        event.preventDefault();
+    });
+
+
+}
+
 function showHideDepositButton() {
-    var userName = getParameterByName('user');
+    var userName = window.location.pathname.split('/').pop();
     var sessionUserName = getCookie("username");
 
     if (userName == sessionUserName) {
         $('#depositBtn').removeClass("hide");
         $('#withdrawBtn').removeClass("hide");
-        setupDepositButton("/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+
     }
 
 }

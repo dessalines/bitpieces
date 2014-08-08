@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    var userName = getParameterByName('user');
+    var userName = window.location.pathname.split('/').pop();
 
 
 

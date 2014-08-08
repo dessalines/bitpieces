@@ -2,56 +2,65 @@ $(document).ready(function() {
     setupMiniSubmenu();
 
 
-    // setupCreatorRegister("#creatorRegisterBtn", "#creatorRegisterForm");
-    $("#creatorRegisterBtn").click(function(event) {
-        standardFormPost('registercreator', "#creatorRegisterForm");
+    var currIso = null;
 
-    });
-
+    showRecaptcha("recaptcha_div");
 
     setupSaveCategories();
 
     console.log(document.cookie);
 
-    $("#settingsSaveBtn").click(function(event) {
-
-    });
-
-    $("#raiseFundsBtn").click(function(event) {
-        var sessionId = getCookie("authenticated_session_id");
-
-        raiseFundsPost('/raise_funds', "#raiseFundsForm");
-    });
-
-
 
     $('#creatorRegisterForm').bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
 
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        standardFormPost('registercreator', "#creatorRegisterForm");
+
+        $('#categories,#registerCreator').collapse();
+
+        // data-target="#registerCreator,#categories" 
     });
+
+
+
     $("#raiseFundsForm").bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
 
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        console.log('test');
+        raiseFundsPost('raise_funds', "#raiseFundsForm");
     });
 
-    $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
+
+
+    $('[name="issuePieces"],[name="issuePrice"],[name="reward_per_piece_per_year"]').bind('keyup', function(f) {
 
         var pieces = parseFloat($('[name="issuePieces"]').val());
 
         // var issuePrice = $('[name="buy"]').text();
         // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
         var issuePrice = parseFloat($('[name="issuePrice"]').val());
+
+        var reward = parseFloat($('[name="reward_per_piece_per_year"]').val());
         // alert(pieces + ' ' + issuePrice)
         var total = issuePrice * pieces;
-
-        if (!isNaN(total)) {
-            $('#issueTotal').text('$' + total);
-
-
+        var currIso = $('[name="curr_iso"]').text().substring(0, 3);
+        var rewardPct = 100.0 * reward / issuePrice;
+        var rewardsOwed = reward * pieces;
+        if (!isNaN(total) && !isNaN(rewardPct)) {
+            $('#issueTotal').text(total + ' ' + currIso);
+            $('#rewardPct').text(rewardPct + '%');
+            $('#rewardsOwedPerYear').text(rewardsOwed + ' ' + currIso + ' / year');
         }
     });
+
 
 
 
@@ -78,8 +87,10 @@ function setupSaveCategories() {
                 console.log('getting the users settings');
                 // $('.collapse').collapse();
                 getJson('/get_users_settings').done(function(e) {
-                    console.log(sessionId);
+
+                    // this is handled in userdashboard_settings.js
                     full();
+
                 });
             });
 
@@ -100,7 +111,7 @@ function raiseFundsPost(shortUrl, formId) {
     console.log(formData);
 
     // Loading
-    $(this).button('loading');
+    // $(this).button('loading');
 
     var url = sparkService + shortUrl; // the script where you handle the form input.
     console.log(url);
@@ -125,7 +136,7 @@ function raiseFundsPost(shortUrl, formId) {
 
             setTimeout(
                 function() {
-                    var url = "creator_overview?creator=" + creatorName;
+                    var url = "/creators/main/" + creatorName;
                     window.location.replace(url);
 
                 }, 2000);
