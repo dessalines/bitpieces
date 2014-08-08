@@ -179,11 +179,9 @@
      top: 0;
     }
 }
- /* Hide for mobile, show later */
- @media (min-width: 993px) {
 
-
-  #mynav.affix-top {
+@media(min-width:993px) {
+    #mynav.affix-top {
     position: static;
     margin-top:30px;
     width:228px;
@@ -194,6 +192,12 @@
     top:70px;
     width:228px;
   }
+}
+ /* Hide for mobile, show later */
+ @media (min-width: 768px) {
+
+
+
 
 /*  .affix,.affix-top,#midCol.affix,#midCol.affix-top {
     position:static;
