@@ -172,7 +172,7 @@
     width:228px;
   }*/
 
-@media(max-width:1000px){
+@media(max-width:993px){
    .affix {
      position: static;
      width: auto;
@@ -180,7 +180,7 @@
     }
 }
  /* Hide for mobile, show later */
- @media (min-width: 768px) {
+ @media (min-width: 993px) {
 
 
   #mynav.affix-top {
