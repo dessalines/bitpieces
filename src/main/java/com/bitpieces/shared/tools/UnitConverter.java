@@ -155,11 +155,11 @@ public class UnitConverter {
 
 	public String convertSingleValueCurrentJson(String val, String iso, Integer precision) {
 
-		if (iso== null) {
-			iso = "BTC";
+		if (iso == null) {
+			iso = "USD";
 		}
 		if (precision == null) {
-			precision = 4;
+			precision = 2;
 		}
 
 		DecimalFormat df = setupDecimalFormat(iso, precision);

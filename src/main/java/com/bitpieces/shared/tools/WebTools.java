@@ -1471,8 +1471,8 @@ public class WebTools {
 				df = UnitConverter.setupDecimalFormat(iso, precision);
 			} else {
 				// This is the case when no user is logged in
-				precision = 15;
-				iso = "BTC";
+				precision = 2;
+				iso = "USD";
 				df = UnitConverter.setupDecimalFormat(iso, precision);
 			}
 			lom = sf.convertAndFormatMoney(lom, convertTimeToMillis,  iso, df);
