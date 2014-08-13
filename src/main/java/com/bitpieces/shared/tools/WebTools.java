@@ -209,7 +209,8 @@ public class WebTools {
 				Integer.valueOf(postMap.get("buyPieces")), 
 				price_per_piece);
 
-		String message = "Bought " + Integer.valueOf(postMap.get("buyPieces")) + " @ " + price_per_piece + " BTC";
+		String message = "Bought " + Integer.valueOf(postMap.get("buyPieces")) + 
+				" pieces @ " + price_per_piece + " BTC/piece";
 		return message;
 	}
 
