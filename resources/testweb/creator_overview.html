@@ -290,109 +290,54 @@
 
 
     <!-- Modals -->
-    <div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+    <div id="creatorDisclaimerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
       <div class="modal-dialog">
 
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Bid</h4>
+            <h4 class="modal-title">Disclaimer</h4>
           </div>
           <div class="modal-body">
-            <form id="bidForm" class="form-horizontal" role="form">
-              <div class="form-group form-group-lg">
-                <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <span id="bidSymbol" class="input-group-addon">$</span>    
-                    <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+            <div class="text">
+             blah blah blah, a disclaimer
+           </div>
 
-                    data-bv-notempty="true"
-                    data-bv-notempty-message="Must be > 0"
 
-                    data-bv-greaterthan="true"
-                    data-bv-greaterthan-inclusive="false"
-                    data-bv-greaterthan-value="0"
-                    data-bv-greaterthan-message="Must be > 0" 
-
-                    >
-                    <span class="input-group-addon">per piece</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group form-group-lg">
-                <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-                <div class="col-sm-10">
-                  <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-                  type="text" 
-                  data-bv-integer="true"
-                  data-bv-integer-message="Must be a whole number"
-
-                  data-bv-notempty="true"
-                  data-bv-notempty-message="Must be a whole number"
-
-                  data-bv-greaterthan="true"
-                  data-bv-greaterthan-inclusive="false"
-                  data-bv-greaterthan-value="0"
-                  data-bv-greaterthan-message="Must be > 0"
-
-                  >
-                </div>
-              </div>
-
-              <div class="form-group form-group-lg">
-                <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
-                <div class="col-sm-10">
-                  <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
-                </div>
-              </div>
-              <div class="form-group form-group-lg">
-
-               <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-               <div id="bidTotal" class="col-sm-10 form-control-static">
-
-               </div>
-             </div>
-
-             <div class="form-group form-group-lg">
-
-               <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
-               <div name="usersFunds" class="col-sm-10 form-control-static">
-
-               </div>
-             </div>
-
-             <div class="form-group form-group-lg">
-
-               <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
-               <div id="bidFundsLeft" class="col-sm-10 form-control-static">
-
-               </div>
-             </div>
-             <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
-             <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
-           </form>
-
+         </div> 
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Okay, I accept</button>
          </div>
 
        </div>
      </div>
    </div>
-   <div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+   <div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
 
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">buy</h4>
+          <h4 class="modal-title">Bid</h4>
         </div>
         <div class="modal-body">
-          <form id="buyForm" class="form-horizontal" role="form">
+          <form id="bidForm" class="form-horizontal" role="form">
             <div class="form-group form-group-lg">
               <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
               <div class="col-sm-10">
                 <div class="input-group">
-                  <span id="buySymbol" class="input-group-addon">$</span>
-                  <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
+                  <span id="bidSymbol" class="input-group-addon">$</span>    
+                  <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+
+                  data-bv-notempty="true"
+                  data-bv-notempty-message="Must be > 0"
+
+                  data-bv-greaterthan="true"
+                  data-bv-greaterthan-inclusive="false"
+                  data-bv-greaterthan-value="0"
+                  data-bv-greaterthan-message="Must be > 0" 
+
+                  >
                   <span class="input-group-addon">per piece</span>
                 </div>
               </div>
@@ -401,26 +346,33 @@
             <div class="form-group form-group-lg">
               <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
               <div class="col-sm-10">
-               <input name="buyPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-               type="text" 
-               data-bv-integer="true"
-               data-bv-integer-message="Must be a whole number"
+                <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+                type="text" 
+                data-bv-integer="true"
+                data-bv-integer-message="Must be a whole number"
 
-               data-bv-notempty="true"
-               data-bv-notempty-message="Must be a whole number"
+                data-bv-notempty="true"
+                data-bv-notempty-message="Must be a whole number"
 
-               data-bv-greaterthan="true"
-               data-bv-greaterthan-inclusive="false"
-               data-bv-greaterthan-value="0"
-               data-bv-greaterthan-message="Must be > 0"
+                data-bv-greaterthan="true"
+                data-bv-greaterthan-inclusive="false"
+                data-bv-greaterthan-value="0"
+                data-bv-greaterthan-message="Must be > 0"
 
-               >
-             </div>
-           </div>
-           <div class="form-group form-group-lg">
+                >
+              </div>
+            </div>
+
+            <div class="form-group form-group-lg">
+              <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+              <div class="col-sm-10">
+                <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+              </div>
+            </div>
+            <div class="form-group form-group-lg">
 
              <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-             <div id="buyTotal" class="col-sm-10 form-control-static">
+             <div id="bidTotal" class="col-sm-10 form-control-static">
 
              </div>
            </div>
@@ -435,13 +387,12 @@
 
            <div class="form-group form-group-lg">
 
-             <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds left</label>
-             <div id="buyFundsLeft" class="col-sm-10 form-control-static">
+             <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+             <div id="bidFundsLeft" class="col-sm-10 form-control-static">
 
              </div>
            </div>
-
-           <button id="placebuyBtn" type="submit" class="btn btn-primary">Place buy</button>
+           <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
            <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
          </form>
 
@@ -450,8 +401,80 @@
      </div>
    </div>
  </div>
+ <div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
 
- <div id="depositModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">buy</h4>
+      </div>
+      <div class="modal-body">
+        <form id="buyForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span id="buySymbol" class="input-group-addon">$</span>
+                <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
+                <span class="input-group-addon">per piece</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+             <input name="buyPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+             type="text" 
+             data-bv-integer="true"
+             data-bv-integer-message="Must be a whole number"
+
+             data-bv-notempty="true"
+             data-bv-notempty-message="Must be a whole number"
+
+             data-bv-greaterthan="true"
+             data-bv-greaterthan-inclusive="false"
+             data-bv-greaterthan-value="0"
+             data-bv-greaterthan-message="Must be > 0"
+
+             >
+           </div>
+         </div>
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="buyTotal" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds left</label>
+           <div id="buyFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <button id="placebuyBtn" type="submit" class="btn btn-primary">Place buy</button>
+         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
+</div>
+
+<div id="depositModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -769,29 +792,9 @@
 
   
 
-<div id="creatorDisclaimerModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Disclaimer</h4>
-      </div>
-      <div class="modal-body">
-        <div class="text">
-         blah blah blah, a disclaimer
-       </div>
 
 
-     </div> 
-     <div class="modal-footer">
-       <button type="button" class="btn btn-default" data-dismiss="modal">Okay, I accept</button>
-     </div>
-
-   </div>
- </div>
-</div>
-
-<div id="raiseFundsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div id="raiseFundsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
 
       <div class="modal-content">
