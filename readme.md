@@ -10,3 +10,7 @@ To clone the repo, type this into a terminal:
 <li> git clone https://github.com/tchoulihan/bitpieces.git </li>
 <ul>
 
+<h2>Bugs and feature requests</h2>
+Have a bug or a feature request? Please <a href="https://github.com/tchoulihan/bitpieces/issues/new">
+open a new issue</a>.
+
