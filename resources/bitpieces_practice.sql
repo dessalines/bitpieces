@@ -1274,6 +1274,7 @@ on time_ = max_price_times.max_time_;
 
 
 
+
 CREATE VIEW creators_search_view as 
 select creators.id as creators_id,
 creators.username as creators_name, 
