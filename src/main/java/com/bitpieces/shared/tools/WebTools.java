@@ -329,7 +329,7 @@ public class WebTools {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		UsersSettings settings = new UsersSettings(uid);
 
-		Double amount = Double.parseDouble(postMap.get("deposit"));
+		Double amount = Double.parseDouble(postMap.get("depositAmount"));
 		Double btcAmount = amount;
 		String message = null;
 
