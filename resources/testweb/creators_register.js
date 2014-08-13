@@ -27,7 +27,13 @@ $(document).ready(function() {
 
 
 
-    
+    $("#takeMeHomeBtn").click(function(e) {
+        getJson('/get_users_settings').done(function(e) {
+            var creatorName = getCookie("username");
+            var url = "/creators/main/" + creatorName;
+            window.location.replace(url);
+        });
+    });
 
 
 
@@ -58,9 +64,7 @@ function setupSaveCategories() {
 
                     // this is handled in userdashboard_settings.js
                     full();
-                    var creatorName = getCookie("username");
-                    var url = "/creators/main/" + creatorName;
-                    window.location.replace(url);
+
                 });
             });
 
@@ -68,65 +72,6 @@ function setupSaveCategories() {
 
         });
 
-
-
-}
-
-function raiseFundsPost(shortUrl, formId) {
-    // !!!!!!They must have names unfortunately
-
-    var creatorName = getCookie("username");
-    // serializes the form's elements.
-    var formData = $(formId).serializeArray();
-    console.log(formData);
-
-    // Loading
-    // $(this).button('loading');
-
-    var url = sparkService + shortUrl; // the script where you handle the form input.
-    console.log(url);
-    var post = $.ajax({
-        type: "POST",
-        url: url,
-        xhrFields: {
-            withCredentials: true
-        },
-        data: formData,
-        success: function(data, status, xhr) {
-
-
-            xhr.getResponseHeader('Set-Cookie');
-            // document.cookie="authenticated_session_id=" + data + 
-            // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
-            // Hide the modal, reset the form, show successful
-
-            $(formId)[0].reset();
-
-            toastr.success(data);
-
-            setTimeout(
-                function() {
-                    var url = "/creators/main/" + creatorName;
-                    window.location.replace(url);
-
-                }, 2000);
-
-
-            console.log(document.cookie);
-            return data;
-
-        },
-        error: function(request, status, error) {
-            toastr.error(request.responseText);
-        }
-    });
-
-    event.preventDefault();
-    return false;
-
-
-
-    // event.preventDefault();
 
 
 }
