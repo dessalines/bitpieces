@@ -605,6 +605,12 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
     simpleFetch(userName + '/get_users_funds_current').done(function(result) {
         $('[name="deposit"]').attr('placeholder', 'Current funds:' + result);
     });
+    getJson('/get_users_settings').done(function(e) {
+
+        // this is handled in userdashboard_settings.js
+        console.log("settings = " + e);
+
+    });
 
     // !!!!!!They must have names unfortunately
     $(btnId).click(function(event) {
