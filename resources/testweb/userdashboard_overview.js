@@ -98,7 +98,7 @@ function showHideDepositButton() {
     if (userName == sessionUserName) {
         $('#depositBtn').removeClass("hide");
         $('#withdrawBtn').removeClass("hide");
-        setupDepositButton("/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+        setupDepositButton("make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
     }
 
 }
