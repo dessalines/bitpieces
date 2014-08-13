@@ -1280,7 +1280,7 @@ creators.username as creators_name,
 GROUP_CONCAT(categories.name) as category_names, 
 pieces_owned_value_current_by_creator.value_total_current as worth_current,
 prices_current.price_per_piece as price_current,
-rewards_current.reward_per_piece_per_year,
+rewards_current.reward_per_piece_per_year as reward_current,
 CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
 backers_current_count.number_of_backers
 from creators
@@ -1422,7 +1422,7 @@ insert into users_deposits (users_id, cb_tid, time_, btc_amount, status) values(
 insert into sales_from_creators (from_creators_id, to_users_id, time_, pieces, price_per_piece, total) VALUES (1, 1, NOW(), 5, 0.0017, 0.0084)
 insert into pieces_owned (owners_id, creators_id, time_, pieces_owned) VALUES (1, 1, NOW(), 5)
 
-1F2Kcd7b2RKVXdR4b7WFa5tAgvtv4RNPbK
+1F2Kcd7b2RKVXdR4b7WFa5tAgvtv4RNPbKc
 select * from pieces_total;
 select * from pieces_available;
 select * from pieces_owned order by owners_id, creators_id, time_;
