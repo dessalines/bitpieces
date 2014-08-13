@@ -345,9 +345,10 @@ public class WebTools {
 		}
 
 
-
-		DBActions.makeOrUpdateOrder("fakeCbTid" + btcAmount, "ofake1"+ btcAmount);
-		DBActions.makeDepositFake(uid.getId(),btcAmount, "fakeCbTid" + btcAmount);
+		String timeStr = Tools.SDF.get().format(new Date());
+		
+		DBActions.makeOrUpdateOrder("fakeCbTid" + timeStr, "ofake1"+ timeStr);
+		DBActions.makeDepositFake(uid.getId(),btcAmount, "fakeCbTid" + timeStr);
 
 		return message;
 
