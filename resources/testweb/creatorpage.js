@@ -255,9 +255,9 @@ function showHideCreatorButtons(creatorName) {
 
     // If its their first time, they have to raise funds, check this by getting the reward pct
     getJson(creatorName + '/get_rewards_current').done(function(e) {
-        var rewardCurrent = e[0];
+        var rewardCurrent = e;
         console.log("reward current = " + rewardCurrent);
-        if (rewardCurrent != null) {
+        if (rewardCurrent == 0) {
             $("#raiseFundsBtn").removeClass("hide");
         } else {
             $("#issueBtn").removeClass("hide");
