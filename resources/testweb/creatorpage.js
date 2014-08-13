@@ -384,10 +384,11 @@ function setupIssueForm(creatorName) {
 
     $.when(getJson(creatorName + '/get_creators_funds_current'),
         getJson(creatorName + '/get_rewards_current')).done(function(a1, a2) {
-        var creatorsFunds = parseFloat(a1[0].replace(/^\D+/g, ''));
+        var creatorsFundsStr = a1[0];
+        var creatorsFunds = parseFloat(creatorsFundsStr.replace(/^\D+/g, ''));
         var currSymbol = a2[0][0];
 
-        $('[name="creatorsFunds"]').text(result);
+        $('[name="creatorsFunds"]').text(creatorsFundsStr);
 
         $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
 
