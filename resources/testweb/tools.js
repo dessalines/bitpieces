@@ -609,6 +609,7 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
 
         // this is handled in userdashboard_settings.js
         var currIso = e['curr_iso'];
+        console.log("iso = " + currIso);
         $("#depositSymbol").text(currIso);
 
     });
