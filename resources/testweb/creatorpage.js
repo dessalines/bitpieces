@@ -283,13 +283,13 @@ function setupRaiseFunds() {
 
 
 
-    $('[name="issuePieces"],[name="issuePrice"],[name="reward_per_piece_per_year"]').bind('keyup', function(f) {
+    $('[name="raisePieces"],[name="raisePrice"],[name="reward_per_piece_per_year"]').bind('keyup', function(f) {
 
-        var pieces = parseFloat($('[name="issuePieces"]').val());
+        var pieces = parseFloat($('[name="raisePieces"]').val());
 
         // var issuePrice = $('[name="buy"]').text();
         // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
-        var issuePrice = parseFloat($('[name="issuePrice"]').val());
+        var issuePrice = parseFloat($('[name="raisePrice"]').val());
 
         var reward = parseFloat($('[name="reward_per_piece_per_year"]').val());
         // alert(pieces + ' ' + issuePrice)
@@ -298,7 +298,7 @@ function setupRaiseFunds() {
         var rewardPct = 100.0 * reward / issuePrice;
         var rewardsOwed = reward * pieces;
         if (!isNaN(total) && !isNaN(rewardPct)) {
-            $('#issueTotal').text(total + ' ' + currIso);
+            $('#raiseTotal').text(total + ' ' + currIso);
             $('#rewardPct').text(rewardPct + '%');
             $('#rewardsOwedPerYear').text(rewardsOwed + ' ' + currIso + ' / year');
         }
