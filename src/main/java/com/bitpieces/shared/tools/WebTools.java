@@ -218,8 +218,17 @@ public class WebTools {
 
 		UsersSettings settings = new UsersSettings(uid);
 
-		Integer pieces = Integer.valueOf(postMap.get("issuePieces"));
-		Double price = Double.valueOf(postMap.get("issuePrice"));
+		Integer pieces = null;
+		Double price = null;
+		// This can be issuePieces, or raisePieces
+		if (postMap.get("issuePieces") != null) {
+			pieces = Integer.valueOf(postMap.get("issuePieces"));
+			price = Double.valueOf(postMap.get("issuePrice"));
+		} else if (postMap.get("raisePieces") != null) {
+			pieces = Integer.valueOf(postMap.get("raisePieces"));
+			price = Double.valueOf(postMap.get("raisePrice"));
+		}
+		
 		Double btcIssuePrice = price;
 		String message = null;
 
