@@ -278,7 +278,7 @@ function setupRaiseFunds() {
     }).on('success.form.bv', function(e) {
         e.preventDefault();
         console.log('test');
-        raiseFundsPost('raise_funds', "#raiseFundsForm");
+        raiseFundsPost('raise_funds', "#raiseFundsForm", '#raiseFundsModal');
     });
 
 
