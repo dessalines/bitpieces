@@ -384,8 +384,8 @@ function setupIssueForm(creatorName) {
 
     $.when(getJson(creatorName + '/get_creators_funds_current'),
         getJson(creatorName + '/get_rewards_current')).done(function(a1, a2) {
-        var creatorsFunds = parseFloat(a1.replace(/^\D+/g, ''));
-        var currSymbol = a2[0];
+        var creatorsFunds = parseFloat(a1[0].replace(/^\D+/g, ''));
+        var currSymbol = a2[0][0];
 
         $('[name="creatorsFunds"]').text(result);
 
