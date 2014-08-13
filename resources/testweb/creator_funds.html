@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+	<title>Bitpieces</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="darkly.bootstrap.min.css" rel="stylesheet">
+
+	<!-- Link to font awesome -->
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+	<!-- Bootstrap social css -->
+	<link href="bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
+
+	<!--   Bootstrap validator -->
+	<link rel="stylesheet" href="bootstrap-validator/dist/css/bootstrapValidator.min.css"/>
+
+	<!--   toastr css -->
+	<link href="toastr/toastr.css" rel="stylesheet"/>
+
+	<!--   typeahead css -->
+	<link href="typeaheadjs.css" rel="stylesheet"/>
+
+	<!-- Pickadate -->
+	<link href="pickadate/lib/themes/default.css" rel="stylesheet"/>
+	<link href="pickadate/lib/themes/default.date.css" rel="stylesheet"/>
+
+	<!-- This main css -->
+	<link href="userdashboard.css" rel="stylesheet">
+
+
+
+	<!-- Just for debugging purposes. Don't actually copy this line! -->
+	<!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+     <!-- Navbars -->
+
+     <!-- the start of the doc -->
+     <div id="wrapper">
+
+      <!-- plug into here -->
+      <nav class="navbar navbar-default" role="navigation">
+       <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">BitPieces</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/discover">Discover</a></li>
+        <li><a href="creators">Creators</a></li>
+        <li><a href="userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+               <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+               <li><a href="#logout" class="hide">Log Out</a></li> -->
+               <li class="dropdown">
+               	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+               	<ul class="dropdown-menu">
+               		<li><a href="#">Action</a></li>
+               		<li><a href="#">Another action</a></li>
+               		<li><a href="#">Something else here</a></li>
+               		<li class="divider"></li>
+               		<li class="dropdown-header">Nav header</li>
+               		<li><a href="#">Separated link</a></li>
+               		<li><a href="#">One more separated link</a></li>
+               	</ul>
+               </li>
+             </ul>
+             <form id="creator_search" class="navbar-form navbar-left navbar-input-group" role="search">
+              <div class="form-group">
+               <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
+             </div>
+             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+           </form>
+
+
+           <ul class="nav navbar-nav navbar-right">
+           	
+           	<li id="userDropdown" class="dropdown user-dropdown">
+
+           		<script id="usernameTemplate" type="x-tmpl-mustache">  
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+
+
+                 <ul class="dropdown-menu">
+                   <li><a id="settings" href="userdashboard_settings"><i class="fa fa-gear"></i> Settings</a></li>
+                   <li class="divider"></li>
+                   <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+
+                 </ul>
+               </script>
+             </li>
+           </ul>
+         </div><!-- /.navbar-collapse -->
+       </div><!-- /.container-fluid -->
+     </nav>
+
+     <!-- The full page with teh sidebar -->
+     <div class="container-fluid">
+       <div class="row">
+
+        <!-- The sidebar -->
+        <div id="side_col" class="col-md-2 sidebar">
+
+         <div class="mini-submenu">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </div>
+      <div class="list-group">
+        <li class="list-group-item">
+         <a href="/creators/overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
+         <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
+       </li>
+       <a class="list-group-item" href="/creators/main" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Main</a>
+       <a class="list-group-item" href="/creators/pricing" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Price</a>
+       <a class="list-group-item" href="/creators/worth" rel="keep-params"><i class="fa fa-table"></i> Worth</a>
+       <a class="list-group-item" href="/creators/rewards" rel="keep-params"><i class="fa fa-edit"></i> Rewards</a>
+       <a class="list-group-item active" href="/creators/funds" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
+       <a class="list-group-item" href="/creators/pieces" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Pieces</a>
+       <a class="list-group-item" href="userdashboard_prices.html" rel="keep-params"><i class="fa fa-edit"></i> Badges</a>
+     </div>
+     </div>        
+   </div>
+
+   <!-- stop plugging in -->
+
+
+   <!-- Sidebar -->
+<!--   <div class="col-sm-3 col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+      <li class="active"><a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a></li>
+      <li><a href="userdashboard_funds.html"><i class="fa fa-bar-chart-o"></i> Funds</a></li>
+      <li><a href="userdashboard_pieces.html"><i class="fa fa-table"></i> Pieces</a></li>
+      <li><a href="userdashboard_prices.html"><i class="fa fa-edit"></i> Prices</a></li>
+    </ul>
+
+  </div> -->
+
+
+
+  <!-- The Page -->
+  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+
+
+
+   <div class="row">
+    <div class="col-md-12">
+
+      <div class="col-md-6">
+        <h1 id="page_title"> </h1>
+      </div>
+      <div class="col-md-6">
+        <div class="col-md-12">
+         <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+         <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+         <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+         <button id="issueBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
+         <button id="changeRewardBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
+         <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
+
+
+       </div>
+     </div>
+   </div>
+ </div>
+ <div class="row">
+  <div class="col-md-12">
+
+    <ol class="breadcrumb">
+      <li><a href="creator_overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a></li>
+      <li class="active"><i class="fa fa-table"></i> Funds</li>
+    </ol>
+  </div>
+</div>
+
+
+<!-- The two top tables -->
+
+
+<!-- a 6 wide  chart -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Funds</h3>
+      </div>
+      <div class="panel-body">
+        <div class = "small-chart" id="creators_funds"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Transactions</h3>
+      </div>
+      <div id="creators_transactions" class="panel-body" style="height: 276px;overflow:auto;">
+        <script id="creators_transactions_template" type="x-tmpl-mustache"> 
+          <table id="creators_transactions_table" class="table table-hover table-striped tablesorter">
+            <thead> 
+              <tr>
+                <th>Time <i class="fa fa-sort"></i></th>
+                <th>Type <i class="fa fa-sort"></th>
+                <th>Recipient <i class="fa fa-sort"></th>
+                <th>Funds <i class="fa fa-sort"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {{#.}}
+
+              <tr> 
+                <td>{{time_}}</td>
+                <td>{{type}}</td>
+                <td>{{recipient}}</td>
+                <td>{{funds}}</td>
+              </tr>
+              {{/.}}
+
+            </tbody>
+          </script>
+        </table>
+
+      </div>
+      <div class="panel-footer">
+        <ul class="pager">
+          <li id="creators_transactions_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
+          <li id="creators_transactions_pager_next" ><a href="javascript:void(0);">Next</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.row -->
+
+<!-- FOOTER -->
+<hr class="featurette-divider">
+     <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+      <p>&copy; 2014 Bitpieces, Inc. &middot; <a href="about">About</a> &middot; <a href="contact">Contact</a>
+      &middot; <a href="/FAQ">Support</a> &middot; <a href="https://github.com/tchoulihan/bitpieces">Github</a></p>
+      </footer>
+
+  
+</div>
+
+<!-- Modals -->
+<div id="bidModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Bid</h4>
+      </div>
+      <div class="modal-body">
+        <form id="bidForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span id="bidSymbol" class="input-group-addon">$</span>    
+                <input name="bid" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+                
+                data-bv-notempty="true"
+                data-bv-notempty-message="Must be > 0"
+
+                data-bv-greaterthan="true"
+                data-bv-greaterthan-inclusive="false"
+                data-bv-greaterthan-value="0"
+                data-bv-greaterthan-message="Must be > 0" 
+
+                >
+                <span class="input-group-addon">per piece</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+              <input name="bidPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              type="text" 
+              data-bv-integer="true"
+              data-bv-integer-message="Must be a whole number"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be a whole number"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0"
+
+              >
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+            <div class="col-sm-10">
+              <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+            </div>
+          </div>
+          <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="bidTotal" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+           <div id="bidFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+         <button id="placebidBtn" type="submit" class="btn btn-primary">Place Bid</button>
+         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
+</div>
+<div id="buyModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">buy</h4>
+      </div>
+      <div class="modal-body">
+        <form id="buyForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <span id="buySymbol" class="input-group-addon">$</span>
+                <input readonly name="buy" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price">
+                <span class="input-group-addon">per piece</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+             <input name="buyPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+             type="text" 
+             data-bv-integer="true"
+             data-bv-integer-message="Must be a whole number"
+
+             data-bv-notempty="true"
+             data-bv-notempty-message="Must be a whole number"
+
+             data-bv-greaterthan="true"
+             data-bv-greaterthan-inclusive="false"
+             data-bv-greaterthan-value="0"
+             data-bv-greaterthan-message="Must be > 0"
+
+             >
+           </div>
+         </div>
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="buyTotal" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="usersFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds left</label>
+           <div id="buyFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <button id="placebuyBtn" type="submit" class="btn btn-primary">Place buy</button>
+         <button data-toggle="modal" href="#depositModal" class="btn btn-primary hide">Add Funds</button>
+       </form>
+
+     </div>
+
+   </div>
+ </div>
+</div>
+
+<div id="depositModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Deposit</h4>
+      </div>
+      <div id="deposit_div" class="modal-body">
+       <script id="deposit_template" type="x-tmpl-mustache">
+        <iframe src="https://coinbase.com/inline_payments/{{.}}" style="width: 500px; height: 160px; border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.25); overflow: hidden;" scrolling="no" allowtransparency="true" frameborder="0"></iframe>
+      </script>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div id="askModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ask</h4>
+      </div>
+      <div class="modal-body">
+        <form id="askForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+             <div class="input-group">
+              <span id="askSymbol" class="input-group-addon">$</span>             
+              <input name="ask" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be > 0"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0" 
+
+              >
+              <span class="input-group-addon">per piece</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+          <div class="col-sm-10">
+            <input name="askPieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+            type="text" 
+            data-bv-integer="true"
+            data-bv-integer-message="Must be a whole number"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Must be a whole number"
+
+            data-bv-greaterthan="true"
+            data-bv-greaterthan-inclusive="false"
+            data-bv-greaterthan-value="0"
+            data-bv-greaterthan-message="Must be > 0"
+
+            >
+          </div>
+        </div>
+
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Date</label>
+          <div class="col-sm-10">
+            <input name="validUntil" class="form-control datepicker" type="text" id="formGroupInputLarge" placeholder="Valid Until...">
+          </div>
+        </div>
+        <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+         <div id="askTotal" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+         <div name="usersFunds" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds left</label>
+         <div id="askFundsLeft" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+       <button id="placeaskBtn" type="submit" class="btn btn-primary">Place Ask</button>
+
+     </form>
+
+   </div>
+
+ </div>
+</div>
+</div>
+
+
+<div id="issueModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Issue Pieces</h4>
+      </div>
+      <div class="modal-body">
+        <form id="issueForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Price</label>
+            <div class="col-sm-10">
+              <input name="issuePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last price"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be > 0"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0" 
+
+              >
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+            <div class="col-sm-10">
+              <input name="issuePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+              type="text" 
+              data-bv-integer="true"
+              data-bv-integer-message="Must be a whole number"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be a whole number"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0"
+
+              >
+            </div>
+          </div>
+
+          <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+           <div id="issueTotal" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Funds</label>
+           <div name="creatorsFunds" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+
+         <div class="form-group form-group-lg">
+
+           <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds After</label>
+           <div id="creatorsFundsLeft" class="col-sm-10 form-control-static">
+
+           </div>
+         </div>
+         <button id="placeIssuePiecesBtn" type="submit" class="btn btn-primary">Issue Pieces</button>
+
+       </form>
+
+     </div>
+
+   </div>
+ </div>
+</div>
+
+<div id="withdrawModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">withdraw</h4>
+      </div>
+      <div class="modal-body">
+        <form id="withdrawForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Amount</label>
+            <div class="col-sm-10">
+             <div class="input-group">
+              <div id="withdrawSymbol" class="input-group-addon">?</div>
+              <input name="withdrawAmount" class="form-control" type="text" id="formGroupInputLarge" placeholder="Current funds"
+
+              >
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="form-group form-group-lg">
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Bitcoin Address</label>
+
+
+         <div class="col-sm-10">
+           <input name="address" type="text" class="form-control" placeholder="Bitcoin Address or Coinbase Email"
+           >
+         </div>
+       </div>
+
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Total after 5% fee</label>
+         <div id="withdrawAmountAfterFee" class="col-sm-10 form-control-static">
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Your Funds</label>
+         <div id="funds" class="col-sm-10 form-control-static">
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Funds After</label>
+         <div id="fundsLeft" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <div class="form-group form-group-lg">
+
+         <label class="col-sm-2 control-label" for="formGroupInputLarge">Safety Rating After</label>
+         <div id="safetyRatingAfter" class="col-sm-10 form-control-static">
+
+         </div>
+       </div>
+
+       <button id="placeWithdrawBtn" type="submit" class="btn btn-primary">Withdraw</button>
+
+     </form>
+   </div>
+
+ </div>
+</div>
+</div>
+
+<div id="rewardModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Change Reward</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text">
+          Note, this will essentially cash every piece of yours owned out at the current rate at this moment,
+          then all pieces will start earning rewards at the new rate from now on.
+        </div>
+        <form id="rewardForm" class="form-horizontal" role="form">
+          <div class="form-group form-group-lg">
+            <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
+            <div class="col-sm-10">
+              <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Last reward"
+
+              data-bv-notempty="true"
+              data-bv-notempty-message="Must be > 0"
+
+              data-bv-greaterthan="true"
+              data-bv-greaterthan-inclusive="false"
+              data-bv-greaterthan-value="0"
+              data-bv-greaterthan-message="Must be > 0" 
+
+              >
+            </div>
+
+            <button id="placeChangeRewardBtn" type="submit" class="btn btn-primary">Change Reward</button>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- end of wrapper -->
+</div>
+
+
+</div>
+
+
+
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="jquery-1.11.1.min.js"></script>
+      <script src="bootstrap-dist/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="bootstrap-validator/dist/js/bootstrapValidator.js"></script>
+      <script src="toastr/toastr.js"></script>
+      <script src="mustache/mustache.js"></script>
+      <script src="holder/holder.js"></script>
+      <script src="json.date-extensions.js"></script>
+      <script src="tablesorter/jquery.tablesorter.js"></script> 
+      <script src="highcharts/js/highcharts.js"></script>
+      <script src="highcharts/js//modules/exporting.js"></script>
+      <script src="highcharts/js/themes/dark-unica.js"></script>
+      <script src="typeahead.js/typeahead.bundle.js"></script>
+      <script src="pickadate/lib/picker.js"></script>
+      <script src="pickadate/lib/picker.date.js"></script>
+       <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+
+      <!-- my scripts -->
+      <script src="tools.js"></script>
+      <script src="highcharts_templates.js"></script>
+      <script src="creatorpage.js"></script>
+      <script src="creator_funds.js"></script>
+      <script src="login.js"></script>
+
+
+    </body>
+    </html>
+

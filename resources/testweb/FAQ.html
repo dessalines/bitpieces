@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+  <title>Bitpieces</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="darkly.bootstrap.min.css" rel="stylesheet">
+
+  <!-- Link to font awesome -->
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+  <!-- Bootstrap social css -->
+  <link href="bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
+
+  <!--   Bootstrap validator -->
+  <link rel="stylesheet" href="bootstrap-validator/dist/css/bootstrapValidator.min.css"/>
+
+  <!--   toastr css -->
+  <link href="toastr/toastr.css" rel="stylesheet"/>
+
+  <!--   typeahead css -->
+  <link href="typeaheadjs.css" rel="stylesheet"/>
+
+  <!-- Pickadate -->
+  <link href="pickadate/lib/themes/default.css" rel="stylesheet"/>
+  <link href="pickadate/lib/themes/default.date.css" rel="stylesheet"/>
+
+  <!-- Summernote -->
+  <link href="summernote/dist/summernote.css" rel="stylesheet"/>
+
+  <!-- This main css -->
+  <link href="userdashboard.css" rel="stylesheet">
+
+
+
+  <!-- Just for debugging purposes. Don't actually copy this line! -->
+  <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+     <!-- Navbars -->
+
+     <!-- the start of the doc -->
+     <div id="wrapper">
+
+      <!-- plug into here -->
+      <nav class="navbar navbar-default" role="navigation">
+       <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">BitPieces</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/discover">Discover</a></li>
+        <li><a href="creators">Creators</a></li>
+        <li><a href="userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+               <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+               <li><a href="#logout" class="hide">Log Out</a></li> -->
+               <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/about">About Bitpieces</a></li>
+                  <li><a href="/FAQ">Frequently Asked Questions</a></li>
+                  <li><a href="/contact">Contact</a></li>
+                  
+
+                </ul>
+              </li>
+            </ul>
+            <form id="creator_search" class="navbar-form navbar-left navbar-input-group" role="search">
+              <div class="form-group">
+               <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
+             </div>
+             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+           </form>
+
+
+           <ul class="nav navbar-nav navbar-right">
+            <li id="userDropdown" class="dropdown user-dropdown">
+
+             <script id="usernameTemplate" type="x-tmpl-mustache">  
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+
+
+               <ul class="dropdown-menu">
+                 <li><a id="settings" href="userdashboard_settings"><i class="fa fa-gear"></i> Settings</a></li>
+                 <li class="divider"></li>
+                 <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+
+               </ul>
+             </script>
+           </li>
+         </ul>
+       </div><!-- /.navbar-collapse -->
+     </div><!-- /.container-fluid -->
+   </nav>
+
+   <!-- The full page with teh sidebar -->
+   <div class="container" id="mycontentcon">
+     <div class="row">
+       <div class="col-md-12">
+         <h1 class="text-center"> Frequently Asked Questions</h1>
+       </div>
+     </div>
+     <hr>
+
+     <div class="row">
+      <div class="col-md-3">
+        <div class="affix" id="sidebar" role="complementary">
+          <ul class="nav nav-tabs nav-stacked affix nav-list" id="mynav" data-spy="affix" data-offset-top="280">
+            <li><a href="#what_is_bitpieces">What is Bitpieces?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#what_are_pieces">What are pieces? <i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#what_is_a_creator">What is a creator?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#what_are_rewards">What are rewards?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#why_are_rewards_mandatory">Why are rewards mandatory?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#how_are_rewards_calculated">How are rewards calculated?  <i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#does_price_affect_rewards">Does price affect rewards?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#how_do_i_know_if_a_creator_is_safe">How do I know if a creator is safe?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#what_are_bids_and_asks">What are bids and asks? <i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#what_are_the_fees">What are the fees for using Bitpieces?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#why_use_bitcoin_instead_of_dollars">Why use Bitcoin instead of dollars?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#why_cant_i_fund_the_creator_directly">Why can't I fund the creator directly?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#how_does_currency_conversion_work">How does currency conversion work?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#how_safe_is_bitpieces">How safe is Bitpieces?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            <li><a href="#where_do_i_report_issues">Where do I report issues?<i class="fa fa-chevron-right pull-right"></i></a></li>
+            
+
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9" id="mycontent">
+        <div id="what_is_bitpieces">
+          <h2 class="">What is Bitpieces?</h2>
+          Bitpieces is a crowd-funding platform to get creative projects off the ground. Instead of promising
+          a product after a funding goal is met, a <a href="#what_is_a_creator">creator</a> issues 
+          <a href="#what_are_pieces">pieces</a>, at a certain price per piece, and promises 
+          <a href="#what_are_rewards">rewards</a> for owning pieces. Rewards grow continuously over time, 
+          from the moment pieces are bought. You can see how rewards are calculated 
+          <a href="#how_are_rewards_calculated">here</a>. 
+          <hr class="col-md-12">
+        </div>
+
+        <div id="what_are_pieces">
+          <h2>What are pieces?</h2>
+          Pieces are little entities guaranteeing you rewards from a creator. In a sense,
+          they represent your contribution to a creator's brand. When you buy pieces from a 
+          <a href="#what_is_a_creator"> creator</a>, you are helping them fund their work.
+          As their brand becomes more(or less)
+          valuable, your pieces may rise or fall in value, based on the their brand strength,
+          popularity, or supply and demand. However, the <a href="#what_are_rewards">rewards</a>
+          you collect are unaffected by changes in the price or value of your pieces. 
+          <br><br>Once you own pieces from a creator, you can <a href="#what_are_bids_and_asks">bid,
+          and ask</a>, to sell your pieces on an open market.
+          <hr class="col-md-12">
+        </div> 
+        <div id="what_is_a_creator">   
+          <h2 class="">What is a creator?</h2>
+          A creator is the term Bitpieces uses to refer to the content-creators who 
+          are issuing pieces to raise funds.
+          <hr class="col-md-12">
+        </div>
+        <div id="what_are_rewards">
+          <h2 class="">What are rewards?</h2>
+          Rewards are what content-creators pay to their funders. They usually start out
+          miniscule, but as their project generates profits, they can change the reward
+          to increase the value of their brand. Bitpieces differs from most systems in 
+          that rewards are continuous; from the moment pieces are purchased, they start
+          generating <a href="#how_are_rewards_calculated">rewards</a>. There are no specific dates at which rewards are payed out, 
+          they build in your account and can be withdrawn at any time.
+          <hr class="col-md-12">
+        </div>
+        <div id="why_are_rewards_mandatory">
+          <h2 class="">Why are rewards mandatory?</h2>
+          Rewards are mandatory to make Bitpieces more <a href="#how_do_i_know_if_a_creator_is_safe">secure</a>
+          for both creators and funders. 
+          <br><br>
+          It doesn't seem to make sense that 
+          a creator would want to give any of the money they raise back to their funders, especially
+          at first; but it is necessary to establish a <b>history of trust</b> between the two. 
+          People fund projects because they are fans, but also because they want to reap the rewards of
+          seeing their favorite brands and projects grow; and projects that give nothing back to 
+          their funders don't instill trust.
+          When you can see a plot over time of increasing rewards to funders, no matter how small,
+          it helps to build that trust. 
+
+          <br><br>
+          Creators who are just starting out should choose a miniscule reward, perhaps around 0.5-1% / year. 
+          Using the <a href="https://en.wikipedia.org/wiki/Rule_of_72">rule of 72</a>, an initial 0.5% reward/piece/year 
+          means that you can pay rewards to funders for ~70 years, making no profit, 
+          and still have half of the funds you raised. Adjusted for inflation, the average growth per year 
+          is about 2.7%, so a reward far above this is not advised. A reward greater than 7-8% is likely dangerous.
+          <hr class="col-md-12">
+        </div>
+        <div id="how_are_rewards_calculated">
+          <h2 class="">How are rewards calculated?</h2>
+          Mathematically, rewards are a rate over time, given as reward / piece / year.
+          A creator can choose to change their reward, if their project starts earning more
+          or less profits.
+          <br><br> 
+          As an example, if a creator issues 5000 pieces at 1 USD per piece, they might
+          make their reward rate at .01 USD / piece / year, meaning a 1% reward yield. If a funder,
+          buys 500 pieces for $500 dollars total, after one year, they will have earned 5$ in rewards.
+          If the price per pieces stays roughly the same, their value after 1 year will be at
+          $505 dollars. Likewise, after one year, if all the pieces are bought, a creator will owe 
+          around $50 per year to their funders. Using the rule of 72, they should be able to pay their
+          funders for 35 years before they reach half their initial funds.
+
+          <hr class="col-md-12">
+        </div>
+
+        <div id="does_price_affect_rewards">
+          <h2 class="">Does price affect rewards?</h2>
+          No. Since rewards are a rate of reward / <b>piece</b> / year, the price of the piece will not
+          affect how much rewards are earned. However, a creator that provides a stable
+          reward to their funders, will likely have the value of their pieces rise. Likewise,
+          A creator who consistently lowers their rewards will likely have the value of their
+          pieces decline. 
+
+          <hr class="col-md-12">
+        </div>
+
+
+
+        <div id="how_do_i_know_if_a_creator_is_safe">
+          <h2 class="">How do I know if a creator is safe?</h2>
+          There are 5 safety measures Bitpieces has in place to protect creators and their funders.
+
+          <ul>
+            <li> 
+              <h3> Verification</h3>
+              Creators can officially link their content to their Bitpieces creator account. 
+              Creators who have their official content linked to their account, are likely to be more
+              trustworthy, because they wouldn't want to alienate their funders and fans. 
+              <br><br>
+              Unverified creators are considered <b>very unsafe</b>; they could be trying to impersonate another
+              person in order to abscond with funds.
+            </li>
+            <li>
+              <h3> Mandatory rewards</h3>
+              One of the oddities of Bitpieces, is in this question: If a creator is trying to raise money, 
+              then why should they be forced to reward their creators right away?
+              <br><br>
+              The answer is this: security. Rewards, no matter how miniscule the amount, help to establish 
+              a <a href="why_are_rewards_mandatory">history of trust</a>. When you see that a creator has
+              consistently paid their funders rewards, and has a history of increasing that amount, no matter
+              how tiny it started off, it builds trust.
+            </li>
+            <li>
+              <h3> Creators safety ratings</h3>
+              Since Bitpieces hosts creators funds, we know how long, given what they have currently in their 
+              account, they can safely pay rewards to their funders. A safety rating of 10 means that a creator
+              can safely pay <b>10 years of rewards</b> to their funders, given what they currently have in their account. 
+              When a creator makes a potential withdrawal, their post-withdrawal safety rating is displayed to them,
+              to make sure they aren't withdrawing too much, so that their users might feel unsafe.
+              Creators are expected to withdraw their funds, that's why they're here. But they should only withdraw
+              so much as to make their funders comfortable. 
+              A plot of safety rating over time is visible from the creator's overview. Withdrawals will appear as 
+              spikes down, and when they sell pieces, you will see upward surges.
+              <br><br>
+              A history of safety ratings of <b>greater than 5</b> is considered safe.
+              <br><br>
+
+              Mathematically, creators safety is calculated as : Safety = creators funds/(reward/piece/year * 
+              pieces owned) . 
+            </li>
+            <li>
+              <h3> Open discussion threads </h3>
+              In order to increase a dialog between creators and their funders, every creator's page has an
+              embedded disqus thread. This can be used for answering questions, requesting content, or 
+              giving updates. <b>Unresponsive</b> or unforthcoming creators are considered unsafe. 
+            </li>
+            <li>
+              <h3> Transparency</h3>
+              All creators activities, whether it be withdrawing funds, changing rewards, or issuing pieces,
+              are visible on their main page. You can see their entire transaction and funding history, and make
+              sure they are making safe decisions with their funders money.
+            </li>
+          </ul>
+
+
+          <hr class="col-md-12">
+        </div>
+
+        <div id="what_are_bids_and_asks">
+          <h2 class="">What are bids and asks?</h2>
+          After pieces are bought from the creator, they can be sold(ask issue) or bought(bid issue)
+          on an open market. Bids and asks contain 3 pieces of information: 
+          <ul>
+            <li> The <b>price</b> of the bid or ask</li>
+            <li> The <b>number of pieces</b> you want to buy or sell</li>
+            <li> A <b>day</b> on which this order expires</li>
+          </ul>
+
+          After a bid or ask is issued, they are compared randomly with other bids and asks for that
+          creator. If a bidding price is above the asking price, the maximum number of pieces in common
+          are exchanged. If there are pieces leftover, a new bid or ask is issued for the remaining pieces,
+          with the same expiration date as before. The system benefits askers over bidders, because the price 
+          taken for the transaction is the high bidding price. This discourages unnecessary bidding up of the 
+          price. 
+
+          <br><br>
+
+          An example is as follows: 
+          <ul>
+            <li> Bill makes an ask for 5 pieces for $1/piece, expiring in a week. </li>
+            <li> Tom makes a bid for 3 pieces at $2/piece, expiring also in a week. </li>
+            <li> The sale is made at $2/piece for 3 pieces. </li>
+            <li> Another ask is automatically issued for bill for the remaining 2 pieces at $1/piece, expiring at the 
+              same time as before. </li>
+            </ul>
+
+            Tom now has 3 pieces, and gave Bill a total of $6 for them.
+
+
+
+            <hr class="col-md-12">
+          </div>
+          <div id="what_are_the_fees">
+            <h2 class="">What are the fees for using Bitpieces?</h2>
+            For funders of projects, Bitpieces is completely free. Bitpieces uses 
+            <a href="https://coinbase.com/">Coinbase</a> as a payment processor,
+            which currently has zero fees for Bitpieces transactions. When not using coinbase,
+            you will incur a .0001-.0002 BTC transaction fee when you first buy pieces. Buying the initial pieces, or issuing bids
+            and asks is a zero-fee process. Withdrawals, after selling pieces, are also entirely free.
+
+            <br><br>
+            For creators, there are no startup fees, but each withdrawal of funds raised incurs a 5% fee on the
+            withdrawal amount. This is in line with other crowd funding websites.
+
+            <hr class="col-md-12">
+          </div>
+
+          <div id="why_use_bitcoin_instead_of_dollars">
+            <h2 class="">Why use bitcoin instead of dollars?</h2>
+            Bitpieces was envisioned as an international crowd-funding platform, being able to fund
+            musicians, communities, comic book artists, writers, or video creators across the globe. As such,
+            a global, unregulated currency with its own transaction processing network like Bitcoin
+            is perfect for funding creators anywhere in the world.
+            <hr class="col-md-12">
+          </div>
+
+          <div id="why_cant_i_fund_the_creator_directly">
+            <h2 class="">Why can't I fund the creator directly?</h2>
+            In a word, <a href="#how_do_i_know_if_a_creator_is_safe">funder safety</a>. Bitpieces hosts a completely 
+            transparent, open network, where you can see how much a creator has raised, and how long
+            they can guarantee rewards to their funders. The network for buying and selling 
+            pieces, and of earning continuous rewards, is provided by Bitpieces. Bitpieces also provides
+            a user experience that makes the dialog between creators and their funders direct, 
+            and unhindered.
+            <hr class="col-md-12">
+          </div>
+
+          <div id="how_does_currency_conversion_work">
+            <h2 class="">How does currency conversion work?</h2>
+            All transactions, such as withdrawing or depositing, buying, bidding, asking, are 
+            done in BTC. If a user has chosen USD as their primary currency, any price field
+            is converted to BTC. Historical, and current-time conversions,
+            are done using <a href="https://bitcoinaverage.com/#USD">Bitcoinaverage.com's API</a>, and 
+            updated every 15 minutes.
+            <hr class="col-md-12">
+          </div>
+
+
+          <div id="how_safe_is_bitpieces">
+            <h2 class="">How safe is Bitpieces?</h2>
+            Bitpieces is still considered to be at a beta safety-level, but here are our 
+            <a href="#how_do_i_know_if_a_creator_is_safe">5 pillars of security</a>. To test Bitpieces 
+            in a no-money, completely risk-free testing environment, head over to our <a href="#">test site</a>, 
+            where you can simulate user and creator accounts, with no real money involved.
+            <hr class="col-md-12">
+          </div>
+
+          <div id="where_do_i_report_issues" style="min-height:500px;">
+            <h2 class="">Where do I report issues?</h2>
+            Issues can be reported on the Bitpieces <a href="https://github.com/tchoulihan/bitpieces">github</a> repository.
+          </div>
+
+          <!-- FOOTER -->
+          <hr class="featurette-divider">
+          <footer>
+            <p class="pull-right"><a href="#">Back to top</a></p>
+            <p>&copy; 2014 Bitpieces, Inc. &middot; <a href="about">About</a> &middot; <a href="contact">Contact</a>
+              &middot; <a href="/FAQ">Support</a></p>
+            </footer>
+            
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="jquery-1.11.1.min.js"></script>
+      <script src="bootstrap-dist/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="bootstrap-validator/dist/js/bootstrapValidator.js"></script>
+      <script src="toastr/toastr.js"></script>
+      <script src="mustache/mustache.js"></script>
+      <script src="holder/holder.js"></script>
+      <script src="json.date-extensions.js"></script>
+      <script src="tablesorter/jquery.tablesorter.js"></script> 
+      <script src="highcharts/js/highcharts.js"></script>
+      <script src="highcharts/js//modules/exporting.js"></script>
+      <script src="highcharts/js/themes/dark-unica.js"></script>
+      <script src="typeahead.js/typeahead.bundle.js"></script>
+      <script src="pickadate/lib/picker.js"></script>
+      <script src="pickadate/lib/picker.date.js"></script>
+      <script src="summernote/dist/summernote.min.js"></script>
+      <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+
+      <!-- my scripts -->
+      <script src="tools.js"></script>
+      <script src="highcharts_templates.js"></script>
+      
+      <script src="FAQ.js"></script>
+      <script src="login.js"></script>
+
+
+    </body>
+    </html>
+

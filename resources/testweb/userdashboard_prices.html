@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+  <title>Bitpieces</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="darkly.bootstrap.min.css" rel="stylesheet">
+
+  <!-- Link to font awesome -->
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+  <!-- Bootstrap social css -->
+  <link href="bootstrap-social-gh-pages/bootstrap-social.css" rel="stylesheet">
+
+  <!--   Bootstrap validator -->
+  <link rel="stylesheet" href="bootstrap-validator/dist/css/bootstrapValidator.min.css"/>
+
+  <!--   toastr css -->
+  <link href="toastr/toastr.css" rel="stylesheet"/>
+
+     <!--   typeahead css -->
+  <link href="typeaheadjs.css" rel="stylesheet"/>
+
+  <!-- This main css -->
+  <link href="userdashboard.css" rel="stylesheet">
+
+  <!-- Just for debugging purposes. Don't actually copy this line! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+      <!-- Navbars -->
+
+      <!-- Start using sb admin stuff -->
+      <div id="wrapper">
+
+       <!-- plug into here -->
+        <nav class="navbar navbar-default" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">BitPieces</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+               <li><a href="/">Home</a></li>
+               <li><a href="/discover">Discover</a></li>
+               <li><a href="/creators_register">Creators</a></li> 
+               <li class="active"><a href="/userdashboard_overview" id="dashboardhref" class="hide">Dashboard</a></li>
+               <!-- <li><a href="#login" id="loginhref" data-toggle="modal" data-target="#userloginModal">Login/Register</a></li>
+               <li><a href="#logout" class="hide">Log Out</a></li> -->
+                             <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/about">About Bitpieces</a></li>
+                  <li><a href="/FAQ">Frequently Asked Questions</a></li>
+                  <li><a href="/contact">Contact</a></li>
+                  
+
+                </ul>
+              </li>
+            </ul>
+            <form id="creator_search" class="navbar-form navbar-left navbar-input-group" role="search">
+              <div class="form-group">
+               <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
+             </div>
+             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+           </form>
+
+
+           <ul class="nav navbar-nav navbar-right">
+ 
+
+
+            <li id="userDropdown" class="dropdown user-dropdown">
+
+             <script id="usernameTemplate" type="x-tmpl-mustache">  
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+
+
+               <ul class="dropdown-menu">
+                 <li><a id="settings" href="userdashboard_settings" rel="keep-params"><i class="fa fa-gear"></i> Settings</a></li>
+                 <li class="divider"></li>
+                 <li><a id="logouthref" href="#logout"><i class="fa fa-power-off"></i> Log Out</a></li>
+
+               </ul>
+             </script>
+           </li>
+         </ul>
+       </div><!-- /.navbar-collapse -->
+     </div><!-- /.container-fluid -->
+   </nav>
+
+   <!-- The full page with teh sidebar -->
+   <div class="container-fluid">
+     <div class="row">
+
+      <!-- The sidebar -->
+      <div id="side_col" class="col-md-2 sidebar">
+
+        <div class="mini-submenu">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </div>
+        <div class="list-group">
+          <li class="list-group-item">
+            <a href="/users/overview" rel="keep-params"><i class="fa fa-dashboard"></i> Overview</a>
+            <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
+          </li>
+
+          <a class="list-group-item" href="/users/funds" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Funds</a>
+          <a class="list-group-item" href="/users/pieces" rel="keep-params"><i class="fa fa-table"></i> Pieces</a>
+          <a class="list-group-item active" href="/users/prices" rel="keep-params"><i class="fa fa-edit"></i> Prices</a>
+        </div>
+      </div>        
+    </div>
+
+     <!-- The Page -->
+     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+      <div class="row">
+        <div class="col-lg-12">
+          <h1>Prices <small>Prices for everything you own </small></h1>
+          <ol class="breadcrumb">
+            <li><a href="userdashboard_overview"><i class="fa fa-dashboard"></i> Overview</a></li>
+            <li class="active"><i class="fa fa-table"></i> Prices</li>
+          </ol>
+        </div>
+      </div><!-- /.row -->
+
+      <!-- a big ass chart -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Prices for pieces owned</h3>
+            </div>
+            <div class="panel-body">
+              <div class = "fullscreen-chart" id="highcharts-chart-area"></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.row -->
+
+ <!-- FOOTER -->
+ <hr class="featurette-divider">
+     <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+      <p>&copy; 2014 Bitpieces, Inc. &middot; <a href="about">About</a> &middot; <a href="contact">Contact</a>
+      &middot; <a href="/FAQ">Support</a> &middot; <a href="https://github.com/tchoulihan/bitpieces">Github</a></p>
+      </footer>
+  
+      <!-- end of page -->
+    </div>
+
+
+    <!-- end of wrapper -->
+  </div>
+
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="jquery-1.11.1.min.js"></script>
+      <script src="bootstrap-dist/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="bootstrap-validator/dist/js/bootstrapValidator.js"></script>
+      <script src="toastr/toastr.js"></script>
+      <script src="mustache/mustache.js"></script>
+      <script src="holder/holder.js"></script>
+      <script src="highcharts/js/highcharts.js"></script>
+      <script src="highcharts/js//modules/exporting.js"></script>
+      <script src="highcharts/js/themes/dark-unica.js"></script>
+      <script src="typeahead.js/typeahead.bundle.js"></script>
+       <script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+
+      <!-- my scripts -->
+      <script src="tools.js"></script>
+      <script src="highcharts_templates.js"></script>
+      <script src="userdashboard.js"></script>
+      <script src="login.js"></script>
+      <script src="userdashboard_prices.js"></script>
+
+    </body>
+    </html>
+
