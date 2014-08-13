@@ -38,7 +38,7 @@ $(document).ready(function() {
 
         setupWithdrawalForm(creatorName);
         setupModal("creator_withdraw", '#withdrawForm', "#placeWithdrawBtn", "#withdrawModal");
-        showHideCreatorButtons();
+        showHideCreatorButtons(creatorName);
         setupRaiseFunds();
 
     }
@@ -250,7 +250,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
 }
 
 
-function showHideCreatorButtons() {
+function showHideCreatorButtons(creatorName) {
     $("#saveBtn").removeClass("hide");
 
     // If its their first time, they have to raise funds, check this by getting the reward pct
