@@ -209,8 +209,8 @@ public class WebTools {
 				Integer.valueOf(postMap.get("buyPieces")), 
 				price_per_piece);
 
-
-		return body;
+		String message = "Bought " + Integer.valueOf(postMap.get("buyPieces")) + " @ " + price_per_piece + " BTC";
+		return message;
 	}
 
 	public static String issuePieces(UID uid, String body, UnitConverter sf) {
