@@ -203,7 +203,6 @@ public class WebTools {
 		List<Model> p = Pieces_issued_view.find("creators_name=?",  creator.getString("username")).orderBy("time_ desc").limit(1);
 		Double price_per_piece = p.get(0).getDouble("price_per_piece");
 
-
 		DBActions.sellFromCreator(creator.getId().toString(), 
 				uid.getId(), 
 				Integer.valueOf(postMap.get("buyPieces")), 

@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 
+import com.bitpieces.dev.scheduled.ScheduledProcessing;
 import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.tools.DBActions;
 import com.bitpieces.shared.tools.Tools;
@@ -53,7 +54,8 @@ public class WebService {
 		// Setup all the common posts
 		WebCommon.commonPosts(SESSION_TO_USER_MAP, prop, sf, DataSources.DEV_SESSION_FILE, COOKIE_PATH);
 
-		// TODO need to make a fake withdrawal
+		// Start the scheduler
+		ScheduledProcessing.main(null);
 
 		post("/make_deposit_fake", (req, res) -> {
 			String message = null;
