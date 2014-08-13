@@ -603,7 +603,7 @@ function navigateWithParams() {
 function setupDepositButton(shortUrl, btnId, formId, modalId) {
     var userName = getCookie("username");
     simpleFetch(userName + '/get_users_funds_current').done(function(result) {
-        $('[name="deposit"]').attr('placeholder', 'Current funds:' + result);
+        $('[name="depositAmount"]').attr('placeholder', 'Current funds:' + result);
     });
     getJson('/get_users_settings').done(function(e) {
 
