@@ -11,7 +11,7 @@ $(document).ready(function() {
     if (userType == 'Creator') {
         $("#dashboardhref").prop("href", "/creators/main/" + userName);
     } else if (userType == 'User') {
-        $("#dashboardhref").prop("href", "userdashboard_overview?user=" + userName);
+        $("#dashboardhref").prop("href", "/users/overview/" + userName);
     }
 
 
