@@ -608,7 +608,8 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
     getJson('/get_users_settings').done(function(e) {
 
         // this is handled in userdashboard_settings.js
-        console.log("settings = " + e);
+        var currIso = e['curr_iso'];
+        $("#depositSymbol").text(currIso);
 
     });
 
