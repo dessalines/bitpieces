@@ -382,10 +382,11 @@ function setupIssueForm(creatorName) {
 
     });
 
-    simpleFetch(creatorName + '/get_creators_funds_current').done(function(result) {
+    $.when(getJson(creatorName + '/get_creators_funds_current'),
+        getJson(creatorName + '/get_rewards_current')).done(function(a1, a2) {
+        var creatorsFunds = parseFloat(a1.replace(/^\D+/g, ''));
+        var currSymbol = a2[0];
 
-        var creatorsFunds = parseFloat(result.replace(/^\D+/g, ''));
-        var currSymbol = result[0];
         $('[name="creatorsFunds"]').text(result);
 
         $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
