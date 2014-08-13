@@ -84,7 +84,7 @@ function setupWithdrawForm() {
         });
     });
     $("#placeWithdrawBtn").click(function(event) {
-        standardFormPost('user_withdraw', '#withdrawForm');
+        standardFormPost('user_withdraw', '#withdrawForm', '#withdrawModal');
         event.preventDefault();
     });
 
