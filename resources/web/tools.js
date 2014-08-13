@@ -600,60 +600,7 @@ function navigateWithParams() {
     });
 }
 
-function setupDepositButton(shortUrl, btnId, formId, modalId) {
-    var userName = getCookie("username");
-    simpleFetch(userName + '/get_users_funds_current').done(function(result) {
-        $('[name="deposit"]').attr('placeholder', 'Current funds:' + result);
-    });
-
-    // !!!!!!They must have names unfortunately
-    $(btnId).click(function(event) {
-        var formData = $(formId).serializeArray();
-
-        var btnId = $(this);
-        // Loading
-        btnId.button('loading');
-
-        var url = sparkService + shortUrl; // the script where you handle the form input.
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            xhrFields: {
-                withCredentials: true
-            },
-            data: formData,
-            success: function(data, status, xhr) {
-
-
-                xhr.getResponseHeader('Set-Cookie');
-                // document.cookie="authenticated_session_id=" + data + 
-                // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
-                // Hide the modal, reset the form, show successful
-
-                // Loading
-                btnId.button('reset');
-
-                toastr.success(data);
-                $(modalId).modal('hide');
-
-                $(formId)[0].reset();
-
-
-                console.log(document.cookie);
-
-            },
-            error: function(request, status, error) {
-
-                toastr.error(request.responseText);
-            }
-        });
-
-
-
-        event.preventDefault();
-    });
-}
+depositSymbol
 
 function getJson(shortUrl) {
     var url = sparkService + shortUrl // the script where you handle the form input.
