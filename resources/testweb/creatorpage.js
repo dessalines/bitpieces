@@ -18,7 +18,7 @@ $(document).ready(function() {
         bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
 
         setupDepositButton("make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
-    
+
     }
 
 
@@ -39,6 +39,7 @@ $(document).ready(function() {
         setupWithdrawalForm(creatorName);
         setupModal("creator_withdraw", '#withdrawForm', "#placeWithdrawBtn", "#withdrawModal");
         showHideCreatorButtons();
+        setupRaiseFunds();
 
     }
 
@@ -251,8 +252,57 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
 
 function showHideCreatorButtons() {
     $("#saveBtn").removeClass("hide");
-    $("#issueBtn").removeClass("hide");
-    $("#changeRewardBtn").removeClass("hide");
+
+    // If its their first time, they have to raise funds, check this by getting the reward pct
+    getJson(creatorName + '/get_rewards_current').done(function(e) {
+        var rewardCurrent = e[0];
+        console.log("reward current = " + rewardCurrent);
+        if (rewardCurrent != null) {
+            $("#raiseFundsBtn").removeClass("hide");
+        } else {
+            $("#issueBtn").removeClass("hide");
+            $("#changeRewardBtn").removeClass("hide");
+        }
+    });
+
+
+
+}
+
+function setupRaiseFunds() {
+    $("#raiseFundsForm").bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        console.log('test');
+        raiseFundsPost('raise_funds', "#raiseFundsForm");
+    });
+
+
+
+    $('[name="issuePieces"],[name="issuePrice"],[name="reward_per_piece_per_year"]').bind('keyup', function(f) {
+
+        var pieces = parseFloat($('[name="issuePieces"]').val());
+
+        // var issuePrice = $('[name="buy"]').text();
+        // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
+        var issuePrice = parseFloat($('[name="issuePrice"]').val());
+
+        var reward = parseFloat($('[name="reward_per_piece_per_year"]').val());
+        // alert(pieces + ' ' + issuePrice)
+        var total = issuePrice * pieces;
+        var currIso = $('[name="curr_iso"]').text().substring(0, 3);
+        var rewardPct = 100.0 * reward / issuePrice;
+        var rewardsOwed = reward * pieces;
+        if (!isNaN(total) && !isNaN(rewardPct)) {
+            $('#issueTotal').text(total + ' ' + currIso);
+            $('#rewardPct').text(rewardPct + '%');
+            $('#rewardsOwedPerYear').text(rewardsOwed + ' ' + currIso + ' / year');
+        }
+    });
 }
 
 function setupChangeRewardForm(creatorName) {

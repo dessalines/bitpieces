@@ -27,39 +27,7 @@ $(document).ready(function() {
 
 
 
-    $("#raiseFundsForm").bootstrapValidator({
-        message: 'This value is not valid',
-        excluded: [':disabled'],
-        submitButtons: 'button[type="submit"]'
-
-    }).on('success.form.bv', function(e) {
-        e.preventDefault();
-        console.log('test');
-        raiseFundsPost('raise_funds', "#raiseFundsForm");
-    });
-
-
-
-    $('[name="issuePieces"],[name="issuePrice"],[name="reward_per_piece_per_year"]').bind('keyup', function(f) {
-
-        var pieces = parseFloat($('[name="issuePieces"]').val());
-
-        // var issuePrice = $('[name="buy"]').text();
-        // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
-        var issuePrice = parseFloat($('[name="issuePrice"]').val());
-
-        var reward = parseFloat($('[name="reward_per_piece_per_year"]').val());
-        // alert(pieces + ' ' + issuePrice)
-        var total = issuePrice * pieces;
-        var currIso = $('[name="curr_iso"]').text().substring(0, 3);
-        var rewardPct = 100.0 * reward / issuePrice;
-        var rewardsOwed = reward * pieces;
-        if (!isNaN(total) && !isNaN(rewardPct)) {
-            $('#issueTotal').text(total + ' ' + currIso);
-            $('#rewardPct').text(rewardPct + '%');
-            $('#rewardsOwedPerYear').text(rewardsOwed + ' ' + currIso + ' / year');
-        }
-    });
+    
 
 
 
@@ -90,7 +58,9 @@ function setupSaveCategories() {
 
                     // this is handled in userdashboard_settings.js
                     full();
-
+                    var creatorName = getCookie("username");
+                    var url = "/creators/main/" + creatorName;
+                    window.location.replace(url);
                 });
             });
 
