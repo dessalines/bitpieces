@@ -19,7 +19,7 @@ RewriteRule ^(.+)$ $1.html [L,QSA]
 
 
 # make landing look like the root
-RewriteRule ^$ /landing.html [L]
+RewriteRule ^$ /testing_home.html [L]
 
 
 # The creators rewrites
