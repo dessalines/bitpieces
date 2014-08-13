@@ -388,7 +388,7 @@ function setupIssueForm(creatorName) {
         var creatorsFunds = parseFloat(creatorsFundsStr.replace(/^\D+/g, ''));
         var currSymbol = a2[0][0];
 
-        $('[name="creatorsFunds"]').text(creatorsFunds);
+        $('[name="creatorsFunds"]').text(creatorsFundsStr);
 
         $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
 
