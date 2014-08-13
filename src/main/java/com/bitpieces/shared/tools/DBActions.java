@@ -619,25 +619,21 @@ public class DBActions {
 
 	}
 
-	public static void userWithdrawalFake(String userId, Double amount) {
+	public static Users_withdrawals userWithdrawalFake(String userId, Double btcAmount) {
 
 		// Make sure the user has enough to cover the withdraw
 		try {
-			Double userFunds = Users_funds_current.findFirst("users_id = ?", userId).getDouble("current_funds");
-
-			if (userFunds < amount) {
-				throw new NoSuchElementException("You have only " + userFunds + " $, but are trying to withdraw " +
-						amount);
-			}
+			// Make sure the user has enough to cover the withdraw
+			checkUsersFunds(userId, btcAmount);
+	
+		return Users_withdrawals.createIt("users_id",userId,
+				"cb_tid", "fake",
+				"time_", SDF.format(new Date()),
+				"btc_amount", btcAmount, 
+				"status", "completed");
 		} catch(NullPointerException e) {
 			throw new NoSuchElementException("You have no funds");
 		}
-
-		Users_withdrawals.createIt("users_id",userId,
-				"cb_tid", "fake",
-				"time_", SDF.format(new Date()),
-				"btc_amount", amount, 
-				"status", "completed");
 
 	}
 

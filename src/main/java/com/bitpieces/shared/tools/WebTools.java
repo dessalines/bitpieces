@@ -352,6 +352,32 @@ public class WebTools {
 		return message;
 
 	}
+	
+	public static String makeWithdrawalFake(UID uid, String body, UnitConverter sf) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		UsersSettings settings = new UsersSettings(uid);
+
+		Double amount = Double.parseDouble(postMap.get("withdrawAmount"));
+		Double btcAmount = amount;
+		String message = null;
+
+		// Convert amount if necessary
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcAmount = amount / spotRate;
+			System.out.println(amount + " / " + spotRate + " = " + btcAmount);
+			message = btcAmount + " BTC withdrew ( or " + amount + " " + settings.getIso() + 
+					" @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = btcAmount + " BTC withdrew";
+		}
+
+	
+		DBActions.userWithdrawalFake(uid.getId(), btcAmount);
+
+		return message;
+
+	}
 
 	public static void makeDepositFromCoinbaseCallback(String userId, String body) {
 

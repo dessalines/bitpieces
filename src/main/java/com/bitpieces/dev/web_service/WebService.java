@@ -74,6 +74,26 @@ public class WebService {
 			return message;
 
 		});
+		
+		post("/make_withdrawal_fake", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
+				uid.verifyUser();
+
+				message = WebTools.makeWithdrawalFake(uid, req.body(), sf);
+
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
 
 	}
 

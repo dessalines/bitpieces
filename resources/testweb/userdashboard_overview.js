@@ -28,7 +28,7 @@ $(document).ready(function() {
         '#users_bids_asks_current_table',
         "#remove_button", sessionId);
 
-    fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+
 
     // TODO do this in a paged way
     // var template = $('#users_bids_asks_current_template').html();
@@ -84,7 +84,7 @@ function setupWithdrawForm() {
         });
     });
     $("#placeWithdrawBtn").click(function(event) {
-        standardFormPost('user_withdraw', '#withdrawForm');
+        standardFormPost('make_withdrawal_fake', '#withdrawForm');
         event.preventDefault();
     });
 
@@ -98,7 +98,7 @@ function showHideDepositButton() {
     if (userName == sessionUserName) {
         $('#depositBtn').removeClass("hide");
         $('#withdrawBtn').removeClass("hide");
-
+        setupDepositButton("/make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
     }
 
 }
