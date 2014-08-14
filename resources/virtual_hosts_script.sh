@@ -55,6 +55,7 @@ TEST_CONF="<VirtualHost *:80>
 
 echo "$TEST_CONF" | sudo tee -a /etc/apache2/sites-available/test.bitpieces.com.conf
 cd /etc/apache2/sites-available/
+sudo a2enmod rewrite
 sudo a2ensite bitpieces.com.conf
 sudo a2ensite test.bitpieces.com.conf
 
