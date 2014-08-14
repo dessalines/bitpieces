@@ -7,14 +7,14 @@ sudo mkdir -p /var/www/bitpieces.com
 sudo mkdir -p /var/www/test.bitpieces.com
 
 # Now make the symlinks
-sudo ln -s /home/tyler/git/bitpieces/resources/web /var/www/bitpieces.com/public_html
-sudo ln -s /home/tyler/git/bitpieces/resources/testweb /var/www/test.bitpieces.com/public_html
+sudo ln -s ~/git/bitpieces/resources/web /var/www/bitpieces.com/public_html
+sudo ln -s ~/git/bitpieces/resources/testweb /var/www/test.bitpieces.com/public_html
 
 sudo chown -R $USER:$USER /var/www/bitpieces.com/public_html
 sudo chown -R $USER:$USER /var/www/test.bitpieces.com/public_html
 
-sudo chown -R $USER:$USER /home/tyler/git/bitpieces/resources/web
-sudo chown -R $USER:$USER /home/tyler/git/bitpieces/resources/testweb
+sudo chown -R $USER:$USER ~/git/bitpieces/resources/web
+sudo chown -R $USER:$USER ~/git/bitpieces/resources/testweb
 
 sudo chmod -R 755 /var/www
 
