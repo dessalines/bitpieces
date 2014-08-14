@@ -1283,8 +1283,10 @@ public class WebTools {
 		if (list.size() > 0) {
 
 			Double reward = list.get(0).getDouble("reward_per_piece_per_year");
-			String val = String.valueOf(reward*100d/priceCurrent);
-			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+			Double yield = reward*100d/priceCurrent;
+			String json = new DecimalFormat("###,###.##").format(yield);
+			
+			
 			
 			return json + "%";
 		} else {
