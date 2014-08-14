@@ -31,6 +31,7 @@ MAIN_CONF="<VirtualHost *:80>
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
       <Directory />
+      Options Indexes FollowSymLinks
         Require all granted
     </Directory>
 </VirtualHost>
@@ -46,6 +47,7 @@ TEST_CONF="<VirtualHost *:80>
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
       <Directory />
+      Options Indexes FollowSymLinks
         Require all granted
     </Directory>
 </VirtualHost>
