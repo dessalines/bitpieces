@@ -240,7 +240,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
 
         });
 
-        $(buttonId).button('reset');
+        // $(buttonId).button('reset');
         event.preventDefault();
         return false;
 
