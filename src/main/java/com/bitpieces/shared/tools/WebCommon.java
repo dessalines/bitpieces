@@ -1528,8 +1528,8 @@ public class WebCommon {
 			res.cookie("authenticated_session_id_" + path, authenticatedSession, expireSeconds);
 			res.cookie("username_" + path, uid.getUsername(), expireSeconds);
 			res.cookie("usertype_" + path, uid.getType().toString(), expireSeconds);
-			String json = Tools.GSON2.toJson(cache);
-			System.out.println(json);
+//			String json = Tools.GSON2.toJson(cache);
+//			System.out.println(json);
 
 
 			return authenticatedSession;
