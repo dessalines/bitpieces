@@ -1,17 +1,17 @@
 # removing the dirs and symlinks
-sudo rm -rf /var/www/html/bitpieces.com
-sudo rm -rf /var/www/html/test.bitpieces.com
+sudo rm -rf /var/www/bitpieces.com
+sudo rm -rf /var/www/test.bitpieces.com
 
 # making the correct dirs
-sudo mkdir -p /var/www/html/bitpieces.com
-sudo mkdir -p /var/www/html/test.bitpieces.com
+sudo mkdir -p /var/www/bitpieces.com
+sudo mkdir -p /var/www/test.bitpieces.com
 
 # Now make the symlinks
-sudo ln -s ~/git/bitpieces/resources/web /var/www/html/bitpieces.com/public_html
-sudo ln -s ~/git/bitpieces/resources/testweb /var/www/html/test.bitpieces.com/public_html
+sudo ln -s ~/git/bitpieces/resources/web /var/www/bitpieces.com/public_html
+sudo ln -s ~/git/bitpieces/resources/testweb /var/www/test.bitpieces.com/public_html
 
-sudo chown -R $USER:$USER /var/www/html/bitpieces.com/public_html
-sudo chown -R $USER:$USER /var/www/html/test.bitpieces.com/public_html
+sudo chown -R $USER:$USER /var/www/bitpieces.com/public_html
+sudo chown -R $USER:$USER /var/www/test.bitpieces.com/public_html
 
 sudo chown -R $USER:$USER ~/git/bitpieces/resources/web
 sudo chown -R $USER:$USER ~/git/bitpieces/resources/testweb
@@ -27,7 +27,7 @@ MAIN_CONF="<VirtualHost *:80>
     ServerAdmin admin@bitpieces.com
     ServerName bitpieces.com
     ServerAlias www.bitpieces.com
-    DocumentRoot /var/www/html/bitpieces.com/public_html
+    DocumentRoot /var/www/bitpieces.com/public_html
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
@@ -39,7 +39,7 @@ TEST_CONF="<VirtualHost *:80>
     ServerAdmin admin@test.bitpieces.com
     ServerName test.bitpieces.com
     ServerAlias www.test.bitpieces.com
-    DocumentRoot /var/www/html/test.bitpieces.com/public_html
+    DocumentRoot /var/www/test.bitpieces.com/public_html
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
