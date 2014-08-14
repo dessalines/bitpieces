@@ -1465,7 +1465,7 @@ public class WebCommon {
 
 	public static void allowResponseHeaders(Request req, Response res) {
 		String origin = req.headers("Origin");
-		res.header("Access-Control-Allow-Credentials", "false");
+		res.header("Access-Control-Allow-Credentials", "true");
 		//		System.out.println(origin);
 		if (DataSources.ALLOW_ACCESS_ADDRESSES.contains(req.headers("Origin"))) {
 			res.header("Access-Control-Allow-Origin", origin);
