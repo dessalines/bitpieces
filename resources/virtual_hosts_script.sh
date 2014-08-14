@@ -30,7 +30,6 @@ MAIN_CONF="<VirtualHost *:80>
     DocumentRoot /var/www/bitpieces.com/public_html
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-    Require all granted
 </VirtualHost>
 "
 
@@ -43,7 +42,6 @@ TEST_CONF="<VirtualHost *:80>
     DocumentRoot /var/www/test.bitpieces.com/public_html
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-    Require all granted
 </VirtualHost>
 "
 
