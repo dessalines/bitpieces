@@ -451,7 +451,7 @@ public class DBActions {
 		try {
 			System.out.println("got here1");
 			Currencies usd = Currencies.findFirst("iso=?", "USD");
-			System.out.println("got here1.1");
+			
 			String encryptedPass = Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password"));
 			System.out.println("got here1.2");
 			User user = User.createIt(
