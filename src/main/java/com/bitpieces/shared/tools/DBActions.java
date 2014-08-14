@@ -461,7 +461,7 @@ public class DBActions {
 			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
 			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
 
-
+			System.out.println("created the badge n stuff");
 			UID uid = new UID(UserType.User, 
 					String.valueOf(user.getId()),
 					user.getString("username"));
