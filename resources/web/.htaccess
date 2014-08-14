@@ -3,7 +3,7 @@
 #Options +FollowSymLinks +Indexes
 # php_flag engine off
 
-DirectoryIndex derp.php
+#DirectoryIndex derp.php
 
 RewriteBase /
 RewriteEngine On
