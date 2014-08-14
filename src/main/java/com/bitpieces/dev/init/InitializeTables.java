@@ -51,6 +51,7 @@ public class InitializeTables {
 				prop.getProperty("dburl"), 
 				prop.getProperty("dbuser"), 
 				prop.getProperty("dbpassword"));
+	
 
 		System.out.println("Initializing tables...");
 		
