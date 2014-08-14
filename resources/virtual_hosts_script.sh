@@ -58,7 +58,6 @@ cd /etc/apache2/sites-available/
 sudo a2enmod rewrite
 sudo a2ensite bitpieces.com.conf
 sudo a2ensite test.bitpieces.com.conf
-
 sudo service apache2 restart
 
 cd ~/git/bitpieces/resources
