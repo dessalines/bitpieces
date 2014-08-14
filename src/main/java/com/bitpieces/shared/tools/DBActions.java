@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 import com.bitpieces.shared.Tables.Ask;
 import com.bitpieces.shared.Tables.Ask_bid_accept_checker;
 import com.bitpieces.shared.Tables.Badge;
@@ -452,7 +454,7 @@ public class DBActions {
 			System.out.println("got here1");
 			Currencies usd = Currencies.findFirst("iso=?", "USD");
 			
-			String encryptedPass = Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password"));
+			String encryptedPass = new StrongPasswordEncryptor().encryptPassword(postMap.get("password"));
 			System.out.println("got here1.2");
 			User user = User.createIt(
 					"username", postMap.get("username"),
