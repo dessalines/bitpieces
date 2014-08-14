@@ -453,8 +453,9 @@ public class DBActions {
 		try {
 			System.out.println("got here1");
 			Currencies usd = Currencies.findFirst("iso=?", "USD");
-			
-			String encryptedPass = new StrongPasswordEncryptor().encryptPassword(postMap.get("password"));
+			StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+			System.out.println("got here1.1");
+			String encryptedPass = encryptor.encryptPassword(postMap.get("password"));
 			System.out.println("got here1.2");
 			User user = User.createIt(
 					"username", postMap.get("username"),
