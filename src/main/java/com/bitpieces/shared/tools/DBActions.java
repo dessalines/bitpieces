@@ -513,14 +513,14 @@ public class DBActions {
 		// Create the required fields 
 		try {
 			// The default currency is BTC
-			Currencies btc = Currencies.findFirst("iso=?", "BTC");
+			Currencies usd = Currencies.findFirst("iso=?", "USD");
 
 
 			Creator creator = Creator.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"),
-					"local_currency_id", btc.getId());
+					"local_currency_id", usd.getId());
 
 
 
@@ -546,14 +546,14 @@ public class DBActions {
 		// Create the required fields 
 		try {
 			// The default currency is BTC
-			Currencies btc = Currencies.findFirst("iso=?", "BTC");
+			Currencies usd = Currencies.findFirst("iso=?", "USD");
 
 
 			Creator creator = Creator.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"),
-					"local_currency_id", btc.getId());
+					"local_currency_id", usd.getId());
 
 
 
