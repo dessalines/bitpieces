@@ -449,7 +449,7 @@ public class DBActions {
 
 
 		try {
-			System.out.println("got here");
+			System.out.println("got here1");
 			Currencies usd = Currencies.findFirst("iso=?", "USD");
 			User user = User.createIt(
 					"username", postMap.get("username"),
@@ -457,15 +457,16 @@ public class DBActions {
 					"email", postMap.get("email"),
 					"local_currency_id", usd.getId(),
 					"precision_", 2);
-
+			System.out.println("got here2");
 			// Give them the padowan badge
 			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
 			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
-
+			System.out.println("got here3");
 			
 			UID uid = new UID(UserType.User, 
 					String.valueOf(user.getId()),
 					user.getString("username"));
+			System.out.println("got here4");
 			return uid;
 
 		} catch (org.javalite.activejdbc.DBException e) {
