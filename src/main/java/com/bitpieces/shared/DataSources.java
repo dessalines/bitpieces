@@ -28,7 +28,8 @@ public class DataSources {
 			"http://localhost", "http://107.170.137.106", "https://coinbase.com", 
 			"http://173.163.212.165:4568", "http://173.163.212.165:8080", "http://173.163.212.165",
 			"http://test.bitpieces.com","http://bitpieces.com",
-			"http://www.test.bitpieces.com","http://www.bitpieces.com");
+			"http://www.test.bitpieces.com","http://www.bitpieces.com",
+			"107.170.137.106", "http://107.170.137.106:4566");
 	
 	public static final String COINBASE_PROP = HOME + "/coinbase.properties";
 }
