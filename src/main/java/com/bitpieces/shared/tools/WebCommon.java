@@ -1530,7 +1530,6 @@ public class WebCommon {
 			res.cookie("usertype_" + path, uid.getType().toString(), expireSeconds);
 			String json = Tools.GSON2.toJson(cache);
 			System.out.println(json);
-			res.cookie("test", "testaa");
 
 
 			return authenticatedSession;
