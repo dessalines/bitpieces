@@ -196,7 +196,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
         console.log(formData);
 
         // Loading
-        $(this).button('loading');
+        // $(this).button('loading');
 
         // username = $('#userLoginDiv').find('input[name="username"]').val();
         // // = $("#inputUsername3").val();
