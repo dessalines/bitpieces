@@ -45,6 +45,7 @@ public class WebCommon {
 		get("/hello", (req, res) -> {
 			allowResponseHeaders(req, res);
 			log.debug("okay wrote that");
+			res.cookie("testypoo", "test");
 			return "hi from the bitpieces web service";
 		});
 		get("/help", (req, res) -> {
