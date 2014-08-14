@@ -1484,7 +1484,6 @@ public class WebTools {
 		ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
 
 		if (reCaptchaResponse.isValid()) {
-			System.out.println("done getting recaptcha");
 			return true;
 		} else {
 			throw new NoSuchElementException("Recaptcha wrong");
