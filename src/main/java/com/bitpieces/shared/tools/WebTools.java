@@ -1480,9 +1480,11 @@ public class WebTools {
 
 		String challenge = postMap.get("recaptcha_challenge_field");
 		String uresponse = postMap.get("recaptcha_response_field");
+		System.out.println("getting recaptcha...");
 		ReCaptchaResponse reCaptchaResponse = reCaptcha.checkAnswer(remoteAddr, challenge, uresponse);
 
 		if (reCaptchaResponse.isValid()) {
+			System.out.println("done getting recaptcha");
 			return true;
 		} else {
 			throw new NoSuchElementException("Recaptcha wrong");
