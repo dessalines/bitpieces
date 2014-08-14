@@ -1,5 +1,5 @@
 // var sparkService = "http://localhost:4567/";
-var sparkService = "http://107.170.137.106:4566/"
+var sparkService = "http://test.bitpieces.com:4566/"
 var cookie_path_name = "test";
 
 var pageNumbers = {};

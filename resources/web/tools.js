@@ -1,5 +1,5 @@
 // var sparkService = "http://localhost:4567/";
-var sparkService = "http://107.170.137.106:4567/"
+var sparkService = "http://bitpieces.com:4567/"
 var cookie_path_name = "prod";
 
 var pageNumbers = {};
@@ -712,7 +712,7 @@ function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
             return;
         }
 
-        
+
     });
 }
 
