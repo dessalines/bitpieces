@@ -1475,7 +1475,7 @@ public class WebTools {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 
 		ReCaptchaImpl reCaptcha = new ReCaptchaImpl();
-		reCaptcha.setPrivateKey("6LfgKvcSAAAAAGGzX4vvIjzVS6RPizYrr-cP7MJE");
+		reCaptcha.setPrivateKey("6Lc5k_gSAAAAAIUoZ4h3uwde6iBFR9wPQ-nCcwJc");
 
 
 		String challenge = postMap.get("recaptcha_challenge_field");

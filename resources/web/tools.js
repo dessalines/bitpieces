@@ -712,12 +712,12 @@ function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
             return;
         }
 
-
+        
     });
 }
 
 function showRecaptcha(element) {
-    Recaptcha.create("6LfgKvcSAAAAAJGQDr6NtYgCqfKAshsFqZDDNJ-N", element, {
+    Recaptcha.create("6Lc5k_gSAAAAANRhbCY2bPCxmJQ3TUr6lLN0s9mi", element, {
         theme: "blackglass",
         //callback: Recaptcha.focus_response_field
     });
