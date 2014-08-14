@@ -1,10 +1,10 @@
 # removing the dirs and symlinks
-sudo rm -rf /var/www/bitpieces.com
-sudo rm -rf /var/www/test.bitpieces.com
+sudo rm -rf /var/www/html/bitpieces.com
+sudo rm -rf /var/www/html/test.bitpieces.com
 
 # making the correct dirs
-sudo mkdir -p /var/www/bitpieces.com
-sudo mkdir -p /var/www/test.bitpieces.com
+sudo mkdir -p /var/www/html/bitpieces.com
+sudo mkdir -p /var/www/html/test.bitpieces.com
 
 # Now make the symlinks
 sudo ln -s ~/git/bitpieces/resources/web /var/www/html/bitpieces.com/public_html
