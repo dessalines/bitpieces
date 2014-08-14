@@ -481,12 +481,12 @@ public class DBActions {
 
 
 		try {
-			Currencies btc = Currencies.findFirst("iso=?", "BTC");
+			Currencies usd = Currencies.findFirst("iso=?", "USD");
 			User user = User.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"),
-					"local_currency_id", btc.getId());
+					"local_currency_id", usd.getId());
 
 			// Give them the padowan badge
 			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
