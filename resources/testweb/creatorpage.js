@@ -179,7 +179,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
     $(formId).bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
-        submitButtons: '"#' + buttonId + '"', 
+        submitButtons: buttonId, 
     }).on('success.form.bv', function(event) {
         event.preventDefault();
 
