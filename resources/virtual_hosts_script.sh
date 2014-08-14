@@ -30,10 +30,10 @@ MAIN_CONF="<VirtualHost *:80>
     DocumentRoot /var/www/html/bitpieces.com/public_html
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-      <Directory /var/www/html/bitpieces.com/public_html>
-      Options Indexes FollowSymLinks
-        Require all granted
-    </Directory>
+     # <Directory /var/www/html/bitpieces.com/public_html>
+     # Options Indexes FollowSymLinks
+     #   Require all granted
+    #Directory>
 </VirtualHost>
 "
 
@@ -46,10 +46,10 @@ TEST_CONF="<VirtualHost *:80>
     DocumentRoot /var/www/html/test.bitpieces.com/public_html
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-      <Directory /var/www/html/test.bitpieces.com/public_html>
-      Options Indexes FollowSymLinks
-        Require all granted
-    </Directory>
+      #<Directory /var/www/html/test.bitpieces.com/public_html>
+      #Options Indexes FollowSymLinks
+      #  Require all granted
+    #</Directory>
 </VirtualHost>
 "
 
