@@ -1258,7 +1258,7 @@ public class WebCommon {
 				WebTools.recaptcha(req.url(), req.body());
 
 				// Create the user
-				UID uid = DBActions.createUserRealFromAjax(req.body());
+				UID uid = DBActions.createUserFromAjax(req.body());
 
 				dbClose();
 
@@ -1289,7 +1289,7 @@ public class WebCommon {
 				WebTools.recaptcha(req.url(), req.body());
 
 				// Create the user
-				UID uid = DBActions.createCreatorRealFromAjax(req.body());
+				UID uid = DBActions.createCreatorFromAjax(req.body());
 
 				dbClose();
 

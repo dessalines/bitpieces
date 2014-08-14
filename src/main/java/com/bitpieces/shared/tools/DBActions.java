@@ -442,41 +442,9 @@ public class DBActions {
 
 	}
 
-	public static UID createUserDevFromAjax(String reqBody) {
 
 
-		// create user 
-		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
-
-		// Create the user 
-		try {
-			User user = User.createIt(
-					"username", postMap.get("username"),
-					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
-					"email", postMap.get("email"));
-
-			// Give them the padowan badge
-			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
-			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
-
-			// Give them $100BTC in play money
-			makeDepositFake(user.getId().toString(), .1d, "fakeCbTid" + postMap.get("username"));
-
-
-			UID uid = new UID(UserType.User, 
-					String.valueOf(user.getId()),
-					user.getString("username"));
-			return uid;
-
-		} catch (org.javalite.activejdbc.DBException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-
-	}
-
-	public static UID createUserRealFromAjax(String reqBody) {
+	public static UID createUserFromAjax(String reqBody) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 
@@ -486,7 +454,8 @@ public class DBActions {
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"),
-					"local_currency_id", usd.getId());
+					"local_currency_id", usd.getId(),
+					"precision_", 2);
 
 			// Give them the padowan badge
 			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
@@ -505,40 +474,8 @@ public class DBActions {
 
 	}
 
-	public static UID createCreatorDevFromAjax(String reqBody) {
 
-
-		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
-
-		// Create the required fields 
-		try {
-			// The default currency is BTC
-			Currencies usd = Currencies.findFirst("iso=?", "USD");
-
-
-			Creator creator = Creator.createIt(
-					"username", postMap.get("username"),
-					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
-					"email", postMap.get("email"),
-					"local_currency_id", usd.getId());
-
-
-
-			UID uid = new UID(UserType.Creator, 
-					String.valueOf(creator.getId()), 
-					creator.getString("username"));
-			return uid;
-
-		} catch (org.javalite.activejdbc.DBException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-
-	}
-
-
-	public static UID createCreatorRealFromAjax(String reqBody) {
+	public static UID createCreatorFromAjax(String reqBody) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
 
@@ -553,7 +490,8 @@ public class DBActions {
 					"username", postMap.get("username"),
 					"password_encrypted", Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password")),
 					"email", postMap.get("email"),
-					"local_currency_id", usd.getId());
+					"local_currency_id", usd.getId(),
+					"precision_", 2);
 
 
 

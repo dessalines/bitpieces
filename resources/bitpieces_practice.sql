@@ -84,7 +84,7 @@ CREATE TABLE users
    email VARCHAR(56) UNIQUE NOT NULL,
    local_currency_id int(11) NOT NULL DEFAULT 1,
    FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
-   precision_ int(11) NOT NULL DEFAULT 6 ,
+   precision_ int(11) NOT NULL DEFAULT 4 ,
 --   local_timezone_id int(11) DEFAULT 1 NOT NULL,
 --   FOREIGN KEY (local_timdezone_id) REFERENCES timezones(id),
    created_at TIMESTAMP NOT NULL DEFAULT 0,
