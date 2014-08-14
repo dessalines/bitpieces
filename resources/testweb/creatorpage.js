@@ -225,7 +225,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
                 $(modalId).modal('hide');
-                $(formId)[0].reset();
+                // $(formId)[0].reset();
 
                 toastr.success(data);
 
