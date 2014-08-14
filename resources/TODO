@@ -42,7 +42,8 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 + Get testing working on remote first
 + Add hrefs to all tables with user or creator info
 + Change raise funds to a modal once your page is done
-- Setup DNS
-- Virtual private servers to folders
-- setup test.bitpieces.com
++ Setup DNS
++ Virtual private servers to folders
++ setup test.bitpieces.com
 - setup ssl on bitpieces.com
+- create badges
