@@ -152,6 +152,9 @@ public class Tables {
 	@Table("prices")
 	public static class Prices extends Model {}
 	
+	@Table("prices_current")
+	public static class Prices_current extends Model {}
+	
 	@Table("worth")
 	public static class Worth extends Model {}
 	

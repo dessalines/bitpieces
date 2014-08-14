@@ -50,6 +50,7 @@ import com.bitpieces.shared.Tables.Pieces_owned_value_current;
 import com.bitpieces.shared.Tables.Pieces_owned_value_current_by_creator;
 import com.bitpieces.shared.Tables.Pieces_owned_value_current_by_owner;
 import com.bitpieces.shared.Tables.Prices;
+import com.bitpieces.shared.Tables.Prices_current;
 import com.bitpieces.shared.Tables.Prices_for_user;
 import com.bitpieces.shared.Tables.Rewards_earned_accum;
 import com.bitpieces.shared.Tables.Rewards_earned_total;
@@ -1265,6 +1266,27 @@ public class WebTools {
 			String val = list.get(0).getString("reward_per_piece_per_year");
 			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
 			return json;
+		} else {
+			return "0";
+		}
+
+	}
+	
+	public static String getRewardsYieldCurrentJson(String creatorName, UID uid, UnitConverter sf) {
+
+		List<Model> list = Rewards_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
+		Double priceCurrent = Prices_current.findFirst("creators_name=?",creatorName).getDouble("price_per_piece");
+		UsersSettings settings = new UsersSettings(null);
+		if (uid != null) {
+			settings = new UsersSettings(uid);
+		} 
+		if (list.size() > 0) {
+
+			Double reward = list.get(0).getDouble("reward_per_piece_per_year");
+			String val = String.valueOf(reward*100d/priceCurrent);
+			String json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
+			
+			return json + "%";
 		} else {
 			return "0";
 		}

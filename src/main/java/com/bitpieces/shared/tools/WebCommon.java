@@ -842,6 +842,28 @@ public class WebCommon {
 			return json;
 
 		});
+		
+		get("/:creator/get_rewards_yield_current", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			String json = null;
+			String creator = req.params(":creator");
+
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+			try {			
+
+				dbInit(prop);
+
+				// get the creator id from the token	
+				json = WebTools.getRewardsYieldCurrentJson(creator, uid, sf);
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+			return json;
+
+		});
 
 		get("/:creator/get_rewards_owed_to_user/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
