@@ -229,7 +229,7 @@ public class WebTools {
 			pieces = Integer.valueOf(postMap.get("raisePieces"));
 			price = Double.valueOf(postMap.get("raisePrice"));
 		}
-		
+
 		Double btcIssuePrice = price;
 		String message = null;
 
@@ -356,14 +356,14 @@ public class WebTools {
 
 
 		String timeStr = Tools.SDF.get().format(new Date());
-		
+
 		DBActions.makeOrUpdateOrder("fakeCbTid" + timeStr, "ofake1"+ timeStr);
 		DBActions.makeDepositFake(uid.getId(),btcAmount, "fakeCbTid" + timeStr);
 
 		return message;
 
 	}
-	
+
 	public static String makeWithdrawalFake(UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		UsersSettings settings = new UsersSettings(uid);
@@ -383,7 +383,7 @@ public class WebTools {
 			message = btcAmount + " BTC withdrew";
 		}
 
-	
+
 		DBActions.userWithdrawalFake(uid.getId(), btcAmount);
 
 		return message;
@@ -691,9 +691,12 @@ public class WebTools {
 		// First fetch from the table
 		List<Model> list = Users_funds_accum.find("owners_name=?", userName);
 
-		return createHighChartsJSONForSingleCreatorV2(list, "time_", "funds_accum", "Funds",
-				sf, settings.getPrecision(), settings.getIso());
-
+		if (list.size() > 0 ) {
+			return createHighChartsJSONForSingleCreatorV2(list, "time_", "funds_accum", "Funds",
+					sf, settings.getPrecision(), settings.getIso());
+		} else {
+			return "0";
+		}
 
 	}
 
@@ -1271,7 +1274,7 @@ public class WebTools {
 		}
 
 	}
-	
+
 	public static String getRewardsYieldCurrentJson(String creatorName, UID uid, UnitConverter sf) {
 
 		List<Model> list = Rewards_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
@@ -1285,9 +1288,9 @@ public class WebTools {
 			Double reward = list.get(0).getDouble("reward_per_piece_per_year");
 			Double yield = reward*100d/priceCurrent;
 			String json = new DecimalFormat("###,###.##").format(yield);
-			
-			
-			
+
+
+
 			return json + "%";
 		} else {
 			return "0";
@@ -1674,13 +1677,13 @@ public class WebTools {
 
 	public static String createHighChartsJSONForCurrentV2(List<Model> list, 
 			String valueColName, String creatorsIdentifier, UnitConverter sf, Integer precision, String iso) {
-	
+
 		List<Map<String, String>> lom = doUnitConversions(list, sf, 19, iso, true);
-	
+
 		List<Object[]> data = new ArrayList<Object[]>();
-	
+
 		for (Map<String, String> cMap : lom) {
-	
+
 			String valStr = cMap.get(valueColName);
 			valStr = valStr.replaceAll("[^\\d.]", "");
 			Double val = Double.parseDouble(valStr);
@@ -1688,11 +1691,11 @@ public class WebTools {
 			Object[] pair = {cCreatorsId, val};
 			data.add(pair);
 		}
-	
+
 		String json = Tools.GSON.toJson(data);
 		System.out.println(json);
 		return json;
-	
+
 	}
 
 	@Deprecated
