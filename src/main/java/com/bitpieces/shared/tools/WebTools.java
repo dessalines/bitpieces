@@ -1672,6 +1672,29 @@ public class WebTools {
 
 	}
 
+	public static String createHighChartsJSONForCurrentV2(List<Model> list, 
+			String valueColName, String creatorsIdentifier, UnitConverter sf, Integer precision, String iso) {
+	
+		List<Map<String, String>> lom = doUnitConversions(list, sf, 19, iso, true);
+	
+		List<Object[]> data = new ArrayList<Object[]>();
+	
+		for (Map<String, String> cMap : lom) {
+	
+			String valStr = cMap.get(valueColName);
+			valStr = valStr.replaceAll("[^\\d.]", "");
+			Double val = Double.parseDouble(valStr);
+			String cCreatorsId = cMap.get(creatorsIdentifier);
+			Object[] pair = {cCreatorsId, val};
+			data.add(pair);
+		}
+	
+		String json = Tools.GSON.toJson(data);
+		System.out.println(json);
+		return json;
+	
+	}
+
 	@Deprecated
 	public static String createHighChartsJSONForMultipleCreators(List<Model> list, String dateColName,
 			String valueColName, String creatorsIdentifier) {
@@ -1804,31 +1827,6 @@ public class WebTools {
 		return arrayStr;
 
 	}
-
-	public static String createHighChartsJSONForCurrentV2(List<Model> list, 
-			String valueColName, String creatorsIdentifier, UnitConverter sf, Integer precision, String iso) {
-
-		List<Map<String, String>> lom = doUnitConversions(list, sf, precision, iso, true);
-
-		List<Object[]> data = new ArrayList<Object[]>();
-
-		for (Map<String, String> cMap : lom) {
-
-			String valStr = cMap.get(valueColName);
-			valStr = valStr.replaceAll("[^\\d.]", "");
-			Double val = Double.parseDouble(valStr);
-			String cCreatorsId = cMap.get(creatorsIdentifier);
-			Object[] pair = {cCreatorsId, val};
-			data.add(pair);
-		}
-
-		String json = Tools.GSON.toJson(data);
-		System.out.println(json);
-		return json;
-
-	}
-
-
 
 	// Sample highcharts data
 	// http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/highcharts/series/data-array-of-arrays-datetime/
