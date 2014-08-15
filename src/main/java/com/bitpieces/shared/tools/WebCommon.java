@@ -1279,7 +1279,7 @@ public class WebCommon {
 				// Verify the recaptcha
 				WebTools.recaptcha(req.url(), req.body());
 
-				System.out.println("done with recaptcha");
+	
 				// Create the user
 				UID uid = DBActions.createUserFromAjax(req.body());
 
