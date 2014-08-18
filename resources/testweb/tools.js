@@ -657,6 +657,10 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
 
                 $(formId)[0].reset();
 
+                // refresh the page, too much info has now changed
+                window.setTimeout(function() {
+                   location.reload();
+                }, 1500);
 
                 console.log(document.cookie);
 
