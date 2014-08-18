@@ -14,7 +14,7 @@
 
      .btn-default {
 
-
+      position:relative; 
       bottom:0;
      }
      img {
