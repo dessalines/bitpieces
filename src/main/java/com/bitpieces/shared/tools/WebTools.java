@@ -1276,23 +1276,26 @@ public class WebTools {
 	}
 
 	public static String getRewardsYieldCurrentJson(String creatorName, UID uid, UnitConverter sf) {
+		try {
+			List<Model> list = Rewards_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
+			Double priceCurrent = Prices_current.findFirst("creators_name=?",creatorName).getDouble("price_per_piece");
+			UsersSettings settings = new UsersSettings(null);
+			if (uid != null) {
+				settings = new UsersSettings(uid);
+			} 
+			if (list.size() > 0) {
 
-		List<Model> list = Rewards_view.find("creators_name=?",  creatorName).orderBy("time_ desc").limit(1);
-		Double priceCurrent = Prices_current.findFirst("creators_name=?",creatorName).getDouble("price_per_piece");
-		UsersSettings settings = new UsersSettings(null);
-		if (uid != null) {
-			settings = new UsersSettings(uid);
-		} 
-		if (list.size() > 0) {
-
-			Double reward = list.get(0).getDouble("reward_per_piece_per_year");
-			Double yield = reward*100d/priceCurrent;
-			String json = new DecimalFormat("###,###.##").format(yield);
+				Double reward = list.get(0).getDouble("reward_per_piece_per_year");
+				Double yield = reward*100d/priceCurrent;
+				String json = new DecimalFormat("###,###.##").format(yield);
 
 
 
-			return json + "%";
-		} else {
+				return json + "%";
+			} else {
+				return "0";
+			}
+		} catch (NullPointerException e) {
 			return "0";
 		}
 
