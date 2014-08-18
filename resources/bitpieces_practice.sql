@@ -1283,7 +1283,8 @@ pieces_owned_value_current_by_creator.value_total_current as worth_current,
 prices_current.price_per_piece as price_current,
 rewards_current.reward_per_piece_per_year as reward_current,
 CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
-backers_current_count.number_of_backers
+backers_current_count.number_of_backers,
+
 from creators
 left join pieces_owned_value_current_by_creator
 on pieces_owned_value_current_by_creator.creators_id = creators.id
@@ -1297,6 +1298,8 @@ inner join categories on
 creators_categories.categories_id = categories.id
 left join prices_current
 on creators.username = prices_current.creators_name
+left join creators_safety_current
+on creators.username = creators_safety_current.creators_name
 group by creators.id;
 
 
