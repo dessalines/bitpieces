@@ -11,6 +11,12 @@
      margin-right: 18px;
 
      }*/
+
+     .btn-default {
+
+      position:absolute; 
+      bottom:0;
+     }
      img {
       width:  auto;
       height: auto;
