@@ -376,7 +376,7 @@ CREATE TABLE sales_from_creators
 
 CREATE TABLE rewards
 (
-   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,rew
    creators_id int(11) NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    time_ DATETIME NOT NULL,
@@ -702,7 +702,7 @@ select rewards.creators_id, username as creators_name, time_, reward_per_piece_p
 from rewards
 inner join creators
 on rewards.creators_id = creators.id
-order by username, time_;
+order by username, time_ desc;
 
 
 
