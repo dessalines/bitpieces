@@ -5,7 +5,7 @@ $(document).ready(function() {
     setupMiniSubmenu();
     navigateWithParams();
 
-    setupCurrFields();
+
 
 
     // var creatorName = window.location.pathname.split('/').pop();
@@ -14,6 +14,7 @@ $(document).ready(function() {
 
 
     if (sessionId != null && userType == 'User') {
+        setupCurrFields();
         showHideButtons(creatorName);
         bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
         bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
@@ -30,6 +31,7 @@ $(document).ready(function() {
     var userName = getCookie('username');
     console.log('un = ' + userName);
     if (userName == creatorName) {
+        setupCurrFields();
         // show the save btn
         setupModal("issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
 
