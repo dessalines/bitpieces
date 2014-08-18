@@ -609,6 +609,10 @@ function setupCurrFields() {
         console.log("iso = " + currIso);
         $("#depositSymbol").text(currIso);
         $("#withdrawSymbol").text(currIso);
+        $("#bidSymbol").text(currIso);
+        $("#askSymbol").text(currIso);
+        $("#buySymbol").text(currIso);
+
     });
 }
 

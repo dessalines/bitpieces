@@ -5,6 +5,8 @@ $(document).ready(function() {
     setupMiniSubmenu();
     navigateWithParams();
 
+    setupCurrFields();
+
 
     // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = window.location.pathname.split('/').pop();
@@ -126,7 +128,7 @@ function showHideButtons(creatorName) {
                 var usersFunds = parseFloat(fundsNum);
                 // $('[name="usersFunds"]').text(result);
                 $('[name="usersFunds"]').text(result);
-                $('#' + e + 'Symbol').text(currSymbol);
+                // $('#' + e + 'Symbol').text(currSymbol);
                 $('[name="' + e + 'Pieces' + '"],[name="' + e + '"]').bind('keyup', function(f) {
 
                     var buyPieces = parseFloat($(this).val());
@@ -179,7 +181,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
     $(formId).bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
-        submitButtons: buttonId, 
+        submitButtons: buttonId,
     }).on('success.form.bv', function(event) {
         event.preventDefault();
 
