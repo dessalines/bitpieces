@@ -128,7 +128,10 @@ function showHideButtons(creatorName) {
             var types = ['bid', 'ask', 'buy'];
             types.forEach(function(e) {
                 var fundsNum = result.replace(/[^0-9\.]+/g, "");
-                var currSymbol = result[0];
+                var currSymbol = "";
+                simpleFetch(userName + '/get_price_per_piece_current').done(function(result) {
+                    currSymbol = result[0];
+                });
                 var usersFunds = parseFloat(fundsNum);
                 // $('[name="usersFunds"]').text(result);
                 $('[name="usersFunds"]').text(result);
