@@ -28,7 +28,7 @@ $(document).ready(function() {
         '#users_bids_asks_current_table',
         "#remove_button", sessionId);
 
-
+    setupCurrFields();
 
     // TODO do this in a paged way
     // var template = $('#users_bids_asks_current_template').html();
@@ -53,10 +53,10 @@ function setupWithdrawForm() {
     });
 
     var userName = getCookie('username');
+
     simpleFetch(userName + '/get_users_funds_current').done(function(result) {
         var fundsNum = result.replace(/[^0-9\.]+/g, "");
         var usersFunds = parseFloat(fundsNum);
-        $("#withdrawSymbol").text(result[0]);
 
         $("#funds").text(result);
         $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + result);

@@ -600,11 +600,7 @@ function navigateWithParams() {
     });
 }
 
-function setupDepositButton(shortUrl, btnId, formId, modalId) {
-    var userName = getCookie("username");
-    simpleFetch(userName + '/get_users_funds_current').done(function(result) {
-        $('[name="depositAmount"]').attr('placeholder', 'Current funds:' + result);
-    });
+function setupCurrFields() {
     getJson('/get_users_settings').done(function(e) {
 
         // this is handled in userdashboard_settings.js
@@ -612,8 +608,17 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
         var currIso = json['curr_iso'];
         console.log("iso = " + currIso);
         $("#depositSymbol").text(currIso);
-
+        $("#withdrawSymbol").text(currIso);
     });
+}
+
+
+function setupDepositButton(shortUrl, btnId, formId, modalId) {
+    var userName = getCookie("username");
+    simpleFetch(userName + '/get_users_funds_current').done(function(result) {
+        $('[name="depositAmount"]').attr('placeholder', 'Current funds:' + result);
+    });
+
 
     // !!!!!!They must have names unfortunately
     $(btnId).click(function(event) {
