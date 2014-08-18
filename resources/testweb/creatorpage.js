@@ -63,7 +63,8 @@ $(document).ready(function() {
     // The date picker
     $('.datepicker').pickadate({
         format: 'yyyy-mm-dd',
-        container: '#wrapper'
+        container: '#wrapper',
+        editable: true
     });
 
 
