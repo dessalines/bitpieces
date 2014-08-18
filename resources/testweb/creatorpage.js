@@ -131,7 +131,6 @@ function showHideButtons(creatorName) {
                 var currSymbol = "";
                 simpleFetch(creatorName + '/get_price_per_piece_current').done(function(pppc) {
                     currSymbol = pppc[0];
-                    console.log(pppc);
                 });
                 var usersFunds = parseFloat(fundsNum);
                 // $('[name="usersFunds"]').text(result);
@@ -156,10 +155,10 @@ function showHideButtons(creatorName) {
                         } else {
                             fundsLeft = usersFunds - total;
                         }
-                               console.log(total);
-                        console.log(fundsNum);
-                            console.log(usersFunds);
-                            console.log(fundsLeft);
+                        //        console.log(total);
+                        // console.log(fundsNum);
+                        //     console.log(usersFunds);
+                        //     console.log(fundsLeft);
                         //     console.log(e);
                         $('#' + e + 'FundsLeft').text(currSymbol + fundsLeft);
 
