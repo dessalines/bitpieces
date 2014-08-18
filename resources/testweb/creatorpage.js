@@ -129,8 +129,8 @@ function showHideButtons(creatorName) {
             types.forEach(function(e) {
                 var fundsNum = result.replace(/[^0-9\.]+/g, "");
                 var currSymbol = "";
-                simpleFetch(userName + '/get_price_per_piece_current').done(function(result) {
-                    currSymbol = result[0];
+                simpleFetch(userName + '/get_price_per_piece_current').done(function(e) {
+                    currSymbol = e[0];
                 });
                 var usersFunds = parseFloat(fundsNum);
                 // $('[name="usersFunds"]').text(result);
