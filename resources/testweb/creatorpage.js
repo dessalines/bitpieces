@@ -129,7 +129,7 @@ function showHideButtons(creatorName) {
             types.forEach(function(e) {
                 var fundsNum = result.replace(/[^0-9\.]+/g, "");
                 var currSymbol = "";
-                simpleFetch(userName + '/get_price_per_piece_current').done(function(pppc) {
+                simpleFetch(creatorName + '/get_price_per_piece_current').done(function(pppc) {
                     currSymbol = pppc[0];
                     console.log(pppc);
                 });
