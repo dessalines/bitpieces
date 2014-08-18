@@ -152,9 +152,10 @@ function showHideButtons(creatorName) {
                         } else {
                             fundsLeft = usersFunds - total;
                         }
-                        //        console.log(total);
+                               console.log(total);
                         console.log(fundsNum);
                             console.log(usersFunds);
+                            console.log(fundsLeft);
                         //     console.log(e);
                         $('#' + e + 'FundsLeft').text(currSymbol + fundsLeft);
 
