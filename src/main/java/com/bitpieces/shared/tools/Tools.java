@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -180,8 +181,9 @@ public class Tools {
 			String[] keyValue = split[i].split("=");
 			try {
 				postMap.put(URLDecoder.decode(keyValue[0], "UTF-8"),URLDecoder.decode(keyValue[1], "UTF-8"));
-			} catch (UnsupportedEncodingException e) {
+			} catch (UnsupportedEncodingException |ArrayIndexOutOfBoundsException e) {
 				e.printStackTrace();
+				throw new NoSuchElementException(e.getMessage());
 			}
 		}
 
