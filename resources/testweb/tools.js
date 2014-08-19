@@ -3,9 +3,15 @@ var sparkService = "http://test.bitpieces.com:4566/"
 var cookie_path_name = "test";
 
 var pageNumbers = {};
+
+
+
+
+
 var extractData = function(node) {
     return $(node).text().replace(/[^0-9.]/g, '');
 }
+
 
 function expireTimeString(seconds) {
     var now = new Date();
