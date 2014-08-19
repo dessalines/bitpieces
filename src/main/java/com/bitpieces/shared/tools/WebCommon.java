@@ -1143,15 +1143,19 @@ public class WebCommon {
 		
 		post("/recover_password", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-
+			try {
 			dbInit(prop);
 
 			String message = WebTools.recoverPassword(req.body());
 
 			dbClose();
-
-
+			
 			return message;
+			
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				return e.getMessage();
+			}
 
 		});
 
