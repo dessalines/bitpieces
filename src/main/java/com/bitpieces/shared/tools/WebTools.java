@@ -853,10 +853,10 @@ public class WebTools {
 		String loginField = postMap.get("username");
 		
 		Model user = null;
-		user = User.findFirst("username = ? OR email = ?", loginField);
+		user = User.findFirst("username = ? OR email = ?", loginField, loginField );
 		
 		if (user == null) {
-			user = Creator.findFirst("username = ? OR email = ?", loginField);
+			user = Creator.findFirst("username = ? OR email = ?", loginField, loginField);
 			
 			if (user == null) {
 				throw new NoSuchElementException("No such user exists");
