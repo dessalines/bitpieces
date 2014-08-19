@@ -1140,6 +1140,20 @@ public class WebCommon {
 			return message;
 
 		});
+		
+		post("/recover_password", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+
+			dbInit(prop);
+
+			String message = WebTools.recoverPassword(req.body());
+
+			dbClose();
+
+
+			return message;
+
+		});
 
 		post("/save_settings", (req, res) -> {
 			String json = null;

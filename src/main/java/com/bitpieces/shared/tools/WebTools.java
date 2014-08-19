@@ -845,6 +845,39 @@ public class WebTools {
 		return "Settings updated";
 
 	}
+	
+	public static String recoverPassword(String body) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		
+		// First, check to see if the user or creator exists:
+		String name = postMap.get("username");
+		
+		Model user = null;
+		user = User.findFirst("username = ?", name);
+		
+		if (user == null) {
+			user = Creator.findFirst("username = ?", name);
+			
+			if (user == null) {
+				throw new NoSuchElementException("No such user exists");
+			}
+		}
+		
+		// Now change the user's pass
+		String newPass = Tools.generateSecureRandom();
+		String encryptedPass = Tools.PASS_ENCRYPT.encryptPassword(newPass);
+		
+		user.set("password_encrypted", encryptedPass);
+		user.saveIt();
+		
+		// Now email the user their pass
+		String email = user.getString("email");
+		
+		String message = Tools.emailRecoveryPassword(email, newPass);
+		
+		return message;
+		
+	}
 
 
 

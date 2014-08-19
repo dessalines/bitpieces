@@ -37,6 +37,16 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class Tools {
 	public static final String ROOT_DIR = "/home/tyler/git/bitpieces_practice/";
 
@@ -46,14 +56,14 @@ public class Tools {
 	public static final Gson GSON2 = new GsonBuilder().setPrettyPrinting().create();
 
 	public static final ObjectMapper JACKSON = new ObjectMapper();
-	
+
 	public static final ThreadLocal<SimpleDateFormat> SDF = new ThreadLocal<SimpleDateFormat>(){
 		@Override
 		protected SimpleDateFormat initialValue() {
 			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		}
 	};
-	
+
 	public static final ThreadLocal<SimpleDateFormat> SDF2 = new ThreadLocal<SimpleDateFormat>(){
 		@Override
 		protected SimpleDateFormat initialValue() {
@@ -72,10 +82,10 @@ public class Tools {
 	public static final List<String> CATEGORIES = Arrays.asList("Visual Arts", "Comics", "Design", "Dance", "Education", "Film and Video", 
 			"Environment", "Music", "Fashion", "Tech", "Photography", "Theatre", "Food", "Health", "Writing and Lit", "Sports",
 			"Small Business", "Gaming", "Crafts", "Journalism");
-	
+
 	public static final Map<String, String> CURRENCY_MAP = ImmutableMap.<String, String>builder()
 			.put("BTC", "Bitcoin")
-//			.put("mBTC", "MilliBits")
+			//			.put("mBTC", "MilliBits")
 			.put("AUD","Australian Dollar")
 			.put( "BRL", "Brazilian Real")
 			.put( "CAD", "Canadian Dollar")
@@ -98,10 +108,10 @@ public class Tools {
 			.put( "USD", "United States Dollar")
 			.put( "ZAR", "South African Rand")
 			.build();
-	
+
 	public static final Map<String, String> CURRENCY_UNICODES =  ImmutableMap.<String, String>builder()
 			.put("BTC", "\u0E3F")
-//			.put("mBTC", "m\u0E3F")
+			//			.put("mBTC", "m\u0E3F")
 			.put("AUD","\u0024")
 			.put( "BRL", "R\u0024")
 			.put( "CAD", "\u0024")
@@ -124,8 +134,8 @@ public class Tools {
 			.put( "USD", "\u0024")
 			.put( "ZAR", "R")
 			.build();
-	
-	
+
+
 	public static void writeFile(String path, String content) {
 
 		try {
@@ -174,7 +184,7 @@ public class Tools {
 
 
 	public static final Map<String, String> createMapFromAjaxPost(String reqBody) {
-//		System.out.println(reqBody);
+		//		System.out.println(reqBody);
 		Map<String, String> postMap = new HashMap<String, String>();
 		String[] split = reqBody.split("&");
 		for (int i = 0; i < split.length; i++) {
@@ -192,19 +202,19 @@ public class Tools {
 		return postMap;
 
 	}
-	
+
 	public static final Integer getExpireTime(String reqBody) {
 		Map<String, String> map = createMapFromAjaxPost(reqBody);
-		
+
 		if (map.get("remember") != null) {
 			return WebCommon.cookieExpiration(1440);
 		} else {
 			return WebCommon.cookieExpiration(20);
 		}
 	}// another
-	
+
 	public static final List<String> createArrayFromAjaxPostSelect(String reqBody) {
-//		System.out.println(reqBody);
+		//		System.out.println(reqBody);
 		List<String> list = new ArrayList<>();
 		System.out.println(reqBody);
 		String[] split = reqBody.split("&");
@@ -259,7 +269,7 @@ public class Tools {
 			os.writeObject(obj); 
 
 			os.flush(); 
-			
+
 			os.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -277,7 +287,7 @@ public class Tools {
 			// Step 2. Create an object input stream 
 			ObjectInputStream ins = new ObjectInputStream(in); 
 			retObj = (Map) ins.readObject();
-			
+
 
 			in.close();
 			ins.close();
@@ -292,45 +302,91 @@ public class Tools {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			System.out.println("Wrote a new file @ " + file.getAbsolutePath());
-			
-			
+
+
 		}
 		return retObj;
 	}
-	
 
-		
-		public static List<Map<String, String>> ListOfMapsPOJO(String json) {
 
-			ObjectMapper mapper = new ObjectMapper();
-		 
-			try {
 
-				List<Map<String,String>> myObjects = mapper.readValue(json, 
-						new TypeReference<ArrayList<HashMap<String,String>>>(){});
-				
-				 return myObjects;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return null;
+	public static List<Map<String, String>> ListOfMapsPOJO(String json) {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+
+			List<Map<String,String>> myObjects = mapper.readValue(json, 
+					new TypeReference<ArrayList<HashMap<String,String>>>(){});
+
+			return myObjects;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		public static List<String> getColumnsFromListOfMaps(List<Map<String, String>> lom) {
-			Map<String, String> cMap = lom.get(0);
-			List<String> cols = new ArrayList<>();
-			for (Entry<String, String> e : cMap.entrySet()) {
-				cols.add(e.getKey());
-			}
-			return cols;
-		}
-		
-		
-
-		
+		return null;
 	}
+
+	public static List<String> getColumnsFromListOfMaps(List<Map<String, String>> lom) {
+		Map<String, String> cMap = lom.get(0);
+		List<String> cols = new ArrayList<>();
+		for (Entry<String, String> e : cMap.entrySet()) {
+			cols.add(e.getKey());
+		}
+		return cols;
+	}
+
+	public static String emailRecoveryPassword(String email, String newPass) {
+
+		Properties props = Tools.loadProperties("bitpieces_email.properties");
+		final String username = props.getProperty("username");
+		final String password =  props.getProperty("password");
+
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+				new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("Noreply-bitpieces@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(email));
+			message.setSubject("Bitpieces Recovery Password");
+
+			String text = "Your new login information is:\n" +
+					"Username : " + email + "\n" + 
+					"Password: " + newPass + "\n\n" + 
+					"You can change your password from your settings page.";
+			message.setText(text);
+
+			Transport.send(message);
+
+			System.out.println("Done");
+
+		} catch (MessagingException e) {
+			throw new NoSuchElementException(e.getMessage());
+		}
+
+		String message = "email sent to " + email;
+
+		return message;
+
+	}
+
+
+
+
+}
 
 
 
