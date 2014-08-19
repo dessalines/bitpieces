@@ -21,7 +21,7 @@ $(document).ready(function() {
     showHideElementsLoggedIn();
     showRecaptcha("recaptcha_div");
 
-    console.log(document.cookie);
+    // console.log(document.cookie);
 
     a = $('#registerForm').bootstrapValidator({
         message: 'This value is not valid',
@@ -64,7 +64,7 @@ function setupRegisterAjax() {
 
     // serializes the form's elements.
     var formData = $("#registerForm").serializeArray();
-    console.log(formData);
+    // console.log(formData);
 
     // Loading
     $(this).button('loading');
@@ -92,7 +92,7 @@ function setupRegisterAjax() {
 
             var userName = getCookie("username");
             
-            console.log(document.cookie);
+            // console.log(document.cookie);
             setTimeout(
                 function() {
                     window.location.replace("/users/overview/" + userName);
@@ -115,7 +115,7 @@ function setupSigninAjax() {
 
     // serializes the form's elements.
     var formData = $("#loginForm").serializeArray();
-    console.log(formData);
+    // console.log(formData);
 
     // Loading
     $(this).button('loading');
@@ -124,7 +124,7 @@ function setupSigninAjax() {
     var url;
     // Decide if its a creator or not
     var isCreator = $("#creatorCheckbox").is(':checked')
-    console.log(isCreator);
+    // console.log(isCreator);
     if (isCreator) {
         url = sparkService + "creatorlogin";
     } else {
@@ -166,17 +166,17 @@ function setupSigninAjax() {
 
 
 
-            console.log(document.cookie);
-            console.log(formData.username);
+            // console.log(document.cookie);
+            // console.log(formData.username);
 
             var userName = getCookie("username");
             // GO to the dashboard
             if (!isCreator) {
                 window.location.replace("/users/overview/" + userName);
             } else {
-                console.log(formData);
+                // console.log(formData);
                 var url = "/creators/main/" + userName;
-                console.log(url);
+                // console.log(url);
                 window.location.replace(url);
 
             }

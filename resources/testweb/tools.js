@@ -235,7 +235,7 @@ function fillTableFromMustache(url, templateHtml, divId, tableId) {
             var rendered = Mustache.render(templateHtml, jsonObj);
             $(divId).html(rendered);
             $(tableId).tablesorter({
-                debug: true,
+                debug: false,
                 textExtraction: extractData
                 //     headers: { 
                 //   0: {       // Change this to your column position
