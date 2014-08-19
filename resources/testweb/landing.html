@@ -344,6 +344,7 @@
                   </div>
 
 
+                  <a href="#" data-toggle="modal" data-target="#recoverPasswordModal">Recover password </a>
                   <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                       <button id="signinBtn" type="submit" class="btn btn-primary">Sign in</button>
@@ -523,6 +524,59 @@
 
    </div>
  </div>
+</div>
+
+<div id="recoverPasswordModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>        
+        <h4 class="modal-title">Recover Password</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text">
+         Enter your username below to receive your login information
+       </div>
+       <form id="registerForm" class="form-horizontal" role="form"
+       data-bv-message="This value is not valid"
+       data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+
+       <div class="form-group">
+         <label for="inputUsername4" class="col-sm-2 control-label">Username</label>
+         <div class="col-sm-10">
+          <input name="username" type="Username" class="form-control" id="inputUsername4" placeholder="Username"
+          data-bv-message="The username is not valid"
+
+          data-bv-notempty="true"
+          data-bv-notempty-message="The username is required and cannot be empty"
+
+          data-bv-regexp="true"
+          data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+          data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+
+          data-bv-stringlength="true"
+          data-bv-stringlength-min="6"
+          data-bv-stringlength-max="30"
+          data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+
+          />
+
+
+        </div> 
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button id="recoverPasswordBtn" type="submit" class="btn btn-primary">Email me</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+</div>
 </div>
 
 
