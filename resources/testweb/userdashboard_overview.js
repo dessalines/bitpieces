@@ -28,7 +28,6 @@ $(document).ready(function() {
         '#users_bids_asks_current_table',
         ".remove-button", sessionId);
 
-    if (userName == )
 
 
     // TODO do this in a paged way
