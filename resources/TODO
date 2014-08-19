@@ -36,7 +36,7 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 	- Email me when a bid or ask completes
 + a redirect on all dashboardy type pages if you're not logged in
 - Badges page
-- I forgot my password
++ I forgot my password
 + change my password
 + Get test/dev working again, remember to separate cookies
 + Create a test page, link to the main page
@@ -49,4 +49,4 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 - setup ssl on bitpieces.com
 - create badges(postpone till after launch)
 + fix tatiana suggestions
-- fix bid and ask trashcan button visible
++ fix bid and ask trashcan button visible
