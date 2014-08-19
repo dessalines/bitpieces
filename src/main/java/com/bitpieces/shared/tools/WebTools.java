@@ -850,13 +850,13 @@ public class WebTools {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		
 		// First, check to see if the user or creator exists:
-		String name = postMap.get("username");
+		String loginField = postMap.get("username");
 		
 		Model user = null;
-		user = User.findFirst("username = ?", name);
+		user = User.findFirst("username = ? OR email = ?", loginField);
 		
 		if (user == null) {
-			user = Creator.findFirst("username = ?", name);
+			user = Creator.findFirst("username = ? OR email = ?", loginField);
 			
 			if (user == null) {
 				throw new NoSuchElementException("No such user exists");

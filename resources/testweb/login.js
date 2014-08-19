@@ -90,11 +90,12 @@ function setupRegisterAjax() {
             toastr.success('Registered and logged in.')
             showHideElementsLoggedIn();
 
-
+            var userName = getCookie("username");
+            
             console.log(document.cookie);
             setTimeout(
                 function() {
-                    window.location.replace("/users/overview/" + formData[0]['value']);
+                    window.location.replace("/users/overview/" + userName);
 
                 }, 1000);
 
@@ -168,12 +169,13 @@ function setupSigninAjax() {
             console.log(document.cookie);
             console.log(formData.username);
 
+            var userName = getCookie("username");
             // GO to the dashboard
             if (!isCreator) {
-                window.location.replace("/users/overview/" + formData[0]['value']);
+                window.location.replace("/users/overview/" + userName);
             } else {
                 console.log(formData);
-                var url = "/creators/main/" + formData[0]['value'];
+                var url = "/creators/main/" + userName;
                 console.log(url);
                 window.location.replace(url);
 
