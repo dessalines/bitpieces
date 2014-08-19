@@ -26,16 +26,17 @@ $(document).ready(function() {
 
     fillTableFromMustacheSpecial(userName + '/get_users_bids_asks_current', '#users_bids_asks_current_template', '#users_bids_asks_current',
         '#users_bids_asks_current_table',
-        "#remove_button", sessionId);
+        ".remove-button", sessionId);
 
-    setupCurrFields();
+    if (userName == )
+
 
     // TODO do this in a paged way
     // var template = $('#users_bids_asks_current_template').html();
     // pageNumbers['#users_bids_asks_current_table'] = 1;
     // setupPagedTable(creatorName + '/get_users_bids_asks_current/', template, '#users_bids_asks_current', '#users_bids_asks_current_table');
 
-    simpleFetch(userName + '/get_pieces_value_current_by_owner').done(function(result) {
+        simpleFetch(userName + '/get_pieces_value_current_by_owner').done(function(result) {
         if (result == 0) {
             $('.first-timers').removeClass('hide');
         }
@@ -99,6 +100,8 @@ function showHideDepositButton() {
         $('#depositBtn').removeClass("hide");
         $('#withdrawBtn').removeClass("hide");
         setupDepositButton("make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+        setupCurrFields();
+        $('.remove-button').removeClass('hide');
     }
 
 }
