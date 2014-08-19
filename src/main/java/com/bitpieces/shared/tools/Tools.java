@@ -32,6 +32,8 @@ import org.codehaus.jackson.type.TypeReference;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
@@ -48,6 +50,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class Tools {
+	
+	static final Logger log = LoggerFactory.getLogger(Tools.class);
+	
+	
 	public static final String ROOT_DIR = "/home/tyler/git/bitpieces_practice/";
 
 	public static StrongPasswordEncryptor PASS_ENCRYPT = new StrongPasswordEncryptor();
