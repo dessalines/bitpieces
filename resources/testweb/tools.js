@@ -364,14 +364,14 @@ function setupCreatorSearch() {
         event.preventDefault();
     });
 }
-
+// CAN"T HAVE UNDERSCORES IN CLASS NAMES
 function setupMiniSubmenu() {
     $('#slide-submenu').on('click', function() {
         $(this).closest('.list-group').fadeOut('slide', function() {
             $('.mini-submenu').fadeIn();
         });
         $('#main_col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
-        $('.othermain-ol').toggleClass('col-md-offset-2 col-md-10 col-md-8');
+        $('.othermain-col').toggleClass('col-md-offset-2 col-md-10 col-md-8');
         // $('#side_col').toggleClass('span0 span3');
 
     });
