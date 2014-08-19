@@ -94,7 +94,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             var jsonObj = jQuery.parseJSON(data);
             // var jsonObj = JSON.stringify(data);
@@ -120,7 +120,7 @@ function fillUserHighChartPieChartTemplate(url, id) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             var jsonObj = jQuery.parseJSON(data);
             // var jsonObj = JSON.stringify(data);
@@ -147,7 +147,7 @@ function fillUserInfoMustache(url) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             var jsonObj = jQuery.parseJSON(data);
 
@@ -156,9 +156,9 @@ function fillUserInfoMustache(url) {
             var rendered = Mustache.render(template, jsonObj);
             $('#userDropdown').html(rendered);
 
-            console.log(jsonObj);
-            console.log(template);
-            console.log(rendered);
+            // console.log(jsonObj);
+            // console.log(template);
+            // console.log(rendered);
 
 
         },
@@ -184,9 +184,9 @@ function fillUserInfoMustacheFromCookie() {
 
 
         $("#settings").attr("href", "/users/settings/" + jsonObj);
-        console.log(jsonObj);
-        console.log(template);
-        console.log(rendered);
+        // console.log(jsonObj);
+        // console.log(template);
+        // console.log(rendered);
 
     } else {
         $('#userDropdown').html('');
@@ -223,7 +223,7 @@ function fillTableFromMustache(url, templateHtml, divId, tableId) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
@@ -243,9 +243,9 @@ function fillTableFromMustache(url, templateHtml, divId, tableId) {
                 //   } 
                 // }
             });
-            console.log(jsonObj);
-            console.log(templateHtml);
-            console.log(rendered);
+            // console.log(jsonObj);
+            // console.log(templateHtml);
+            // console.log(rendered);
 
 
         },
@@ -267,7 +267,7 @@ function fillFieldFromMustache(url, templateId, divId, isMoney) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
@@ -280,9 +280,9 @@ function fillFieldFromMustache(url, templateId, divId, isMoney) {
             Mustache.parse(template); // optional, speeds up future uses
             var rendered = Mustache.render(template, data);
             $(divId).html(rendered);
-            console.log(jsonObj);
-            console.log(template);
-            console.log(rendered);
+            // console.log(jsonObj);
+            // console.log(template);
+            // console.log(rendered);
 
 
         },
@@ -304,7 +304,7 @@ function fillJSONFieldFromMustache(url, templateId, divId, isMoney) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
@@ -317,9 +317,9 @@ function fillJSONFieldFromMustache(url, templateId, divId, isMoney) {
             Mustache.parse(template); // optional, speeds up future uses
             var rendered = Mustache.render(template, jsonObj);
             $(divId).html(rendered);
-            console.log(jsonObj);
-            console.log(template);
-            console.log(rendered);
+            // console.log(jsonObj);
+            // console.log(template);
+            // console.log(rendered);
 
 
         },
@@ -354,10 +354,10 @@ function setupCreatorSearch() {
 
     $("#creator_search").submit(function(event) {
         var formData = $("#creator_search").serializeArray();
-        console.log(formData);
+        // console.log(formData);
         var searchString = formData[0].value;
 
-        console.log(searchString);
+        // console.log(searchString);
         var url = "/creators/main/" + searchString;
         window.location.replace(url);
 
@@ -399,7 +399,7 @@ function setupLogout() {
             },
             // data: seriesData, 
             success: function(data, status, xhr) {
-                console.log(data);
+                // console.log(data);
                 // var jsonObj = JSON.parse(data);
                 // JSON.useDateParser();
                 // var jsonObj = jQuery.parseJSON(data);
@@ -407,7 +407,7 @@ function setupLogout() {
 
 
                 toastr.success(data);
-                console.log(url);
+                // console.log(url);
                 delete_cookie("authenticated_session_id");
                 delete_cookie("username");
                 delete_cookie("usertype");
@@ -447,7 +447,7 @@ function setupSummerNote(url, id, sqlColName) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
@@ -458,8 +458,8 @@ function setupSummerNote(url, id, sqlColName) {
 
 
             var mainBody = jsonObj[sqlColName];
-            console.log(jsonObj);
-            console.log(mainBody);
+            // console.log(jsonObj);
+            // console.log(mainBody);
 
             $(id).summernote({
                 height: 300, // set editor height
@@ -490,7 +490,7 @@ function saveSummerNote(shortUrl, btn, id) {
 
 
         var sHTML = $(id).code();
-        console.log(sHTML);
+        // console.log(sHTML);
 
         var btn = $(this);
         // Loading
@@ -520,7 +520,7 @@ function saveSummerNote(shortUrl, btn, id) {
 
 
 
-                console.log(document.cookie);
+                // console.log(document.cookie);
 
             },
             error: function(request, status, error) {
@@ -545,7 +545,7 @@ function fillSimpleText(url, divId) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             $(divId).html(data);
 
 
@@ -567,7 +567,7 @@ function simpleFetch(url) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log('data = ' + data);
+            // console.log('data = ' + data);
             // return data;
 
 
@@ -609,7 +609,7 @@ function setupCurrFields() {
         // this is handled in userdashboard_settings.js
         var json = JSON.parse(e);
         var currIso = json['curr_iso'];
-        console.log("iso = " + currIso);
+        // console.log("iso = " + currIso);
         $("#depositSymbol").text(currIso);
         $("#withdrawSymbol").text(currIso);
         $("#bidSymbol").text(currIso);
@@ -665,7 +665,7 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
                    location.reload();
                 }, 1500);
 
-                console.log(document.cookie);
+                // console.log(document.cookie);
 
             },
             error: function(request, status, error) {
@@ -712,13 +712,13 @@ function standardFormPost(shortUrl, formId, modalId) {
 
     // serializes the form's elements.
     var formData = $(formId).serializeArray();
-    console.log(formData);
+    // console.log(formData);
 
     // Loading
     $(this).button('loading');
 
     var url = sparkService + shortUrl; // the script where you handle the form input.
-    console.log(url);
+    // console.log(url);
     $.ajax({
         type: "POST",
         url: url,
@@ -728,7 +728,7 @@ function standardFormPost(shortUrl, formId, modalId) {
         data: formData,
         success: function(data, status, xhr) {
 
-            console.log('posted the data');
+            // console.log('posted the data');
             xhr.getResponseHeader('Set-Cookie');
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
@@ -736,13 +736,13 @@ function standardFormPost(shortUrl, formId, modalId) {
 
             $(formId)[0].reset();
             $(modalId).modal('hide');
-            console.log(modalId);
+            // console.log(modalId);
             toastr.success(data);
 
 
 
 
-            console.log(document.cookie);
+            // console.log(document.cookie);
             return data;
 
         },
@@ -766,7 +766,7 @@ function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
 
     var nextId = divId + "_pager_next";
     var prevId = divId + "_pager_prev";
-    console.log(nextId);
+    // console.log(nextId);
     fillTableFromMustache(shortUrl + pageNum,
         templateHtml, divId, tableId);
 
