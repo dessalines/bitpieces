@@ -35,7 +35,7 @@ $(document).ready(function() {
     // pageNumbers['#users_bids_asks_current_table'] = 1;
     // setupPagedTable(creatorName + '/get_users_bids_asks_current/', template, '#users_bids_asks_current', '#users_bids_asks_current_table');
 
-        simpleFetch(userName + '/get_pieces_value_current_by_owner').done(function(result) {
+    simpleFetch(userName + '/get_pieces_value_current_by_owner').done(function(result) {
         if (result == 0) {
             $('.first-timers').removeClass('hide');
         }
@@ -100,7 +100,7 @@ function showHideDepositButton() {
         $('#withdrawBtn').removeClass("hide");
         setupDepositButton("make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
         setupCurrFields();
-        $('.remove-button').removeClass('hide');
+
     }
 
 }
@@ -108,6 +108,8 @@ function showHideDepositButton() {
 
 function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonName, sessionId) {
     var url = sparkService + url // the script where you handle the form input.
+    var userName = window.location.pathname.split('/').pop();
+    var sessionUserName = getCookie("username");
     $.ajax({
         type: "GET",
         url: url,
@@ -133,6 +135,10 @@ function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonNam
             console.log(jsonObj);
             console.log(template);
             console.log(rendered);
+            if (userName == sessionUserName) {
+                $('.remove-button').removeClass("hide");
+            }
+
             $(buttonName).click(function(event) {
                 // var id2= $(this).closest("tr")
                 var row = $(this).closest("tr"); // Finds the closest row <tr> 
