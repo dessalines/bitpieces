@@ -29,7 +29,7 @@ $(document).ready(function() {
 
     // if you're this creator, then set up summer note, issue pieces button
     var userName = getCookie('username');
-    console.log('un = ' + userName);
+    // console.log('un = ' + userName);
     if (userName == creatorName) {
         setupCurrFields();
         // show the save btn
@@ -79,7 +79,7 @@ function showHideButtons(creatorName) {
     if (getCookie('usertype') == 'User') {
         // Showing or hiding the bid/ask/buy buttons
         simpleFetch(creatorName + "/get_pieces_available").done(function(result) {
-            console.log('result = ' + result);
+            // console.log('result = ' + result);
             if (result > 0) {
                 $("#buyBtn").removeClass("hide");
                 $('[name="buyPieces"]').attr('placeholder', 'There are ' + result + ' pieces left');
@@ -92,7 +92,7 @@ function showHideButtons(creatorName) {
             }
         });
         simpleFetch(creatorName + "/get_pieces_owned_total").done(function(result) {
-            console.log('result = ' + result);
+            // console.log('result = ' + result);
             if (result > 0) {
                 $('[name="bidPieces"]').attr('placeholder', 'There are ' + result + ' pieces owned');
             }
@@ -100,7 +100,7 @@ function showHideButtons(creatorName) {
 
 
         simpleFetch(userName + "/" + creatorName + "/get_pieces_owned_current").done(function(result) {
-            console.log('result = ' + result);
+            // console.log('result = ' + result);
 
             if (result > 0) {
                 $("#askBtn").removeClass("hide");
@@ -203,7 +203,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
         };
         formData.push(creator);
 
-        console.log(formData);
+        // console.log(formData);
 
         // Loading
         // $(this).button('loading');
@@ -266,7 +266,7 @@ function showHideCreatorButtons(creatorName) {
     // If its their first time, they have to raise funds, check this by getting the reward pct
     getJson(creatorName + '/get_rewards_current').done(function(e) {
         var rewardCurrent = e;
-        console.log("reward current = " + rewardCurrent);
+        // console.log("reward current = " + rewardCurrent);
         if (rewardCurrent == 0) {
             $("#raiseFundsBtn").removeClass("hide");
         } else {
@@ -287,7 +287,7 @@ function setupRaiseFunds() {
 
     }).on('success.form.bv', function(e) {
         e.preventDefault();
-        console.log('test');
+        // console.log('test');
         standardFormPost('raise_funds', "#raiseFundsForm", '#raiseFundsModal');
     });
 
@@ -349,8 +349,8 @@ function setupWithdrawalForm(creatorName) {
         var piecesOwnedTotal = parseFloat(piecesOwnedTotalStr.replace(/^\D+/g, ''));
         var rewardsPerPiecePerYear = parseFloat(rewardsPerPiecePerYearStr.replace(/^\D+/g, ''));
 
-        console.log(piecesOwnedTotalStr);
-        console.log(creatorsFunds + '|' + piecesOwnedTotal + '|' + rewardsPerPiecePerYear);
+        // console.log(piecesOwnedTotalStr);
+        // console.log(creatorsFunds + '|' + piecesOwnedTotal + '|' + rewardsPerPiecePerYear);
         // $("#creatorsFunds").text(result);
         $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + creatorsFunds);
         $('#funds').text(creatorsFundsStr);
@@ -436,7 +436,7 @@ function setupModal(shortUrl, formId, buttonId, modalId) {
         // serializes the form's elements.
         var formData = $(formId).serializeArray();
 
-        console.log(formData);
+        // console.log(formData);
 
         // Loading
         $(this).button('loading');
