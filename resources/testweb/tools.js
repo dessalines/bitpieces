@@ -370,7 +370,7 @@ function setupMiniSubmenu() {
         $(this).closest('.list-group').fadeOut('slide', function() {
             $('.mini-submenu').fadeIn();
         });
-        $('#main_col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
+        $('.main-col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
         $('.othermain-col').toggleClass('col-md-offset-2 col-md-10 col-md-8');
          $(window).resize();
         // $('#side_col').toggleClass('span0 span3');
@@ -381,7 +381,7 @@ function setupMiniSubmenu() {
 
         $(this).next('.list-group').toggle('slide');
         $('.mini-submenu').hide();
-        $('#main_col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
+        $('.main-col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
         $('.othermain-col').toggleClass('col-md-offset-2 col-md-8 col-md-10');
          $(window).resize();
     });
