@@ -46,6 +46,16 @@ $(document).ready(function() {
         setupSigninAjax();
     });
 
+    $('#recoverPasswordForm').bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        standardFormPost('recover_password', "#recoverPasswordForm", '#recoverPasswordModal');
+    });
+
 });
 
 function setupRegisterAjax() {
