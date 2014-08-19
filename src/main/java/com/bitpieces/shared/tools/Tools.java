@@ -347,7 +347,7 @@ public class Tools {
 
 		Properties props = Tools.loadProperties("bitpieces_email.properties");
 		final String username = props.getProperty("username");
-		System.out.println("user-email-name = " + username);
+		log.info("user-email-name = " + username);
 		final String password =  props.getProperty("password");
 
 		props.put("mail.smtp.auth", "true");
