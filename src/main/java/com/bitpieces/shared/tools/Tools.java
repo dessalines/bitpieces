@@ -35,6 +35,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bitpieces.shared.DataSources;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -345,7 +346,7 @@ public class Tools {
 
 	public static String emailRecoveryPassword(String email, String newPass) {
 
-		Properties props = Tools.loadProperties("bitpieces_email.properties");
+		Properties props = Tools.loadProperties(DataSources.EMAIL_PROP);
 		final String username = props.getProperty("username");
 		log.info("user-email-name = " + username);
 		final String password =  props.getProperty("password");
