@@ -366,7 +366,7 @@ public class Tools {
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("Noreply-bitpieces@gmail.com"));
+			message.setFrom(new InternetAddress("Noreply_bitpieces@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
 			message.setSubject("Bitpieces Recovery Password");
