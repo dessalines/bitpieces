@@ -187,6 +187,10 @@
 }
 
 @media(min-width:993px) {
+    #mynav {
+      font-size: .75em;
+    }
+
     #mynav.affix-top {
     position: static;
     margin-top:30px;
