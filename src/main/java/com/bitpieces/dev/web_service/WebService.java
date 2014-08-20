@@ -34,7 +34,9 @@ public class WebService {
 
 	// another
 	public static void main(String[] args) {
-
+		// This needs to be initialized for some weird reason
+		Tools.PASS_ENCRYPT.encryptPassword("derp");
+		
 		// Load the correct db connection
 		Properties prop = Tools.loadProperties(DataSources.DEV_DB_PROP);
 
