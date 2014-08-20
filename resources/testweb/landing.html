@@ -173,16 +173,19 @@
       <div class="container marketing">
         <hr>
         <div id="what_is_bitpieces" class="row featurette">
-        <div class="col-md-12">
-        <h2 class="featurette-heading">What is <span class="text-muted">Bitpieces? </span></h2>
-         <p class="lead"> <b>Bitpieces</b> is a crowd-funding platform that gives content creators, small businesses, and community projects a way to raise funding by <a href="/FAQ#what_are_pieces">selling pieces</a> of their brand, and sharing profits with their funders through monetary <a href="/FAQ#what_are_rewards">rewards</a> over time. 
+          <div class="col-md-12">
+            <h2 class="featurette-heading">What is <span class="text-muted">Bitpieces? </span></h2>
+            <p class="lead"> <b>Bitpieces</b> is a crowd-funding platform that gives content creators, small businesses, and community projects a way to raise funding by <a href="/FAQ#what_are_pieces">selling pieces</a> of their brand, and sharing profits with their funders through monetary <a href="/FAQ#what_are_rewards">rewards</a> over time. 
             </p>
-        </div>
+          </div>
         </div>
         <hr>
         <!-- Three columns of text below the carousel -->
         <div class="row">
-        <h2 class="featurette-heading">How does <span class="text-muted">Bitpieces</span> work? </h2>
+          <div id="how_does_bitpieces_work" class="row featurette">
+            <h2 class="featurette-heading">How does <span class="text-muted">Bitpieces</span> work? </h2>
+          </div>
+          <br><br>
           <div class="col-lg-4">
 
             <i class="fa fa-pencil-square-o fa-5x"></i>
@@ -295,74 +298,74 @@
                   <div class="modal-body">
 
                     <h3> Sign in &nbsp;&nbsp;&nbsp; 
-                    <small> <a href="#" data-toggle="modal" data-target="#recoverPasswordModal">Recover password </a> </small></h3>
+                      <small> <a href="#" data-toggle="modal" data-target="#recoverPasswordModal">Recover password </a> </small></h3>
 
-                    <form id="loginForm" class="form-horizontal" role="form">
-                      <div id="userLoginDiv" class="form-group">
-                        <label for="inputUsername3" class="col-sm-2 control-label">Username</label>
-                        <div class="col-sm-10">
-                          <input name="username" type="Username" class="form-control" id="inputUsername3" placeholder="Username or Email"
-                          data-bv-message="The username is not valid"
+                      <form id="loginForm" class="form-horizontal" role="form">
+                        <div id="userLoginDiv" class="form-group">
+                          <label for="inputUsername3" class="col-sm-2 control-label">Username</label>
+                          <div class="col-sm-10">
+                            <input name="username" type="Username" class="form-control" id="inputUsername3" placeholder="Username or Email"
+                            data-bv-message="The username is not valid"
 
-                          data-bv-notempty="true"
-                          data-bv-notempty-message="The username is required and cannot be empty"
+                            data-bv-notempty="true"
+                            data-bv-notempty-message="The username is required and cannot be empty"
 
-                          data-bv-regexp="true"
-                          data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
-                          data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+                            data-bv-regexp="true"
+                            data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+                            data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
 
-                          data-bv-stringlength="true"
-                          data-bv-stringlength-min="6"
-                          data-bv-stringlength-max="30"
-                          data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+                            data-bv-stringlength="true"
+                            data-bv-stringlength-min="6"
+                            data-bv-stringlength-max="30"
+                            data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
 
-                          >
+                            >
+                          </div>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-                        <div class="col-sm-10">
-                          <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
+                        <div class="form-group">
+                          <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                          <div class="col-sm-10">
+                            <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password"
 
-                          data-bv-notempty="true"
-                          data-bv-notempty-message="The password is required and cannot be empty"
+                            data-bv-notempty="true"
+                            data-bv-notempty-message="The password is required and cannot be empty"
 
-                          data-bv-different="true"
-                          data-bv-different-field="username"
-                          data-bv-different-message="The password cannot be the same as username" 
-                          >
+                            data-bv-different="true"
+                            data-bv-different-field="username"
+                            data-bv-different-message="The password cannot be the same as username" 
+                            >
+                          </div>
                         </div>
-                      </div>
-                      <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                          <div class="checkbox">
-                            <label>
-                              <input name="remember" type="checkbox"> Remember me
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                              <label>
+                                <input name="remember" type="checkbox"> Remember me
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+
+                             <label>
+                              <input name="creatorCheckbox" type="checkbox" id="creatorCheckbox" value="creator"> I'm a Creator
                             </label>
+
                           </div>
                         </div>
                       </div>
+
+
+
+
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                          <div class="checkbox">
-
-                           <label>
-                            <input name="creatorCheckbox" type="checkbox" id="creatorCheckbox" value="creator"> I'm a Creator
-                          </label>
-
+                          <button id="signinBtn" type="submit" class="btn btn-primary">Sign in</button>
                         </div>
                       </div>
-                    </div>
-
-                
-                     
-
-                    <div class="form-group">
-                      <div class="col-sm-offset-2 col-sm-10">
-                        <button id="signinBtn" type="submit" class="btn btn-primary">Sign in</button>
-                      </div>
-                    </div>
-                  </form>
+                    </form>
 
                 <!-- The different sign ins 
                 <table style="width:100%">
@@ -549,45 +552,45 @@
       <div class="modal-body">
         <div class="text">
          Enter your username below to receive your login information
-        </br>
-       </div>
-       <form id="recoverPasswordForm" class="form-horizontal" role="form"
-       data-bv-message="This value is not valid"
-       data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
-       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
-       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
+       </br>
+     </div>
+     <form id="recoverPasswordForm" class="form-horizontal" role="form"
+     data-bv-message="This value is not valid"
+     data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+     data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+     data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
 
-       <div class="form-group">
-         <label for="inputUsername4" class="col-sm-2 control-label">Username</label>
-         <div class="col-sm-10">
-          <input name="username" type="Username" class="form-control" id="inputUsername4" placeholder="Username or Email"
-          data-bv-message="The username is not valid"
+     <div class="form-group">
+       <label for="inputUsername4" class="col-sm-2 control-label">Username</label>
+       <div class="col-sm-10">
+        <input name="username" type="Username" class="form-control" id="inputUsername4" placeholder="Username or Email"
+        data-bv-message="The username is not valid"
 
-          data-bv-notempty="true"
-          data-bv-notempty-message="The username is required and cannot be empty"
+        data-bv-notempty="true"
+        data-bv-notempty-message="The username is required and cannot be empty"
 
-          data-bv-regexp="true"
-          data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
-          data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
+        data-bv-regexp="true"
+        data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+        data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
 
-          data-bv-stringlength="true"
-          data-bv-stringlength-min="6"
-          data-bv-stringlength-max="30"
-          data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
+        data-bv-stringlength="true"
+        data-bv-stringlength-min="6"
+        data-bv-stringlength-max="30"
+        data-bv-stringlength-message="The username must be more than 6 and less than 30 characters long"
 
-          />
+        />
 
 
-        </div> 
+      </div> 
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button id="recoverPasswordBtn" type="submit" class="btn btn-primary">Email me</button>
       </div>
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button id="recoverPasswordBtn" type="submit" class="btn btn-primary">Email me</button>
-        </div>
-      </div>
-    </form>
+    </div>
+  </form>
 
-  </div>
+</div>
 </div>
 </div>
 </div>
