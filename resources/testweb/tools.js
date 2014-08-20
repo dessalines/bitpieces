@@ -378,7 +378,7 @@ function setupMiniSubmenu() {
         });
         $('.main-col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
         $('.othermain-col').toggleClass('col-md-offset-2 col-md-10 col-md-8');
-         $(window).resize();
+        $(window).resize();
         // $('#side_col').toggleClass('span0 span3');
 
     });
@@ -389,7 +389,7 @@ function setupMiniSubmenu() {
         $('.mini-submenu').hide();
         $('.main-col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
         $('.othermain-col').toggleClass('col-md-offset-2 col-md-8 col-md-10');
-         $(window).resize();
+        $(window).resize();
     });
 }
 
@@ -668,7 +668,7 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
 
                 // refresh the page, too much info has now changed
                 window.setTimeout(function() {
-                   location.reload();
+                    location.reload();
                 }, 1500);
 
                 // console.log(document.cookie);
@@ -711,10 +711,12 @@ function getJson(shortUrl) {
     });
 }
 
-function standardFormPost(shortUrl, formId, modalId) {
+function standardFormPost(shortUrl, formId, modalId, reload) {
     // !!!!!!They must have names unfortunately
     // An optional arg
     modalId = (typeof modalId === "undefined") ? "defaultValue" : modalId;
+
+    reload = (typeof reload === "undefined") ? false : reload;
 
     // serializes the form's elements.
     var formData = $(formId).serializeArray();
@@ -745,7 +747,12 @@ function standardFormPost(shortUrl, formId, modalId) {
             // console.log(modalId);
             toastr.success(data);
 
-
+            if (reload) {
+                // refresh the page, too much info has now changed
+                window.setTimeout(function() {
+                    location.reload();
+                }, 1500);
+            }
 
 
             // console.log(document.cookie);
