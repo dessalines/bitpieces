@@ -202,7 +202,7 @@
   
   #mynav.affix {
     position: fixed;
-    top:70px;
+    top:40px;
     width:auto;
   }
 }
