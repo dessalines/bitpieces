@@ -621,6 +621,7 @@ function setupCurrFields() {
         $("#bidSymbol").text(currIso);
         $("#askSymbol").text(currIso);
         $("#buySymbol").text(currIso);
+        $('[name="curr_iso"]').text(currIso);
 
     });
 }
