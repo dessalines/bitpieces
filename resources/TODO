@@ -25,7 +25,7 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 	- Use fiverr to get a front thing to look like kickstarter
 + Prepending currency to input boxes
 + show alerts on dashboards if results come back zero
-- add correct deposit stuff to creators pages
++ add correct deposit stuff to creators pages
 - disclaimers when signing up, just have a check box, still need to write them
 + FAQ
 + front page
@@ -50,3 +50,4 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 - create badges(postpone till after launch)
 + fix tatiana suggestions
 + fix bid and ask trashcan button visible
+- Make sure creators safety ratings is explained for starting creators
