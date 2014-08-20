@@ -190,6 +190,9 @@
     #mynav {
       font-size: .75em;
     }
+    #mynav > li {
+      height: 30px;
+    }
 
     #mynav.affix-top {
     position: static;
