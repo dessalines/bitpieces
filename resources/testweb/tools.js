@@ -670,7 +670,7 @@ function setupDepositButton(shortUrl, btnId, formId, modalId) {
                 // refresh the page, too much info has now changed
                 window.setTimeout(function() {
                     location.reload();
-                }, 1500);
+                }, 3000);
 
                 // console.log(document.cookie);
 
@@ -752,7 +752,7 @@ function standardFormPost(shortUrl, formId, modalId, reload) {
                 // refresh the page, too much info has now changed
                 window.setTimeout(function() {
                     location.reload();
-                }, 1500);
+                }, 3000);
             }
 
 

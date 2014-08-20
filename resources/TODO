@@ -51,11 +51,11 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 + fix tatiana suggestions
 + fix bid and ask trashcan button visible
 - Make sure creators safety ratings is explained for starting creators
-- disclaimers when signing up, just have a check box, still need to write them
-- page reloads where it makes sense
++ disclaimers when signing up, just have a check box, still need to write them
++ page reloads where it makes sense
 + Creator
 + FAQ how is worth calculated
 - Buy an explainer whiteboard video
 - Write the script for it
-- add google analytics
+- add google analytics(not sure if working yet)
 
