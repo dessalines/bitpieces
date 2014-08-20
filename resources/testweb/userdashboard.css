@@ -181,7 +181,7 @@
 @media(max-width:993px){
    .affix {
      position: static;
-     /*width: auto;*/
+     width: auto;
      top: 0;
     }
 }
@@ -196,7 +196,7 @@
   #mynav.affix {
     position: fixed;
     top:70px;
-    width:228px;
+    width:323px;
   }
 }
  /* Hide for mobile, show later */
