@@ -187,9 +187,9 @@
 }
 
 @media(min-width:993px) {
-   /* #mynav {
+    #mynav {
       font-size: .75em;
-    }*/
+    }
     #mynav > li {
       height: 30px;
     }
