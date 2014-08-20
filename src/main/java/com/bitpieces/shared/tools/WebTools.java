@@ -864,7 +864,7 @@ public class WebTools {
 		}
 		
 		// Now change the user's pass
-		String newPass = Tools.generateSecureRandom();
+		String newPass = Tools.generateSecureRandom().substring(0, 8);
 		String encryptedPass = Tools.PASS_ENCRYPT.encryptPassword(newPass);
 		
 		user.set("password_encrypted", encryptedPass);
