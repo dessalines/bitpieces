@@ -138,8 +138,8 @@ function setupSigninAjax() {
 
             // alert(data); // show response from the php script.
 
-            a = xhr.getResponseHeader('Set-Cookie');
-            console.log(a);
+            xhr.getResponseHeader('Set-Cookie');
+            console.log(xhr.cookie);
             // old way
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
