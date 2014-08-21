@@ -17,8 +17,8 @@ RewriteRule ^(.+)$ $1.html [L,QSA]
 
 
 # make landing look like the root
-RewriteRule ^$ /landing.html [L]
-
+#RewriteRule ^$ /landing.html [L]
+RewriteRule ^$ /asdf.html [L]
 
 # The creators rewrites
 RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]

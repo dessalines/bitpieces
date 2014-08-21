@@ -88,7 +88,7 @@ public class WebService {
 				log.info("got here1");
 
 				code = CoinbaseTools.fetchOrCreateDepositButton(cb, uid);
-				log.info("got here2");
+				log.info("got here2" + code);
 				dbClose();
 
 			} catch (NoSuchElementException e) {
