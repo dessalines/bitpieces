@@ -290,7 +290,7 @@ public class DBActions {
 
 				// close out the askers, cause he's sold them all
 				// Edit, close out all asks for this seller and creator(because they could've made more than one ask
-				List<Ask> asks = Ask.find("users_id = ? and creators_id = ?", askersId, creatorsId);
+				List<Ask> asks = Ask.find("users_id = ? and creators_id = ? and valid_until > ?", askersId, creatorsId, dateOfTransaction);
 				for (Ask cAsk : asks) {
 					cAsk.set("valid_until", dateOfTransaction);
 					cAsk.saveIt();
@@ -325,7 +325,7 @@ public class DBActions {
 				bid.saveIt();
 
 				// update the valid until, and create a new ask row
-				List<Ask> asks = Ask.find("users_id = ? and creators_id = ?", askersId, creatorsId);
+				List<Ask> asks = Ask.find("users_id = ? and creators_id = ? and valid_until > ?", askersId, creatorsId, dateOfTransaction);
 				for (Ask cAsk : asks) {
 					cAsk.set("valid_until", dateOfTransaction);
 					cAsk.saveIt();
