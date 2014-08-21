@@ -38,6 +38,8 @@ public class WebService {
 
 	public static void main(String[] args) {
 
+		SparkBase.setSecure("/home/tyler/keystore.jks","asdfasdf",null,null);
+		
 		// Set up coinbase for operations
 		Coinbase cb = CoinbaseTools.setupCoinbase(DataSources.COINBASE_PROP);
 
@@ -62,7 +64,7 @@ public class WebService {
 		// Start the scheduler
 		ScheduledProcessing.main(null);
 
-		SparkBase.setSecure("/home/tyler/keystore.jks","asdfasdf",null,null);
+		
 		
 
 		get("/deposit_button", (req, res) -> {
