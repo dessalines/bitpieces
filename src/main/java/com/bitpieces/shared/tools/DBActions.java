@@ -292,7 +292,6 @@ public class DBActions {
 				// Edit, close out all asks for this seller and creator(because they could've made more than one ask
 				List<Ask> asks = Ask.find("users_id = ? and creators_id = ?", askersId, creatorsId);
 				for (Ask cAsk : asks) {
-					
 					cAsk.set("valid_until", dateOfTransaction);
 					cAsk.saveIt();
 					log.info("ask#" + cAsk.getId() + "invalidated");
@@ -326,9 +325,12 @@ public class DBActions {
 				bid.saveIt();
 
 				// update the valid until, and create a new ask row
-				Ask ask = Ask.findById(askId);
-				ask.set("valid_until", dateOfTransaction);
-				ask.saveIt();
+				List<Ask> asks = Ask.find("users_id = ? and creators_id = ?", askersId, creatorsId);
+				for (Ask cAsk : asks) {
+					cAsk.set("valid_until", dateOfTransaction);
+					cAsk.saveIt();
+					log.info("ask#" + cAsk.getId() + "invalidated");
+				}
 
 				Integer newPieces = askPieces - piecesForTransaction;
 
