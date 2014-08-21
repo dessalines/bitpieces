@@ -30,6 +30,11 @@ MAIN_CONF="<VirtualHost *:80>
     DocumentRoot /var/www/html/bitpieces.com/public_html
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
+    SSLEngine on
+    SSLProtocol all
+    SSLCertificateFile /home/tyler/public.crt
+    SSLCertificateKeyFile /home/tyler/privatekey.key
+    SSLCACertificateFile /home/tyler/intermediate.crt
      # <Directory /var/www/html/bitpieces.com/public_html>
      # Options Indexes FollowSymLinks
      #   Require all granted
