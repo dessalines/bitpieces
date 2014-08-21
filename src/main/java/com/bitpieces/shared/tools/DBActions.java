@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.jasypt.util.password.BasicPasswordEncryptor;
-import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.bitpieces.shared.Tables.Ask;
 import com.bitpieces.shared.Tables.Ask_bid_accept_checker;
@@ -35,6 +35,7 @@ import com.bitpieces.shared.tools.Tools.UserType;
 import com.coinbase.api.Coinbase;
 
 public class DBActions {
+	static final Logger log = LoggerFactory.getLogger(DBActions.class);
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static final Double SERVICE_FEE_PCT = .05d;
 
