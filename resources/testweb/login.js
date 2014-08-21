@@ -132,9 +132,9 @@ function setupSigninAjax() {
         data: formData,
         success: function(data, status, xhr) {
 
-            //    console.log(xhr);
+               console.log(xhr);
             // console.log(asdf);
-            // console.log(xhr.getAllResponseHeaders()); 
+            console.log(xhr.getAllResponseHeaders()); 
 
             // alert(data); // show response from the php script.
 
