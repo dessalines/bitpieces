@@ -159,7 +159,7 @@ function setupSigninAjax() {
             var userName = getCookie("username");
             // GO to the dashboard
             if (!isCreator) {
-                window.location.replace("/users/overview/" + userName);
+                // window.location.replace("/users/overview/" + userName);
             } else {
                 // console.log(formData);
                 var url = "/creators/main/" + userName;
