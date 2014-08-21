@@ -237,6 +237,10 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
                 $(modalId).modal('hide');
                 // $(formId)[0].reset();
 
+                 window.setTimeout(function() {
+                    location.reload();
+                }, 3000);
+
                 toastr.success(data);
 
 
