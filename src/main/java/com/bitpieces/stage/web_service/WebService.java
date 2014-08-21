@@ -73,7 +73,7 @@ public class WebService {
 
 		get("/hello3", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			log.debug("okay wrote that");
+			log.info("okay wrote that");
 			return "hi from the bitpieces web service";
 		});
 		
