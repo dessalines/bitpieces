@@ -85,9 +85,10 @@ public class WebService {
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyUser();
+				log.info("got here1");
 
 				code = CoinbaseTools.fetchOrCreateDepositButton(cb, uid);
-
+				log.info("got here2");
 				dbClose();
 
 			} catch (NoSuchElementException e) {
