@@ -191,7 +191,7 @@ public class Tools {
 
 
 	public static final Map<String, String> createMapFromAjaxPost(String reqBody) {
-		//		System.out.println(reqBody);
+		//		log.info(reqBody);
 		Map<String, String> postMap = new HashMap<String, String>();
 		String[] split = reqBody.split("&");
 		for (int i = 0; i < split.length; i++) {
@@ -204,7 +204,7 @@ public class Tools {
 			}
 		}
 
-		System.out.println(postMap);
+		log.info(GSON2.toJson(postMap));
 
 		return postMap;
 
@@ -221,9 +221,9 @@ public class Tools {
 	}// another
 
 	public static final List<String> createArrayFromAjaxPostSelect(String reqBody) {
-		//		System.out.println(reqBody);
+		//		log.info(reqBody);
 		List<String> list = new ArrayList<>();
-		System.out.println(reqBody);
+		log.info(reqBody);
 		String[] split = reqBody.split("&");
 		for (int i = 0; i < split.length; i++) {
 			String[] keyValue = split[i].split("=");
@@ -310,7 +310,7 @@ public class Tools {
 				e.printStackTrace();
 			}
 
-			System.out.println("Wrote a new file @ " + file.getAbsolutePath());
+			log.info("Wrote a new file @ " + file.getAbsolutePath());
 
 
 		}
@@ -379,7 +379,7 @@ public class Tools {
 
 			Transport.send(message);
 
-			System.out.println("Done");
+			log.info("Done");
 
 		} catch (MessagingException e) {
 			throw new NoSuchElementException(e.getMessage());
