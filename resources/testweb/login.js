@@ -131,7 +131,8 @@ function setupSigninAjax() {
         },
         data: formData,
         success: function(data, status, xhr) {
-            // console.log(xhr.getResponseHeader())
+            console.log(xhr.getResponseHeader('Set-Cookie[0]'));
+            console.log(xhr.getResponseHeader('Set-Cookie'));
                console.log(xhr);
             // console.log(asdf);
             console.log(xhr.getAllResponseHeaders()); 
