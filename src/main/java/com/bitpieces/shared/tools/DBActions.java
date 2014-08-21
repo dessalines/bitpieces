@@ -289,7 +289,7 @@ public class DBActions {
 			if (bidPieces > askPieces) {
 
 				// close out the askers, cause he's sold them all
-				// Edit, close out all asks for this seller and creator(because they could've made more than one ask
+				// Edit, close out all current asks for this seller and creator(because they could've made more than one ask
 				List<Ask> asks = Ask.find("users_id = ? and creators_id = ? and valid_until > ?", askersId, creatorsId, dateOfTransaction);
 				for (Ask cAsk : asks) {
 					cAsk.set("valid_until", dateOfTransaction);

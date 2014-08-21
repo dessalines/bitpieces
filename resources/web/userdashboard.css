@@ -11,11 +11,18 @@
      margin-right: 18px;
 
      }*/
+
+/*     .btn-default {
+
+      position:relative; 
+      bottom:0;
+     }*/
      img {
       width:  auto;
       height: auto;
 
     }
+ 
 
     .nav-list {
       width: 228px;
@@ -181,16 +188,23 @@
 }
 
 @media(min-width:993px) {
+    #mynav {
+      font-size: .75em;
+    }
+    #mynav > li {
+      height: 30px;
+    }
+
     #mynav.affix-top {
     position: static;
     margin-top:30px;
-    width:228px;
+    width:auto;
   }
   
   #mynav.affix {
     position: fixed;
-    top:70px;
-    width:228px;
+    top:40px;
+    width:auto;
   }
 }
  /* Hide for mobile, show later */
@@ -254,7 +268,7 @@
     padding-left: 40px;
   }
   }*/
-  .main .page-header {
+  .main .page-header .main-col {
     margin-top: 0;
   }
 
@@ -279,7 +293,7 @@
 }
 
 .fullscreen-chart {
-  height: 80vh;
+  height: 70vh;
 }
 
 .small-chart {

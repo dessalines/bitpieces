@@ -4,24 +4,9 @@ This sets up all the common stuff, having to do with the top bar, redirects, sea
 
 $(document).ready(function() {
 
-    var sessionId = getCookie("authenticated_session_id");
-    var userType = getCookie('usertype');
-    var userName = getCookie('username');
-    // set up the correct dashboard if its a creator
-    if (userType == 'Creator') {
-        $("#dashboardhref").prop("href", "/creators/main/" + userName);
-    } else if (userType == 'User') {
-        $("#dashboardhref").prop("href", "/users/overview/" + userName);
-    }
-
-
-    setupCreatorSearch();
-    fillUserInfoMustacheFromCookie();
-    setupLogout();
-    showHideElementsLoggedIn();
     showRecaptcha("recaptcha_div");
 
-    console.log(document.cookie);
+    // console.log(document.cookie);
 
     a = $('#registerForm').bootstrapValidator({
         message: 'This value is not valid',
@@ -46,6 +31,16 @@ $(document).ready(function() {
         setupSigninAjax();
     });
 
+    $('#recoverPasswordForm').bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        standardFormPost('recover_password', "#recoverPasswordForm", '#recoverPasswordModal');
+    });
+
 });
 
 function setupRegisterAjax() {
@@ -54,7 +49,7 @@ function setupRegisterAjax() {
 
     // serializes the form's elements.
     var formData = $("#registerForm").serializeArray();
-    console.log(formData);
+    // console.log(formData);
 
     // Loading
     $(this).button('loading');
@@ -71,6 +66,8 @@ function setupRegisterAjax() {
         success: function(data, status, xhr) {
 
             xhr.getResponseHeader('Set-Cookie');
+            console.log('xhr = ' + xhr);
+            console.log('xhr response header' + xhr.getResponseHeader);
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
             // Hide the modal, reset the form, show successful
@@ -80,11 +77,12 @@ function setupRegisterAjax() {
             toastr.success('Registered and logged in.')
             showHideElementsLoggedIn();
 
+            var userName = getCookie("username");
 
-            console.log(document.cookie);
+            // console.log(document.cookie);
             setTimeout(
                 function() {
-                    window.location.replace("/users/overview/" + formData[0]['value']);
+                    window.location.replace("/users/overview/" + userName);
 
                 }, 1000);
 
@@ -104,7 +102,7 @@ function setupSigninAjax() {
 
     // serializes the form's elements.
     var formData = $("#loginForm").serializeArray();
-    console.log(formData);
+    // console.log(formData);
 
     // Loading
     $(this).button('loading');
@@ -113,7 +111,7 @@ function setupSigninAjax() {
     var url;
     // Decide if its a creator or not
     var isCreator = $("#creatorCheckbox").is(':checked')
-    console.log(isCreator);
+        // console.log(isCreator);
     if (isCreator) {
         url = sparkService + "creatorlogin";
     } else {
@@ -133,15 +131,16 @@ function setupSigninAjax() {
         },
         data: formData,
         success: function(data, status, xhr) {
-
+            // console.log(xhr.getResponseHeader('Set-Cookie[0]'));
+            // console.log(xhr.getResponseHeader('Set-Cookie'));
             //    console.log(xhr);
-            // console.log(asdf);
+            // // console.log(asdf);
             // console.log(xhr.getAllResponseHeaders()); 
 
             // alert(data); // show response from the php script.
 
             xhr.getResponseHeader('Set-Cookie');
-
+            // console.log(xhr.cookie);
             // old way
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
@@ -155,17 +154,28 @@ function setupSigninAjax() {
 
 
 
-            console.log(document.cookie);
-            console.log(formData.username);
+            // console.log(document.cookie);
+            // console.log(formData.username);
 
+            var userName = getCookie("username");
             // GO to the dashboard
             if (!isCreator) {
-                window.location.replace("/users/overview/" + formData[0]['value']);
+                setTimeout(
+                    function() {
+                        window.location.replace("/users/overview/" + userName);
+
+                    }, 1000);
+
             } else {
-                console.log(formData);
-                var url = "/creators/main/" + formData[0]['value'];
-                console.log(url);
-                window.location.replace(url);
+                // console.log(formData);
+                var url = "/creators/main/" + userName;
+                // console.log(url);
+
+                setTimeout(
+                    function() {
+                        window.location.replace(url);
+
+                    }, 1000);
 
             }
 

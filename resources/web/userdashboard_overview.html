@@ -157,32 +157,36 @@
 
 
   <!-- The Page -->
-  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+  <div class="main-col col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2">
 
     <div class="row">
-
-      <div class="col-md-6">
-        <h1> <span id="page_title"></span> <small> overview</small> </h1> 
-      </div>
-      <div class="col-md-6">
-        <button id="depositBtn" type="button" class="btn btn-default btn-lg pull-right hide" data-toggle="modal" data-target="#depositModal">Deposit</button>
-        <button id="withdrawBtn" type="button" class="btn btn-default btn-lg pull-right hide" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
-
-      </div>
       <div class="col-md-12">
-        <ol class="breadcrumb">
-          <li><i class="fa fa-dashboard"></i> Overview</a></li>
-        </ol>
-      </div>
-    </div>
+        <div class="col-md-6">
+          <h1> <span id="page_title"></span> <small> overview</small> </h1> 
+        </div>
+        <div class="col-md-6">
+          <button id="depositBtn" type="button" class="btn btn-default btn-lg pull-right hide" data-toggle="modal" data-target="#depositModal">Deposit</button>
+          <button id="withdrawBtn" type="button" class="btn btn-default btn-lg pull-right hide" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
 
-    <div class="row">
-      <div class="col-lg-3">
-        <div class="first-timers alert alert-warning alert-dismissible hide" role="alert">
-          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <strong>You have no pieces!</strong> <a href="/discover">Discover</a> some creators to fund.
         </div>
       </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <ol class="breadcrumb">
+            <li><i class="fa fa-dashboard"></i> Overview</a></li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="first-timers alert alert-warning alert-dismissible hide" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <strong>You have no pieces!</strong> <a href="/discover">Discover</a> some creators to fund.
+          </div>
+        </div>
     </div>
 
 
@@ -205,7 +209,7 @@
               </div>
             </div>
           </div>
-          <a href="/users/funds">
+          <a href="/users/funds" rel="keep-params">
             <div class="panel-footer announcement-bottom">
               <div class="row">
                 <div class="col-xs-6">
@@ -236,7 +240,7 @@
               </div>
             </div>
           </div>
-          <a href="#">
+          <a href="/users/pieces" rel="keep-params">
             <div class="panel-footer announcement-bottom">
               <div class="row">
                 <div class="col-xs-6">
@@ -267,7 +271,7 @@
               </div>
             </div>
           </div>
-          <a href="/users/pieces">
+          <a href="/users/pieces" rel="keep-params">
             <div class="panel-footer announcement-bottom">
               <div class="row">
                 <div class="col-xs-6">
@@ -299,7 +303,7 @@
               </div>
             </div>
           </div>
-          <a href="/users/pieces">
+          <a href="/users/pieces" rel="keep-params">
             <div class="panel-footer announcement-bottom">
               <div class="row">
                 <div class="col-xs-6">
@@ -405,7 +409,7 @@
                     <td>{{creators_name}}</td>
                     <td>{{type}}</td>
                     <td>{{pieces}}</td>
-                    <td>{{price_per_piece}} <button id="remove_button" class="btn btn-danger btn-xs pull-right"><i class="fa fa-trash-o"></i></button></td>
+                    <td>{{price_per_piece}} <button class="remove-button btn btn-danger btn-xs pull-right hide"><i class="fa fa-trash-o"></i></button></td>
                   </tr>
                   {{/.}}
 
@@ -469,6 +473,7 @@
       </div>
       <div class="modal-body">
         <form id="withdrawForm" class="form-horizontal" role="form">
+          
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Amount</label>
             <div class="col-sm-10">
@@ -491,7 +496,7 @@
 
 
            <div class="col-sm-10">
-             <input name="address" type="text" class="form-control" placeholder="Bitcoin Address or Coinbase Email"
+             <input name="address" type="text" class="form-control" disabled placeholder="Bitcoin Address or Coinbase Email"
              >
            </div>
          </div>

@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 
+import com.bitpieces.dev.scheduled.ScheduledProcessing;
 import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.tools.CoinbaseTools;
-import com.bitpieces.shared.tools.DBActions;
 import com.bitpieces.shared.tools.Tools;
 import com.bitpieces.shared.tools.UID;
 import com.bitpieces.shared.tools.UnitConverter;
@@ -57,7 +57,8 @@ public class WebService {
 		// Setup all the common posts
 		WebCommon.commonPosts(SESSION_TO_USER_MAP, prop, sf, DataSources.STAGE_SESSION_FILE, COOKIE_PATH);
 
-
+		// Start the scheduler
+		ScheduledProcessing.main(null);
 
 		
 

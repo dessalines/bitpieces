@@ -1,5 +1,3 @@
-
-
 #Options +FollowSymLinks +Indexes
 # php_flag engine off
 
@@ -62,9 +60,3 @@ RewriteRule ^users/prices/(.*) $1  [L]
 
 RewriteRule ^users/settings/([^/.]+)/?$ /userdashboard_settings.html?user=$1 [L]
 RewriteRule ^users/settings/(.*) $1  [L]
-
-
-
-
-
-

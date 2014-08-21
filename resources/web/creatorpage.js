@@ -6,19 +6,22 @@ $(document).ready(function() {
     navigateWithParams();
 
 
+
+
     // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = window.location.pathname.split('/').pop();
     $('#page_title').text(creatorName);
 
 
     if (sessionId != null && userType == 'User') {
+        setupCurrFields();
         showHideButtons(creatorName);
         bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
         bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
         bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
 
-
         fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+
     }
 
 
@@ -26,8 +29,9 @@ $(document).ready(function() {
 
     // if you're this creator, then set up summer note, issue pieces button
     var userName = getCookie('username');
-    console.log('un = ' + userName);
+    // console.log('un = ' + userName);
     if (userName == creatorName) {
+        setupCurrFields();
         // show the save btn
         setupModal("issue_pieces", '#issueForm', "#placeIssuePiecesBtn", "#issueModal");
 
@@ -38,7 +42,8 @@ $(document).ready(function() {
 
         setupWithdrawalForm(creatorName);
         setupModal("creator_withdraw", '#withdrawForm', "#placeWithdrawBtn", "#withdrawModal");
-        showHideCreatorButtons();
+        showHideCreatorButtons(creatorName);
+        setupRaiseFunds();
 
     }
 
@@ -58,7 +63,8 @@ $(document).ready(function() {
     // The date picker
     $('.datepicker').pickadate({
         format: 'yyyy-mm-dd',
-        container: '#wrapper'
+        container: '#wrapper',
+        editable: true
     });
 
 
@@ -73,7 +79,7 @@ function showHideButtons(creatorName) {
     if (getCookie('usertype') == 'User') {
         // Showing or hiding the bid/ask/buy buttons
         simpleFetch(creatorName + "/get_pieces_available").done(function(result) {
-            console.log('result = ' + result);
+            // console.log('result = ' + result);
             if (result > 0) {
                 $("#buyBtn").removeClass("hide");
                 $('[name="buyPieces"]').attr('placeholder', 'There are ' + result + ' pieces left');
@@ -86,7 +92,7 @@ function showHideButtons(creatorName) {
             }
         });
         simpleFetch(creatorName + "/get_pieces_owned_total").done(function(result) {
-            console.log('result = ' + result);
+            // console.log('result = ' + result);
             if (result > 0) {
                 $('[name="bidPieces"]').attr('placeholder', 'There are ' + result + ' pieces owned');
             }
@@ -94,7 +100,7 @@ function showHideButtons(creatorName) {
 
 
         simpleFetch(userName + "/" + creatorName + "/get_pieces_owned_current").done(function(result) {
-            console.log('result = ' + result);
+            // console.log('result = ' + result);
 
             if (result > 0) {
                 $("#askBtn").removeClass("hide");
@@ -122,14 +128,17 @@ function showHideButtons(creatorName) {
             var types = ['bid', 'ask', 'buy'];
             types.forEach(function(e) {
                 var fundsNum = result.replace(/[^0-9\.]+/g, "");
-                var currSymbol = result[0];
+                var currSymbol = "";
+                simpleFetch(creatorName + '/get_price_per_piece_current').done(function(pppc) {
+                    currSymbol = pppc[0];
+                });
                 var usersFunds = parseFloat(fundsNum);
                 // $('[name="usersFunds"]').text(result);
                 $('[name="usersFunds"]').text(result);
-                $('#' + e + 'Symbol').text(currSymbol);
+                // $('#' + e + 'Symbol').text(currSymbol);
                 $('[name="' + e + 'Pieces' + '"],[name="' + e + '"]').bind('keyup', function(f) {
 
-                    var buyPieces = parseFloat($(this).val());
+                    var buyPieces = parseFloat($('[name="' + e + 'Pieces' + '"]').val());
 
                     // var buyPrice = $('[name="buy"]').text();
                     // var buyPrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
@@ -149,6 +158,7 @@ function showHideButtons(creatorName) {
                         //        console.log(total);
                         // console.log(fundsNum);
                         //     console.log(usersFunds);
+                        //     console.log(fundsLeft);
                         //     console.log(e);
                         $('#' + e + 'FundsLeft').text(currSymbol + fundsLeft);
 
@@ -179,7 +189,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
     $(formId).bootstrapValidator({
         message: 'This value is not valid',
         excluded: [':disabled'],
-        submitButtons: 'button[type="submit"]'
+        submitButtons: buttonId,
     }).on('success.form.bv', function(event) {
         event.preventDefault();
 
@@ -193,10 +203,10 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
         };
         formData.push(creator);
 
-        console.log(formData);
+        // console.log(formData);
 
         // Loading
-        $(this).button('loading');
+        // $(this).button('loading');
 
         // username = $('#userLoginDiv').find('input[name="username"]').val();
         // // = $("#inputUsername3").val();
@@ -225,7 +235,11 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
                 // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
                 // Hide the modal, reset the form, show successful
                 $(modalId).modal('hide');
-                $(formId)[0].reset();
+                // $(formId)[0].reset();
+
+                 window.setTimeout(function() {
+                    location.reload();
+                }, 3000);
 
                 toastr.success(data);
 
@@ -240,7 +254,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
 
         });
 
-        $(buttonId).button('reset');
+        // $(buttonId).button('reset');
         event.preventDefault();
         return false;
 
@@ -250,10 +264,59 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
 }
 
 
-function showHideCreatorButtons() {
+function showHideCreatorButtons(creatorName) {
     $("#saveBtn").removeClass("hide");
-    $("#issueBtn").removeClass("hide");
-    $("#changeRewardBtn").removeClass("hide");
+
+    // If its their first time, they have to raise funds, check this by getting the reward pct
+    getJson(creatorName + '/get_rewards_current').done(function(e) {
+        var rewardCurrent = e;
+        // console.log("reward current = " + rewardCurrent);
+        if (rewardCurrent == 0) {
+            $("#raiseFundsBtn").removeClass("hide");
+        } else {
+            $("#issueBtn").removeClass("hide");
+            $("#changeRewardBtn").removeClass("hide");
+        }
+    });
+
+
+
+}
+
+function setupRaiseFunds() {
+    $("#raiseFundsForm").bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        // console.log('test');
+        standardFormPost('raise_funds', "#raiseFundsForm", '#raiseFundsModal', true);
+    });
+
+
+
+    $('[name="raisePieces"],[name="raisePrice"],[name="reward_per_piece_per_year"]').bind('keyup', function(f) {
+
+        var pieces = parseFloat($('[name="raisePieces"]').val());
+
+        // var issuePrice = $('[name="buy"]').text();
+        // var issuePrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
+        var issuePrice = parseFloat($('[name="raisePrice"]').val());
+
+        var reward = parseFloat($('[name="reward_per_piece_per_year"]').val());
+        // alert(pieces + ' ' + issuePrice)
+        var total = issuePrice * pieces;
+        var currIso = $('[name="curr_iso"]').text().substring(0, 3);
+        var rewardPct = 100.0 * reward / issuePrice;
+        var rewardsOwed = reward * pieces;
+        if (!isNaN(total) && !isNaN(rewardPct)) {
+            $('#raiseTotal').text(total + ' ' + currIso);
+            $('#rewardPct').text(rewardPct + '%');
+            $('#rewardsOwedPerYear').text(rewardsOwed + ' ' + currIso + ' / year');
+        }
+    });
 }
 
 function setupChangeRewardForm(creatorName) {
@@ -290,8 +353,8 @@ function setupWithdrawalForm(creatorName) {
         var piecesOwnedTotal = parseFloat(piecesOwnedTotalStr.replace(/^\D+/g, ''));
         var rewardsPerPiecePerYear = parseFloat(rewardsPerPiecePerYearStr.replace(/^\D+/g, ''));
 
-        console.log(piecesOwnedTotalStr);
-        console.log(creatorsFunds + '|' + piecesOwnedTotal + '|' + rewardsPerPiecePerYear);
+        // console.log(piecesOwnedTotalStr);
+        // console.log(creatorsFunds + '|' + piecesOwnedTotal + '|' + rewardsPerPiecePerYear);
         // $("#creatorsFunds").text(result);
         $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + creatorsFunds);
         $('#funds').text(creatorsFundsStr);
@@ -333,11 +396,13 @@ function setupIssueForm(creatorName) {
 
     });
 
-    simpleFetch(creatorName + '/get_creators_funds_current').done(function(result) {
+    $.when(getJson(creatorName + '/get_creators_funds_current'),
+        getJson(creatorName + '/get_rewards_current')).done(function(a1, a2) {
+        var creatorsFundsStr = a1[0];
+        var creatorsFunds = parseFloat(creatorsFundsStr.replace(/^\D+/g, ''));
+        var currSymbol = a2[0][0];
 
-        var creatorsFunds = parseFloat(result.replace(/^\D+/g, ''));
-        var currSymbol = result[0];
-        $('[name="creatorsFunds"]').text(result);
+        $('[name="creatorsFunds"]').text(creatorsFundsStr);
 
         $('[name="issuePieces"],[name="issuePrice"]').bind('keyup', function(f) {
 
@@ -372,60 +437,8 @@ function setupModal(shortUrl, formId, buttonId, modalId) {
 
     }).on('success.form.bv', function(event) {
         event.preventDefault();
-        // serializes the form's elements.
-        var formData = $(formId).serializeArray();
-
-        console.log(formData);
-
-        // Loading
-        $(this).button('loading');
-
-        // username = $('#userLoginDiv').find('input[name="username"]').val();
-        // // = $("#inputUsername3").val();
-        // document.cookie = "username=" + username ;
-
-        var url = sparkService + shortUrl;
-        $.ajax({
-            type: "POST",
-            url: url,
-            xhrFields: {
-                withCredentials: true
-            },
-            data: formData,
-            success: function(data, status, xhr) {
-
-                //    console.log(xhr);
-                // console.log(asdf);
-                // console.log(xhr.getAllResponseHeaders()); 
-
-                // alert(data); // show response from the php script.
-
-                xhr.getResponseHeader('Set-Cookie');
-
-                // old way
-                // document.cookie="authenticated_session_id=" + data + 
-                // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
-                // Hide the modal, reset the form, show successful
-                $(modalId).modal('hide');
-                $(formId)[0].reset();
-
-                toastr.success(data);
-
-
-
-            },
-            error: function(request, status, error) {
-                toastr.error(request.responseText);
-            }
-
-
-
-        });
-
-        $(buttonId).button('reset');
-        event.preventDefault();
-        return false;
-
+        standardFormPost(shortUrl, formId, modalId, true);
+        
     });
 
 

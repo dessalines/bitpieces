@@ -8,6 +8,7 @@ $(document).ready(function() {
     var userName = window.location.pathname.split('/').pop();
     $('#page_title').text(userName);
 
+
     setupMiniSubmenu();
     navigateWithParams();
 

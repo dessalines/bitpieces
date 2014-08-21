@@ -26,9 +26,9 @@ $(document).ready(function() {
 
     fillTableFromMustacheSpecial(userName + '/get_users_bids_asks_current', '#users_bids_asks_current_template', '#users_bids_asks_current',
         '#users_bids_asks_current_table',
-        "#remove_button", sessionId);
+        ".remove-button", sessionId);
 
-    fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+
 
     // TODO do this in a paged way
     // var template = $('#users_bids_asks_current_template').html();
@@ -53,10 +53,10 @@ function setupWithdrawForm() {
     });
 
     var userName = getCookie('username');
+
     simpleFetch(userName + '/get_users_funds_current').done(function(result) {
         var fundsNum = result.replace(/[^0-9\.]+/g, "");
         var usersFunds = parseFloat(fundsNum);
-        $("#withdrawSymbol").text(result[0]);
 
         $("#funds").text(result);
         $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + result);
@@ -84,7 +84,7 @@ function setupWithdrawForm() {
         });
     });
     $("#placeWithdrawBtn").click(function(event) {
-        standardFormPost('user_withdraw', '#withdrawForm', '#withdrawModal');
+        standardFormPost('user_withdraw', '#withdrawForm', '#withdrawModal', true);
         event.preventDefault();
     });
 
@@ -98,6 +98,8 @@ function showHideDepositButton() {
     if (userName == sessionUserName) {
         $('#depositBtn').removeClass("hide");
         $('#withdrawBtn').removeClass("hide");
+        fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+        setupCurrFields();
 
     }
 
@@ -106,6 +108,8 @@ function showHideDepositButton() {
 
 function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonName, sessionId) {
     var url = sparkService + url // the script where you handle the form input.
+    var userName = window.location.pathname.split('/').pop();
+    var sessionUserName = getCookie("username");
     $.ajax({
         type: "GET",
         url: url,
@@ -131,6 +135,10 @@ function fillTableFromMustacheSpecial(url, templateId, divId, tableId, buttonNam
             console.log(jsonObj);
             console.log(template);
             console.log(rendered);
+            if (userName == sessionUserName) {
+                $('.remove-button').removeClass("hide");
+            }
+
             $(buttonName).click(function(event) {
                 // var id2= $(this).closest("tr")
                 var row = $(this).closest("tr"); // Finds the closest row <tr> 

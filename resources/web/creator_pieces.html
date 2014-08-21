@@ -6,9 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
 	<title>Bitpieces</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
 	<!-- Bootstrap core CSS -->
 	<link href="darkly.bootstrap.min.css" rel="stylesheet">
@@ -160,7 +162,7 @@
   
 
   <!-- The Page -->
-  <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+  <div class="main-col col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2">
 
 
 
@@ -172,12 +174,13 @@
       </div>
       <div class="col-md-6">
         <div class="col-md-12">
-         <button id="askBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
-         <button id="bidBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
-         <button id="buyBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
-         <button id="issueBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
-         <button id="changeRewardBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
-         <button id="withdrawBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
+          <button id="askBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+          <button id="bidBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+          <button id="buyBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+          <button id="raiseFundsBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#raiseFundsModal">Raise funds</button>
+          <button id="issueBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
+          <button id="changeRewardBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
+          <button id="withdrawBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
 
 
        </div>
@@ -487,7 +490,6 @@
   </div>
 </div>
 </div>
-
 <div id="askModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 

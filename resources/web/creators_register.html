@@ -111,35 +111,10 @@
    </nav>
 
    <!-- The full page with teh sidebar -->
-   <div class="container-fluid">
-     <div class="row">
-
-      <!-- The sidebar -->
-      <div id="side_col" class="col-md-2 sidebar">
-
-        <div class="mini-submenu">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </div>
-        <div id="scroll-nav" class="list-group">
-
-          <li class="list-group-item">
-            <a href="userdashboard_overview.html"><i class="fa fa-dashboard"></i> Overview</a>
-            <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
-          </li>
-
-          <a class="list-group-item" href="#registerCreator"><i class="fa fa-bar-chart-o"></i> Register</a>
-          <a class="list-group-item" href="#categories"><i class="fa fa-table"></i> Categories</a>
-          <a class="list-group-item" href="#units"><i class="fa fa-table"></i> Units</a>
-          <a class="list-group-item" href="#raiseFunds"><i class="fa fa-table"></i> Raise Funds</a>
-
-        </div>
-      </div>        
-    </div>
+   <div class="container">
 
     <!-- The Page -->
-    <div id="main_col" class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+    <div id="main_col" class="col-md-12">
       <div class="starter-template">
         <h1>Creator register</h1>
         <p class="lead">Please read through the entire <a href="/FAQ">FAQ</a>, especially about the <a href="/FAQ#what_are_rewards">rewards</a> you will owe to your funders,  before signing up and selling pieces. </p>
@@ -159,7 +134,7 @@
               <div class="panel-body">
 
                <div class="register">
-                <h3> Register &nbsp;&nbsp;&nbsp; <small><a href="/creators_register">Creator register</a> </small></h3>
+                <h3> Register </h3>
                 <hr></hr>
 
                 <form id="creatorRegisterForm" class="form-horizontal" role="form"
@@ -424,117 +399,16 @@
 
   </form>
 </script>
+
+
 </div>
 </div>
 </div>
+<button id="takeMeHomeBtn" type="submit" class="btn btn-primary"
+>Take me to my page</button>
 </div>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4 class="panel-title">
-      <a data-toggle="collapse" data-parent="#accordion" href="#raiseFunds">
-        Raise Funds
-      </a>
-    </h4>
-  </div>
-  <div id="raiseFunds" class="panel-collapse collapse">
-    <div class="panel-body">
-      Read through the <a href="/FAQ">FAQ</a> to learn about <a href="/FAQ#what_are_rewards">rewards</a>. A 0.5% reward percentage is standard for startup projects.<br><br>
-      <form id="raiseFundsForm" class="form-horizontal" role="form">
-
-        <div class="form-group form-group-lg">
-          <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
-          <div class="col-sm-10">
-           <div class="input-group">
-           <span name="curr_iso" class="input-group-addon">$</span>    
-            <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Reward/piece/year"
-
-            data-bv-notempty="true"
-            data-bv-notempty-message="Must be > 0"
-
-            data-bv-greaterthan="true"
-            data-bv-greaterthan-inclusive="false"
-            data-bv-greaterthan-value="0"
-            data-bv-greaterthan-message="Must be > 0" 
-
-            >
-            <span class="input-group-addon">per piece per year</span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group form-group-lg">
-        <label class="col-sm-2 control-label" for="formGroupInputLarge">Price per piece</label>
-        <div class="col-sm-10">
-          <div class="input-group">
-           <span name="curr_iso" class="input-group-addon">$</span>    
-            <input name="issuePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Price per piece"
-
-            data-bv-notempty="true"
-            data-bv-notempty-message="Must be > 0"
-
-            data-bv-greaterthan="true"
-            data-bv-greaterthan-inclusive="false"
-            data-bv-greaterthan-value="0"
-            data-bv-greaterthan-message="Must be > 0" 
-
-            >
-            <span class="input-group-addon">per piece </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group form-group-lg">
-        <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
-        <div class="col-sm-10">
-          <input name="issuePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-          type="text" 
-          data-bv-integer="true"
-          data-bv-integer-message="Must be a whole number"
-
-          data-bv-notempty="true"
-          data-bv-notempty-message="Must be a whole number"
-
-          data-bv-greaterthan="true"
-          data-bv-greaterthan-inclusive="false"
-          data-bv-greaterthan-value="0"
-          data-bv-greaterthan-message="Must be > 0"
-
-          >
-        </div>
-      </div>
-
-      <div class="form-group form-group-lg">
-
-       <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-       <div id="issueTotal" class="col-sm-10 form-control-static">
-
-       </div>
-     </div>
-
-     <div class="form-group form-group-lg">
-       <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward %</label>
-       <div id="rewardPct" class="col-sm-10 form-control-static">
-       </div>
-     </div>
-
-     <div class="form-group form-group-lg">
-       <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Rewards owed</label>
-       <div id="rewardsOwedPerYear" class="col-sm-10 form-control-static">
-       </div>
-     </div>
-
-     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button id="raiseFundsBtn" type="submit" class="btn btn-primary" 
-        >Take me to my page</button>
-      </div>
-    </div>
 
 
-
-  </form>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -544,17 +418,23 @@
   <div class="modal-dialog">
 
     <div class="modal-content">
-            <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>        <h4 class="modal-title">Disclaimer</h4>
       </div>
       <div class="modal-body">
         <div class="text">
-         blah blah blah, a disclaimer
-       </div>
+         <ul>
+          <li>The fee for using Bitpieces is 5% of every withdrawal of funds raised. </li>
+          <li>Bitpieces does not guarantee that the pieces you issue will be purchased.</li>
+          <li>You are liable to your funders for the rewards that you issue.</li>
+          <li>Selling pieces is a contract between you and your potential funders, and you may be liable to your funders for the initial value of the pieces you have sold to them, if you do not provide the rewards which were promised.</li>
+          
+          </ul>
+        </div>
 
 
-     </div> 
-     <div class="modal-footer">
+      </div> 
+      <div class="modal-footer">
        <button type="button" class="btn btn-default" data-dismiss="modal">Okay, I accept</button>
      </div>
 

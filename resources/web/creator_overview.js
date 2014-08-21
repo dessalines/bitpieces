@@ -25,7 +25,9 @@ $(document).ready(function() {
     pageNumbers['#creators_activity_table'] = 1;
     setupPagedTable(creatorName + '/get_creators_activity/', template, '#creators_activity', '#creators_activity_table');
 
-
+    var template = $('#bids_asks_template').html();
+    pageNumbers['#bids_asks_table'] = 1;
+    setupPagedTable(creatorName + '/get_bids_asks_current/', template, '#bids_asks', '#bids_asks_table');
 
 
 });

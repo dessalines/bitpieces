@@ -1,11 +1,17 @@
 // var sparkService = "http://localhost:4567/";
-var sparkService = "http://bitpieces.com:4567/"
+var sparkService = "http://bitpieces.com:4566/"
 var cookie_path_name = "prod";
 
 var pageNumbers = {};
+
+
+
+
+
 var extractData = function(node) {
     return $(node).text().replace(/[^0-9.]/g, '');
 }
+
 
 function expireTimeString(seconds) {
     var now = new Date();
@@ -94,7 +100,7 @@ function fillUserHighChartStandardTemplate(url, id, yAxisLabel, symbol) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             var jsonObj = jQuery.parseJSON(data);
             // var jsonObj = JSON.stringify(data);
@@ -120,7 +126,7 @@ function fillUserHighChartPieChartTemplate(url, id) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             var jsonObj = jQuery.parseJSON(data);
             // var jsonObj = JSON.stringify(data);
@@ -147,7 +153,7 @@ function fillUserInfoMustache(url) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             var jsonObj = jQuery.parseJSON(data);
 
@@ -156,9 +162,9 @@ function fillUserInfoMustache(url) {
             var rendered = Mustache.render(template, jsonObj);
             $('#userDropdown').html(rendered);
 
-            console.log(jsonObj);
-            console.log(template);
-            console.log(rendered);
+            // console.log(jsonObj);
+            // console.log(template);
+            // console.log(rendered);
 
 
         },
@@ -184,9 +190,9 @@ function fillUserInfoMustacheFromCookie() {
 
 
         $("#settings").attr("href", "/users/settings/" + jsonObj);
-        console.log(jsonObj);
-        console.log(template);
-        console.log(rendered);
+        // console.log(jsonObj);
+        // console.log(template);
+        // console.log(rendered);
 
     } else {
         $('#userDropdown').html('');
@@ -223,7 +229,7 @@ function fillTableFromMustache(url, templateHtml, divId, tableId) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
@@ -235,7 +241,7 @@ function fillTableFromMustache(url, templateHtml, divId, tableId) {
             var rendered = Mustache.render(templateHtml, jsonObj);
             $(divId).html(rendered);
             $(tableId).tablesorter({
-                debug: true,
+                debug: false,
                 textExtraction: extractData
                 //     headers: { 
                 //   0: {       // Change this to your column position
@@ -243,9 +249,9 @@ function fillTableFromMustache(url, templateHtml, divId, tableId) {
                 //   } 
                 // }
             });
-            console.log(jsonObj);
-            console.log(templateHtml);
-            console.log(rendered);
+            // console.log(jsonObj);
+            // console.log(templateHtml);
+            // console.log(rendered);
 
 
         },
@@ -267,7 +273,7 @@ function fillFieldFromMustache(url, templateId, divId, isMoney) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
@@ -280,9 +286,9 @@ function fillFieldFromMustache(url, templateId, divId, isMoney) {
             Mustache.parse(template); // optional, speeds up future uses
             var rendered = Mustache.render(template, data);
             $(divId).html(rendered);
-            console.log(jsonObj);
-            console.log(template);
-            console.log(rendered);
+            // console.log(jsonObj);
+            // console.log(template);
+            // console.log(rendered);
 
 
         },
@@ -304,7 +310,7 @@ function fillJSONFieldFromMustache(url, templateId, divId, isMoney) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
@@ -317,9 +323,9 @@ function fillJSONFieldFromMustache(url, templateId, divId, isMoney) {
             Mustache.parse(template); // optional, speeds up future uses
             var rendered = Mustache.render(template, jsonObj);
             $(divId).html(rendered);
-            console.log(jsonObj);
-            console.log(template);
-            console.log(rendered);
+            // console.log(jsonObj);
+            // console.log(template);
+            // console.log(rendered);
 
 
         },
@@ -354,33 +360,36 @@ function setupCreatorSearch() {
 
     $("#creator_search").submit(function(event) {
         var formData = $("#creator_search").serializeArray();
-        console.log(formData);
+        // console.log(formData);
         var searchString = formData[0].value;
 
-        console.log(searchString);
+        // console.log(searchString);
         var url = "/creators/main/" + searchString;
         window.location.replace(url);
 
         event.preventDefault();
     });
 }
-
+// CAN"T HAVE UNDERSCORES IN CLASS NAMES
 function setupMiniSubmenu() {
     $('#slide-submenu').on('click', function() {
         $(this).closest('.list-group').fadeOut('slide', function() {
             $('.mini-submenu').fadeIn();
         });
-        $('#main_col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
-        $('#othermain_col').toggleClass('col-md-offset-2 col-md-10 col-md-8');
+        $('.main-col').toggleClass('col-sm-offset-2 col-md-offset-2 col-md-10 col-md-12');
+        $('.othermain-col').toggleClass('col-md-offset-2 col-md-10 col-md-8');
+        $(window).resize();
         // $('#side_col').toggleClass('span0 span3');
 
     });
 
     $('.mini-submenu').on('click', function() {
+
         $(this).next('.list-group').toggle('slide');
         $('.mini-submenu').hide();
-        $('#main_col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
-        $('#othermain_col').toggleClass('col-md-offset-2 col-md-8 col-md-10');
+        $('.main-col').toggleClass('col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2');
+        $('.othermain-col').toggleClass('col-md-offset-2 col-md-8 col-md-10');
+        $(window).resize();
     });
 }
 
@@ -396,7 +405,7 @@ function setupLogout() {
             },
             // data: seriesData, 
             success: function(data, status, xhr) {
-                console.log(data);
+                // console.log(data);
                 // var jsonObj = JSON.parse(data);
                 // JSON.useDateParser();
                 // var jsonObj = jQuery.parseJSON(data);
@@ -404,7 +413,7 @@ function setupLogout() {
 
 
                 toastr.success(data);
-                console.log(url);
+                // console.log(url);
                 delete_cookie("authenticated_session_id");
                 delete_cookie("username");
                 delete_cookie("usertype");
@@ -433,6 +442,7 @@ function setupLogout() {
     });
 }
 
+
 function setupSummerNote(url, id, sqlColName) {
 
     var url = sparkService + url // the script where you handle the form input.
@@ -444,7 +454,7 @@ function setupSummerNote(url, id, sqlColName) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             // var jsonObj = JSON.parse(data);
             // JSON.useDateParser();
             // var jsonObj = jQuery.parseJSON(data);
@@ -455,8 +465,8 @@ function setupSummerNote(url, id, sqlColName) {
 
 
             var mainBody = jsonObj[sqlColName];
-            console.log(jsonObj);
-            console.log(mainBody);
+            // console.log(jsonObj);
+            // console.log(mainBody);
 
             $(id).summernote({
                 height: 300, // set editor height
@@ -487,7 +497,7 @@ function saveSummerNote(shortUrl, btn, id) {
 
 
         var sHTML = $(id).code();
-        console.log(sHTML);
+        // console.log(sHTML);
 
         var btn = $(this);
         // Loading
@@ -517,7 +527,7 @@ function saveSummerNote(shortUrl, btn, id) {
 
 
 
-                console.log(document.cookie);
+                // console.log(document.cookie);
 
             },
             error: function(request, status, error) {
@@ -542,7 +552,7 @@ function fillSimpleText(url, divId) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log(data);
+            // console.log(data);
             $(divId).html(data);
 
 
@@ -564,7 +574,7 @@ function simpleFetch(url) {
         },
         // data: seriesData, 
         success: function(data, status, xhr) {
-            console.log('data = ' + data);
+            // console.log('data = ' + data);
             // return data;
 
 
@@ -600,7 +610,83 @@ function navigateWithParams() {
     });
 }
 
-depositSymbol
+function setupCurrFields() {
+    getJson('/get_users_settings').done(function(e) {
+
+        // this is handled in userdashboard_settings.js
+        var json = JSON.parse(e);
+        var currIso = json['curr_iso'];
+        // console.log("iso = " + currIso);
+        $("#depositSymbol").text(currIso);
+        $("#withdrawSymbol").text(currIso);
+        $("#bidSymbol").text(currIso);
+        $("#askSymbol").text(currIso);
+        $("#buySymbol").text(currIso);
+        $('[name="curr_iso"]').text(currIso);
+
+    });
+}
+
+
+function setupDepositButton(shortUrl, btnId, formId, modalId) {
+    var userName = getCookie("username");
+    simpleFetch(userName + '/get_users_funds_current').done(function(result) {
+        $('[name="depositAmount"]').attr('placeholder', 'Current funds:' + result);
+    });
+
+
+    // !!!!!!They must have names unfortunately
+    $(btnId).click(function(event) {
+        var formData = $(formId).serializeArray();
+
+        var btnId = $(this);
+        // Loading
+        btnId.button('loading');
+
+        var url = sparkService + shortUrl; // the script where you handle the form input.
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            xhrFields: {
+                withCredentials: true
+            },
+            data: formData,
+            success: function(data, status, xhr) {
+
+
+                xhr.getResponseHeader('Set-Cookie');
+                // document.cookie="authenticated_session_id=" + data + 
+                // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
+                // Hide the modal, reset the form, show successful
+
+                // Loading
+                btnId.button('reset');
+
+                toastr.success(data);
+                $(modalId).modal('hide');
+
+                $(formId)[0].reset();
+
+                // refresh the page, too much info has now changed
+                window.setTimeout(function() {
+                    location.reload();
+                }, 3000);
+
+                // console.log(document.cookie);
+
+            },
+            error: function(request, status, error) {
+
+                toastr.error(request.responseText);
+            }
+        });
+
+
+
+        event.preventDefault();
+    });
+}
 
 function getJson(shortUrl) {
     var url = sparkService + shortUrl // the script where you handle the form input.
@@ -627,20 +713,22 @@ function getJson(shortUrl) {
     });
 }
 
-function standardFormPost(shortUrl, formId, modalId) {
+function standardFormPost(shortUrl, formId, modalId, reload) {
     // !!!!!!They must have names unfortunately
     // An optional arg
     modalId = (typeof modalId === "undefined") ? "defaultValue" : modalId;
 
+    reload = (typeof reload === "undefined") ? false : reload;
+
     // serializes the form's elements.
     var formData = $(formId).serializeArray();
-    console.log(formData);
+    // console.log(formData);
 
     // Loading
     $(this).button('loading');
 
     var url = sparkService + shortUrl; // the script where you handle the form input.
-    console.log(url);
+    // console.log(url);
     $.ajax({
         type: "POST",
         url: url,
@@ -650,7 +738,7 @@ function standardFormPost(shortUrl, formId, modalId) {
         data: formData,
         success: function(data, status, xhr) {
 
-            console.log('posted the data');
+            // console.log('posted the data');
             xhr.getResponseHeader('Set-Cookie');
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
@@ -658,13 +746,18 @@ function standardFormPost(shortUrl, formId, modalId) {
 
             $(formId)[0].reset();
             $(modalId).modal('hide');
-            console.log(modalId);
+            // console.log(modalId);
             toastr.success(data);
 
+            if (reload) {
+                // refresh the page, too much info has now changed
+                window.setTimeout(function() {
+                    location.reload();
+                }, 3000);
+            }
 
 
-
-            console.log(document.cookie);
+            // console.log(document.cookie);
             return data;
 
         },
@@ -688,7 +781,7 @@ function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
 
     var nextId = divId + "_pager_next";
     var prevId = divId + "_pager_prev";
-    console.log(nextId);
+    // console.log(nextId);
     fillTableFromMustache(shortUrl + pageNum,
         templateHtml, divId, tableId);
 
@@ -723,7 +816,19 @@ function showRecaptcha(element) {
     });
 }
 
-function setupDisqus(creatorName) {
+
+function setupModal(shortUrl, formId, buttonId, modalId) {
+
+    $(formId).bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        standardFormPost(shortUrl, formId, modalId, true);
+        
+    });
 
 
 
