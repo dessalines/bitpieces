@@ -292,8 +292,10 @@ public class DBActions {
 				// Edit, close out all asks for this seller and creator(because they could've made more than one ask
 				List<Ask> asks = Ask.find("users_id = ? and creators_id = ?", askersId, creatorsId);
 				for (Ask cAsk : asks) {
+					
 					cAsk.set("valid_until", dateOfTransaction);
 					cAsk.saveIt();
+					log.info("ask#" + cAsk.getId() + "invalidated");
 				}
 
 				// update the valid until, and create a new bid row
