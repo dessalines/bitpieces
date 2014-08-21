@@ -816,7 +816,19 @@ function showRecaptcha(element) {
     });
 }
 
-function setupDisqus(creatorName) {
+
+function setupModal(shortUrl, formId, buttonId, modalId) {
+
+    $(formId).bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
+
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        standardFormPost(shortUrl, formId, modalId, true);
+        
+    });
 
 
 
