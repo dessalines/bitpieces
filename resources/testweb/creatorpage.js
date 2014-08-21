@@ -138,7 +138,7 @@ function showHideButtons(creatorName) {
                 // $('#' + e + 'Symbol').text(currSymbol);
                 $('[name="' + e + 'Pieces' + '"],[name="' + e + '"]').bind('keyup', function(f) {
 
-                    var buyPieces = parseFloat($(this).val());
+                    var buyPieces = parseFloat($('[name="' + e + 'Pieces' + '"]').val());
 
                     // var buyPrice = $('[name="buy"]').text();
                     // var buyPrice = parseFloat($('[name="buy"]').attr('placeholder').substring(1).split('/')[0]);
