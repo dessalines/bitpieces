@@ -58,5 +58,6 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 - Buy an explainer whiteboard video
 - Write the script for it
 - add google analytics(not sure if working yet)
-- Create the bitpieces content page
+- Create the bitpieces content page, on creatorpoo7
+- logging out when the auth-id is null
 

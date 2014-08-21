@@ -442,6 +442,7 @@ function setupLogout() {
     });
 }
 
+
 function setupSummerNote(url, id, sqlColName) {
 
     var url = sparkService + url // the script where you handle the form input.
