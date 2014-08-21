@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 
+import spark.SparkBase;
+
 import com.bitpieces.dev.scheduled.ScheduledProcessing;
 import com.bitpieces.shared.DataSources;
 import com.bitpieces.shared.tools.CoinbaseTools;
@@ -60,6 +62,7 @@ public class WebService {
 		// Start the scheduler
 		ScheduledProcessing.main(null);
 
+		SparkBase.setSecure("/home/tyler/keystore.jks","asdfasdf",null,null);
 		
 
 		get("/deposit_button", (req, res) -> {
