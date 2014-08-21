@@ -22,6 +22,9 @@
       height: auto;
 
     }
+    .placeholder {
+      color: #999999;
+    }
 
     .nav-list {
       width: 228px;
