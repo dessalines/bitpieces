@@ -61,10 +61,11 @@ TEST_CONF="<VirtualHost *:80>
 echo "$TEST_CONF" | sudo tee -a /etc/apache2/sites-available/test.bitpieces.com.conf
 cd /etc/apache2/sites-available/
 sudo a2enmod rewrite
+sudo a2enmod ssl
 sudo a2ensite bitpieces.com.conf
 sudo a2ensite test.bitpieces.com.conf
 sudo service apache2 restart
-
+sudo a2ensite /etc/apache2/sites-available/default-ssl.conf
 cd ~/git/bitpieces/resources
 
 # may need to put these in host file
