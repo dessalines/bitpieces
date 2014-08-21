@@ -376,7 +376,7 @@ CREATE TABLE sales_from_creators
 
 CREATE TABLE rewards
 (
-   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,rew
+   id int(11) DEFAULT NULL auto_increment PRIMARY KEY,
    creators_id int(11) NOT NULL,
    FOREIGN KEY (creators_id) REFERENCES creators(id),
    time_ DATETIME NOT NULL,
@@ -1275,32 +1275,7 @@ on time_ = max_price_times.max_time_;
 
 
 
-CREATE VIEW creators_search_view as 
-select creators.id as creators_id,
-creators.username as creators_name, 
-GROUP_CONCAT(categories.name) as category_names, 
-pieces_owned_value_current_by_creator.value_total_current as worth_current,
-prices_current.price_per_piece as price_current,
-rewards_current.reward_per_piece_per_year as reward_current,
-CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
-backers_current_count.number_of_backers,
 
-from creators
-left join pieces_owned_value_current_by_creator
-on pieces_owned_value_current_by_creator.creators_id = creators.id
-left join rewards_current
-on rewards_current.creators_id = creators.id
-left join backers_current_count
-on backers_current_count.creators_id = creators.id
-left join creators_categories
-on creators_categories.creators_id = creators.id
-inner join categories on
-creators_categories.categories_id = categories.id
-left join prices_current
-on creators.username = prices_current.creators_name
-left join creators_safety_current
-on creators.username = creators_safety_current.creators_name
-group by creators.id;
 
 
 
@@ -1378,7 +1353,32 @@ inner join creators
 on from_creators_id = creators.id
 group by from_creators_id;
 
+CREATE VIEW creators_search_view as 
+select creators.id as creators_id,
+creators.username as creators_name, 
+GROUP_CONCAT(categories.name) as category_names, 
+pieces_owned_value_current_by_creator.value_total_current as worth_current,
+prices_current.price_per_piece as price_current,
+rewards_current.reward_per_piece_per_year as reward_current,
+CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
+backers_current_count.number_of_backers
 
+from creators
+left join pieces_owned_value_current_by_creator
+on pieces_owned_value_current_by_creator.creators_id = creators.id
+left join rewards_current
+on rewards_current.creators_id = creators.id
+left join backers_current_count
+on backers_current_count.creators_id = creators.id
+left join creators_categories
+on creators_categories.creators_id = creators.id
+inner join categories on
+creators_categories.categories_id = categories.id
+left join prices_current
+on creators.username = prices_current.creators_name
+left join creators_safety_current
+on creators.username = creators_safety_current.creators_name
+group by creators.id;
 
 
 /*
