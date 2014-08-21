@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import spark.SparkBase;
 
@@ -28,6 +30,8 @@ import com.google.common.cache.CacheBuilder;
 // 
 // java -cp bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar com.bitpieces.dev.web_service.WebService
 public class WebService {
+	static final Logger log = LoggerFactory.getLogger(WebService.class);
+	
 	public static final String COOKIE_PATH = "prod";
 
 	// Use an expiring map to store the authenticated sessions
@@ -67,7 +71,11 @@ public class WebService {
 		// Start the scheduler
 		ScheduledProcessing.main(null);
 
-		
+		get("/hello3", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			log.debug("okay wrote that");
+			return "hi from the bitpieces web service";
+		});
 		
 
 		get("/deposit_button", (req, res) -> {
