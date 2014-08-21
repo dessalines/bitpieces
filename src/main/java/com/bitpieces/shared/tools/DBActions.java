@@ -244,7 +244,7 @@ public class DBActions {
 
 	public static void askBidAccepter() {
 
-		System.out.println("Starting ask bid acceptor ...");
+		log.info("Starting ask bid acceptor ...");
 		Boolean rerun = false;
 		// Look at the view, and get the list of rows
 		List<Ask_bid_accept_checker> rows = Ask_bid_accept_checker.findAll();
@@ -273,9 +273,9 @@ public class DBActions {
 			// If the bidder wants more than the asker has:
 			Integer askMinusBidPieces = askPieces - bidPieces;
 			Integer piecesForTransaction = Math.min(askPieces, bidPieces);
-			System.out.println("\ncreators id = " + creatorsId + " bidders id = " + biddersId + " askers id = " + askersId);
-			System.out.println("ask minus bid pieces = " + askMinusBidPieces);
-			System.out.println("pieces for transaction = " + piecesForTransaction);
+			log.info("\ncreators id = " + creatorsId + " bidders id = " + biddersId + " askers id = " + askersId);
+			log.info("ask minus bid pieces = " + askMinusBidPieces);
+			log.info("pieces for transaction = " + piecesForTransaction);
 
 			String dateOfTransaction = SDF.format(new Date());
 			// Do the sale at the bidders price, or penalize them for overbidding
@@ -346,7 +346,7 @@ public class DBActions {
 				break;
 
 			} else {
-				System.out.println("got here!");
+				log.info("got here!");
 			}
 
 
@@ -368,7 +368,7 @@ public class DBActions {
 			Tools.Sleep(1000L);
 			askBidAccepter();
 		} else {
-			System.out.println("Finished.");
+			log.info("Finished.");
 		}
 
 	}
@@ -456,28 +456,28 @@ public class DBActions {
 
 
 		try {
-			System.out.println("got here1");
+			log.info("got here1");
 			Currencies usd = Currencies.findFirst("iso=?", "USD");
 		
-			System.out.println("got here1.1");
+			log.info("got here1.1");
 			String encryptedPass = Tools.PASS_ENCRYPT.encryptPassword(postMap.get("password"));
-			System.out.println("got here1.2");
+			log.info("got here1.2");
 			User user = User.createIt(
 					"username", postMap.get("username"),
 					"password_encrypted", encryptedPass,
 					"email", postMap.get("email"),
 					"local_currency_id", usd.getId(),
 					"precision_", 2);
-			System.out.println("got here2");
+			log.info("got here2");
 			// Give them the padowan badge
 			Badge padawanBadge = Badge.findFirst("name=?", "Padawan Learner");
 			Users_badges.createIt("users_id", user.getId().toString(), "badges_id", padawanBadge.getId().toString());
-			System.out.println("got here3");
+			log.info("got here3");
 			
 			UID uid = new UID(UserType.User, 
 					String.valueOf(user.getId()),
 					user.getString("username"));
-			System.out.println("got here4");
+			log.info("got here4");
 			return uid;
 
 		} catch (org.javalite.activejdbc.DBException e) {
@@ -689,7 +689,7 @@ public class DBActions {
 
 	public static void updateTransactionStatuses(Coinbase cb) {
 
-		System.out.println("updating statuses...");
+		log.info("updating statuses...");
 		// Go through the users_withdrawals table
 		List<Users_withdrawals> userWithdrawals = Users_withdrawals.where("status=?", "pending");
 
@@ -699,7 +699,7 @@ public class DBActions {
 
 			cW.set("status", updatedStatus).saveIt();
 
-			System.out.println("updated status of " + cb_tid + " to " + updatedStatus);
+			log.info("updated status of " + cb_tid + " to " + updatedStatus);
 
 		}
 		
@@ -711,7 +711,7 @@ public class DBActions {
 
 			cW.set("status", updatedStatus).saveIt();
 
-			System.out.println("updated status of " + cb_tid + " to " + updatedStatus);
+			log.info("updated status of " + cb_tid + " to " + updatedStatus);
 
 		}
 		
