@@ -131,16 +131,16 @@ function setupSigninAjax() {
         },
         data: formData,
         success: function(data, status, xhr) {
-            console.log(xhr.getResponseHeader('Set-Cookie[0]'));
-            console.log(xhr.getResponseHeader('Set-Cookie'));
-               console.log(xhr);
-            // console.log(asdf);
-            console.log(xhr.getAllResponseHeaders()); 
+            // console.log(xhr.getResponseHeader('Set-Cookie[0]'));
+            // console.log(xhr.getResponseHeader('Set-Cookie'));
+            //    console.log(xhr);
+            // // console.log(asdf);
+            // console.log(xhr.getAllResponseHeaders()); 
 
             // alert(data); // show response from the php script.
 
             xhr.getResponseHeader('Set-Cookie');
-            console.log(xhr.cookie);
+            // console.log(xhr.cookie);
             // old way
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
@@ -160,7 +160,7 @@ function setupSigninAjax() {
             var userName = getCookie("username");
             // GO to the dashboard
             if (!isCreator) {
-                // window.location.replace("/users/overview/" + userName);
+                window.location.replace("/users/overview/" + userName);
             } else {
                 // console.log(formData);
                 var url = "/creators/main/" + userName;
