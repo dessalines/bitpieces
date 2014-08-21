@@ -131,15 +131,15 @@ function setupSigninAjax() {
         },
         data: formData,
         success: function(data, status, xhr) {
-
+            console.log(xhr.getResponseHeader())
                console.log(xhr);
             // console.log(asdf);
             console.log(xhr.getAllResponseHeaders()); 
 
             // alert(data); // show response from the php script.
 
-            xhr.getResponseHeader('Set-Cookie');
-
+            a = xhr.getResponseHeader('Set-Cookie');
+            console.log(a);
             // old way
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
