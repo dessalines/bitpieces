@@ -38,13 +38,16 @@ public class WebService {
 
 	public static void main(String[] args) {
 
-		SparkBase.setSecure("/home/tyler/keystore.jks","asdfasdf",null,null);
+		
 		
 		// Set up coinbase for operations
 		Coinbase cb = CoinbaseTools.setupCoinbase(DataSources.COINBASE_PROP);
 
 		// Load the correct db connection
 		Properties prop = Tools.loadProperties(DataSources.STAGE_DB_PROP);
+		
+		// Set up the secure keystore
+		SparkBase.setSecure(DataSources.KEYSTORE, prop.getProperty("dbpassword"),null,null);
 
 		// Load the correct session cache
 		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(DataSources.STAGE_SESSION_FILE));

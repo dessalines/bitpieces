@@ -17,6 +17,8 @@ public class DataSources {
 	public static final String STAGE_DB_PROP = HOME + "/bitpieces_stage_db.properties";
 	public static final String PROD_DB_PROP = HOME + "/bitpieces_prod_db.properties";
 	
+	// The keystore location for the backend
+	public static final String KEYSTORE = "/home/tyler/keystore.jks";
 	public static final String DEV_SESSION_FILE =  HOME + "/bitpieces_dev_session.cache";
 	public static final String STAGE_SESSION_FILE =  HOME + "/bitpieces_stage_session.cache";
 	
