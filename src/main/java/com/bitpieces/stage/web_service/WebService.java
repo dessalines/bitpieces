@@ -47,7 +47,7 @@ public class WebService {
 		Properties prop = Tools.loadProperties(DataSources.STAGE_DB_PROP);
 		
 		// Set up the secure keystore
-		SparkBase.setSecure(DataSources.KEYSTORE, prop.getProperty("dbpassword"),null,null);
+		SparkBase.setSecure(DataSources.KEYSTORE, prop.getProperty("keystorepassword"),null,null);
 
 		// Load the correct session cache
 		SESSION_TO_USER_MAP.putAll(Tools.readObjectFromFile(DataSources.STAGE_SESSION_FILE));
