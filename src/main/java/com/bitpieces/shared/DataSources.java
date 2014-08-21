@@ -22,7 +22,7 @@ public class DataSources {
 	
 	public static final Integer DEV_WEB_PORT = 4566;
 	public static final Integer STAGE_WEB_PORT = 4567;
-	public static final Integer PROD_WEB_PORT = 4566;
+//	public static final Integer PROD_WEB_PORT = 4566;
 	
 	public static final String IP_ADDRESS = "107.170.137.106";
 	
