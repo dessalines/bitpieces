@@ -66,7 +66,7 @@ function setupRegisterAjax() {
         success: function(data, status, xhr) {
 
             xhr.getResponseHeader('Set-Cookie');
-            console.log('xhr = '  + xhr);
+            console.log('xhr = ' + xhr);
             console.log('xhr response header' + xhr.getResponseHeader);
             // document.cookie="authenticated_session_id=" + data + 
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
@@ -160,12 +160,22 @@ function setupSigninAjax() {
             var userName = getCookie("username");
             // GO to the dashboard
             if (!isCreator) {
-                window.location.replace("/users/overview/" + userName);
+                setTimeout(
+                    function() {
+                        window.location.replace("/users/overview/" + userName);
+
+                    }, 1000);
+
             } else {
                 // console.log(formData);
                 var url = "/creators/main/" + userName;
                 // console.log(url);
-                window.location.replace(url);
+
+                setTimeout(
+                    function() {
+                        window.location.replace(url);
+
+                    }, 1000);
 
             }
 
