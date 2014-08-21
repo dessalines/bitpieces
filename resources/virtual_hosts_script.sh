@@ -23,7 +23,7 @@ sudo rm /etc/apache2/sites-available/test.bitpieces.com.conf
 
 
 
-MAIN_CONF="<VirtualHost *:80>
+MAIN_CONF="<VirtualHost *:443>
     ServerAdmin admin@bitpieces.com
     ServerName bitpieces.com
     ServerAlias www.bitpieces.com
