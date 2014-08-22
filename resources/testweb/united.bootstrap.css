@@ -1150,7 +1150,7 @@ mark,
   color: #008A2E;
 }
 a.text-primary:hover {
-  color: #3DAE10;
+  color: #328A0F;
 }
 .text-success {
   color: #468847;
@@ -1181,7 +1181,7 @@ a.text-danger:hover {
   background-color: #008A2E;
 }
 a.bg-primary:hover {
-  background-color: #3DAE10;
+  background-color: #328A0F;
 }
 .bg-success {
   background-color: #dff0d8;
@@ -2812,7 +2812,7 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
   color: #ffffff;
-  background-color: #3DAE10;
+  background-color: #328A0F;
   border-color: #a5360f;
 }
 .btn-primary:active,
@@ -4105,7 +4105,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
   color: #ffffff;
-  background-color: #3DAE10;
+  background-color: #328A0F;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
@@ -4130,7 +4130,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  background-color: #3DAE10;
+  background-color: #328A0F;
   color: #ffffff;
 }
 @media (max-width: 767px) {
@@ -4146,7 +4146,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #ffffff;
-    background-color: #3DAE10;
+    background-color: #328A0F;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
@@ -4462,7 +4462,7 @@ a.label:focus {
 }
 .label-primary[href]:hover,
 .label-primary[href]:focus {
-  background-color: #3DAE10;
+  background-color: #328A0F;
 }
 .label-success {
   background-color: #38b44a;
