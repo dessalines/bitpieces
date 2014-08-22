@@ -7,7 +7,7 @@ RewriteBase /
 RewriteEngine On
 
 
-
+AddType text/javascript .js
 
 # html directs
 RewriteCond %{REQUEST_FILENAME} !-f
