@@ -84,14 +84,15 @@
         border-bottom-left-radius: 0px;
         border-left: 0px;
       }
-      .pager .navbar .navbar-default .nav body > nav {
+      .pager .navbar .navbar-default .nav body > nav .navbar .navbar-default .navbar-nav{
         margin-top: 0px;
         margin-bottom: 0px;
         margin-right: 0px;
         margin-left: 0px;
+        padding-top: 0px;
+        padding-bottom: 0px;
       }
-      .navbar-nav > li > a {padding-top:10px !important; padding-bottom:10px !important;}
-      .navbar {min-height:40px !important}
+
 
 
       .table {
@@ -226,12 +227,14 @@
     position:static;
     }*/
 
-    .navbar .navbar-default .nav{
+    .pager .navbar .navbar-default .nav body > nav .navbar .navbar-default .navbar-nav {
       height: 60px;
       margin-top: 0px;
       margin-bottom: 0px;
       margin-right: 0px;
       margin-left: 0px;
+      padding-top: 0px;
+      padding-bottom: 0px;
     }
     .sidebar {
       position: fixed;
