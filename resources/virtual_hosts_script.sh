@@ -25,6 +25,14 @@ sudo rm /etc/apache2/sites-available/test.bitpieces.com.conf
 # Now, its all about changing the default-ssl to have those 3 lines below
 
 MAIN_CONF="
+
+<VirtualHost *:80>
+    ServerAdmin admin@bitpieces.com
+    ServerName bitpieces.com
+    ServerAlias www.bitpieces.com
+    Redirect / https://bitpieces.com/
+</VirtualHost>
+
           <VirtualHost _default_:443>
                 ServerAdmin admin@bitpieces.com
                 ServerName bitpieces.com
@@ -55,12 +63,7 @@ MAIN_CONF="
 
         </VirtualHost>
 
-<VirtualHost *:80>
-    ServerAdmin admin@bitpieces.com
-    ServerName bitpieces.com
-    ServerAlias www.bitpieces.com
-    Redirect / https://bitpieces.com/
-</VirtualHost>
+
 
 "
 
