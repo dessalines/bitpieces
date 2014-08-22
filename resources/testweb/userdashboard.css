@@ -326,11 +326,11 @@
 
 }
 .blur {
-  -webkit-filter: blur(0.4px);
-  -moz-filter: blur(0.4px);
-  -o-filter: blur(0.4px);
-  -ms-filter: blur(0.4px);
-  filter: blur(0.4px);
+  -webkit-filter: blur(0.8px);
+  -moz-filter: blur(0.8px);
+  -o-filter: blur(0.8px);
+  -ms-filter: blur(0.8px);
+  filter: blur(0.8px);
 }
 
 /* Declare heights because of positioning of img element */
