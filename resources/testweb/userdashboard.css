@@ -225,11 +225,11 @@
     }*/
 
     .navbar {
-      height: 60px;
+      height: 50px;
     }
     .sidebar {
       position: fixed;
-      top: 60px;
+      top: 50px;
       bottom: 0;
       left: 0;
       z-index: 1000;
@@ -318,7 +318,7 @@
 /* Carousel base class */
 .carousel {
   height: 400px;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
   margin-top: -20px;
 }
 /* Since positioning the image, we need to help out the caption */
