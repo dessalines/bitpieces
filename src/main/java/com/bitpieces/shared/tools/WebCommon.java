@@ -1566,9 +1566,9 @@ public class WebCommon {
 
 
 			// Set some cookies for that users login
-			res.cookie("authenticated_session_id_" + path, authenticatedSession, expireSeconds);
-			res.cookie("username_" + path, uid.getUsername(), expireSeconds);
-			res.cookie("usertype_" + path, uid.getType().toString(), expireSeconds);
+			res.cookie("authenticated_session_id_" + path, authenticatedSession, expireSeconds, true);
+			res.cookie("username_" + path, uid.getUsername(), expireSeconds, true);
+			res.cookie("usertype_" + path, uid.getType().toString(), expireSeconds, true);
 //			String json = Tools.GSON2.toJson(cache);
 //			System.out.println(json);
 
