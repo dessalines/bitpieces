@@ -47,7 +47,6 @@
         box-shadow: 0 1px 4px rgba(0,0,0,.065);
       }
       .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
-        width: 228px;
         color: #ffffff;
         text-shadow: 0 -1px 0 
         rgba(0, 0, 0, 0.2);
@@ -217,13 +216,13 @@
     #mynav.affix-top {
       position: static;
       margin-top:30px;
-      width:auto;
+      width: 228px;
     }
 
     #mynav.affix {
       position: fixed;
       top:-200px;
-      width:auto;
+      width: 228px;
     }
   }
   /* Hide for mobile, show later */
