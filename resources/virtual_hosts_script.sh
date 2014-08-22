@@ -30,6 +30,7 @@ MAIN_CONF="
     ServerAdmin admin@bitpieces.com
     ServerName bitpieces.com
     ServerAlias www.bitpieces.com
+    DocumentRoot /var/www/html/bitpieces.com/public_html
     Redirect / https://bitpieces.com/
 </VirtualHost>
 
