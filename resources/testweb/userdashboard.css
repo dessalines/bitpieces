@@ -18,12 +18,12 @@
       bottom:0;
       }*/
       img {
+        display: block;
         width:  auto;
         height: 100%;
         vertical-align: middle;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
+        
+        margin: 0 auto;
         /*horizontal-align: middle;*/
       }
 
