@@ -1554,9 +1554,12 @@ public class WebCommon {
 
 	public static String verifyLoginAndSetCookies(UID uid, Request req, Response res, 
 			Cache<String, UID> cache, String cacheFile, String path) {
+		
 		if (uid != null) {
 			Integer expireSeconds = Tools.getExpireTime(req.body());
 			String authenticatedSession = Tools.generateSecureRandom();
+			
+			Boolean secure = (path.equals("prod")) ? true : false;
 			// Put the users ID in the session
 			//				req.session().attribute("userId", userId); // put the user id in the session data
 
@@ -1566,9 +1569,9 @@ public class WebCommon {
 
 
 			// Set some cookies for that users login
-			res.cookie("authenticated_session_id_" + path, authenticatedSession, expireSeconds, true);
-			res.cookie("username_" + path, uid.getUsername(), expireSeconds, true);
-			res.cookie("usertype_" + path, uid.getType().toString(), expireSeconds, true);
+			res.cookie("authenticated_session_id_" + path, authenticatedSession, expireSeconds, secure);
+			res.cookie("username_" + path, uid.getUsername(), expireSeconds, secure);
+			res.cookie("usertype_" + path, uid.getType().toString(), expireSeconds, secure);
 //			String json = Tools.GSON2.toJson(cache);
 //			System.out.println(json);
 
