@@ -189,7 +189,7 @@
     @media(max-width:993px){
      .affix {
        position: static;
-       width: auto;
+       width: 100%;
        top: 0;
      }
    }
