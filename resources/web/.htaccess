@@ -10,7 +10,8 @@ RewriteEngine On
 
 
 # html directs
-RewriteRule ^(.+)$ $1.html [QSA]
+#RewriteRule ^(.+)$ $1.html [QSA]
+RewriteRule ^(.+)$ turd.html [QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
