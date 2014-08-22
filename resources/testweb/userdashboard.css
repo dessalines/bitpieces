@@ -78,6 +78,9 @@
         font-size: 0px; /*removes whitespace between button and input*/
 
       }
+      #creator_search > button {
+        margin-left: -10px;
+      }
 
 
       .navbar-input-group input {
@@ -87,7 +90,7 @@
       .navbar-input-group .btn {
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
-        border-left: -10px;
+        border-left: 0px;
       }
       .pager .navbar-input-group {
         margin-top: 0px;
