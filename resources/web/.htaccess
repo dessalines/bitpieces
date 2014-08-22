@@ -7,8 +7,8 @@ RewriteBase /
 RewriteEngine On
 
 
-RewriteCond %{HTTPS} !on
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+#RewriteCond %{HTTPS} !on
+#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
 
 # html directs
