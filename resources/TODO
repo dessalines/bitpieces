@@ -62,10 +62,10 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 - logging out when the auth-id is null(instead, try to get that time from the response header)
 - color suggestions : 
 40A6C2, 6/10, 9.5
-F5DD42, 2, 5
+F5DD42, 2, 5, yellow
 26754B	9.0, 7.0
 752650
-BA2800
-8DA802
+BA2800 5.0, orangish-red
+8DA802, olive
 52233C
 
