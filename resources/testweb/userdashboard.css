@@ -21,6 +21,9 @@
         width:  auto;
         height: 100%;
         vertical-align: middle;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
         /*horizontal-align: middle;*/
       }
 
