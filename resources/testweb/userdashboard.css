@@ -18,10 +18,12 @@
       bottom:0;
       }*/
       img {
-        display: block;
-        width:  auto;
+        display: inline-block;
         height: 100%;
         vertical-align: middle;
+        width:  auto;
+        
+        
         border:1px solid #021a40;
 
         /*horizontal-align: middle;*/
