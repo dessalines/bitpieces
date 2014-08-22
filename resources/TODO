@@ -61,8 +61,8 @@ Use disqus, and use the creators name as the disqus Identifier for each creators
 - Create the bitpieces content page, on creatorpoo7
 - logging out when the auth-id is null(instead, try to get that time from the response header)
 - color suggestions : 
-40A6C2, 6/10, 
-F5DD42
+40A6C2, 6/10, 9.5
+F5DD42, 2/10
 26754B
 752650
 BA2800
