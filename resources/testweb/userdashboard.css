@@ -84,7 +84,7 @@
         border-bottom-left-radius: 0px;
         border-left: 0px;
       }
-      .pager .navbar .navbar-default .nav {
+      .pager .navbar .navbar-default .nav body > nav {
         margin-top: 0px;
         margin-bottom: 0px;
         margin-right: 0px;
