@@ -48,7 +48,7 @@ MAIN_CONF="
                     SSLCertificateFile /home/tyler/public.crt
                     SSLCertificateKeyFile /home/tyler/privatekey.key
                     SSLCACertificateFile /home/tyler/intermediate.crt
-                <FilesMatch "\.(cgi|shtml|phtml|php)$">
+                <FilesMatch '\.(cgi|shtml|phtml|php)$'>
                                 SSLOptions +StdEnvVars
                 </FilesMatch>
                 <Directory /usr/lib/cgi-bin>
