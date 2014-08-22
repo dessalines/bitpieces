@@ -73,7 +73,9 @@
       }
       .navbar-input-group {
         font-size: 0px; /*removes whitespace between button and input*/
+
       }
+
 
       .navbar-input-group input {
         border-top-right-radius: 0px;
@@ -84,7 +86,7 @@
         border-bottom-left-radius: 0px;
         border-left: 0px;
       }
-      .pager {
+      .pager .navbar-form{
         margin-top: 0px;
         margin-bottom: 0px;
         margin-right: 0px;
