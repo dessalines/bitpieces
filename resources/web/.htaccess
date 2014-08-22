@@ -21,7 +21,7 @@ RewriteRule ^(.+)$ $1.html [L,QSA]
 RewriteRule ^$ /asdf.html [L]
 
 
-
+ErrorDocument 404 /404.html
 
 # The creators rewrites
 RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
