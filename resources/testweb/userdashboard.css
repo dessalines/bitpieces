@@ -84,7 +84,7 @@
         border-bottom-left-radius: 0px;
         border-left: 0px;
       }
-      .pager .navbar .navbar-default {
+      .pager .navbar .navbar-default .nav {
         margin-top: 0px;
         margin-bottom: 0px;
         margin-right: 0px;
@@ -224,7 +224,7 @@
     position:static;
     }*/
 
-    .navbar .navbar-default{
+    .navbar .navbar-default .nav{
       height: 60px;
       margin-top: 0px;
       margin-bottom: 0px;
