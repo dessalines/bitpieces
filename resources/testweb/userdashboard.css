@@ -22,8 +22,8 @@
         height: 100%;
         vertical-align: middle;
         width:  auto;
-        
-        
+
+
         border:1px solid #021a40;
 
         /*horizontal-align: middle;*/
@@ -87,7 +87,7 @@
       .navbar-input-group .btn {
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
-        border-left: 0px;
+        border-left: -10px;
       }
       .pager .navbar-input-group {
         margin-top: 0px;
