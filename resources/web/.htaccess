@@ -7,7 +7,7 @@ RewriteBase /
 RewriteEngine On
 
 
-
+RewriteCond %{HTTPS} off
 
 # html directs
 RewriteRule ^(.+)$ $1.html [L,QSA]
