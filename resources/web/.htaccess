@@ -7,7 +7,7 @@ RewriteBase /
 RewriteEngine On
 
 
-RewriteCond %{HTTPS} off
+
 
 # html directs
 RewriteRule ^(.+)$ $1.html [L,QSA]
@@ -19,8 +19,15 @@ RewriteCond %{REQUEST_FILENAME}.html -f
 
 # make landing look like the root
 #RewriteRule ^$ /landing.html [L]
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteRule ^$ /asdf.html [L]
+
+# reroute to https://
+RewriteCond %{HTTP_HOST} !^\.
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#Now, rewrite to HTTPS:
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 
 # The creators rewrites
