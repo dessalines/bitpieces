@@ -19,6 +19,7 @@ RewriteRule ^(.+)$ $1.html [L,QSA]
 # make landing look like the root
 #RewriteRule ^$ /landing.html [L]
 RewriteRule ^$ /asdf.html [L]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # The creators rewrites
 RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
