@@ -322,7 +322,8 @@
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
-  z-index: 10;
+  z-index: 5;
+
 }
 
 /* Declare heights because of positioning of img element */
