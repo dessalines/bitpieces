@@ -6,16 +6,9 @@
 RewriteBase /
 RewriteEngine On
 
-RewriteCond %{HTTPS} off
-# reroute to https://
 
-# First rewrite to HTTPS:
-# Don't put www. here. If it is already there it will be included, if not
-# the subsequent rule will catch it.
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} 
-# Now, rewrite any request to the wrong domain to use www.
-RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} 
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
 
 # html directs
