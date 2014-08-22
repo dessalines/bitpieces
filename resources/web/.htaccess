@@ -6,7 +6,7 @@
 RewriteBase /
 RewriteEngine On
 
-
+RewriteCond %{HTTPS} off
 
 
 # html directs
@@ -23,7 +23,7 @@ RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^$ /asdf.html [L]
 
 # reroute to https://
-RewriteCond %{HTTPS} off
+
 # First rewrite to HTTPS:
 # Don't put www. here. If it is already there it will be included, if not
 # the subsequent rule will catch it.
