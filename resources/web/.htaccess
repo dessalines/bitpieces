@@ -7,17 +7,13 @@ RewriteBase /
 RewriteEngine On
 
 
-#RewriteCond %{HTTPS} !on
-#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
 
 # html directs
-#RewriteRule ^(.+)$ $1.html [QSA]
-RewriteRule ^(.+)$ landing.html [QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
-
+RewriteRule ^(.+)$ $1.html [L,QSA]
 
 
 # make landing look like the root
