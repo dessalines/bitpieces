@@ -16,140 +16,147 @@
 
       position:relative; 
       bottom:0;
-     }*/
-     img {
-      width:  auto;
-      height: auto;
+      }*/
+      img {
+        display: block;
+        width:  auto;
+        height: 100%;
+        vertical-align: middle;
 
-    }
- 
-
-    .nav-list {
-      width: 228px;
-      margin: 30px 0 0;
-      padding: 0;
-      background-color: #202020;
-      -webkit-border-radius: 6px;
-      -moz-border-radius: 6px;
-      border-radius: 6px;
-      -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-      -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-      box-shadow: 0 1px 4px rgba(0,0,0,.065);
-    }
-    .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
-      color: #ffffff;
-      text-shadow: 0 -1px 0 
-      rgba(0, 0, 0, 0.2);
-      background-color: #0088cc;
-    }
-    #midCol.affix-top {
-      position:fixed;
-      margin-left:-18px;
-      margin-right:10px;
-    }
-
-    #midCol.affix-bottom {
-      position:static;
-    }
-
-    #midCol.affix {
-      position:static;
-    }
-
-    @font-face {
-      font-family: 'Glyphicons Halflings';
-      src: url('bootstrap-dist/fonts/glyphicons-halflings-regular.eot');
-      src: url('bootstrap-dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
-      url('bootstrap-dist/fonts/glyphicons-halflings-regular.woff') format('woff'), 
-      url('bootstrap-dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
-      url('bootstrap-dist/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
-    }
-    .navbar-input-group {
-      font-size: 0px; /*removes whitespace between button and input*/
-    }
-
-    .navbar-input-group input {
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-    .navbar-input-group .btn {
-      border-top-left-radius: 0px;
-      border-bottom-left-radius: 0px;
-      border-left: 0px;
-    }
-    .pager {
-      margin-top: 0px;
-      margin-bottom: 0px;
-      margin-right: 0px;
-      margin-left: 0px;
-    }
+        /*horizontal-align: middle;*/
+      }
+      .carousel-inner > .item > img {
+        margin: 0 auto;
+      }
 
 
-    .table {
-      font-size: .85em;
-    }
+
+      .nav-list {
+        width: 228px;
+        margin: 30px 0 0;
+        padding: 0;
+        background-color: #202020;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+        -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+        -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+        box-shadow: 0 1px 4px rgba(0,0,0,.065);
+      }
+      .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+        color: #ffffff;
+        text-shadow: 0 -1px 0 
+        rgba(0, 0, 0, 0.2);
+        background-color: #0088cc;
+      }
+      #midCol.affix-top {
+        position:fixed;
+        margin-left:-18px;
+        margin-right:10px;
+      }
+
+      #midCol.affix-bottom {
+        position:static;
+      }
+
+      #midCol.affix {
+        position:static;
+      }
+
+      @font-face {
+        font-family: 'Glyphicons Halflings';
+        src: url('bootstrap-dist/fonts/glyphicons-halflings-regular.eot');
+        src: url('bootstrap-dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+        url('bootstrap-dist/fonts/glyphicons-halflings-regular.woff') format('woff'), 
+        url('bootstrap-dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+        url('bootstrap-dist/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+      }
+      .navbar-input-group {
+        font-size: 0px; /*removes whitespace between button and input*/
+      }
+
+      .navbar-input-group input {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .navbar-input-group .btn {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-left: 0px;
+      }
+      .pager {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+      }
 
 
-    /*dropdown hover*/
-    ul.nav li.dropdown:hover > ul.dropdown-menu {
-      display: block;    
-    }
-    .input-group-addon {
-      background-color: #505050;
-    }
+      .table {
+        font-size: .85em;
+      }
 
-    .mini-submenu{
-      display:none;  
-      background-color: rgba(0, 0, 0, 0.6);  
-      border: 1px solid rgba(0, 0, 0, 0.9);
-      border-radius: 4px;
-      padding: 9px;  
-      /*position: relative;*/
-      width: 42px;
 
-    }
+      /*dropdown hover*/
+      ul.nav li.dropdown:hover > ul.dropdown-menu {
+        display: block;    
+      }
+      .input-group-addon {
+        background-color: #505050;
+      }
 
-    .mini-submenu:hover{
-      cursor: pointer;
-    }
+      .mini-submenu{
+        display:none;  
+        background-color: rgba(0, 0, 0, 0.6);  
+        border: 1px solid rgba(0, 0, 0, 0.9);
+        border-radius: 4px;
+        padding: 9px;  
+        /*position: relative;*/
+        width: 42px;
 
-    .mini-submenu .icon-bar {
-      border-radius: 1px;
-      display: block;
-      height: 2px;
-      width: 22px;
-      margin-top: 3px;
-    }
+      }
 
-    .mini-submenu .icon-bar {
-      background-color: #999;
-    }
+      .mini-submenu:hover{
+        cursor: pointer;
+      }
 
-    #slide-submenu{
-      background: rgba(0, 0, 0, 0.45);
-      display: inline-block;
-      padding: 0 8px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+      .mini-submenu .icon-bar {
+        border-radius: 1px;
+        display: block;
+        height: 2px;
+        width: 22px;
+        margin-top: 3px;
+      }
 
-    .announcement-heading {
-      font-size: 35px;
-      margin: 0;
-    }
+      .mini-submenu .icon-bar {
+        background-color: #999;
+      }
 
-    .announcement-text,  {
-      margin: 0;
-      font-size: 12px;
+      #slide-submenu{
+        background: rgba(0, 0, 0, 0.45);
+        display: inline-block;
+        padding: 0 8px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
 
-    }
-    .announcement-bottom {
-      font-size: 14px;
-    }
+      .announcement-heading {
+        font-size: 35px;
+        margin: 0;
+      }
 
-    .sidebar {
-      padding-left: 40px;
-    }
+      .announcement-text,  {
+        margin: 0;
+        font-size: 12px;
+
+      }
+      .announcement-bottom {
+        font-size: 14px;
+      }
+
+      .sidebar {
+        padding-left: 40px;
+      }
 
 
 
@@ -177,17 +184,17 @@
     position: inherit;
     top:70px;
     width:228px;
-  }*/
+    }*/
 
-@media(max-width:993px){
-   .affix {
-     position: static;
-     width: auto;
-     top: 0;
-    }
-}
+    @media(max-width:993px){
+     .affix {
+       position: static;
+       width: auto;
+       top: 0;
+     }
+   }
 
-@media(min-width:993px) {
+   @media(min-width:993px) {
     #mynav {
       font-size: .75em;
     }
@@ -196,62 +203,62 @@
     }
 
     #mynav.affix-top {
-    position: static;
-    margin-top:30px;
-    width:auto;
+      position: static;
+      margin-top:30px;
+      width:auto;
+    }
+
+    #mynav.affix {
+      position: fixed;
+      top:40px;
+      width:auto;
+    }
   }
-  
-  #mynav.affix {
-    position: fixed;
-    top:40px;
-    width:auto;
-  }
-}
- /* Hide for mobile, show later */
- @media (min-width: 768px) {
+  /* Hide for mobile, show later */
+  @media (min-width: 768px) {
 
 
 
 
 /*  .affix,.affix-top,#midCol.affix,#midCol.affix-top {
     position:static;
-  }*/
+    }*/
 
-  .navbar {
-    height: 60px;
+    .navbar {
+      height: 60px;
+    }
+    .sidebar {
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      display: block;
+      padding: 20px;
+      overflow-x: hidden;
+      overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+      /*background-color: #f5f5f5;*/
+      /*border-right: 1px solid #eee;*/
+    }
+
+    .right-sidebar {
+      position: relative;
+      float:right;
+      top: 51px;
+      bottom: 0;
+      /*right: 0;*/
+      z-index: 1000;
+      display: block;
+      padding: 20px;
+      overflow-x: hidden;
+      /*overflow-y: auto; */
+      /* Scrollable contents if viewport is shorter than content. */
+      /*background-color: #f5f5f5;*/
+      /*border-right: 1px solid #eee;*/
+    }
+
+
   }
-  .sidebar {
-    position: fixed;
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    /*background-color: #f5f5f5;*/
-    /*border-right: 1px solid #eee;*/
-  }
-
-  .right-sidebar {
-    position: relative;
-    float:right;
-    top: 51px;
-    bottom: 0;
-    /*right: 0;*/
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    /*overflow-y: auto; */
-    /* Scrollable contents if viewport is shorter than content. */
-    /*background-color: #f5f5f5;*/
-    /*border-right: 1px solid #eee;*/
-  }
-
-
-}
 
 
 
@@ -310,17 +317,26 @@
 
 /* Carousel base class */
 .carousel {
-  height: 500px;
+  height: 400px;
   margin-bottom: 60px;
+  margin-top: -20px;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   z-index: 10;
+
+}
+.blur {
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
 }
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 500px;
+  height: 400px;
   background-color: #222222;
 }
 .carousel-inner > .item > img {
@@ -328,7 +344,7 @@
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 500px;
+  height: 400px;
 }
 
 
