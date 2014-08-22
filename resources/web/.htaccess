@@ -3,8 +3,20 @@
 
 #DirectoryIndex derp.php
 
-RewriteBase /
+
 RewriteEngine On
+
+# reroute to https://
+RewriteCond %{HTTP_HOST} !^\.
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#Now, rewrite to HTTPS:
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+RewriteBase /
+
 
 
 
@@ -21,13 +33,7 @@ RewriteCond %{REQUEST_FILENAME}.html -f
 #RewriteRule ^$ /landing.html [L]
 RewriteRule ^$ /asdf.html [L]
 
-# reroute to https://
-RewriteCond %{HTTP_HOST} !^\.
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-#Now, rewrite to HTTPS:
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 
 # The creators rewrites
