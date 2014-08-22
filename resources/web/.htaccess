@@ -7,6 +7,15 @@ RewriteBase /
 RewriteEngine On
 
 RewriteCond %{HTTPS} off
+# reroute to https://
+
+# First rewrite to HTTPS:
+# Don't put www. here. If it is already there it will be included, if not
+# the subsequent rule will catch it.
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Now, rewrite any request to the wrong domain to use www.
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 
 # html directs
@@ -22,15 +31,7 @@ RewriteCond %{REQUEST_FILENAME}.html -f
 #RewriteRule ^$ /landing.html [L]
 RewriteRule ^$ /asdf.html [L]
 
-# reroute to https://
 
-# First rewrite to HTTPS:
-# Don't put www. here. If it is already there it will be included, if not
-# the subsequent rule will catch it.
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# Now, rewrite any request to the wrong domain to use www.
-RewriteCond %{HTTP_HOST} !^www\.
-RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 
 # The creators rewrites
