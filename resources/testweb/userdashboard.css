@@ -19,11 +19,11 @@
       }*/
       img {
         width:  auto;
-        height: auto;
+        height: 100%;
         vertical-align: middle;
         /*horizontal-align: middle;*/
       }
-      
+
 
       .nav-list {
         width: 228px;
@@ -201,7 +201,7 @@
       margin-top:30px;
       width:auto;
     }
-    
+
     #mynav.affix {
       position: fixed;
       top:40px;
