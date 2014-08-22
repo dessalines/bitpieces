@@ -187,19 +187,17 @@
     }*/
 
     @media(max-width:993px){
-     #mynav.affix {
+     .affix {
        position: static;
        width: auto;
        top: 0;
      }
-     #mynav.affix-top {
-      position: static;
-      margin-top:30px;
-      width:100%;
-    }
-  }
+     .affix-top {
+      width: 100%;
+     }
+   }
 
-  @media(min-width:993px) {
+   @media(min-width:993px) {
     #mynav {
       font-size: .75em;
     }
@@ -388,7 +386,7 @@
 .carousel-body {
   padding-bottom: 40px;
 /*  color: #DBDBDB;
-background-color: #222222;*/
+  background-color: #222222;*/
 
 }
 
