@@ -115,7 +115,10 @@
       .panel-body {
         overflow: auto;
       }
-      
+      .table-paged {
+        height: ;
+      }
+
       .pager {
         margin-top: -5px;
         
@@ -339,6 +342,9 @@
 .small-chart {
   /*height: 50vh;*/
   height: 300px;
+}
+.small-table {
+  height: 280px;
 }
 
 .btn {
