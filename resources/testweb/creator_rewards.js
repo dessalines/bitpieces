@@ -3,7 +3,7 @@ $(document).ready(function() {
     var creatorName = window.location.pathname.split('/').pop();
 
 
-    fillUserHighChartPieChartTemplate(creatorName + '/get_rewards_owed_to_user/', '#rewards_owed_to_user');
+    fillUserHighChartPieChartTemplate(creatorName + '/get_rewards_owed_to_user', '#rewards_owed_to_user');
 
     var template = $('#rewards_template').html();
     pageNumbers['#rewards_table'] = 1;
