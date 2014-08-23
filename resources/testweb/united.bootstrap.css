@@ -888,7 +888,13 @@ html {
   font-size: 10px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-body { font-size: 13px; color: white; background-color: #2c2c2c;}
+body {
+  /*font-family: "Ubuntu", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  font-size: 14px;
+  /*line-height: 1.42857143;*/
+  color: #333333;
+  background-color: #ffffff;
+}
 input,
 button,
 select,
