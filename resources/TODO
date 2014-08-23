@@ -74,8 +74,10 @@ BA2800 5.0, orangish-red
 3796B0 , darker teal
 008A2E, dark green
 
-- change all the images to color again
++ change all the images to color again
 - Add some bunch of pictures and descriptions for your creator page
 - Rewards page pie chart
 - test money after UI change
-- footer size
++ footer size
+- rewards paid to users pie chart
+- currencies in charts
