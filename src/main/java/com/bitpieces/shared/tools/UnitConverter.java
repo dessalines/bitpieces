@@ -45,7 +45,7 @@ public class UnitConverter {
 
 	// The map of toCurrency, and the given currency service
 	private final LoadingCache<String, Map<DateTime, Double>> btcRatesCache = CacheBuilder.newBuilder()
-			.expireAfterWrite(15, TimeUnit.MINUTES)
+			.expireAfterWrite(5, TimeUnit.MINUTES)
 			.build(
 					new CacheLoader<String, Map<DateTime, Double>>() {
 						public Map<DateTime, Double> load(String ISO) {
