@@ -39,7 +39,7 @@
       
       }
       #conversation > div.nav.nav-secondary > ul > li.dropdown.sorting > a {
-        color: black;
+        color: #000000;
         text-decoration: line-through;
       }
 
