@@ -170,7 +170,7 @@
 
 
   <!-- The Page -->
- <div class="main-col col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2">
+  <div class="main-col col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2">
 
 
 
@@ -182,13 +182,13 @@
     </div>
     <div class="col-md-6">
       <div class="col-md-12">
-          <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
-          <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
-          <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
-          <button id="raiseFundsBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#raiseFundsModal">Raise funds</button>
-          <button id="issueBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
-          <button id="changeRewardBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
-          <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
+        <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+        <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+        <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+        <button id="raiseFundsBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#raiseFundsModal">Raise funds</button>
+        <button id="issueBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
+        <button id="changeRewardBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
+        <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
       </div>
     </div>
   </div>
@@ -264,6 +264,8 @@
         </div>
       </div>
     </div>
+    <!-- end of row -->
+  </div>
 
   
 
@@ -282,49 +284,49 @@
       </div>
     </div>
     <div class="col-md-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Current Bids and Asks</h3>
-      </div>
-      <div id="bids_asks" class="panel-body small-table">
-        <script id="bids_asks_template" type="x-tmpl-mustache"> 
-          <table id="bids_asks_table" class="table table-hover table-striped tablesorter">
-            <thead> 
-              <tr>
-                <th>Time <i class="fa fa-sort"></i></th>
-                <th>User <i class="fa fa-sort"></th>
-                <th>Type <i class="fa fa-sort"></th>
-                <th>Pieces <i class="fa fa-sort"></th>
-                <th>Price per piece<i class="fa fa-sort"></th>
-              </tr>
-            </thead>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Current Bids and Asks</h3>
+        </div>
+        <div id="bids_asks" class="panel-body small-table">
+          <script id="bids_asks_template" type="x-tmpl-mustache"> 
+            <table id="bids_asks_table" class="table table-hover table-striped tablesorter">
+              <thead> 
+                <tr>
+                  <th>Time <i class="fa fa-sort"></i></th>
+                  <th>User <i class="fa fa-sort"></th>
+                  <th>Type <i class="fa fa-sort"></th>
+                  <th>Pieces <i class="fa fa-sort"></th>
+                  <th>Price per piece<i class="fa fa-sort"></th>
+                </tr>
+              </thead>
 
-            <tbody>
+              <tbody>
 
-              {{#.}}
+                {{#.}}
 
-              <tr> 
-                <td>{{time_}}</td>
-                <td><a href="/users/overview/{{users_name}}">{{users_name}}</a></td>
-                <td>{{type}}</td>
-                <td>{{pieces}}</td>
-                <td>{{price_per_piece}}</td>
-              </tr>
-              {{/.}}
+                <tr> 
+                  <td>{{time_}}</td>
+                  <td><a href="/users/overview/{{users_name}}">{{users_name}}</a></td>
+                  <td>{{type}}</td>
+                  <td>{{pieces}}</td>
+                  <td>{{price_per_piece}}</td>
+                </tr>
+                {{/.}}
 
-            </tbody>
-          </script>
-        </table>
+              </tbody>
+            </script>
+          </table>
 
-      </div>
-      <div class="panel-footer">
-        <ul class="pager">
-          <li id="bids_asks_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
-          <li id="bids_asks_pager_next" ><a href="javascript:void(0);">Next</a></li>
-        </ul>
+        </div>
+        <div class="panel-footer">
+          <ul class="pager">
+            <li id="bids_asks_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
+            <li id="bids_asks_pager_next" ><a href="javascript:void(0);">Next</a></li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 
   <!-- FOOTER -->
@@ -343,8 +345,8 @@
       <div class="modal-dialog">
 
         <div class="modal-content">
-                <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>            <h4 class="modal-title">Bid</h4>
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>            <h4 class="modal-title">Bid</h4>
           </div>
           <div class="modal-body">
             <form id="bidForm" class="form-horizontal" role="form">
@@ -433,8 +435,8 @@
     <div class="modal-dialog">
 
       <div class="modal-content">
-              <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>          <h4 class="modal-title">buy</h4>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>          <h4 class="modal-title">buy</h4>
         </div>
         <div class="modal-body">
           <form id="buyForm" class="form-horizontal" role="form">
@@ -506,7 +508,7 @@
   <div class="modal-dialog">
 
     <div class="modal-content">
-            <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>        <h4 class="modal-title">Deposit</h4>
       </div>
       <div id="deposit_div" class="modal-body">
@@ -541,7 +543,7 @@
   <div class="modal-dialog">
 
     <div class="modal-content">
-            <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>        <h4 class="modal-title">Ask</h4>
       </div>
       <div class="modal-body">
@@ -633,7 +635,7 @@
   <div class="modal-dialog">
 
     <div class="modal-content">
-            <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>        <h4 class="modal-title">Issue Pieces</h4>
       </div>
       <div class="modal-body">
@@ -712,12 +714,12 @@
   <div class="modal-dialog">
 
     <div class="modal-content">
-            <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>        <h4 class="modal-title">withdraw</h4>
       </div>
       <div class="modal-body">
-      Make sure your creator safety after withdrawal doesn't go below 5, or you will be labeled as <b> unsafe </b>.
-      <br>
+        Make sure your creator safety after withdrawal doesn't go below 5, or you will be labeled as <b> unsafe </b>.
+        <br>
         <form id="withdrawForm" class="form-horizontal" role="form">
           <div class="form-group form-group-lg">
             <label class="col-sm-2 control-label" for="formGroupInputLarge">Amount</label>
@@ -787,7 +789,7 @@
   <div class="modal-dialog">
 
     <div class="modal-content">
-            <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>        <h4 class="modal-title">Disclaimer</h4>
       </div>
       <div class="modal-body">
@@ -806,45 +808,25 @@
 </div>
 
 <div id="raiseFundsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal-dialog">
 
-      <div class="modal-content">
-              <div class="modal-header">
+    <div class="modal-content">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>          <h4 class="modal-title">Raise Funds</h4>
-        </div>
-        <div class="modal-body">
-          <div class="text">
-           Read through the <a href="/FAQ">FAQ</a> to learn about <a href="/FAQ#what_are_rewards">rewards</a>. A 0.5% reward percentage is standard for startup projects.<br><br>
-         </div>
+      </div>
+      <div class="modal-body">
+        <div class="text">
+         Read through the <a href="/FAQ">FAQ</a> to learn about <a href="/FAQ#what_are_rewards">rewards</a>. A 0.5% reward percentage is standard for startup projects.<br><br>
+       </div>
 
-         <form id="raiseFundsForm" class="form-horizontal" role="form">
+       <form id="raiseFundsForm" class="form-horizontal" role="form">
 
-          <div class="form-group form-group-lg">
-            <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
-            <div class="col-sm-10">
-             <div class="input-group">
-               <span name="curr_iso" class="input-group-addon"></span>    
-               <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Reward/piece/year"
-
-               data-bv-notempty="true"
-               data-bv-notempty-message="Must be > 0"
-
-               data-bv-greaterthan="true"
-               data-bv-greaterthan-inclusive="false"
-               data-bv-greaterthan-value="0"
-               data-bv-greaterthan-message="Must be > 0" 
-
-               >
-               <span class="input-group-addon">per piece per year</span>
-             </div>
-           </div>
-         </div>
-         <div class="form-group form-group-lg">
-          <label class="col-sm-2 control-label" for="formGroupInputLarge">Price per piece</label>
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
           <div class="col-sm-10">
-            <div class="input-group">
-             <span name="curr_iso" class="input-group-addon">$</span>    
-             <input name="raisePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Price per piece"
+           <div class="input-group">
+             <span name="curr_iso" class="input-group-addon"></span>    
+             <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Reward/piece/year"
 
              data-bv-notempty="true"
              data-bv-notempty-message="Must be > 0"
@@ -855,61 +837,81 @@
              data-bv-greaterthan-message="Must be > 0" 
 
              >
-             <span class="input-group-addon">per piece </span>
+             <span class="input-group-addon">per piece per year</span>
            </div>
          </div>
        </div>
-
        <div class="form-group form-group-lg">
-        <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+        <label class="col-sm-2 control-label" for="formGroupInputLarge">Price per piece</label>
         <div class="col-sm-10">
-          <input name="raisePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
-          type="text" 
-          data-bv-integer="true"
-          data-bv-integer-message="Must be a whole number"
+          <div class="input-group">
+           <span name="curr_iso" class="input-group-addon">$</span>    
+           <input name="raisePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Price per piece"
 
-          data-bv-notempty="true"
-          data-bv-notempty-message="Must be a whole number"
+           data-bv-notempty="true"
+           data-bv-notempty-message="Must be > 0"
 
-          data-bv-greaterthan="true"
-          data-bv-greaterthan-inclusive="false"
-          data-bv-greaterthan-value="0"
-          data-bv-greaterthan-message="Must be > 0"
+           data-bv-greaterthan="true"
+           data-bv-greaterthan-inclusive="false"
+           data-bv-greaterthan-value="0"
+           data-bv-greaterthan-message="Must be > 0" 
 
-          >
-        </div>
-      </div>
-
-      <div class="form-group form-group-lg">
-
-       <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
-       <div id="raiseTotal" class="col-sm-10 form-control-static">
-
+           >
+           <span class="input-group-addon">per piece </span>
+         </div>
        </div>
      </div>
 
      <div class="form-group form-group-lg">
-       <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward %</label>
-       <div id="rewardPct" class="col-sm-10 form-control-static">
-       </div>
-     </div>
+      <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+      <div class="col-sm-10">
+        <input name="raisePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+        type="text" 
+        data-bv-integer="true"
+        data-bv-integer-message="Must be a whole number"
 
-     <div class="form-group form-group-lg">
-       <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Rewards owed</label>
-       <div id="rewardsOwedPerYear" class="col-sm-10 form-control-static">
-       </div>
-     </div>
+        data-bv-notempty="true"
+        data-bv-notempty-message="Must be a whole number"
 
-     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button id="raiseFundsBtn" type="submit" class="btn btn-primary" 
-        >Raise funds</button>
+        data-bv-greaterthan="true"
+        data-bv-greaterthan-inclusive="false"
+        data-bv-greaterthan-value="0"
+        data-bv-greaterthan-message="Must be > 0"
+
+        >
       </div>
     </div>
 
+    <div class="form-group form-group-lg">
+
+     <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+     <div id="raiseTotal" class="col-sm-10 form-control-static">
+
+     </div>
+   </div>
+
+   <div class="form-group form-group-lg">
+     <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward %</label>
+     <div id="rewardPct" class="col-sm-10 form-control-static">
+     </div>
+   </div>
+
+   <div class="form-group form-group-lg">
+     <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Rewards owed</label>
+     <div id="rewardsOwedPerYear" class="col-sm-10 form-control-static">
+     </div>
+   </div>
+
+   <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button id="raiseFundsBtn" type="submit" class="btn btn-primary" 
+      >Raise funds</button>
+    </div>
+  </div>
 
 
-  </form>
+
+</form>
 
 </div>
 
@@ -922,7 +924,7 @@
   <div class="modal-dialog">
 
     <div class="modal-content">
-            <div class="modal-header">
+      <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>        <h4 class="modal-title">Change Reward</h4>
       </div>
       <div class="modal-body">
@@ -965,7 +967,7 @@
 
 
 
-<!-- end of wrapper -->
+  <!-- end of wrapper -->
 </div>
 
 
