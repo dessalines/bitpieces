@@ -345,6 +345,7 @@
 }
 .small-table {
   height: 289px;
+  overflow: auto;
 }
 
 .btn {
