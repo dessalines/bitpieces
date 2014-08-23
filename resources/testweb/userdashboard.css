@@ -28,10 +28,6 @@
 
         /*horizontal-align: middle;*/
       }
-      .carousel-inner>.item {
-        position: relative;
-        overflow: hidden;
-      }
 
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
         position: absolute;
@@ -39,7 +35,9 @@
         bottom: -9999px;
         left: -9999px;
         right: -9999px;
-        margin: auto;
+        margin: -100%;
+        overflow:hidden;
+        vertical-align:middle;
         
 
 
