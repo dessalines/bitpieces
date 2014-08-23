@@ -234,19 +234,19 @@
       /*font-size: .75em;*/
     }
     #mynav > li {
-      height: 30px;
+      height: 40px;
     }
 
     #mynav.affix-top {
       position: static;
       margin-top:30px;
-      width: 228px;
+      width: 300px;
     }
 
     #mynav.affix {
       position: fixed;
       top:-200px;
-      width: 228px;
+      width: 300px;
     }
   }
   /* Hide for mobile, show later */
