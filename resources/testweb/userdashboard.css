@@ -38,9 +38,8 @@
         text-align: center;*/
       
       }
-      #conversation > div.nav.nav-secondary > ul > li.dropdown.sorting > a {
+      #disqus_thread > span {
         color: #000000;
-        text-decoration: line-through;
       }
 
 
