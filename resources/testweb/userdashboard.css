@@ -30,18 +30,16 @@
       }
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
         display: block;
-        height: 400px;
+        width: 100%; 
+        height: auto;
         vertical-align: middle;
         top: 0;
         left: 0;
         margin: 0 auto;
         max-width: 100%;
         line-height: 1;
-        width: 100%; 
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
+        
+
 
       }
 
