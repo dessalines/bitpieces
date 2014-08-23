@@ -42,7 +42,7 @@
       }
 
       .carousel-img-special {
-        vertical-align:top;
+        background-position: left center;
         width:100%; 
         height: 400px; 
       }
