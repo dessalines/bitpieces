@@ -28,6 +28,10 @@
 
         /*horizontal-align: middle;*/
       }
+      .list-group-item {
+        margin-top: 0px;
+        margin-bottom: 0px;
+      }
 
 
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
