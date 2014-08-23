@@ -30,7 +30,7 @@
       }
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
         display: block;
-        height: auto;
+        height: 400px;
          margin: 0 auto;
         max-width: 100%;
         line-height: 1;
