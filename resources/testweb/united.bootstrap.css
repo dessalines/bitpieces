@@ -903,7 +903,7 @@ textarea {
   font-size: inherit;
   line-height: inherit;
 }
-a {
+a,span {
   color: #008A2E;
   text-decoration: none;
 }
