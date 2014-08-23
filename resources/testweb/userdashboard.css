@@ -41,6 +41,12 @@
 
       }
 
+      .carousel-img-special {
+        width:100%; 
+        height: 400px; 
+        no-repeat center center transparent;
+      }
+
 
 
       .nav-list {
