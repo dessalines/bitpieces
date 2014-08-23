@@ -9,8 +9,7 @@ favicon :
 
 
 htaccess
-
-
+-------
 #Options +FollowSymLinks +Indexes
 # php_flag engine off
 
@@ -20,7 +19,7 @@ RewriteBase /
 RewriteEngine On
 
 
-
+AddType text/javascript .js
 
 # html directs
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -30,8 +29,11 @@ RewriteRule ^(.+)$ $1.html [L,QSA]
 
 
 # make landing look like the root
-RewriteRule ^$ /landing.html [L]
+#RewriteRule ^$ /landing.html [L]
+RewriteRule ^$ /asdf.html [L]
 
+
+ErrorDocument 404 /404.html
 
 # The creators rewrites
 RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
@@ -75,9 +77,9 @@ RewriteRule ^users/settings/([^/.]+)/?$ /userdashboard_settings.html?user=$1 [L]
 RewriteRule ^users/settings/(.*) $1  [L]
 
 
-
 Javascript
 ----------
+creatorpage, userpages: 
     if (sessionId != null && userType == 'User') {
         showHideButtons(creatorName);
         bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
@@ -186,6 +188,8 @@ Creator pages
 </div>
 </div>
 
+
+The user withdrawal, remove the line that says its fake
 
 Fake version
 -----------

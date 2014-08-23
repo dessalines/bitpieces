@@ -1,5 +1,6 @@
 function standardTemplate(id, seriesData, yAxisLabel, symbol) {
     Highcharts.setOptions({
+        colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
         global: {
             useUTC: false
         }
@@ -58,6 +59,12 @@ function standardTemplate(id, seriesData, yAxisLabel, symbol) {
 }
 
 function pieChartTemplate(id, seriesData) {
+    Highcharts.setOptions({
+        colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+        global: {
+            useUTC: false
+        }
+    });
     $(id).highcharts({
         chart: {
             plotBackgroundColor: null,
@@ -94,6 +101,12 @@ function pieChartTemplate(id, seriesData) {
 }
 
 function testTemplate(id, seriesData) {
+    Highcharts.setOptions({
+        colors: ['#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
+        global: {
+            useUTC: false
+        }
+    });
     $(id).highcharts({
         chart: {
             type: 'spline'

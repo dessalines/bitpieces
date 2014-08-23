@@ -1,6 +1,6 @@
 // var sparkService = "http://localhost:4567/";
-var sparkService = "https://bitpieces.com:4567/"
-var cookie_path_name = "prod";
+var sparkService = "http://test.bitpieces.com:4566/"
+var cookie_path_name = "test";
 
 var pageNumbers = {};
 
@@ -811,7 +811,8 @@ function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
 
 function showRecaptcha(element) {
     Recaptcha.create("6Lc5k_gSAAAAANRhbCY2bPCxmJQ3TUr6lLN0s9mi", element, {
-        theme: "blackglass",
+        
+        theme: "clean",
         //callback: Recaptcha.focus_response_field
     });
 }

@@ -11,10 +11,10 @@
   <title>Bitpieces</title>
 
   <!-- favicon -->
-  <link rel="shortcut icon" href="https://bitpieces.com/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
   <!-- Bootstrap core CSS -->
-  <link href="darkly.bootstrap.min.css" rel="stylesheet">
+  <link href="united.bootstrap.css" rel="stylesheet">
 
   <!-- Link to font awesome -->
   <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
@@ -97,7 +97,7 @@
               <div class="form-group">
                <input name="search_input" type="text" class="form-control typeahead" placeholder="Search for Creator...">
              </div>
-             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+             <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
            </form>
 
 
@@ -139,11 +139,11 @@
          <span class="badge" id="slide-submenu"><i class="fa fa-times"></i></span>
        </li>
        <a class="list-group-item active" href="/creators/main" rel="keep-params"><i class="fa fa-bar-chart-o"></i> Main</a>
-       <a class="list-group-item" href="/creators/pricing" rel="keep-params"><i class="fa fa-dollar"></i> Price</a>
+       <a class="list-group-item" href="/creators/pricing" rel="keep-params"><i class="fa fa-money"></i> Price</a>
        <a class="list-group-item" href="/creators/worth" rel="keep-params"><i class="fa fa-building-o"></i> Worth</a>
        <a class="list-group-item" href="/creators/rewards" rel="keep-params"><i class="fa fa-trophy"></i> Rewards</a>
        <a class="list-group-item" href="/creators/funds" rel="keep-params"><i class="fa fa-bank"></i> Funds</a>
-       <a class="list-group-item" href="/creators/pieces" rel="keep-params"><i class="fa fa-puzzle-piece"></i> Pieces</a>
+       <a class="list-group-item" href="/creators/pieces" rel="keep-params"><i class="fa fa-cubes"></i> Pieces</a>
        
      </div>
    </div>        
@@ -183,13 +183,13 @@
       </div>
       <div class="col-md-6">
         <div class="col-md-12">
-          <button id="askBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
-          <button id="bidBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
-          <button id="buyBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
-          <button id="raiseFundsBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#raiseFundsModal">Raise funds</button>
-          <button id="issueBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
-          <button id="changeRewardBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
-          <button id="withdrawBtn" type="button" class="btn btn-default btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
+          <button id="askBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#askModal">Ask</button>
+          <button id="bidBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#bidModal">Bid</button>
+          <button id="buyBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#buyModal">Buy</button>
+          <button id="raiseFundsBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#raiseFundsModal">Raise funds</button>
+          <button id="issueBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#issueModal">Issue Pieces</button>
+          <button id="changeRewardBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#rewardModal">Change Reward</button>
+          <button id="withdrawBtn" type="button" class="btn btn-primary btn-lg hide pull-right" data-toggle="modal" data-target="#withdrawModal">Withdraw</button>
         </div>
       </div>
     </div>
@@ -252,8 +252,8 @@
       <!-- a main one -->
       <div class="row">
         <div class="col-lg-12">
-          <div class="panel">
-            <div class="panel-heading">
+          <div class="panel panel-default">
+            <div class="panel-body">
               <div class="row">
 
                 <div class="col-xs-12 text-left">
@@ -324,7 +324,7 @@
     
     <div class="othermain-col col-md-8 col-md-offset-2">
     <div class="row">
-        <div id="disqus_thread"></div>
+        <div id="disqus_thread"><p></p></div>
       <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 
@@ -809,7 +809,7 @@
 
      </div> 
      <div class="modal-footer">
-       <button type="button" class="btn btn-default" data-dismiss="modal">Okay, I accept</button>
+       <button type="button" class="btn btn-primary" data-dismiss="modal">Okay, I accept</button>
      </div>
 
    </div>
@@ -999,7 +999,6 @@
       <script src="tablesorter/jquery.tablesorter.js"></script> 
       <script src="highcharts/js/highcharts.js"></script>
       <script src="highcharts/js//modules/exporting.js"></script>
-      <script src="highcharts/js/themes/dark-unica.js"></script>
       <script src="typeahead.js/typeahead.bundle.js"></script>
       <script src="pickadate/lib/picker.js"></script>
       <script src="pickadate/lib/picker.date.js"></script>
