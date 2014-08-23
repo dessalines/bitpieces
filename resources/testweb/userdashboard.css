@@ -29,8 +29,8 @@
         /*horizontal-align: middle;*/
       }
       .list-group-item {
-        margin-top: 0px;
-        margin-bottom: 0px;
+        margin-top: -2px;
+        margin-bottom: -2px;
       }
 
 
