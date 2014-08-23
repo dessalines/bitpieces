@@ -240,13 +240,13 @@
     #mynav.affix-top {
       position: static;
       margin-top:30px;
-      width: 315px;
+      width: 350px;
     }
 
     #mynav.affix {
       position: fixed;
       top:-200px;
-      width: 315px;
+      width: 350px;
     }
   }
   /* Hide for mobile, show later */
