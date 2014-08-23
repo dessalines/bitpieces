@@ -38,6 +38,11 @@
         margin: 0 auto;
         max-width: 100%;
         line-height: 1;
+        top: -9999px;
+        bottom: -9999px;
+        left: -9999px;
+        right: -9999px;
+        margin: auto;
         
 
 
