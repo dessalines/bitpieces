@@ -29,148 +29,155 @@
         /*horizontal-align: middle;*/
       }
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
-       position: absolute;
-       top: 0;
-       left: 0;
-       min-width: 100%;
-       height: 400px;
-       max-width: none;
+        display: block;
+        height: 400px;
+        vertical-align: middle;
+        top: 0;
+        left: 0;
+        margin: 0 auto;
+        max-width: 100%;
+        line-height: 1;
+        width: 100%; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
 
-     }
-
-
-
-     .nav-list {
-      width: 228px;
-      margin: 30px 0 0;
-      padding: 0;
-      background-color: #F7F7F7;
-      -webkit-border-radius: 6px;
-      -moz-border-radius: 6px;
-      border-radius: 6px;
-      -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-      -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
-      box-shadow: 0 1px 4px rgba(0,0,0,.065);
-    }
-    .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
-      color: #ffffff;
-      text-shadow: 0 -1px 0 
-      rgba(0, 0, 0, 0.2);
-      background-color: #BABABA;
-    }
-    #midCol.affix-top {
-      position:fixed;
-      margin-left:-18px;
-      margin-right:10px;
-    }
-
-    #midCol.affix-bottom {
-      position:static;
-    }
-
-    #midCol.affix {
-      position:static;
-    }
-
-    @font-face {
-      font-family: 'Glyphicons Halflings';
-      src: url('bootstrap-dist/fonts/glyphicons-halflings-regular.eot');
-      src: url('bootstrap-dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
-      url('bootstrap-dist/fonts/glyphicons-halflings-regular.woff') format('woff'), 
-      url('bootstrap-dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
-      url('bootstrap-dist/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
-    }
-    .navbar-input-group {
-      font-size: 0px; /*removes whitespace between button and input*/
-
-    }
-    #creator_search > button {
-      margin-left: -2px;
-    }
+      }
 
 
-    .navbar-input-group input {
-      border-top-right-radius: 0px;
-      border-bottom-right-radius: 0px;
-    }
-    .navbar-input-group .btn {
-      border-top-left-radius: 0px;
-      border-bottom-left-radius: 0px;
-      border-left: 0px;
-    }
-    .pager .navbar-input-group {
-      margin-top: 0px;
-      margin-bottom: 0px;
-      margin-right: 0px;
-      margin-left: 0px;
-    }
+
+      .nav-list {
+        width: 228px;
+        margin: 30px 0 0;
+        padding: 0;
+        background-color: #F7F7F7;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+        -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+        -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+        box-shadow: 0 1px 4px rgba(0,0,0,.065);
+      }
+      .nav-list > .active > a, .nav-list > .active > a:hover, .nav-list > .active > a:focus {
+        color: #ffffff;
+        text-shadow: 0 -1px 0 
+        rgba(0, 0, 0, 0.2);
+        background-color: #BABABA;
+      }
+      #midCol.affix-top {
+        position:fixed;
+        margin-left:-18px;
+        margin-right:10px;
+      }
+
+      #midCol.affix-bottom {
+        position:static;
+      }
+
+      #midCol.affix {
+        position:static;
+      }
+
+      @font-face {
+        font-family: 'Glyphicons Halflings';
+        src: url('bootstrap-dist/fonts/glyphicons-halflings-regular.eot');
+        src: url('bootstrap-dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+        url('bootstrap-dist/fonts/glyphicons-halflings-regular.woff') format('woff'), 
+        url('bootstrap-dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+        url('bootstrap-dist/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+      }
+      .navbar-input-group {
+        font-size: 0px; /*removes whitespace between button and input*/
+
+      }
+      #creator_search > button {
+        margin-left: -2px;
+      }
 
 
-    .table {
-      font-size: .85em;
-    }
+      .navbar-input-group input {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .navbar-input-group .btn {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-left: 0px;
+      }
+      .pager .navbar-input-group {
+        margin-top: 0px;
+        margin-bottom: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+      }
 
 
-    /*dropdown hover*/
-    ul.nav li.dropdown:hover > ul.dropdown-menu {
-      display: block;    
-    }
-    .input-group-addon {
-      background-color: #F7F7F7;
-    }
+      .table {
+        font-size: .85em;
+      }
 
-    .mini-submenu{
-      display:none;  
-      background-color: rgba(0, 0, 0, 0.6);  
-      border: 1px solid rgba(0, 0, 0, 0.9);
-      border-radius: 4px;
-      padding: 9px;  
-      /*position: relative;*/
-      width: 42px;
 
-    }
+      /*dropdown hover*/
+      ul.nav li.dropdown:hover > ul.dropdown-menu {
+        display: block;    
+      }
+      .input-group-addon {
+        background-color: #F7F7F7;
+      }
 
-    .mini-submenu:hover{
-      cursor: pointer;
-    }
+      .mini-submenu{
+        display:none;  
+        background-color: rgba(0, 0, 0, 0.6);  
+        border: 1px solid rgba(0, 0, 0, 0.9);
+        border-radius: 4px;
+        padding: 9px;  
+        /*position: relative;*/
+        width: 42px;
 
-    .mini-submenu .icon-bar {
-      border-radius: 1px;
-      display: block;
-      height: 2px;
-      width: 22px;
-      margin-top: 3px;
-    }
+      }
 
-    .mini-submenu .icon-bar {
-      background-color: #999;
-    }
+      .mini-submenu:hover{
+        cursor: pointer;
+      }
 
-    #slide-submenu{
-      background: rgba(0, 0, 0, 0.45);
-      display: inline-block;
-      padding: 0 8px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+      .mini-submenu .icon-bar {
+        border-radius: 1px;
+        display: block;
+        height: 2px;
+        width: 22px;
+        margin-top: 3px;
+      }
 
-    .announcement-heading {
-      font-size: 35px;
-      margin: 0;
-    }
+      .mini-submenu .icon-bar {
+        background-color: #999;
+      }
 
-    .announcement-text,  {
-      margin: 0;
-      font-size: 12px;
+      #slide-submenu{
+        background: rgba(0, 0, 0, 0.45);
+        display: inline-block;
+        padding: 0 8px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
 
-    }
-    .announcement-bottom {
-      font-size: 14px;
-    }
+      .announcement-heading {
+        font-size: 35px;
+        margin: 0;
+      }
 
-    .sidebar {
-      padding-left: 40px;
-    }
+      .announcement-text,  {
+        margin: 0;
+        font-size: 12px;
+
+      }
+      .announcement-bottom {
+        font-size: 14px;
+      }
+
+      .sidebar {
+        padding-left: 40px;
+      }
 
 
 
