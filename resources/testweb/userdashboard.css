@@ -116,9 +116,7 @@
       .panel-footer {
         height: 41px;
       }
-      .panel-body {
-        overflow: auto;
-      }
+
 
       .pager {
         margin-top: -6px;
@@ -343,6 +341,7 @@
 .small-chart {
   /*height: 50vh;*/
   height: 300px;
+  overflow: auto;
 }
 .small-table {
   height: 289px;
