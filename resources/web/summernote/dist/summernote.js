@@ -3319,7 +3319,7 @@
       var dropdown = options.dropdown;
 
       return '<button type="button"' +
-                 ' class="btn btn-default btn-sm btn-small' +
+                 ' class="btn btn-primary btn-sm btn-small' +
                    (className ? ' ' + className : '') +
                    (dropdown ? ' dropdown-toggle' : '') +
                  '"' +
