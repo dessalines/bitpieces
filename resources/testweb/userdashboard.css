@@ -36,9 +36,10 @@
         vertical-align:middle;
         display:table-cell;
         text-align: center;*/
-        
-
-
+      
+      }
+      .tab-conversation {
+        color: black;
       }
 
 
