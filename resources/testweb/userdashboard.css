@@ -112,6 +112,10 @@
       .panel-footer {
         height: 40px;
       }
+      .panel-body {
+        overflow: auto;
+      }
+      
       .pager {
         margin-top: -5px;
         
