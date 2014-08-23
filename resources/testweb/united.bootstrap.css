@@ -4987,7 +4987,7 @@ a.list-group-item-danger.active:focus {
   border-top-left-radius: 3px;
 }
 .panel-heading > .dropdown .dropdown-toggle {
-  color: inherit;
+  color: #008A2E;
 }
 .panel-title {
   margin-top: 0;
