@@ -43,7 +43,11 @@
       #dsq-content { font-family: Arial,Helvetica,sans-serif; font-size:12px;  color: black !important;}
       .dsq-comment-text p { color: black !important; }
 
-      
+      .panel-footer {
+        height: 32px;
+        padding: 5px;
+
+      }
 
       .nav-list {
         width: 228px;
