@@ -249,9 +249,9 @@ public class Tools {
 	public static final String httpGet(String url) {
 		String res = "";
 		try {
-			URL yahoo = new URL(url);
+			URL externalURL = new URL(url);
 
-			URLConnection yc = yahoo.openConnection();
+			URLConnection yc = externalURL.openConnection();
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(
 							yc.getInputStream()));

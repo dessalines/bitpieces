@@ -26,7 +26,7 @@ import com.google.common.cache.LoadingCache;
 
 
 public class UnitConverter {
-	
+
 	static final Logger log = LoggerFactory.getLogger(UnitConverter.class);
 
 	public static final List<String> MONEY_COL_NAMES = Arrays.asList("price_per_piece", "worth_current", 
@@ -43,7 +43,7 @@ public class UnitConverter {
 		return "https://api.bitcoinaverage.com/history/" + ISO + "/per_day_all_time_history.csv";
 	}
 	public static String bitcoinCurrentCurrQuery(String ISO) {
-		return "https://api.bitcoinaverage.com/history/" + ISO + "/per_minute_24h_sliding_window.csv";
+		return "https://api.bitcoinaverage.com/ticker/global/" + ISO + "/last" ;
 	}
 
 
@@ -62,13 +62,13 @@ public class UnitConverter {
 							// Grab the most recent rate for today, and add it
 							String currentRes = Tools.httpGet(bitcoinCurrentCurrQuery(ISO));
 							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForToday(currentRes);
-							
+
 							log.info("last rate cleared = " + rates.get(recentRate.getKey()));
-							
-							
+
+
 							rates.put(recentRate.getKey(), recentRate.getValue());
-							log.info("recent rate put = " + Tools.GSON2.toJson(recentRate));
-							
+							log.info("recent rate put = " + recentRate.getValue());
+
 							System.out.println("Recaching BTC -> " + ISO);
 							return rates;
 						}
@@ -179,7 +179,7 @@ public class UnitConverter {
 			if (iso != null && !iso.contains("BTC")) {
 				DateTime now = new DateTime();
 				DateTime startOfToday = getStartOfDay(now);
-			
+
 				todayRate = getBtcRatesCache().get(iso).get(startOfToday);
 
 
@@ -312,7 +312,7 @@ public class UnitConverter {
 					// Convert the time columns to the correct format
 					for (String cCol : timeCols) {
 						String prevValue = cMap.get(cCol);
-//						System.out.println(prevValue);
+						//						System.out.println(prevValue);
 						//						System.out.println(dt);
 						//						Date timeBefore = Tools.SDF2.get().parse(prevValue);
 						DateTime timeAfter = Tools.DTF2.parseDateTime(prevValue);
@@ -368,7 +368,7 @@ public class UnitConverter {
 					}
 				}
 			}
-//			System.out.println(listOfMaps);
+			//			System.out.println(listOfMaps);
 
 		} catch (ExecutionException  e) {
 			// TODO Auto-generated catch block
@@ -530,33 +530,24 @@ public class UnitConverter {
 	}
 	public static final Map.Entry<DateTime, Double> getMostRecentConversionRateForToday(String res) {
 
-		// Goto the last one
-		String cvsSplit = ",";
-		String lines[] = res.split("\\r?\\n");
 
-		String lastLine[] = lines[lines.length-1].split(cvsSplit);
-		
+
 		// had a weird error where the date in the csv file looked like this: 2014-07-
-		DateTime time = null;
-		Double value = null;
-		try {
-			time = Tools.DTF.parseDateTime(lastLine[0]);
-			value = Double.parseDouble(lastLine[1]);
-		} catch (IllegalArgumentException e) {
-			String lastLine2[]  =  lines[lines.length-2].split(cvsSplit);
-			time = Tools.DTF.parseDateTime(lastLine2[0]);
-			value = Double.parseDouble(lastLine2[1]);
-		}
-	
+		DateTime time = new DateTime();
+		DateTime startOfToday = getStartOfDay(time);
+		
+		// Goto the last one
+		Double value = Double.parseDouble(res);
+
+
 
 		// Normalize time to today
-//		LocalDate today = time.toLocalDate();
-//		DateTime startOfToday = today.toDateTimeAtStartOfDay(time.getZone());
-		DateTime startOfToday = getStartOfDay(time);
+		//		LocalDate today = time.toLocalDate();
+		//		DateTime startOfToday = today.toDateTimeAtStartOfDay(time.getZone());
+		
 
 		Map.Entry<DateTime, Double> entry = 
 				new AbstractMap.SimpleEntry<DateTime, Double>(startOfToday, value);
-		//		System.out.println(entry);
 		return entry;
 	}
 	Map<DateTime, Double> getDateValueMapFromTable(List<Model> list, String dateColName, String valColName) {
