@@ -38,7 +38,7 @@
         text-align: center;*/
       
       }
-      #disqus_thread > span {
+      #conversation > div.nav.nav-secondary > ul > li.dropdown.sorting > a {
         color: black;
       }
 
