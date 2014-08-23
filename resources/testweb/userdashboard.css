@@ -28,7 +28,7 @@
 
         /*horizontal-align: middle;*/
       }
-      .carousel-inner>.item> {
+      .carousel-inner>.item {
         position: relative;
         overflow: hidden;
       }
