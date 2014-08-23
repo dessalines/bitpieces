@@ -889,11 +889,11 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  /*font-family: "Ubuntu", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  font-family: "Ubuntu", Tahoma, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  /*line-height: 1.42857143;*/
-  color: #343343;
-  background-color: #abcdef;
+  line-height: 1.42857143;
+  color: #333333;
+  background-color: #ffffff;
 }
 input,
 button,
