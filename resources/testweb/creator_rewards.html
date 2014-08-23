@@ -237,41 +237,13 @@
     </div>
   </div>
 
-  <div class="col-md-6">
+ <div class="col-md-6">
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Rewards paid to users</h3>
       </div>
-      <div id="rewards_owed_to_user" class="panel-body small-table">
-        <script id="rewards_owed_to_user_template" type="x-tmpl-mustache"> 
-          <table id="rewards_owed_to_user_table" class="table table-hover table-striped tablesorter">
-            <thead> 
-              <tr>
-                <th>Owner <i class="fa fa-sort"></i></th>
-                <th>Total Paid <i class="fa fa-sort"></th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {{#.}}
-
-              <tr> 
-                <td><a href="/users/overview/{{owners_name}}">{{owners_name}}</a></td>
-                <td>{{total_owed}}</td>
-              </tr>
-              {{/.}}
-
-            </tbody>
-          </script>
-        </table>
-
-      </div>
-      <div class="panel-footer">
-        <ul class="pager">
-          <li id="rewards_owed_to_user_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
-          <li id="rewards_owed_to_user_pager_next" ><a href="javascript:void(0);">Next</a></li>
-        </ul>
+      <div class="panel-body">
+        <div class = "small-chart" id="rewards_owed_to_users"></div>
       </div>
     </div>
   </div>

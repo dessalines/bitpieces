@@ -865,18 +865,17 @@ public class WebCommon {
 
 		});
 
-		get("/:creator/get_rewards_owed_to_user/:page_num", (req, res) -> {
+		get("/:creator/get_rewards_owed_to_user", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
 			String creator = req.params(":creator");
-			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf, pageNum);
+				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {

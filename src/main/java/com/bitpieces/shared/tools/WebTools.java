@@ -1334,18 +1334,19 @@ public class WebTools {
 
 	}
 
-	public static String getRewardsOwedToUserJson(String creatorName, UID uid, UnitConverter sf,Integer pageNum) {
-
-		Paginator p = new Paginator(Rewards_owed_to_user.class, PAGINATOR_ROWS,"creators_username=?",  creatorName);
-		List<Model> list = p.getPage(pageNum);
+	public static String getRewardsOwedToUserJson(String creatorName, UID uid, UnitConverter sf) {
 
 		UsersSettings settings = new UsersSettings(null);
 		if (uid != null) {
 			settings = new UsersSettings(uid);
 		} 
+
+		// First fetch from the table
+		List<Model> list = Rewards_owed_to_user.find("creators_username=?", creatorName);
+
 		if (list.size() > 0) {
-			return convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false,
-					"creators_username", "owners_name", "total_owed"));
+			return createHighChartsJSONForCurrentV2(list, "total_owed", "owners_name",
+					sf, settings.getPrecision(), settings.getIso());
 		} else {
 			return "0";
 		}
