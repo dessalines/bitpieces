@@ -30,11 +30,6 @@
       }
 
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
-        position: absolute;
-        top: -9999px;
-        bottom: -9999px;
-        left: -9999px;
-        right: -9999px;
         margin-left:auto; margin-right:auto;
         overflow:hidden;
         vertical-align:middle;
