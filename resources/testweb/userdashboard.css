@@ -35,7 +35,7 @@
         bottom: -9999px;
         left: -9999px;
         right: -9999px;
-        margin: -100%;
+        margin: -100% 0;
         overflow:hidden;
         vertical-align:middle;
         
