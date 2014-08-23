@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 import org.javalite.activejdbc.Model;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
@@ -24,6 +26,8 @@ import com.google.common.cache.LoadingCache;
 
 
 public class UnitConverter {
+	
+	static final Logger log = LoggerFactory.getLogger(UnitConverter.class);
 
 	public static final List<String> MONEY_COL_NAMES = Arrays.asList("price_per_piece", "worth_current", 
 			"funds", "funds_accum", "value_accum", "value_total", "worth", "value_total_current",
@@ -58,9 +62,13 @@ public class UnitConverter {
 							// Grab the most recent rate for today, and add it
 							String currentRes = Tools.httpGet(bitcoinCurrentCurrQuery(ISO));
 							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForToday(currentRes);
-
+							
+							log.info("last rate cleared = " + rates.get(recentRate.getKey()));
+							
+							
 							rates.put(recentRate.getKey(), recentRate.getValue());
-
+							log.info("recent rate put = " + Tools.GSON2.toJson(recentRate));
+							
 							System.out.println("Recaching BTC -> " + ISO);
 							return rates;
 						}
@@ -542,8 +550,9 @@ public class UnitConverter {
 	
 
 		// Normalize time to today
-		LocalDate today = time.toLocalDate();
-		DateTime startOfToday = today.toDateTimeAtStartOfDay(time.getZone());
+//		LocalDate today = time.toLocalDate();
+//		DateTime startOfToday = today.toDateTimeAtStartOfDay(time.getZone());
+		DateTime startOfToday = getStartOfDay(time);
 
 		Map.Entry<DateTime, Double> entry = 
 				new AbstractMap.SimpleEntry<DateTime, Double>(startOfToday, value);
