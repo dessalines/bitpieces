@@ -29,6 +29,7 @@
         /*horizontal-align: middle;*/
       }
 
+
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
 /*        position: absolute;
         margin-left:auto; margin-right:auto;
@@ -102,11 +103,18 @@
         border-bottom-left-radius: 0px;
         border-left: 0px;
       }
-      .pager .navbar-input-group {
+      .navbar-input-group {
         margin-top: 0px;
         margin-bottom: 0px;
         margin-right: 0px;
         margin-left: 0px;
+      }
+      .panel-footer {
+        height: 36px;
+      }
+      .pager {
+        margin-top: -10px;
+        margin-bottom: -10px;
       }
 
 
