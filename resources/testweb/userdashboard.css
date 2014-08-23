@@ -30,12 +30,12 @@
       }
 
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
-        position: absolute;
+/*        position: absolute;
         margin-left:auto; margin-right:auto;
         overflow:hidden;
         vertical-align:middle;
         display:table-cell;
-        text-align: center;
+        text-align: center;*/
         
 
 
