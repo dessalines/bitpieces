@@ -38,10 +38,10 @@
         text-align: center;*/
       
       }
-      #disqus_thread > span , .username{
-        color: #000000;
+      #disqus_thread {
+        color: black;
       }
-
+body { font-size: 13px; color: white; background-color: #2c2c2c;}
 
 
 
