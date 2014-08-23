@@ -62,7 +62,7 @@ public class UnitConverter {
 							// Grab the most recent rate for today, and add it
 							String currentRes = Tools.httpGet(bitcoinCurrentCurrQuery(ISO));
 							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForToday(currentRes);
-
+							
 							rates.put(recentRate.getKey(), recentRate.getValue());
 							log.info("recent rate put = " + recentRate.getValue());
 

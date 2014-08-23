@@ -27,6 +27,7 @@ public class DataSources {
 //	public static final Integer PROD_WEB_PORT = 4566;
 	
 	public static final String IP_ADDRESS = "107.170.137.106";
+
 	
 	public static final List<String> ALLOW_ACCESS_ADDRESSES = Arrays.asList(
 			"http://localhost", "http://107.170.137.106", "https://coinbase.com", 
