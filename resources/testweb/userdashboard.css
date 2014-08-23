@@ -38,7 +38,7 @@
         text-align: center;*/
       
       }
-      #disqus_thread > span {
+      #disqus_thread > span , .username{
         color: #000000;
       }
 
