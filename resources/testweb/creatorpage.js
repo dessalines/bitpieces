@@ -21,7 +21,7 @@ $(document).ready(function() {
             bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
             bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
 
-            fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+            fillFieldFromMustache('make_deposit_fake', '#deposit_template', '#deposit_div', false);
         }
 
     });
