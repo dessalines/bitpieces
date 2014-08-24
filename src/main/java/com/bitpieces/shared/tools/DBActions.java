@@ -264,6 +264,7 @@ public class DBActions {
 		List<Creators_search_view> list2 = Creators_search_view.where("reward_yield_current is not null");
 		for (Creators_search_view cRew : list2) {
 			String yieldStr = cRew.getString("reward_yield_current");
+			log.info(yieldStr + "");
 //			yieldStr = yieldStr.substring(0, yieldStr.length()-1);
 			yieldStr = yieldStr.replaceAll("\\D+","");
 			Double yieldPct = Double.parseDouble(yieldStr);
