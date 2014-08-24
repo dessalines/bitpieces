@@ -249,9 +249,11 @@ public class DBActions {
 		List<Creators_funds_current> list = Creators_funds_current.findAll();
 		
 		for (Creators_funds_current cFunds : list) {
-			if (cFunds.getDouble("current_funds") <= .000001) {
-				String creatorId = cFunds.getString("creators_id");
-				String name = cFunds.getString("creators_name");
+			String creatorId = cFunds.getString("creators_id");
+			String name = cFunds.getString("creators_name");
+			Double rew = Rewards_current.findFirst("creators_id = ?", creatorId).getDouble("reward_per_piece_per_year");
+			if (cFunds.getDouble("current_funds") <= .000001 && !rew.equals( .000000001) ) {
+				
 				issueReward(creatorId, .000000001);
 				log.info("Creator " + name + " funds went too low, issued a new miniscule reward");
 			}
@@ -261,7 +263,6 @@ public class DBActions {
 		List<Creators_search_view> list2 = Creators_search_view.where("reward_yield_current is not null");
 		for (Creators_search_view cRew : list2) {
 			String yieldStr = cRew.getString("reward_yield_current");
-			log.info(yieldStr);
 //			yieldStr = yieldStr.substring(0, yieldStr.length()-1);
 			yieldStr = yieldStr.replaceAll("\\D+","");
 			Double yieldPct = Double.parseDouble(yieldStr);
