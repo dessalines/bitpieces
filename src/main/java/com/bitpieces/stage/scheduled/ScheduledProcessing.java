@@ -30,6 +30,10 @@ public class ScheduledProcessing {
             JobDetail job2 = newJob(UpdateTransactionStatuses.class)
 //                  .withIdentity("job1", "group1")
                   .build();
+            
+            JobDetail job3 = newJob(CreatorsFundsChecker.class)
+//                  .withIdentity("job1", "group1")
+                  .build();
 
             // Trigger the job to run now, and then repeat every 40 seconds
             Trigger trigger = newTrigger()
@@ -48,11 +52,20 @@ public class ScheduledProcessing {
                           .repeatForever())            
                   .build();
             
+            Trigger trigger3 = newTrigger()
+//                  .withIdentity("trigger1", "group1")
+                  .startNow()
+                  .withSchedule(simpleSchedule()
+                          .withIntervalInSeconds(60)
+                          .repeatForever())            
+                  .build();
+            
             
 
             // Tell quartz to schedule the job using our trigger
             scheduler.scheduleJob(job, trigger);
             scheduler.scheduleJob(job2, trigger2);
+            scheduler.scheduleJob(job3, trigger3);
 //            scheduler.shutdown();
 
         } catch (SchedulerException se) {

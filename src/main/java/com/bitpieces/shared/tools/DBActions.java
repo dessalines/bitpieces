@@ -24,6 +24,7 @@ import com.bitpieces.shared.Tables.Pieces_owned;
 import com.bitpieces.shared.Tables.Pieces_owned_total;
 import com.bitpieces.shared.Tables.Reward;
 import com.bitpieces.shared.Tables.Rewards_current;
+import com.bitpieces.shared.Tables.Rewards_owed_to_user;
 import com.bitpieces.shared.Tables.Sales_from_creators;
 import com.bitpieces.shared.Tables.Sales_from_users;
 import com.bitpieces.shared.Tables.User;
@@ -43,12 +44,12 @@ public class DBActions {
 		String now = Tools.SDF.get().format(new Date());
 
 
-		if (reward_per_piece_per_year > 0) {
+		if (reward_per_piece_per_year > 0 && reward_per_piece_per_year < 0.0298) {
 		Reward.createIt("creators_id", creatorId,
 				"time_", now,
 				"reward_per_piece_per_year", reward_per_piece_per_year);
 		} else {
-			throw new NoSuchElementException("Reward must be greater than zero");
+			throw new NoSuchElementException("Reward must be greater than zero and < 0.0298 BTC");
 		}
 	}
 
@@ -240,6 +241,20 @@ public class DBActions {
 
 
 		return sale;
+	}
+	
+	public static void creatorsFundsChecker() {
+		log.info("Checking to see if creators funds are negative");
+		List<Creators_funds_current> list = Creators_funds_current.findAll();
+		
+		for (Creators_funds_current cFunds : list) {
+			if (cFunds.getDouble("current_funds") <= .000001) {
+				String creatorId = cFunds.getString("creators_id");
+				String name = cFunds.getString("creators_name");
+				issueReward(creatorId, .000000001);
+				log.info("Creator " + name + " funds went too low, issued a new miniscule reward");
+			}
+		}
 	}
 
 	public static void askBidAccepter() {
