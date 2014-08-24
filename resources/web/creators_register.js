@@ -19,8 +19,7 @@ $(document).ready(function() {
     }).on('success.form.bv', function(event) {
         event.preventDefault();
         standardFormPost('registercreator', "#creatorRegisterForm", null, false, 
-           itWorked);
-// $('#categories,#registerCreator').collapse()
+           collapseRegisterCreator);
      
 
         // data-target="#registerCreator,#categories" 
@@ -40,8 +39,8 @@ $(document).ready(function() {
 
 
 });
-function itWorked() {
-    console.log('it worked')
+function collapseRegisterCreator() {
+    $('#categories,#registerCreator').collapse();
 }
 
 
