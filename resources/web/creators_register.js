@@ -19,7 +19,7 @@ $(document).ready(function() {
     }).on('success.form.bv', function(event) {
         event.preventDefault();
         standardFormPost('registercreator', "#creatorRegisterForm", null, false, 
-           asdf );
+           console.log('it worked') );
 // $('#categories,#registerCreator').collapse()
      
 
