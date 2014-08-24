@@ -252,7 +252,7 @@ public class DBActions {
 			String creatorId = cFunds.getString("creators_id");
 			String name = cFunds.getString("creators_name");
 			Double rew = Rewards_current.findFirst("creators_id = ?", creatorId).getDouble("reward_per_piece_per_year");
-			if (cFunds.getDouble("current_funds") <= .000001 && !rew.equals(Double.valueOf(0.000000001))) {
+			if (cFunds.getDouble("current_funds") <= .000001 && !(rew ==0.000000001D)) {
 				
 				issueReward(creatorId, .000000001);
 				log.info("Creator " + name + " funds went too low, issued a new miniscule reward");
