@@ -18,9 +18,9 @@ $(document).ready(function() {
 
     }).on('success.form.bv', function(event) {
         event.preventDefault();
-        standardFormPost('registercreator', "#creatorRegisterForm");
-
-        $('#categories,#registerCreator').collapse();
+        standardFormPost('registercreator', "#creatorRegisterForm", null, false, 
+           collapseRegisterCreator);
+     
 
         // data-target="#registerCreator,#categories" 
     });
@@ -39,6 +39,9 @@ $(document).ready(function() {
 
 
 });
+function collapseRegisterCreator() {
+    $('#categories,#registerCreator').collapse();
+}
 
 
 

@@ -713,7 +713,7 @@ function getJson(shortUrl) {
     });
 }
 
-function standardFormPost(shortUrl, formId, modalId, reload) {
+function standardFormPost(shortUrl, formId, modalId, reload, successFunctions) {
     // !!!!!!They must have names unfortunately
     // An optional arg
     modalId = (typeof modalId === "undefined") ? "defaultValue" : modalId;
@@ -748,7 +748,7 @@ function standardFormPost(shortUrl, formId, modalId, reload) {
             $(modalId).modal('hide');
             // console.log(modalId);
             toastr.success(data);
-
+            successFunctions();
             if (reload) {
                 // refresh the page, too much info has now changed
                 window.setTimeout(function() {
