@@ -13,16 +13,20 @@ $(document).ready(function() {
     $('#page_title').text(creatorName);
 
 
-    if (sessionId != null && userType == 'User') {
-        setupCurrFields();
-        showHideButtons(creatorName);
-        bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
-        bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
-        bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
+    simpleFetch(creatorName + '/get_price_per_piece_current').done(function(result) {
+        if (sessionId != null && userType == 'User' && result != 0) {
+            setupCurrFields();
+            showHideButtons(creatorName);
+            bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
+            bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
+            bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
 
-        setupDepositButton("make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+            fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+        }
 
-    }
+    });
+
+
 
 
 
@@ -237,7 +241,7 @@ function bidAskOrBuySetup(shortUrl, creatorName, formId, buttonId, modalId) {
                 $(modalId).modal('hide');
                 // $(formId)[0].reset();
 
-                 window.setTimeout(function() {
+                window.setTimeout(function() {
                     location.reload();
                 }, 3000);
 
@@ -438,7 +442,7 @@ function setupModal(shortUrl, formId, buttonId, modalId) {
     }).on('success.form.bv', function(event) {
         event.preventDefault();
         standardFormPost(shortUrl, formId, modalId, true);
-        
+
     });
 
 
