@@ -271,7 +271,7 @@ public class DBActions {
 				String creatorId = cRew.getString("creators_id");
 				String name = cRew.getString("creators_name");
 				issueReward(creatorId, .000000001);
-				log.info("Creator " + name + " funds went too low, issued a new miniscule reward");
+				log.info("Creator " + name + " reward yield too high, issued a new miniscule reward");
 				
 			}
 		}
