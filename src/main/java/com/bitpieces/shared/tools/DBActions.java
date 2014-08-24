@@ -267,7 +267,8 @@ public class DBActions {
 //			yieldStr = yieldStr.substring(0, yieldStr.length()-1);
 			yieldStr = yieldStr.replaceAll("\\D+","");
 			Double yieldPct = Double.parseDouble(yieldStr);
-			if (yieldPct >= 30) {
+			if (yieldPct >= 30d) {
+				log.info(yieldPct + "");
 				String creatorId = cRew.getString("creators_id");
 				String name = cRew.getString("creators_name");
 				issueReward(creatorId, .000000001);
