@@ -19,7 +19,7 @@ $(document).ready(function() {
     }).on('success.form.bv', function(event) {
         event.preventDefault();
         standardFormPost('registercreator', "#creatorRegisterForm", null, false, 
-           return console.log('it worked') );
+           itWorked);
 // $('#categories,#registerCreator').collapse()
      
 
@@ -40,6 +40,9 @@ $(document).ready(function() {
 
 
 });
+function itWorked() {
+    console.log('it worked')
+}
 
 
 
