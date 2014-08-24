@@ -258,7 +258,7 @@ public class DBActions {
 		}
 		
 		log.info("Checking to make sure reward yield is not above 30%");
-		List<Creators_search_view> list2 = Creators_search_view.findAll();
+		List<Creators_search_view> list2 = Creators_search_view.where("reward_yield_current is not null");
 		for (Creators_search_view cRew : list2) {
 			String yieldStr = cRew.getString("reward_yield_current");
 			log.info(yieldStr);
