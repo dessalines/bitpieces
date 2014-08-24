@@ -265,8 +265,8 @@ public class DBActions {
 		for (Creators_search_view cRew : list2) {
 			String yieldStr = cRew.getString("reward_yield_current");
 			log.info(yieldStr + "");
-//			yieldStr = yieldStr.substring(0, yieldStr.length()-1);
-			yieldStr = yieldStr.replaceAll("\\D+","");
+			yieldStr = yieldStr.substring(0, yieldStr.length()-1).replaceAll(",","");
+//			yieldStr = yieldStr.replaceAll("\\D+","");
 			Double yieldPct = Double.parseDouble(yieldStr);
 			if (yieldPct >= 30d) {
 				log.info(yieldPct + "");
