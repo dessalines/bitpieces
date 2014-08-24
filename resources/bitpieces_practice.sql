@@ -788,7 +788,7 @@ on pieces_owned_accum.creators_id = rewards_span.creators_id
 -- where rewards_span.creators_id = 1
 -- and owners_id = 1
 where (rewards_span.end_time_ >= pieces_owned_accum.start_time_)
-and (pieces_owned_accum.end_time_ >= rewards_span.time_)
+and (pieces_owned_accum.end_time_ >= rewards_span.time_);
 
 
 
