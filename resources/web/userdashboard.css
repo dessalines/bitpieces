@@ -33,6 +33,10 @@
         margin-bottom: -2px;
       }
 
+      #creator_search {
+        margin-top: 3px;
+      }
+
 
       .carousel-inner>.item>img, .carousel-inner>.item>a>img {
 /*        position: absolute;
@@ -113,7 +117,7 @@
         margin-right: 0px;
         margin-left: 0px;
       }
-   
+      
 
       .pager-footer {
         height: 41px;
