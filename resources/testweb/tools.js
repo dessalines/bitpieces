@@ -720,6 +720,8 @@ function standardFormPost(shortUrl, formId, modalId, reload, successFunctions) {
 
     reload = (typeof reload === "undefined") ? false : reload;
 
+
+
     // serializes the form's elements.
     var formData = $(formId).serializeArray();
     // console.log(formData);
@@ -748,7 +750,9 @@ function standardFormPost(shortUrl, formId, modalId, reload, successFunctions) {
             $(modalId).modal('hide');
             // console.log(modalId);
             toastr.success(data);
-            successFunctions();
+            if (successFunctions != null) {
+                successFunctions();
+            }
             if (reload) {
                 // refresh the page, too much info has now changed
                 window.setTimeout(function() {
@@ -811,7 +815,7 @@ function setupPagedTable(shortUrl, templateHtml, divId, tableId) {
 
 function showRecaptcha(element) {
     Recaptcha.create("6Lc5k_gSAAAAANRhbCY2bPCxmJQ3TUr6lLN0s9mi", element, {
-        
+
         theme: "clean",
         //callback: Recaptcha.focus_response_field
     });
@@ -828,7 +832,7 @@ function setupModal(shortUrl, formId, buttonId, modalId) {
     }).on('success.form.bv', function(event) {
         event.preventDefault();
         standardFormPost(shortUrl, formId, modalId, true);
-        
+
     });
 
 
