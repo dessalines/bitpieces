@@ -14,17 +14,19 @@ $(document).ready(function() {
 
 
     simpleFetch(creatorName + '/get_price_per_piece_current').done(function(result) {
-            if (sessionId != null && userType == 'User' && result != 0) {
-                setupCurrFields();
-                showHideButtons(creatorName);
-                bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
-                bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
-                bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
+        if (sessionId != null && userType == 'User' && result != 0) {
+            setupCurrFields();
+            showHideButtons(creatorName);
+            bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
+            bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
+            bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
 
-                fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
-            });
+            fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+        }
 
-    }
+    });
+
+
 
 
 
