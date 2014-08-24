@@ -45,7 +45,7 @@ $(document).ready(function() {
         setupModal("new_reward", '#rewardForm', "#placeChangeRewardBtn", "#rewardModal");
 
         setupWithdrawalForm(creatorName);
-        setupModal("creator_withdraw", '#withdrawForm', "#placeWithdrawBtn", "#withdrawModal");
+        setupModal("creator_withdraw_fake", '#withdrawForm', "#placeWithdrawBtn", "#withdrawModal");
         showHideCreatorButtons(creatorName);
         setupRaiseFunds();
 

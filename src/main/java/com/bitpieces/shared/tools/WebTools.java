@@ -364,7 +364,7 @@ public class WebTools {
 
 	}
 
-	public static String makeWithdrawalFake(UID uid, String body, UnitConverter sf) {
+	public static String makeUserWithdrawalFake(UID uid, String body, UnitConverter sf) {
 		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
 		UsersSettings settings = new UsersSettings(uid);
 
@@ -531,7 +531,54 @@ public class WebTools {
 		return message;
 	}
 
+	public static String makeCreatorWithdrawalFake(UID uid, String body, UnitConverter sf) {
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+		UsersSettings settings = new UsersSettings(uid);
 
+		String addr = postMap.get("address");
+		Double amount = Double.valueOf(postMap.get("withdrawAmount"));
+
+		// For safety, convert the amount to BTC and make sure the user has that much
+		Double btcAmount = amount;
+		String message = null;
+
+		if (!settings.getIso().equals("BTC")) {
+			Double spotRate = sf.getSpotRate(settings.getIso());
+			btcAmount = amount / spotRate;
+
+
+			message = "withdrawal(pending) at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)" + "(or "  + 
+					amount*(1d-DBActions.SERVICE_FEE_PCT)+ " (after fee) " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+		} else {
+			message = "withdrawal(pending)  at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)";
+		}
+
+		Double currentFunds = 
+				Creators_funds_current.findFirst("creators_id=?", uid.getId()).getDouble("current_funds");
+
+		Double fee = DBActions.SERVICE_FEE_PCT * btcAmount;
+
+		Double amountAfterFee = btcAmount - fee;
+
+
+		if (currentFunds >= amountAfterFee) {
+			
+				// Do the coinbase half, with the btc amount
+				Map<String, String> results;
+
+				// Do the DB side
+				// give this one the full amount, because it does the fee on its own
+				DBActions.creatorWithdrawalFake(uid.getId(), btcAmount);
+
+		
+		} else {
+			throw new NoSuchElementException("You only have " + currentFunds + " BTC, "
+					+ "but are trying to withdraw " + btcAmount + " BTC");
+		}
+
+
+		return message;
+	}
 
 
 

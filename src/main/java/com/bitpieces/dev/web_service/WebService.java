@@ -84,12 +84,33 @@ public class WebService {
 				UID uid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
 				uid.verifyUser();
 
-				message = WebTools.makeWithdrawalFake(uid, req.body(), sf);
+				message = WebTools.makeUserWithdrawalFake(uid, req.body(), sf);
 
 				dbClose();
 
 			} catch (NoSuchElementException e) {
 				res.status(666);
+				return e.getMessage();
+			}
+			return message;
+
+		});
+		
+		post("/creator_withdraw_fake", (req, res) -> {
+			String message = null;
+			try {
+				WebCommon.allowResponseHeaders(req, res);
+				UID cid = WebCommon.getUserFromCookie(req, SESSION_TO_USER_MAP, COOKIE_PATH);
+				cid.verifyCreator();
+
+				dbInit(prop);
+
+				message = WebTools.makeCreatorWithdrawalFake(cid, req.body(), sf);
+				dbClose();
+
+			} catch (NoSuchElementException e) {
+				res.status(666);
+				e.printStackTrace();
 				return e.getMessage();
 			}
 			return message;
