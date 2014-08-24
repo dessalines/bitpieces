@@ -759,10 +759,14 @@ from pieces_owned_value_accum
 group by creators_id, creators_username, price_time_
 order by creators_id, price_time_;
 
+
+
 CREATE VIEW rewards_earned as
 select
 pieces_owned_accum.owners_id,
+pieces_owned_accum.owners_name,
 pieces_owned_accum.creators_id,
+pieces_owned_accum.creators_username,
 rewards_span.time_ as reward_start,
 rewards_span.end_time_ as reward_end,
 rewards_span.timediff_seconds as reward_diff,
@@ -772,8 +776,8 @@ pieces_owned_accum.timediff_seconds as pieces_diff,
 rewards_span.reward_per_piece_per_year,
 
 pieces_owned_accum.pieces_accum,
-greatest(pieces_owned_accum.start_time_, rewards_span.time_) as greatest_start_time,
-least(pieces_owned_accum.end_time_, rewards_span.end_time_) as least_end_time,
+greatest(pieces_owned_accum.start_time_, rewards_span.time_) as end_time_,
+least(pieces_owned_accum.end_time_, rewards_span.end_time_) as start_time_,
 TIMESTAMPDIFF(SECOND,
 greatest(pieces_owned_accum.start_time_, rewards_span.time_),
 least(pieces_owned_accum.end_time_, rewards_span.end_time_)) as span_diff,
@@ -792,66 +796,11 @@ and (pieces_owned_accum.end_time_ >= rewards_span.time_);
 
 
 
-/*
-Another faulty way of doing rewards that didn't figure reward changes in
-CREATE VIEW rewards_earned as 
-select pieces_owned_accum.owners_id,
-pieces_owned_accum.owners_name,
-pieces_owned_accum.creators_id,
-pieces_owned_accum.creators_username,
-pieces_owned_accum.start_time_,
-pieces_owned_accum.end_time_,
-pieces_owned_accum.timediff_seconds,
-pieces_owned_accum.pieces_accum,
-rewards_span.time_ as rewards_start_time_, 
-rewards_span.end_time_ as rewards_end_time_,
-rewards_span.reward_per_piece_per_year,
-pieces_accum * pieces_owned_accum.timediff_seconds*reward_per_piece_per_year/3.15569E7 as reward_earned
-from pieces_owned_accum
-inner join rewards_span
-on pieces_owned_accum.creators_id = rewards_span.creators_id
-and (
-   (pieces_owned_accum.start_time_ >= rewards_span.time_ and pieces_owned_accum.end_time_ <= rewards_span.end_time_)
-   or 
-   pieces_owned_accum.end_time_ = rewards_span.end_time_)
-and pieces_accum > 0 
-order by owners_id, pieces_owned_accum.start_time_;
-
-*/ 
-
-/*
-This is the old way of calculating rewards, which is very incorrect
-
-CREATE VIEW rewards_earned as
-select pieces_owned_value_accum.owners_id, 
-pieces_owned_value_accum.creators_id, 
-pieces_owned_value_accum.owners_name,
-creators.username as creators_username,
-price_time_, 
-pieces_owned_value_accum.end_time_, pieces_owned_value_accum.timediff_seconds, value_accum, 
-rewards_span.time_ as rewards_start_time_, 
-rewards_span.end_time_ as rewards_end_time_,
-reward_pct, 
-value_accum*(EXP(reward_pct*pieces_owned_value_accum.timediff_seconds/3.15569E7)-1) as reward_earned
-from pieces_owned_value_accum
-inner join rewards_span on pieces_owned_value_accum.creators_id = rewards_span.creators_id
-and (pieces_owned_value_accum.price_time_ >= rewards_span.time_ and pieces_owned_value_accum.end_time_ <= rewards_span.end_time_)
-inner join creators
-on pieces_owned_value_accum.creators_id = creators.id
-;
-*/
-
-
-
-
 
 CREATE VIEW rewards_earned_total as
 select owners_id, creators_id, owners_name, creators_username, sum(reward_earned) as reward_earned_total
 from rewards_earned
 group by owners_id, creators_id;
-
-
-
 
 
 CREATE VIEW rewards_earned_total_by_user as
@@ -1512,6 +1461,59 @@ select * from pieces_owned_accum
 
 
 
+
+*/
+
+
+/*
+
+
+
+
+
+-- Another faulty way of doing rewards that didn't figure reward changes in
+CREATE VIEW rewards_earned as 
+select pieces_owned_accum.owners_id,
+pieces_owned_accum.owners_name,
+pieces_owned_accum.creators_id,
+pieces_owned_accum.creators_username,
+pieces_owned_accum.start_time_,
+pieces_owned_accum.end_time_,
+pieces_owned_accum.timediff_seconds,
+pieces_owned_accum.pieces_accum,
+rewards_span.time_ as rewards_start_time_, 
+rewards_span.end_time_ as rewards_end_time_,
+rewards_span.reward_per_piece_per_year,
+pieces_accum * pieces_owned_accum.timediff_seconds*reward_per_piece_per_year/3.15569E7 as reward_earned
+from pieces_owned_accum
+inner join rewards_span
+on pieces_owned_accum.creators_id = rewards_span.creators_id
+and (
+   (pieces_owned_accum.start_time_ >= rewards_span.time_ and pieces_owned_accum.end_time_ <= rewards_span.end_time_)
+   or 
+   pieces_owned_accum.end_time_ = rewards_span.end_time_)
+and pieces_accum > 0 
+order by owners_id, pieces_owned_accum.start_time_;
+
+-- This is the old way of calculating rewards, which is very incorrect
+
+CREATE VIEW rewards_earned as
+select pieces_owned_value_accum.owners_id, 
+pieces_owned_value_accum.creators_id, 
+pieces_owned_value_accum.owners_name,
+creators.username as creators_username,
+price_time_, 
+pieces_owned_value_accum.end_time_, pieces_owned_value_accum.timediff_seconds, value_accum, 
+rewards_span.time_ as rewards_start_time_, 
+rewards_span.end_time_ as rewards_end_time_,
+reward_pct, 
+value_accum*(EXP(reward_pct*pieces_owned_value_accum.timediff_seconds/3.15569E7)-1) as reward_earned
+from pieces_owned_value_accum
+inner join rewards_span on pieces_owned_value_accum.creators_id = rewards_span.creators_id
+and (pieces_owned_value_accum.price_time_ >= rewards_span.time_ and pieces_owned_value_accum.end_time_ <= rewards_span.end_time_)
+inner join creators
+on pieces_owned_value_accum.creators_id = creators.id
+;
 
 */
 
