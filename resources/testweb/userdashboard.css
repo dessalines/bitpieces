@@ -28,6 +28,10 @@
 
         /*horizontal-align: middle;*/
       }
+      #creator_search {
+        margin-top: 10px;
+      }
+
       .list-group-item {
         margin-top: -2px;
         margin-bottom: -2px;
