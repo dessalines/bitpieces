@@ -90,6 +90,8 @@ public class InitializeTables {
 		user_withdrawal();
 
 		creator_withdrawal();
+		
+		issue_new_reward2();
 
 
 	}
@@ -145,7 +147,16 @@ public class InitializeTables {
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
 		
 		DBActions.issueReward(leo.getId().toString(), 0.00008d);
+		Tools.Sleep(1000L);
+	}
+	
+	private static void issue_new_reward2() {
+		String now = Tools.SDF.get().format(new Date());
 
+		Creator leo = Creator.findFirst("username like 'Leonardo%'");
+		
+		DBActions.issueReward(leo.getId().toString(), 0.00010d);
+		Tools.Sleep(1000L);
 	}
 
 
