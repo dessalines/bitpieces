@@ -366,7 +366,7 @@ function setupWithdrawalForm(creatorName) {
         $('[name="withdrawAmount"]').bind('keyup', function(f) {
             var withdrawAmount = parseFloat($(this).val());
             var withdrawAmountAfterFee = withdrawAmount * .95;
-            var fundsLeft = creatorsFunds - withdrawAmountAfterFee;
+            var fundsLeft = creatorsFunds - withdrawAmount;
             safetyRatingAfter = fundsLeft / (piecesOwnedTotal * rewardsPerPiecePerYear);
 
             if (!isNaN(withdrawAmountAfterFee) && fundsLeft > 0) {
