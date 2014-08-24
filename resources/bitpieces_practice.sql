@@ -1457,7 +1457,9 @@ ss
 
 -- ALTER TABLE employees ADD unique INDEX name (first_name, last_name)
 
-select * from pieces_owned_accum
+select * from pieces_owned
+where creators_id = 1
+and owners_id = 1
 
 select * from rewards_earned
 where creators_id = 1
@@ -1482,9 +1484,10 @@ pieces_owned_accum.timediff_seconds,
 rewards_span.reward_per_piece_per_year,
 pieces_owned_accum.owners_id,
 pieces_owned_accum.creators_id,
-pieces_owned_accum.pieces_accum
-
-
+pieces_owned_accum.pieces_accum,
+greatest(pieces_owned_accum.start_time_, rewards_span.time_) as greatest_start_time,
+least(pieces_owned_accum.end_time_, rewards_span.end_time_) as least_end_time,
+ as timediff_seconds
 from rewards_span
 inner join pieces_owned_accum
 on pieces_owned_accum.creators_id = rewards_span.creators_id
@@ -1492,6 +1495,12 @@ where rewards_span.creators_id = 1
 and owners_id = 1
 and (rewards_span.end_time_ >= pieces_owned_accum.start_time_)
 and (pieces_owned_accum.end_time_ >= rewards_span.time_)
+
+-- p start - rew.end
+-- rew.start - p.end
+-- p.start - rew.end
+-- rew.start - p.end
+if (p.start >= rew.end
 
 
 
