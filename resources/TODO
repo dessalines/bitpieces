@@ -81,3 +81,7 @@ BA2800 5.0, orangish-red
 + footer size
 + rewards paid to users pie chart
 - currencies in charts
+
+- Fix reward change sql
+- On raise funds form, first set a limit
+- Have a scheduled process called the creators funds checker, that if 

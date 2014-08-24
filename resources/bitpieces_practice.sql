@@ -777,7 +777,10 @@ pieces_accum * pieces_owned_accum.timediff_seconds*reward_per_piece_per_year/3.1
 from pieces_owned_accum
 inner join rewards_span
 on pieces_owned_accum.creators_id = rewards_span.creators_id
-and (pieces_owned_accum.start_time_ >= rewards_span.time_ and pieces_owned_accum.end_time_ <= rewards_span.end_time_)
+and (
+   (pieces_owned_accum.start_time_ >= rewards_span.time_ and pieces_owned_accum.end_time_ <= rewards_span.end_time_)
+   or 
+   pieces_owned_accum.end_time_ = rewards_span.end_time_)
 and pieces_accum > 0 
 order by owners_id, pieces_owned_accum.start_time_;
 
