@@ -15,6 +15,7 @@ import com.bitpieces.shared.Tables.Badge;
 import com.bitpieces.shared.Tables.Bid;
 import com.bitpieces.shared.Tables.Creator;
 import com.bitpieces.shared.Tables.Creators_funds_current;
+import com.bitpieces.shared.Tables.Creators_search_view;
 import com.bitpieces.shared.Tables.Creators_withdrawals;
 import com.bitpieces.shared.Tables.Currencies;
 import com.bitpieces.shared.Tables.Orders;
@@ -244,7 +245,7 @@ public class DBActions {
 	}
 	
 	public static void creatorsFundsChecker() {
-		log.info("Checking to see if creators funds are negative");
+		log.info("Checking to see if creators funds are really low");
 		List<Creators_funds_current> list = Creators_funds_current.findAll();
 		
 		for (Creators_funds_current cFunds : list) {
@@ -253,6 +254,21 @@ public class DBActions {
 				String name = cFunds.getString("creators_name");
 				issueReward(creatorId, .000000001);
 				log.info("Creator " + name + " funds went too low, issued a new miniscule reward");
+			}
+		}
+		
+		log.info("Checking to make sure reward yield is not above 30%");
+		List<Creators_search_view> list2 = Creators_search_view.findAll();
+		for (Creators_search_view cRew : list2) {
+			String yieldStr = cRew.getString("reward_yield_current");
+			yieldStr = yieldStr.replaceAll("\\D+","");
+			Double yieldPct = Double.parseDouble(yieldStr);
+			if (yieldPct >= 30) {
+				String creatorId = cRew.getString("creators_id");
+				String name = cRew.getString("creators_name");
+				issueReward(creatorId, .000000001);
+				log.info("Creator " + name + " funds went too low, issued a new miniscule reward");
+				
 			}
 		}
 	}
