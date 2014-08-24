@@ -261,7 +261,7 @@ public class DBActions {
 		List<Creators_search_view> list2 = Creators_search_view.findAll();
 		for (Creators_search_view cRew : list2) {
 			String yieldStr = cRew.getString("reward_yield_current");
-			yieldStr = yieldStr.replaceAll("\\D+","");
+			yieldStr = yieldStr.substring(0, yieldStr.length());
 			Double yieldPct = Double.parseDouble(yieldStr);
 			if (yieldPct >= 30) {
 				String creatorId = cRew.getString("creators_id");
