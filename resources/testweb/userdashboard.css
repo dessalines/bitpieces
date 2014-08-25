@@ -30,8 +30,11 @@
       }
       #creator_search {
         margin-top: 3px;
-        width: 175px;
       }
+      input[name="search_input"] {    
+        width: 100px;
+      }  
+      #creator_search > div > span > input.form-control.typeahead.tt-input
 
       .list-group-item {
         margin-top: -2px;
@@ -118,7 +121,7 @@
         margin-right: 0px;
         margin-left: 0px;
       }
-   
+
 
       .pager-footer {
         height: 41px;
@@ -252,14 +255,14 @@
 
     #mynav.affix {
   /*    position: fixed;
-      top:-200px;*/
-        position: static;
-      margin-top:-150px;
-      width: 275px;
-    }
-  }
-  /* Hide for mobile, show later */
-  @media (min-width: 768px) {
+  top:-200px;*/
+  position: static;
+  margin-top:-150px;
+  width: 275px;
+}
+}
+/* Hide for mobile, show later */
+@media (min-width: 768px) {
 
 
 
