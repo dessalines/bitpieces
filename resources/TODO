@@ -88,4 +88,7 @@ BA2800 5.0, orangish-red
 + A reward limit of $15/piece/year ;
 + fixed rewards_earned logic to include reward changes
 - replace all loading with fa spinner
++ Do hrefs for users pages
++ requires adding creator column , views : users_transactions, users_activity
+- fix main page
 
