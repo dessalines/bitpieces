@@ -250,8 +250,10 @@
     }
 
     #mynav.affix {
-      position: inherit;
-      top:-200px;
+  /*    position: inherit;
+      top:-200px;*/
+        position: static;
+      margin-top:5px;
       width: 275px;
     }
   }
