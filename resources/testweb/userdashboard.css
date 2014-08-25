@@ -250,7 +250,7 @@
     }
 
     #mynav.affix {
-      position: fixed;
+      position: static;
       top:-200px;
       width: 275px;
     }
