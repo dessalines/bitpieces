@@ -30,8 +30,9 @@
       }
       #creator_search {
         margin-top: 3px;
+        width: 100px;
       }
-      #creator_search > div{    
+      #creator_search > div > span{    
         width: 100px;
       }  
 
