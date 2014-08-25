@@ -1104,7 +1104,6 @@ on asks.users_id = users.id
 order by users_id, time_ desc;
 
 
-
 CREATE VIEW creators_transactions as 
 select creators.username as creators_name,
 time_,
@@ -1362,7 +1361,8 @@ pieces_owned_value_current_by_creator.value_total_current as worth_current,
 prices_current.price_per_piece as price_current,
 rewards_current.reward_per_piece_per_year as reward_current,
 CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
-backers_current_count.number_of_backers
+backers_current_count.number_of_backers,
+x_years_of_payments_to_funders as creators_safety
 
 from creators
 left join pieces_owned_value_current_by_creator
@@ -1380,6 +1380,9 @@ on creators.username = prices_current.creators_name
 left join creators_safety_current
 on creators.username = creators_safety_current.creators_name
 group by creators.id;
+
+
+select x_years_of_payments_to_funders from creators_safety;
 
 
 /*

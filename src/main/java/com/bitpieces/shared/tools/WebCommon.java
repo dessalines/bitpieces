@@ -57,6 +57,13 @@ public class WebCommon {
 			res.redirect("/hello");
 			return null;
 		});
+		
+		get("/pass_encrypt", (req, res) -> {
+			allowResponseHeaders(req, res);
+			log.debug("testing pass encrypt");
+			Tools.PASS_ENCRYPT.encryptPassword("asdf");
+			return "test passed";
+		});
 
 
 		get("/get_users_settings", (req, res) -> {
