@@ -15,8 +15,8 @@ $(document).ready(function() {
 
     }).on('success.form.bv', function(event) {
         event.preventDefault();
-        setupRegisterAjax();
-
+        // setupRegisterAjax();
+        
 
     });
 
@@ -52,7 +52,7 @@ function setupRegisterAjax() {
     // console.log(formData);
 
     // Loading
-    $(this).button('loading');
+    $("registerBtn").button('loading');
 
     var url = sparkService + "registeruser"; // the script where you handle the form input.
 
