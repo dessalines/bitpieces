@@ -31,10 +31,11 @@
       #creator_search {
         margin-top: 3px;
       }
-      input[name="search_input"] {    
+      #creator_search > div > span {    
         width: 100px;
       }  
-      #creator_search > div > span > input.form-control.typeahead.tt-input
+
+      
 
       .list-group-item {
         margin-top: -2px;
