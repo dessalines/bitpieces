@@ -58,6 +58,7 @@ public class WebCommon {
 			return null;
 		});
 		
+		// This is necessary, because there is a bug in jasypt that takes a long time the first time you run it
 		get("/pass_encrypt", (req, res) -> {
 			allowResponseHeaders(req, res);
 			log.debug("testing pass encrypt");
