@@ -250,7 +250,7 @@
     }
 
     #mynav.affix {
-      position: static;
+      position: inherit;
       top:-200px;
       width: 275px;
     }
