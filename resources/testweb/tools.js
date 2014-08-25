@@ -759,7 +759,7 @@ function standardFormPost(shortUrl, formId, modalId, reload, successFunctions) {
                     location.reload();
                 }, 3000);
             }
-
+            $(this).button('reset');
 
             // console.log(document.cookie);
             return data;
