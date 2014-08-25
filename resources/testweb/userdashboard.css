@@ -31,7 +31,7 @@
       #creator_search {
         margin-top: 3px;
       }
-      #creator_search > div > span > input.form-control.typeahead.tt-hint {    
+      #creator_search > div{    
         width: 100px;
       }  
 
