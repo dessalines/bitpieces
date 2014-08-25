@@ -105,7 +105,7 @@ function setupSigninAjax() {
     // console.log(formData);
 
     // Loading
-    $(this).button('loading');
+    $("#signinBtn").button('loading');
 
 
     var url;
