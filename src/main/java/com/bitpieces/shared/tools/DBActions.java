@@ -760,6 +760,15 @@ public class DBActions {
 		
 
 	}
+	
+	public static void verifyCreator(String creatorName) {
+		
+		Creator c = Creator.findFirst("username = ?", creatorName);
+		
+		c.set("verified", true);
+		c.saveIt();
+		
+	}
 
 
 
