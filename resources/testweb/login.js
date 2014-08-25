@@ -179,7 +179,7 @@ function setupSigninAjax() {
 
             }
 
-
+            $("#signinBtn").button('reset');
         },
         error: function(request, status, error) {
             delete_cookie("authenticated_session_id");
@@ -190,7 +190,7 @@ function setupSigninAjax() {
 
     });
 
-    $("#signinBtn").button('reset');
+    
     event.preventDefault();
     return false;
 
