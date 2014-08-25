@@ -240,7 +240,7 @@
       /*font-size: .75em;*/
     }
     #mynav > li {
-      height: 40px;
+      height: 30px;
     }
 
     #mynav.affix-top {
@@ -250,10 +250,10 @@
     }
 
     #mynav.affix {
-      position: fixed;
-      top:-200px;
-  /*      position: static;
-      margin-top:-100px;*/
+  /*    position: fixed;
+      top:-200px;*/
+        position: static;
+      margin-top:--150px;
       width: 275px;
     }
   }
