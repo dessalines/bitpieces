@@ -978,7 +978,8 @@ select to_users_id as users_id,
 users.username as owners_name, 
 time_, 
 'buy' as type,
-creators.username as recipient,
+creators.username as creator,
+'' as recipient,
 pieces, 
 -1*total as total
 from 
@@ -993,6 +994,7 @@ select from_users_id,
 b.username as owners_name,
 time_, 
 'sell' as type,
+c.username as creator,
 a.username as recipient, 
 pieces,
 total 
@@ -1004,12 +1006,16 @@ on sales_from_users.to_users_id = a.id
 inner join 
 users b
 on sales_from_users.from_users_id = b.id
+inner join 
+creators c
+on sales_from_users.creators_id = c.id
 union
 
 select to_users_id, 
 b.username as owners_name,
 time_, 
 'buy' as type,
+c.username as creator,
 a.username as recipient, 
 pieces,
 -1*total from 
@@ -1020,12 +1026,16 @@ on sales_from_users.from_users_id = a.id
 inner join 
 users b
 on sales_from_users.to_users_id = b.id
+inner join 
+creators c
+on sales_from_users.creators_id = c.id
 union
 
 select users_id, 
 users.username as owners_name,
 time_, 
 concat('deposit(', status, ')') as type,
+'' as creator,
 '' as recipient, 
 '' as pieces, 
 btc_amount as funds 
@@ -1039,6 +1049,7 @@ select users_id,
 users.username as owners_name,
 time_,
 concat('withdrawal(', status, ')') as type, 
+'' as creator,
 '' as recipient, 
 '' as pieces,
 -1*btc_amount as funds from 
@@ -1055,16 +1066,19 @@ select users_id,
 owners_name, 
 time_, 
 type,
+creator, 
 recipient,
 pieces,
 total
 from users_transactions
 union 
+
 select users_id, 
 users.username as owners_name,
 time_, 
 'bid' as type,
-creators.username as recipient,
+creators.username as creator,
+'' as recipient,
 pieces,
 bid_per_piece*pieces as funds
 from bids
@@ -1073,11 +1087,13 @@ on bids.creators_id = creators.id
 inner join users
 on bids.users_id = users.id
 union
+
 select users_id, 
 users.username as owners_name, 
 time_, 
 'ask' as type,
-creators.username as recipient,
+creators.username as creator,
+'' as recipient,
 pieces,
 ask_per_piece*pieces as funds
 from asks
@@ -1112,7 +1128,7 @@ on creators_withdrawals.creators_id = creators.id
 union
 select creators.username as creators_name, 
 time_, 
-'buy' as type,
+'sell' as type,
 users.username as recipient,
 pieces,
 total as funds
@@ -1158,7 +1174,7 @@ on sales_from_users.to_users_id = users.id
 union
 select creators_name,
 time_,
-'reward change(per piece per year)' as type,
+'reward (per piece per year)' as type,
 '' as recipient, 
 '' as pieces,
 reward_per_piece_per_year as funds

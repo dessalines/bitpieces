@@ -83,10 +83,9 @@ BA2800 5.0, orangish-red
 - currencies in charts
 
 + Fix reward change sql
-- On raise funds form, first set a limit, 
-- after the initial 
-- 2 safety measures
-- scheduled poller that checks when a creators funds are less than .000001BTC, and then sets the reward_pct to zero, and freezes the account.
-- A reward limit of $15/piece/year ;
++ 2 safety measures
++ scheduled poller that checks when a creators funds are less than .000001BTC, and then sets the reward_pct to zero, and freezes the account.
++ A reward limit of $15/piece/year ;
++ fixed rewards_earned logic to include reward changes
 - replace all loading with fa spinner
 
