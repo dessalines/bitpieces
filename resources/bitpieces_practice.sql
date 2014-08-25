@@ -1515,5 +1515,9 @@ inner join creators
 on pieces_owned_value_accum.creators_id = creators.id
 ;
 
+
+
+select * from rewards_earned
+
 */
 
