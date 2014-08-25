@@ -90,5 +90,5 @@ BA2800 5.0, orangish-red
 - replace all loading with fa spinner
 + Do hrefs for users pages
 + requires adding creator column , views : users_transactions, users_activity
-- fix main page
++ fix main page
 
