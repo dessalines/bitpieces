@@ -253,7 +253,7 @@
   /*    position: fixed;
       top:-200px;*/
         position: static;
-      margin-top:--150px;
+      margin-top:-150px;
       width: 275px;
     }
   }
