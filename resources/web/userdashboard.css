@@ -28,13 +28,13 @@
 
         /*horizontal-align: middle;*/
       }
+      #creator_search {
+        margin-top: 3px;
+      }
+
       .list-group-item {
         margin-top: -2px;
         margin-bottom: -2px;
-      }
-
-      #creator_search {
-        margin-top: 3px;
       }
 
 
@@ -117,7 +117,7 @@
         margin-right: 0px;
         margin-left: 0px;
       }
-      
+   
 
       .pager-footer {
         height: 41px;
@@ -237,22 +237,24 @@
 
   @media(min-width:993px) {
     #mynav {
-      /*font-size: .75em;*/
+      font-size: .75em;
     }
     #mynav > li {
-      height: 40px;
+      height: 30px;
     }
 
     #mynav.affix-top {
       position: static;
       margin-top:30px;
-      width: 340px;
+      width: 275px;
     }
 
     #mynav.affix {
-      position: fixed;
-      top:-200px;
-      width: 340px;
+  /*    position: fixed;
+      top:-200px;*/
+        position: static;
+      margin-top:-150px;
+      width: 275px;
     }
   }
   /* Hide for mobile, show later */
