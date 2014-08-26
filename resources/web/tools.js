@@ -720,6 +720,8 @@ function standardFormPost(shortUrl, formId, modalId, reload, successFunctions) {
 
     reload = (typeof reload === "undefined") ? false : reload;
 
+
+
     // serializes the form's elements.
     var formData = $(formId).serializeArray();
     // console.log(formData);
@@ -757,7 +759,7 @@ function standardFormPost(shortUrl, formId, modalId, reload, successFunctions) {
                     location.reload();
                 }, 3000);
             }
-
+            $(this).button('reset');
 
             // console.log(document.cookie);
             return data;

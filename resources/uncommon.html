@@ -83,20 +83,24 @@ RewriteRule ^users/settings/(.*) $1  [L]
 
 Javascript
 ----------
-creatorpage, userpages: 
-    if (sessionId != null && userType == 'User') {
-        showHideButtons(creatorName);
-        bidAskOrBuySetup("/placeask", creatorName, '#askForm', "#placeaskBtn", "#askModal");
-        bidAskOrBuySetup("/placebid", creatorName, '#bidForm', "#placebidBtn", "#bidModal");
-        bidAskOrBuySetup("/placebuy", creatorName, '#buyForm', "#placebuyBtn", "#buyModal");
+    
+ 
 
 
-        fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
-    }
 
-    ...
 
+-- from : to 
+setupDepositButton("make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
+fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
+
+setupModal("creator_withdraw_fake", '#withdrawForm', "#placeWithdrawBtn", "#withdrawModal");
+setupModal("creator_withdraw", '#withdrawForm', "#placeWithdrawBtn", "#withdrawModal");
+
+
+standardFormPost('make_withdrawal_fake', '#withdrawForm', '#withdrawModal', true);
 standardFormPost('user_withdraw', '#withdrawForm', '#withdrawModal', true);
+
+
 
 Creator pages
 -------------
@@ -281,6 +285,8 @@ Javascript
         setupDepositButton("make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
 
     }
+
+
 
 HTML
 -----
