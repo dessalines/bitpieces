@@ -669,6 +669,118 @@
 </div>
 </div>
 
+
+<div id="raiseFundsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>          <h4 class="modal-title">Raise Funds</h4>
+      </div>
+      <div class="modal-body">
+        <div class="text">
+         Read through the <a href="/FAQ">FAQ</a> to learn about <a href="/FAQ#what_are_rewards">rewards</a>. A 0.5% reward percentage is standard for startup projects.<br><br>
+       </div>
+
+       <form id="raiseFundsForm" class="form-horizontal" role="form">
+
+        <div class="form-group form-group-lg">
+          <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward per piece per year</label>
+          <div class="col-sm-10">
+           <div class="input-group">
+             <span name="curr_iso" class="input-group-addon"></span>    
+             <input name="reward_per_piece_per_year" class="form-control" type="text" id="formGroupInputLarge" placeholder="Reward/piece/year"
+
+             data-bv-notempty="true"
+             data-bv-notempty-message="Must be > 0"
+
+             data-bv-greaterthan="true"
+             data-bv-greaterthan-inclusive="false"
+             data-bv-greaterthan-value="0"
+             data-bv-greaterthan-message="Must be > 0" 
+
+             >
+             <span class="input-group-addon">per piece per year</span>
+           </div>
+         </div>
+       </div>
+       <div class="form-group form-group-lg">
+        <label class="col-sm-2 control-label" for="formGroupInputLarge">Price per piece</label>
+        <div class="col-sm-10">
+          <div class="input-group">
+           <span name="curr_iso" class="input-group-addon">$</span>    
+           <input name="raisePrice" class="form-control" type="text" id="formGroupInputLarge" placeholder="Price per piece"
+
+           data-bv-notempty="true"
+           data-bv-notempty-message="Must be > 0"
+
+           data-bv-greaterthan="true"
+           data-bv-greaterthan-inclusive="false"
+           data-bv-greaterthan-value="0"
+           data-bv-greaterthan-message="Must be > 0" 
+
+           >
+           <span class="input-group-addon">per piece </span>
+         </div>
+       </div>
+     </div>
+
+     <div class="form-group form-group-lg">
+      <label class="col-sm-2 control-label" for="formGroupInputLarge">Pieces</label>
+      <div class="col-sm-10">
+        <input name="raisePieces" class="form-control" type="text" id="formGroupInputLarge" placeholder="Pieces"
+        type="text" 
+        data-bv-integer="true"
+        data-bv-integer-message="Must be a whole number"
+
+        data-bv-notempty="true"
+        data-bv-notempty-message="Must be a whole number"
+
+        data-bv-greaterthan="true"
+        data-bv-greaterthan-inclusive="false"
+        data-bv-greaterthan-value="0"
+        data-bv-greaterthan-message="Must be > 0"
+
+        >
+      </div>
+    </div>
+
+    <div class="form-group form-group-lg">
+
+     <label class="col-sm-2 control-label" for="formGroupInputLarge">Total</label>
+     <div id="raiseTotal" class="col-sm-10 form-control-static">
+
+     </div>
+   </div>
+
+   <div class="form-group form-group-lg">
+     <label class="col-sm-2 control-label" for="formGroupInputLarge">Reward %</label>
+     <div id="rewardPct" class="col-sm-10 form-control-static">
+     </div>
+   </div>
+
+   <div class="form-group form-group-lg">
+     <label class="col-sm-2 control-label" for="formGroupInputLarge">Potential Rewards owed</label>
+     <div id="rewardsOwedPerYear" class="col-sm-10 form-control-static">
+     </div>
+   </div>
+
+   <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button id="raiseFundsBtn" type="submit" class="btn btn-primary" 
+      >Raise funds</button>
+    </div>
+  </div>
+
+
+
+</form>
+
+</div>
+
+</div>
+</div>
+</div>
 <div id="rewardModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
 
