@@ -31,7 +31,7 @@ public class WebCommon {
 	
 	/**
 	 * This needs the cache, to get the correct user, a properties file for making the 
-	 * correct db connections, and a unit converter to convert everything correctly
+	 * correct db connections, and a unit converter to convert everything correctly.
 	 * @param cache
 	 * @param prop
 	 * @param sf
