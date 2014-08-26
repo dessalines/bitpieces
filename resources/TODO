@@ -91,4 +91,6 @@ BA2800 5.0, orangish-red
 + Do hrefs for users pages
 + requires adding creator column , views : users_transactions, users_activity
 + fix main page
+- add verified column
+- add logins from every page
 
