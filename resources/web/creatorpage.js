@@ -338,7 +338,8 @@ function setupWithdrawalForm(creatorName) {
     // Need totals, get_rewards current, get_pieces_owned_total, get_creators_funds_current'
     $.when(getJson(creatorName + '/get_creators_funds_current'),
         getJson(creatorName + '/get_pieces_owned_total'),
-        getJson(creatorName + '/get_rewards_current')).done(function(a1, a2, a3) {
+        getJson(creatorName + '/get_rewards_current'),
+        getJson('/get_withdraw_fee_pct')).done(function(a1, a2, a3, a4) {
         // the code here will be executed when all four ajax requests resolve.
         // a1, a2, a3 and a4 are lists of length 3 containing the response text,
         // status, and jqXHR object for each of the four ajax calls respectively.
@@ -347,6 +348,7 @@ function setupWithdrawalForm(creatorName) {
         var creatorsFundsStr = a1[0];
         var piecesOwnedTotalStr = a2[0];
         var rewardsPerPiecePerYearStr = a3[0];
+        var feePctStr = a4[0];
 
         if (creatorsFundsStr != "0") {
             $('#withdrawBtn').removeClass('hide');
@@ -356,16 +358,20 @@ function setupWithdrawalForm(creatorName) {
         var creatorsFunds = parseFloat(creatorsFundsStr.replace(/^\D+/g, ''));
         var piecesOwnedTotal = parseFloat(piecesOwnedTotalStr.replace(/^\D+/g, ''));
         var rewardsPerPiecePerYear = parseFloat(rewardsPerPiecePerYearStr.replace(/^\D+/g, ''));
-
+        var feePct = parseFloat(feePctStr.replace(/^\D+/g, ''));
+        var feeHundred = feePct*100;
         // console.log(piecesOwnedTotalStr);
         // console.log(creatorsFunds + '|' + piecesOwnedTotal + '|' + rewardsPerPiecePerYear);
         // $("#creatorsFunds").text(result);
         $('[name="withdrawAmount"]').attr('placeholder', 'Current funds : ' + creatorsFunds);
         $('#funds').text(creatorsFundsStr);
         $("#withdrawSymbol").text(rewardsPerPiecePerYearStr[0]);
+        $("#fee_pct").text('Total after ' + feeHundred + '% fee');
+
+
         $('[name="withdrawAmount"]').bind('keyup', function(f) {
             var withdrawAmount = parseFloat($(this).val());
-            var withdrawAmountAfterFee = withdrawAmount * .95;
+            var withdrawAmountAfterFee = withdrawAmount * (1-feePct);
             var fundsLeft = creatorsFunds - withdrawAmount;
             safetyRatingAfter = fundsLeft / (piecesOwnedTotal * rewardsPerPiecePerYear);
 
