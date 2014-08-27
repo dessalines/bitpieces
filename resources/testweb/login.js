@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     }).on('success.form.bv', function(event) {
         event.preventDefault();
-        // setupRegisterAjax();
+        setupRegisterAjax();
         
 
     });
