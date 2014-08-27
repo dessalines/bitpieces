@@ -39,7 +39,7 @@ import com.coinbase.api.Coinbase;
 public class DBActions {
 	static final Logger log = LoggerFactory.getLogger(DBActions.class);
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	public static final Double SERVICE_FEE_PCT = .05d;
+	
 
 	public static void issueReward(String creatorId, Double reward_per_piece_per_year) {
 		String now = Tools.SDF.get().format(new Date());
@@ -662,8 +662,8 @@ public class DBActions {
 
 		Double availableFunds = creatorsFunds - rewardsOwedForOneYear;
 
-
-		Double fee = SERVICE_FEE_PCT * btcAmount;
+		Double feePct = Creator.findById(creatorId).getDouble("fee_pct");
+		Double fee = feePct * btcAmount;
 
 		Double amountAfterFee = btcAmount - fee;
 
@@ -682,8 +682,9 @@ public class DBActions {
 		try {
 			// Make sure the creator has enough to cover the withdraw
 			checkCreatorFunds(creatorId, btcAmount);
-
-			Double fee = SERVICE_FEE_PCT * btcAmount;
+			
+			Double feePct = Creator.findById(creatorId).getDouble("fee_pct");
+			Double fee = feePct * btcAmount;
 
 			Double amountAfterFee = btcAmount - fee;
 
@@ -708,8 +709,8 @@ public class DBActions {
 		try {
 
 			checkCreatorFunds(creatorId, btcAmount);
-
-			Double fee = SERVICE_FEE_PCT * btcAmount;
+			Double feePct = Creator.findById(creatorId).getDouble("fee_pct");
+			Double fee = feePct * btcAmount;
 
 			Double amountAfterFee = btcAmount - fee;
 

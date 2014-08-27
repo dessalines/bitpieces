@@ -103,6 +103,7 @@ CREATE TABLE creators
    FOREIGN KEY (local_currency_id) REFERENCES currencies(id),
    precision_ int(11) NOT NULL DEFAULT 6 ,
    verified TINYINT(1) NOT  NULL DEFAULT 0,
+   fee_pct DOUBLE UNSIGNED DEFAULT 0.05,
    created_at TIMESTAMP NOT NULL DEFAULT 0,
    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
    UPDATE CURRENT_TIMESTAMP
@@ -1534,9 +1535,12 @@ inner join creators
 on pieces_owned_value_accum.creators_id = creators.id
 ;
 
+-- adding the creator fee column
+ALTER TABLE creators ADD COLUMN fee_pct DOUBLE UNSIGNED DEFAULT 0.05;
+ALTER TABLE creators MODIFY fee_pct DOUBLE AFTER verified;
 
 
-select * from rewards_earned
+select * from creators
 
 */
 
