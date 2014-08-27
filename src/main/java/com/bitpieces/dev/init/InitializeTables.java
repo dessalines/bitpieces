@@ -88,6 +88,8 @@ public class InitializeTables {
 		ask_bid_acceptor();
 
 		user_withdrawal();
+		
+		custom_creator_fee();
 
 		creator_withdrawal();
 		
@@ -159,6 +161,13 @@ public class InitializeTables {
 		Tools.Sleep(1000L);
 	}
 
+	private static void custom_creator_fee() {
+		Creator leo = Creator.findFirst("username like 'Leonardo%'");
+
+		leo.set("fee_pct", 0d).saveIt();
+
+
+	}
 
 	private static void creator_withdrawal() {
 		Creator leo = Creator.findFirst("username like 'Leonardo%'");
