@@ -992,7 +992,23 @@ public class WebTools {
 		return json;
 
 	}
+	public static String getCreatorsWithdrawFeePctJson(UID uid) {
 
+		String json = null;
+		try {
+			Creator creator = Creator.findById(uid.getId());
+
+			json = creator.getString("fee_pct");
+			
+
+		} catch(NullPointerException e) {
+			return "0.05";
+		}
+		return json;
+
+	}
+	
+	
 	public static String getRewardsEarnedTotalByUserJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;

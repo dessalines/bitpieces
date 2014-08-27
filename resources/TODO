@@ -94,5 +94,10 @@ BA2800 5.0, orangish-red
 + add logins from every page
 - add verified column
 - add a fee_pct column to the creators table, defaulted to .05
+	- alter table
+	- copy over the javascript, setupwithdrawalform on creatorpage.js
+	- replace html
+	<label class="col-sm-2 control-label" for="formGroupInputLarge">Total after 5% fee</label>
+	<label id="fee_pct" class="col-sm-2 control-label" for="formGroupInputLarge"></label>
 
 
