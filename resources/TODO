@@ -87,17 +87,19 @@ BA2800 5.0, orangish-red
 + scheduled poller that checks when a creators funds are less than .000001BTC, and then sets the reward_pct to zero, and freezes the account.
 + A reward limit of $15/piece/year ;
 + fixed rewards_earned logic to include reward changes
-- replace all loading with fa spinner
++ replace all loading with fa spinner
 + Do hrefs for users pages
 + requires adding creator column , views : users_transactions, users_activity
 + fix main page
 + add logins from every page
-- add verified column
-- add a fee_pct column to the creators table, defaulted to .05
++ add verified column
++ add a fee_pct column to the creators table, defaulted to .05
 	- alter table
 	- copy over the javascript, setupwithdrawalform on creatorpage.js
 	- replace html
 	<label class="col-sm-2 control-label" for="formGroupInputLarge">Total after 5% fee</label>
 	<label id="fee_pct" class="col-sm-2 control-label" for="formGroupInputLarge"></label>
+
+- consult a securities lawyer
 
 
