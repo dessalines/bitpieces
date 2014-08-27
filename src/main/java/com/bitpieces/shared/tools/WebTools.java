@@ -483,21 +483,23 @@ public class WebTools {
 		Double btcAmount = amount;
 		String message = null;
 
+		Double feePct = Creator.findById(uid.getId()).getDouble("fee_pct");
+		
 		if (!settings.getIso().equals("BTC")) {
 			Double spotRate = sf.getSpotRate(settings.getIso());
 			btcAmount = amount / spotRate;
 
 
-			message = "withdrawal(pending) at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)" + "(or "  + 
-					amount*(1d-DBActions.SERVICE_FEE_PCT)+ " (after fee) " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+			message = "withdrawal(pending) at " + btcAmount*(1d-feePct) + " BTC (after fee)" + "(or "  + 
+					amount*(1d-feePct)+ " (after fee) " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
 		} else {
-			message = "withdrawal(pending)  at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)";
+			message = "withdrawal(pending)  at " + btcAmount*(1d-feePct) + " BTC (after fee)";
 		}
 
 		Double currentFunds = 
 				Creators_funds_current.findFirst("creators_id=?", uid.getId()).getDouble("current_funds");
 
-		Double fee = DBActions.SERVICE_FEE_PCT * btcAmount;
+		Double fee = feePct * btcAmount;
 
 		Double amountAfterFee = btcAmount - fee;
 
@@ -541,22 +543,24 @@ public class WebTools {
 		// For safety, convert the amount to BTC and make sure the user has that much
 		Double btcAmount = amount;
 		String message = null;
+		
+		Double feePct = Creator.findById(uid.getId()).getDouble("fee_pct");
 
 		if (!settings.getIso().equals("BTC")) {
 			Double spotRate = sf.getSpotRate(settings.getIso());
 			btcAmount = amount / spotRate;
 
 
-			message = "withdrawal(pending) at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)" + "(or "  + 
-					amount*(1d-DBActions.SERVICE_FEE_PCT)+ " (after fee) " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
+			message = "withdrawal(pending) at " + btcAmount*(1d-feePct) + " BTC (after fee)" + "(or "  + 
+					amount*(1d-feePct)+ " (after fee) " + settings.getIso() + " @ " + spotRate + settings.getIso() + "/BTC";
 		} else {
-			message = "withdrawal(pending)  at " + btcAmount*(1d-DBActions.SERVICE_FEE_PCT) + " BTC (after fee)";
+			message = "withdrawal(pending)  at " + btcAmount*(1d-feePct) + " BTC (after fee)";
 		}
 
 		Double currentFunds = 
 				Creators_funds_current.findFirst("creators_id=?", uid.getId()).getDouble("current_funds");
 
-		Double fee = DBActions.SERVICE_FEE_PCT * btcAmount;
+		Double fee = feePct * btcAmount;
 
 		Double amountAfterFee = btcAmount - fee;
 
@@ -988,7 +992,23 @@ public class WebTools {
 		return json;
 
 	}
+	public static String getCreatorsWithdrawFeePctJson(UID uid) {
 
+		String json = null;
+		try {
+			Creator creator = Creator.findById(uid.getId());
+
+			json = creator.getString("fee_pct");
+			
+
+		} catch(NullPointerException e) {
+			return "0.05";
+		}
+		return json;
+
+	}
+	
+	
 	public static String getRewardsEarnedTotalByUserJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;

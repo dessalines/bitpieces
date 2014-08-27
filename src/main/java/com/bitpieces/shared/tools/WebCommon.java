@@ -25,10 +25,10 @@ public class WebCommon {
 	public static final Integer COOKIE_EXPIRE_SECONDS = cookieExpiration(1440);
 
 	static final Logger log = LoggerFactory.getLogger(WebCommon.class);
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * This needs the cache, to get the correct user, a properties file for making the 
 	 * correct db connections, and a unit converter to convert everything correctly.
@@ -57,7 +57,7 @@ public class WebCommon {
 			res.redirect("/hello");
 			return null;
 		});
-		
+
 		// This is necessary, because there is a bug in jasypt that takes a long time the first time you run it
 		get("/pass_encrypt", (req, res) -> {
 			allowResponseHeaders(req, res);
@@ -93,7 +93,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String userName = req.params(":user");
-		UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {
 
 				dbInit(prop);
@@ -118,7 +118,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			String userName = req.params(":user");
-		UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {
 
 
@@ -144,7 +144,7 @@ public class WebCommon {
 			try {
 				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, creatorName, uid, sf);
@@ -169,7 +169,7 @@ public class WebCommon {
 			try {
 				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedCurrentSeriesJson(userName, creatorName, uid, sf);
@@ -194,7 +194,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
 				dbInit(prop);
@@ -217,7 +217,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
 				dbInit(prop);
@@ -241,7 +241,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getRewardsEarnedTotalJson(userName, uid, sf);
 
@@ -261,7 +261,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedAccumSeriesJson(userName, uid, sf);
 
@@ -282,7 +282,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersFundsAccumSeriesJson(userName, uid, sf);
 
@@ -306,7 +306,7 @@ public class WebCommon {
 			try {
 				String userName = req.params(":user");
 				Integer pageNum = Integer.parseInt(req.params(":page_num"));
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersTransactionsJson(userName, uid, sf, pageNum);
 
@@ -329,7 +329,7 @@ public class WebCommon {
 			try {
 				String userName = req.params(":user");
 				Integer pageNum = Integer.parseInt(req.params(":page_num"));
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 
 				// get currency if one exists
@@ -352,7 +352,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersFundsCurrentJson(userName, uid, sf);
 
@@ -372,9 +372,29 @@ public class WebCommon {
 			String json = null;
 			try {
 				String creatorName = req.params(":creator");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getCreatorsFundsCurrentJson(creatorName, uid, sf);
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return json;
+
+		});
+
+		get("/get_withdraw_fee_pct", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			try {
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				uid.verifyCreator();
+				dbInit(prop);
+				json = WebTools.getCreatorsWithdrawFeePctJson(uid);
 
 				dbClose();
 
@@ -392,7 +412,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getRewardsEarnedTotalByUserJson(userName, uid, sf);
 
@@ -412,7 +432,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getPiecesValueCurrentByOwnerJson(userName, uid, sf);
 
@@ -452,7 +472,7 @@ public class WebCommon {
 			String json = null;
 			try {
 				String userName = req.params(":user");
-			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersBidsAsksCurrentJson(userName, uid, sf);
 
@@ -850,7 +870,7 @@ public class WebCommon {
 			return json;
 
 		});
-		
+
 		get("/:creator/get_rewards_yield_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
@@ -1111,7 +1131,7 @@ public class WebCommon {
 			UnitConverter sf,
 			String cacheFile, 
 			String cookiePath) {
-		
+
 		post("/userlogin", (req, res) -> {
 			System.out.println(req.headers("Origin"));
 			WebCommon.allowResponseHeaders(req, res);
@@ -1147,18 +1167,18 @@ public class WebCommon {
 			return message;
 
 		});
-		
+
 		post("/recover_password", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			try {
-			dbInit(prop);
+				dbInit(prop);
 
-			String message = WebTools.recoverPassword(req.body());
+				String message = WebTools.recoverPassword(req.body());
 
-			dbClose();
-			
-			return message;
-			
+				dbClose();
+
+				return message;
+
 			} catch (NoSuchElementException e) {
 				res.status(666);
 				return e.getMessage();
@@ -1267,7 +1287,7 @@ public class WebCommon {
 
 
 
-		
+
 
 
 
@@ -1294,8 +1314,8 @@ public class WebCommon {
 			return message;
 
 		});
-		
-		
+
+
 
 		post("/registeruser", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
@@ -1304,7 +1324,7 @@ public class WebCommon {
 				// Verify the recaptcha
 				WebTools.recaptcha(req.url(), req.body());
 
-	
+
 				// Create the user
 				UID uid = DBActions.createUserFromAjax(req.body());
 
@@ -1343,7 +1363,7 @@ public class WebCommon {
 
 				// Its null if it couldn't create the user, usually cause of constraints
 				if (uid != null) {
-							String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, cache, 
+					String message = WebCommon.verifyLoginAndSetCookies(uid, req, res, cache, 
 							cacheFile, cookiePath);
 
 					return "creator registered";
@@ -1503,12 +1523,12 @@ public class WebCommon {
 			return message;
 
 		});
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 	}
 
 
@@ -1561,11 +1581,11 @@ public class WebCommon {
 
 	public static String verifyLoginAndSetCookies(UID uid, Request req, Response res, 
 			Cache<String, UID> cache, String cacheFile, String path) {
-		
+
 		if (uid != null) {
 			Integer expireSeconds = Tools.getExpireTime(req.body());
 			String authenticatedSession = Tools.generateSecureRandom();
-			
+
 			Boolean secure = (path.equals("prod")) ? true : false;
 			// Put the users ID in the session
 			//				req.session().attribute("userId", userId); // put the user id in the session data
@@ -1579,8 +1599,8 @@ public class WebCommon {
 			res.cookie("authenticated_session_id_" + path, authenticatedSession, expireSeconds, secure);
 			res.cookie("username_" + path, uid.getUsername(), expireSeconds, secure);
 			res.cookie("usertype_" + path, uid.getType().toString(), expireSeconds, secure);
-//			String json = Tools.GSON2.toJson(cache);
-//			System.out.println(json);
+			//			String json = Tools.GSON2.toJson(cache);
+			//			System.out.println(json);
 
 
 			return authenticatedSession;

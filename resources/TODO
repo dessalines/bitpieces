@@ -91,6 +91,13 @@ BA2800 5.0, orangish-red
 + Do hrefs for users pages
 + requires adding creator column , views : users_transactions, users_activity
 + fix main page
++ add logins from every page
 - add verified column
-- add logins from every page
+- add a fee_pct column to the creators table, defaulted to .05
+	- alter table
+	- copy over the javascript, setupwithdrawalform on creatorpage.js
+	- replace html
+	<label class="col-sm-2 control-label" for="formGroupInputLarge">Total after 5% fee</label>
+	<label id="fee_pct" class="col-sm-2 control-label" for="formGroupInputLarge"></label>
+
 
