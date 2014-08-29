@@ -59,13 +59,13 @@ public class CoinbaseTools {
 		b.setName("Deposit");
 		b.setType(Type.BUY_NOW);
 		b.setPriceCurrencyIso(currencyIso);
-		b.setCallbackUrl("https://bitpieces.com:4567/" + user.getId().toString()
+		b.setCallbackUrl("https://bitpieces.com:" + DataSources.STAGE_WEB_PORT + "/" + user.getId().toString()
 				+ "/coinbase_deposit_callback");
 		b.setDescription("Make a deposit to be able to buy and bid on pieces");
 		b.setStyle(Style.NONE);
 		b.setIncludeEmail(true);
 		b.setIncludeAddress(true);
-
+		
 
 		b.setChoosePrice(true);
 		b.setPrice(Money.parse(currencyIso + " 0.01"));
