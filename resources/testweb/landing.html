@@ -338,6 +338,9 @@
                         data-bv-stringlength-max="30"
                         data-bv-stringlength-message="The username must be more than 3 and less than 30 characters long"
 
+                        data-bv-regexp-message="Not a valid username(no spaces, etc)"
+                        data-bv-regexp-regexp="^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
+
                         >
                       </div>
                     </div>
@@ -352,6 +355,9 @@
                         data-bv-different="true"
                         data-bv-different-field="username"
                         data-bv-different-message="The password cannot be the same as username" 
+
+
+
                         >
                       </div>
                     </div>
