@@ -330,7 +330,7 @@
                         data-bv-notempty-message="The username is required and cannot be empty"
 
                         data-bv-regexp="true"
-                        data-bv-regexp-regexp="[a-zA-Z0-9_\.]+"
+                        data-bv-regexp-regexp="^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
                         data-bv-regexp-message="The username can only consist of alphabetical, number, dot and underscore"
 
                         data-bv-stringlength="true"
@@ -338,8 +338,8 @@
                         data-bv-stringlength-max="30"
                         data-bv-stringlength-message="The username must be more than 3 and less than 30 characters long"
 
-                        data-bv-regexp-regexp="^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$"
-                        data-bv-regexp-message="Not a valid username(no spaces, etc)"
+                      
+
 
                         >
                       </div>
