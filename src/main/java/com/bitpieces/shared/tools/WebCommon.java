@@ -3,6 +3,8 @@ package com.bitpieces.shared.tools;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -92,10 +94,10 @@ public class WebCommon {
 		get("/:user/get_pieces_owned_value_accum", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
-			String userName = req.params(":user");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {
-
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				dbInit(prop);
 				// get currency if one exists
 
@@ -105,7 +107,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -117,10 +119,10 @@ public class WebCommon {
 		get("/:user/get_pieces_owned_value_current", (req, res) -> {
 			allowResponseHeaders(req, res);
 			String json = null;
-			String userName = req.params(":user");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {
-
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, uid, sf);
@@ -129,7 +131,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -142,8 +144,8 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
-				String creatorName = req.params(":creator");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
+				String creatorName = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				dbInit(prop);
@@ -153,7 +155,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -167,8 +169,8 @@ public class WebCommon {
 			String json = null;
 
 			try {
-				String userName = req.params(":user");
-				String creatorName = req.params(":creator");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
+				String creatorName = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				dbInit(prop);
@@ -178,7 +180,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -193,7 +195,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
@@ -203,7 +205,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -216,7 +218,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
@@ -227,7 +229,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -240,7 +242,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getRewardsEarnedTotalJson(userName, uid, sf);
@@ -248,7 +250,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -260,7 +262,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getPiecesOwnedAccumSeriesJson(userName, uid, sf);
@@ -269,7 +271,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -281,7 +283,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersFundsAccumSeriesJson(userName, uid, sf);
@@ -290,7 +292,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -304,7 +306,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				Integer pageNum = Integer.parseInt(req.params(":page_num"));
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
@@ -314,7 +316,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -327,7 +329,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				Integer pageNum = Integer.parseInt(req.params(":page_num"));
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
@@ -339,7 +341,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -351,7 +353,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersFundsCurrentJson(userName, uid, sf);
@@ -359,7 +361,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -371,7 +373,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String creatorName = req.params(":creator");
+				String creatorName = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getCreatorsFundsCurrentJson(creatorName, uid, sf);
@@ -379,7 +381,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -411,7 +413,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getRewardsEarnedTotalByUserJson(userName, uid, sf);
@@ -419,7 +421,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -431,7 +433,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getPiecesValueCurrentByOwnerJson(userName, uid, sf);
@@ -439,7 +441,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -451,7 +453,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 
 				dbInit(prop);
 				json = WebTools.getUsersReputationJson(userName);
@@ -459,7 +461,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -471,7 +473,7 @@ public class WebCommon {
 			allowResponseHeaders(req, res);
 			String json = null;
 			try {
-				String userName = req.params(":user");
+				String userName = URLDecoder.decode(req.params(":user"),"UTF-8");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
 				json = WebTools.getUsersBidsAsksCurrentJson(userName, uid, sf);
@@ -479,7 +481,7 @@ public class WebCommon {
 				dbClose();
 
 				System.out.println(json);
-			} catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -554,17 +556,17 @@ public class WebCommon {
 		get("/:creator/get_pieces_owned_value_current_by_creator", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token		
 				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -575,17 +577,17 @@ public class WebCommon {
 		get("/:creator/get_funds_raised", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token		
 				json = WebTools.getFundsRaisedJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -596,16 +598,16 @@ public class WebCommon {
 		get("/:creator/get_safety_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
-			try {			
 
+			try {			
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token		
 				json = WebTools.getSafetyCurrentJson(creator);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -616,16 +618,16 @@ public class WebCommon {
 		get("/:creator/get_verified", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token		
 				json = WebTools.getVerifiedJson(creator);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -636,17 +638,17 @@ public class WebCommon {
 		get("/:creator/get_price_per_piece_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getPricePerPieceCurrentJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -657,17 +659,17 @@ public class WebCommon {
 		get("/:creator/get_rewards_owed", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getRewardsOwedJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -678,17 +680,17 @@ public class WebCommon {
 		get("/:creator/get_pieces_owned_value_current_creator", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getPiecesOwnedValueCurrentCreatorSeriesJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -699,17 +701,17 @@ public class WebCommon {
 		get("/:creator/get_backers_current_count", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getBackersCurrentCountJson(creator);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -720,16 +722,16 @@ public class WebCommon {
 		get("/:creator/get_main_body", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getMainBodyJson(creator, req.body());
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -740,17 +742,17 @@ public class WebCommon {
 		get("/:creator/get_pricing", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getPricesJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -761,17 +763,17 @@ public class WebCommon {
 		get("/:creator/get_safety", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getSafetyJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -783,17 +785,17 @@ public class WebCommon {
 		get("/:creator/get_worth", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getWorthJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -804,12 +806,12 @@ public class WebCommon {
 		get("/:creator/get_bids_asks_current/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
@@ -817,7 +819,7 @@ public class WebCommon {
 				json = WebTools.getBidsAsksCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -830,18 +832,18 @@ public class WebCommon {
 		get("/:creator/get_rewards/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getRewardsJson(creator, uid, sf, pageNum);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -852,18 +854,18 @@ public class WebCommon {
 		get("/:creator/get_rewards_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getRewardsCurrentJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -874,18 +876,18 @@ public class WebCommon {
 		get("/:creator/get_rewards_yield_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+	
 
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getRewardsYieldCurrentJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -896,17 +898,17 @@ public class WebCommon {
 		get("/:creator/get_rewards_owed_to_user", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -917,18 +919,18 @@ public class WebCommon {
 		get("/:creator/get_pieces_issued/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getPiecesIssuedJson(creator, uid, sf, pageNum);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -939,18 +941,18 @@ public class WebCommon {
 		get("/:creator/get_backers_current/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getBackersCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -961,17 +963,17 @@ public class WebCommon {
 		get("/:creator/get_creators_reputation", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getCreatorsReputationJson(creator);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -982,16 +984,16 @@ public class WebCommon {
 		get("/:creator/get_pieces_available", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getPiecesAvailableJson(creator);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -1002,16 +1004,16 @@ public class WebCommon {
 		get("/:creator/get_pieces_available_total", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getPiecesAvailableTotalJson(creator);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -1022,16 +1024,16 @@ public class WebCommon {
 		get("/:creator/get_pieces_owned_total", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getPiecesOwnedTotalJson(creator);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -1042,18 +1044,18 @@ public class WebCommon {
 		get("/:creator/get_creators_activity/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getCreatorsActivityJson(creator, uid, sf, pageNum);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -1064,18 +1066,18 @@ public class WebCommon {
 		get("/:creator/get_creators_transactions/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getCreatorsTransactionsJson(creator, uid, sf, pageNum);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -1086,17 +1088,17 @@ public class WebCommon {
 		get("/:creator/get_creators_funds_accum", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+		
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getCreatorsFundsAccumJson(creator,uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
@@ -1107,17 +1109,17 @@ public class WebCommon {
 		get("/:creator/get_pieces_issued_most_recent_price", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
 			String json = null;
-			String creator = req.params(":creator");
+			
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
-
+				String creator = URLDecoder.decode(req.params(":creator"),"UTF-8");
 				dbInit(prop);
 
 				// get the creator id from the token	
 				json = WebTools.getPiecesIssuedMostRecentPriceJson(creator, uid, sf);
 
 				dbClose();
-			}catch (NoSuchElementException e) {
+			} catch (NoSuchElementException | UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 
