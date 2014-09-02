@@ -1544,8 +1544,9 @@ on pieces_owned_value_accum.creators_id = creators.id
 ;
 
 -- adding the creator fee column
-ALTER TABLE creators ADD COLUMN fee_pct DOUBLE UNSIGNED DEFAULT 0.05;
-ALTER TABLE creators MODIFY fee_pct DOUBLE AFTER verified;
+ALTER TABLE creators DROP fee_pct;
+ALTER TABLE creators ADD COLUMN fee_pct DOUBLE UNSIGNED NOT NULL DEFAULT 0.05 ;
+ALTER TABLE creators MODIFY fee_pct DOUBLE UNSIGNED NOT NULL DEFAULT 0.05 AFTER verified;
 
 
 select * from creators
