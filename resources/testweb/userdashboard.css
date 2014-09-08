@@ -17,6 +17,13 @@
       position:relative; 
       bottom:0;
       }*/
+
+      .vcenter {
+        display: inline-block;
+        vertical-align: middle;
+        float: none;
+      }
+
       img {
 /*        display: inline-block;
         height: 100%;
@@ -33,7 +40,7 @@
 
 
       }
-     
+      
 
 
       
