@@ -1394,10 +1394,10 @@ select * from creators;
 update creators set verified=true where username='Dusty_Springfield'
 
 
+
 /*
 CREATE VIEW date_testing as
 select id, concat('/Date(',UNIX_TIMESTAMP(time_),')/') from bids
-
 
 
 
@@ -1545,8 +1545,8 @@ on pieces_owned_value_accum.creators_id = creators.id
 
 -- adding the creator fee column
 ALTER TABLE creators DROP fee_pct;
-ALTER TABLE creators ADD COLUMN fee_pct DOUBLE UNSIGNED NOT NULL DEFAULT 0.05 ;
-ALTER TABLE creators MODIFY fee_pct DOUBLE UNSIGNED NOT NULL DEFAULT 0.05 AFTER verified;
+ALTER TABLE creators ADD COLUMN fee_pct DOUBLE UNSIGNED NOT NULL DEFAULT 0.01 ;
+ALTER TABLE creators MODIFY fee_pct DOUBLE UNSIGNED NOT NULL DEFAULT 0.01 AFTER verified;
 
 
 select * from creators
