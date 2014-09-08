@@ -18,12 +18,7 @@
       bottom:0;
       }*/
 
-      .vcenter {
-        display:table !important;
-        vertical-align: middle;
-        float: none;
-        
-      }
+
 
       img {
 /*        display: inline-block;
