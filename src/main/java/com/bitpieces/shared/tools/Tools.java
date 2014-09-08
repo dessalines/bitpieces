@@ -141,7 +141,7 @@ public class Tools {
 			.put( "USD", "\u0024")
 			.put( "ZAR", "R")
 			.build();
-
+//	BTC,AUD,BRL,CAD,CHF,CNY,EUR,GBP,HKD,IDR,ILS,MXN,NOK,NZD,PLN,RON,RUB,SEK,SGD,TRY,USD,ZAR
 
 	public static void writeFile(String path, String content) {
 
