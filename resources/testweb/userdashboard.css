@@ -357,11 +357,11 @@
 
 .small-chart {
   /*height: 50vh;*/
-  height: 300px;
+  height: 320px;
   overflow: auto;
 }
 .small-table {
-  height: 289px;
+  height: 309px;
   overflow: auto;
 }
 
