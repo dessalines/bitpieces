@@ -358,7 +358,7 @@
 .small-chart {
   /*height: 50vh;*/
   height: 400px;
-  overflow: auto;
+  /*overflow: auto;*/
 }
 .small-table {
   height: 389px;
