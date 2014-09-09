@@ -354,11 +354,11 @@
 
 .small-chart {
   /*height: 50vh;*/
-  height: 300px;
-  overflow: auto;
+  height: 350px;
+  /*overflow: auto;*/
 }
 .small-table {
-  height: 289px;
+  height: 339px;
   overflow: auto;
 }
 
