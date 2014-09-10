@@ -23,9 +23,12 @@ $(document).ready(function() {
 
         simpleFetch('getcreatorpage').done(function(result) {
             var jsonObj = JSON.parse(result);
+
             var youtube_link = jsonObj['youtube_link'];
             console.log('youtube ' + youtube_link);
-            $('#youtubeLinkInput').text(youtube_link);
+            if (youtube_link != null) {
+                $('#youtubeLinkInput').text(youtube_link);
+            }
 
             var short_desc = jsonObj['description'];
             console.log('short_desc ' + short_desc);
@@ -52,7 +55,7 @@ $(document).ready(function() {
 
         }).on('success.form.bv', function(event) {
             event.preventDefault();
-            alert('mmmk');
+            standardFormPost('save_youtube_link', "#youtubeLinkForm");
         });
 
         $('#shortDescriptionForm').bootstrapValidator({
@@ -62,7 +65,7 @@ $(document).ready(function() {
 
         }).on('success.form.bv', function(event) {
             event.preventDefault();
-            alert('mmmk2');
+            standardFormPost('save_creator_description', "#shortDescriptionForm");
         });
 
     }

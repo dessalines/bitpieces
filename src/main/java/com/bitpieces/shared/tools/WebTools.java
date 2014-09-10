@@ -93,8 +93,53 @@ public class WebTools {
 			page.set("main_body", reqBody).saveIt();
 		}
 
-		// Save the html page
-		//		HTMLTools.saveCreatorHTMLPage(username, page);
+
+		return "Successful";
+
+	}
+	
+	public static String saveCreatorYoutubeLink(String id, String reqBody) {
+
+		System.out.println(reqBody);
+		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+
+		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
+		Creator creator = Creator.findById(id);
+		String username = creator.getString("username");
+
+		// The first time filling the page fields
+		if (page == null) {
+			page = Creators_page_fields.createIt("creators_id", id,
+					"main_body", "Nothing here yet",
+					"youtube_link", reqBody);
+		} else {
+			page.set("youtube_link", reqBody).saveIt();
+		}
+
+
+		return "Successful";
+
+	}
+	
+	public static String saveCreatorDescription(String id, String reqBody) {
+
+		System.out.println(reqBody);
+		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+
+		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
+		Creator creator = Creator.findById(id);
+		String username = creator.getString("username");
+
+		// The first time filling the page fields
+		if (page == null) {
+			page = Creators_page_fields.createIt("creators_id", id,
+					"main_body", "Nothing here yet",
+					"description", reqBody);
+		} else {
+			page.set("description", reqBody).saveIt();
+		}
+
+
 
 		return "Successful";
 

@@ -1314,6 +1314,52 @@ public class WebCommon {
 			return message;
 
 		});
+		
+		post("/save_youtube_link", (req, res) -> {
+			String message = null;
+			try {			
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID cid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				cid.verifyCreator();
+
+
+
+				// get the creator id from the token		
+				message = WebTools.saveCreatorYoutubeLink(cid.getId(), req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+
+			return message;
+
+		});
+		
+		post("/save_creator_description", (req, res) -> {
+			String message = null;
+			try {			
+				WebCommon.allowResponseHeaders(req, res);
+				dbInit(prop);
+				UID cid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+				cid.verifyCreator();
+
+
+
+				// get the creator id from the token	
+				message = WebTools.saveCreatorDescription(cid.getId(), req.body());
+
+				dbClose();
+			}catch (NoSuchElementException e) {
+				e.printStackTrace();
+			}
+
+
+			return message;
+
+		});
 
 
 
