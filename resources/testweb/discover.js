@@ -20,7 +20,7 @@ $(document).ready(function() {
             '#discover_creators', template, '#discover_creators_table');
 
         setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
-        '#discover_creators_square', squareTemplate, '#discover_creators_table');
+            '#discover_creators_square', squareTemplate, '#discover_creators_table');
 
     });
 
