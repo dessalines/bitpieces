@@ -10,14 +10,17 @@ $(document).ready(function() {
     setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
         '#discover_creators', template, '#discover_creators_table');
 
-     setupDiscoverSearchSquare('discover', '#discover_search', '#discover_search_btn',
-        '#discover_creators', squareTemplate, '#discover_creators_table');
+    setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
+        '#discover_creators_square', squareTemplate, '#discover_creators_table');
 
 
 
     $('#categories').on('change', function() {
         setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
-            '#discover_creators_square', template, '#discover_creators_table');
+            '#discover_creators', template, '#discover_creators_table');
+
+        setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
+        '#discover_creators_square', squareTemplate, '#discover_creators_table');
 
     });
 
