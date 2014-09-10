@@ -256,24 +256,25 @@
       </form>
 
       <h3> Description &nbsp;&nbsp;&nbsp; </h3>
-      <small> A short description(140 characters or less) of your brand. </small>
+      <small> A short description of your brand. </small>
 
       <form id="shortDescriptionForm" class="form-horizontal" role="form">
         <div id="shortDescriptionDiv" class="form-group">
           <label for="shortDescription3" class="col-sm-2 control-label">Description</label>
           <div class="col-sm-10">
-          <textarea name="shortDescription"
-            rows="3"
-            class="form-control"
-            id="shortDescription3"
+          <textarea name="shortDescription" rows="3" type="name" class="form-control" id="shortDescription3" 
             placeholder="140 characters max"
+
             data-bv-message="Not valid"
+
             data-bv-notempty="true"
             data-bv-notempty-message="Can't be empty"
+
             data-bv-stringlength="true"
             data-bv-stringlength-min="1"
             data-bv-stringlength-max="140"
             data-bv-stringlength-message="The description must be more than 1 and less than 140 characters long"
+            
             ></textarea>
           </div>
         </div>
