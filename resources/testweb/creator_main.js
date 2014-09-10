@@ -10,6 +10,10 @@ $(document).ready(function() {
 
 
     if (userName == creatorName) {
+
+        // show the creator content
+        $("#creator_edit_content").removeClass("hide");
+
         // show the save btn
         setupSummerNote('getcreatorpage', '#main_body', 'main_body');
 
