@@ -28,7 +28,15 @@ $(document).ready(function() {
 
     }
 
+    $('#youtubeLinkForm').bootstrapValidator({
+        message: 'This value is not valid',
+        excluded: [':disabled'],
+        submitButtons: 'button[type="submit"]'
 
+    }).on('success.form.bv', function(event) {
+        event.preventDefault();
+        alert('mmmk');
+    });
 
     fillSimpleText(creatorName + '/get_pieces_owned_value_current_by_creator', '#worth_current');
     fillSimpleText(creatorName + '/get_funds_raised', '#funds_raised');
