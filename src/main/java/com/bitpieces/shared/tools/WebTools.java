@@ -97,12 +97,14 @@ public class WebTools {
 		return "Successful";
 
 	}
-	
+
 	public static String saveCreatorYoutubeLink(String id, String reqBody) {
 
 		System.out.println(reqBody);
-		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
+		String youtubeLink = postMap.get("youtube_link");
+		
 		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
 		Creator creator = Creator.findById(id);
 		String username = creator.getString("username");
@@ -111,21 +113,22 @@ public class WebTools {
 		if (page == null) {
 			page = Creators_page_fields.createIt("creators_id", id,
 					"main_body", "Nothing here yet",
-					"youtube_link", reqBody);
+					"youtube_link", youtubeLink);
 		} else {
-			page.set("youtube_link", reqBody).saveIt();
+			page.set("youtube_link", youtubeLink).saveIt();
 		}
 
 
 		return "Successful";
 
 	}
-	
+
 	public static String saveCreatorDescription(String id, String reqBody) {
 
 		System.out.println(reqBody);
-		//		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
+		Map<String, String> postMap = Tools.createMapFromAjaxPost(reqBody);
 
+		String description = postMap.get("shortDescription");
 		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
 		Creator creator = Creator.findById(id);
 		String username = creator.getString("username");
@@ -134,9 +137,9 @@ public class WebTools {
 		if (page == null) {
 			page = Creators_page_fields.createIt("creators_id", id,
 					"main_body", "Nothing here yet",
-					"description", reqBody);
+					"description", description);
 		} else {
-			page.set("description", reqBody).saveIt();
+			page.set("description", description).saveIt();
 		}
 
 
@@ -529,7 +532,7 @@ public class WebTools {
 		String message = null;
 
 		Double feePct = Creator.findById(uid.getId()).getDouble("fee_pct");
-		
+
 		if (!settings.getIso().equals("BTC")) {
 			Double spotRate = sf.getSpotRate(settings.getIso());
 			btcAmount = amount / spotRate;
@@ -588,7 +591,7 @@ public class WebTools {
 		// For safety, convert the amount to BTC and make sure the user has that much
 		Double btcAmount = amount;
 		String message = null;
-		
+
 		Double feePct = Creator.findById(uid.getId()).getDouble("fee_pct");
 
 		if (!settings.getIso().equals("BTC")) {
@@ -611,15 +614,15 @@ public class WebTools {
 
 
 		if (currentFunds >= amountAfterFee) {
-			
-				// Do the coinbase half, with the btc amount
-				Map<String, String> results;
 
-				// Do the DB side
-				// give this one the full amount, because it does the fee on its own
-				DBActions.creatorWithdrawalFake(uid.getId(), btcAmount);
+			// Do the coinbase half, with the btc amount
+			Map<String, String> results;
 
-		
+			// Do the DB side
+			// give this one the full amount, because it does the fee on its own
+			DBActions.creatorWithdrawalFake(uid.getId(), btcAmount);
+
+
 		} else {
 			throw new NoSuchElementException("You only have " + currentFunds + " BTC, "
 					+ "but are trying to withdraw " + btcAmount + " BTC");
@@ -1044,7 +1047,7 @@ public class WebTools {
 			Creator creator = Creator.findById(uid.getId());
 
 			json = creator.getString("fee_pct");
-			
+
 
 		} catch(NullPointerException e) {
 			return "0.05";
@@ -1052,8 +1055,8 @@ public class WebTools {
 		return json;
 
 	}
-	
-	
+
+
 	public static String getRewardsEarnedTotalByUserJson(String userName, UID uid, UnitConverter sf) {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
