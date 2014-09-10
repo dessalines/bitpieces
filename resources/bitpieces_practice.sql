@@ -1550,8 +1550,8 @@ ALTER TABLE creators MODIFY fee_pct DOUBLE UNSIGNED NOT NULL DEFAULT 0.01 AFTER 
 
 ALTER TABLE creators_page_fields DROP description;
 ALTER TABLE creators_page_fields DROP youtube_link;
-ALTER TABLE creators_page_fields ADD COLUMN description VARCHAR(141) NOT NULL DEFAULT 'no description yet' AFTER creators_id;
-ALTER TABLE creators_page_fields ADD COLUMN youtube_link VARCHAR(300) NOT NULL DEFAULT 'no youtube link yet' AFTER creators_id;
+ALTER TABLE creators_page_fields ADD COLUMN description VARCHAR(141) AFTER creators_id;
+ALTER TABLE creators_page_fields ADD COLUMN youtube_link TINYTEXT AFTER creators_id;
 
 
 -- Add the description, and picture link
