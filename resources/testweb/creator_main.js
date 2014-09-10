@@ -23,7 +23,7 @@ $(document).ready(function() {
 
         simpleFetch('getcreatorpage').done(function(result) {
 
-            var youtube_link = result['youtube_link'];
+            var youtube_link = result;
             console.log('youtube ' + youtube_link);
             $('#youtubeLinkInput').text(youtube_link);
 
