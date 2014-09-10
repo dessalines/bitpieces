@@ -22,7 +22,7 @@ $(document).ready(function() {
         saveSummerNote('savecreatorpage', '#saveBtn', '#main_body');
 
         simpleFetch('getcreatorpage').done(function(result) {
-            var jsonObj = JSON.parse(data);
+            var jsonObj = JSON.parse(result);
             var youtube_link = jsonObj['youtube_link'];
             console.log('youtube ' + youtube_link);
             $('#youtubeLinkInput').text(youtube_link);
