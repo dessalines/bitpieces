@@ -27,6 +27,11 @@ $(document).ready(function() {
             console.log('youtube ' + youtube_link);
             $('#youtubeLinkInput').text(youtube_link);
 
+            var short_desc = jsonObj['description'];
+            console.log('short_desc ' + short_desc);
+            $('#shortDescriptionInput').text(short_desc);
+
+
 
             var emptyObj = '{"main_body": "Nothing here yet"}';
             console.log('page = ' + result);
