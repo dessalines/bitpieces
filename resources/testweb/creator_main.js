@@ -14,12 +14,19 @@ $(document).ready(function() {
         // show the creator content
         $("#creator_edit_content").removeClass("hide");
 
+
+
         // show the save btn
         setupSummerNote('getcreatorpage', '#main_body', 'main_body');
 
         saveSummerNote('savecreatorpage', '#saveBtn', '#main_body');
 
         simpleFetch('getcreatorpage').done(function(result) {
+
+            var youtube_link = result['youtube_link'];
+            console.log('youtube ' + youtube_link);
+            $('#youtubeLinkInput').text(youtube_link);
+
 
             var emptyObj = '{"main_body": "Nothing here yet"}';
             console.log('page = ' + result);

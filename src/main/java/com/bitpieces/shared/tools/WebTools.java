@@ -107,7 +107,7 @@ public class WebTools {
 		String json = null;
 		try {
 			Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
-			json = page.toJson(false, "main_body");
+			json = page.toJson(false, "main_body", "description", "youtube_link");
 		} catch (NullPointerException e) {
 			return "{\"main_body\": \"Nothing here yet\"}";
 
