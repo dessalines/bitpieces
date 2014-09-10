@@ -461,7 +461,7 @@ function setupSummerNote(url, id, sqlColName) {
             // JSON.useDateParser();
             var jsonObj = JSON.parse(data);
 
-
+            $(id+"_title").removeClass("hide");
 
 
             var mainBody = jsonObj[sqlColName];
