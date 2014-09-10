@@ -29,7 +29,9 @@ $(document).ready(function() {
 
             var short_desc = jsonObj['description'];
             console.log('short_desc ' + short_desc);
-            $('#shortDescriptionInput').text(short_desc);
+            if (short_desc != null) {
+                $('#shortDescriptionInput').text(short_desc);
+            }
 
 
 
