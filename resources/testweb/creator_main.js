@@ -23,7 +23,7 @@ $(document).ready(function() {
 
         simpleFetch('getcreatorpage').done(function(result) {
             var jsonObj = JSON.parse(result);
-
+            console.log(jsonObj);
             var youtube_link = jsonObj['youtube_link'];
             console.log('youtube ' + youtube_link);
             if (youtube_link != null) {
