@@ -219,12 +219,35 @@
             </div>
           </div>
         </div>
-        <!-- end of tab -->
+       
       </div>
+       <!-- end of tab -->
       </div>
 
       <div class="tab-pane fade" id="square-style">
-        DERP
+        <div class="row"> 
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Creators</h3>
+                </div>
+                <div id="discover_creators_square" class="panel-body" style="height: 80vh;overflow:auto;">
+                  <script id="discover_creators_square_template" type="x-tmpl-mustache"> 
+                  {{#.}}
+                  <a href="/creators/main/{{creators_name}}"> {{creators_name}} </a>
+              </script>
+
+            </div>
+            <div class="panel-footer pager-footer">
+              <ul class="pager">
+                <li id="discover_creators_pager_prev" class="disabled"><a href="javascript:void(0);">Previous</a></li>
+                <li id="discover_creators_pager_next" ><a href="javascript:void(0);">Next</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+       
+      </div>
       </div>
 
       <!-- end of tabs content -->
