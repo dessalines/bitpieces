@@ -23,7 +23,9 @@
       #discover_creators_square > div:nth-child(4n+1) > div {
         clear: both;
       }
-
+      #discover_creators_square > div:nth-child(5) {
+         clear: both;
+      }
       .stButton .stButton_gradient {
         height: 24px !important;
       }
