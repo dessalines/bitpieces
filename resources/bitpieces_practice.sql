@@ -1399,8 +1399,8 @@ when true then 'yes'
 when false then 'no'
 end as verified,
 CASE creators.verified 
-when true then '<p class="text-success"><i class="fa fa-check"></i> Verified</p>'
-when false then '<p class="text-danger"><i class="fa fa-exclamation"></i> Unverified</p>'
+when true then '<p class="text-success text-right"><i class="fa fa-check"></i> Verified</p>'
+when false then '<p class="text-danger text-right"><i class="fa fa-exclamation"></i> Unverified</p>'
 end as verified_html,
 creators_page_fields.description as description,
 IF(youtube_link IS NULL or youtube_link = '', 
