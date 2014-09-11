@@ -17,7 +17,11 @@
       position:relative; 
       bottom:0;
       }*/
+      #square-style > .row > .col-md-3:nth-child(4n+1) {
+        clear: both;
+      }
 
+      
       .stButton .stButton_gradient {
         height: 24px !important;
       }
@@ -43,7 +47,7 @@
 
       }
       .discover-tile {
-        height: 580px;
+       /* height: 580px;*/
       }
       .discover-image {
        margin: -15px;
