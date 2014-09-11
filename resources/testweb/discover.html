@@ -248,11 +248,19 @@
 
                     
                     <h2><b><a href="/creators/main/{{creators_name}}"> {{creators_name}} </a></b></h2>
-                    <small> {{category_names}} </small>
+                    <div class="row">
+                      <div class="col-md-6">
+                      <small> {{category_names}} </small>
+                      </div>
+                      <div class="col-md-6 pull-right">
+                       {{{verified_html}}}
+                      </div>
+                    </div>
+                    
                 
                     <h4> {{description}} </h4>
                   
-                    {{{verified_html}}}
+                   
 
                     <hr>                  
                     <div class="row">
