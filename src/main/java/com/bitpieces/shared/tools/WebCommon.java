@@ -386,6 +386,25 @@ public class WebCommon {
 			return json;
 
 		});
+		
+		get("/:creator/get_youtube_link", (req, res) -> {
+			allowResponseHeaders(req, res);
+			String json = null;
+			try {
+				String creatorName = req.params(":creator");
+				dbInit(prop);
+				json = WebTools.getYoutubeLink(creatorName);
+
+				dbClose();
+
+				System.out.println(json);
+			} catch (NoSuchElementException e) {
+				
+				e.printStackTrace();
+			}
+			return json;
+
+		});
 
 		get("/get_withdraw_fee_pct", (req, res) -> {
 			allowResponseHeaders(req, res);

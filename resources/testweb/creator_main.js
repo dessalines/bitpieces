@@ -5,6 +5,15 @@ $(document).ready(function() {
 
     fillSimpleText(creatorName + '/get_main_body', '#main_body');
 
+    // Fill the youtube iframe
+    simpleFetch(creatorName + '/get_youtube_v').done(function(result) {
+
+        console.log("youtube v = " + result);
+
+        $("#youtubeFrame").attr("src",
+            "https://www.youtube.com/embed/" + result + "?rel=0&amp;theme=light&amp;modestbranding=1&amp;wmode=transparent&amp;showinfo=0");
+    });
+
     // if you're this creator, then set up summer note, issue pieces button
     var userName = getCookie('username');
 

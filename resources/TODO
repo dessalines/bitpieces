@@ -106,5 +106,7 @@ BA2800 5.0, orangish-red
 - Start emulating indiegogo/kickstarter discover
 - Use youtube thumbnail as main image, show them the link of how to change the thumbnail
 
+- regen tables : creators_page_fields_view, creators_search_square_view
+
 
 
