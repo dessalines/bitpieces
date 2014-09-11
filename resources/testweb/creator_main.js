@@ -6,7 +6,7 @@ $(document).ready(function() {
     fillSimpleText(creatorName + '/get_main_body', '#main_body');
 
     // Fill the youtube iframe
-    simpleFetch(creatorName + '/get_youtube_v').done(function(result) {
+    simpleFetch(creatorName + '/get_youtube_link').done(function(result) {
 
         console.log("youtube v = " + result);
 
