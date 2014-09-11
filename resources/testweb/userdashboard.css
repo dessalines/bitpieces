@@ -17,13 +17,8 @@
       position:relative; 
       bottom:0;
       }*/
-      #square-style > .row > .col-md-3:nth-child(4n+1) {
-        clear: both;
-      }
-      #discover_creators_square > div:nth-child(4n+1) > div {
-        clear: both;
-      }
-      #discover_creators_square > div:nth-child(5) {
+
+      #discover_creators_square > div:nth-child(4n+1) {
          clear: both;
       }
       .stButton .stButton_gradient {
