@@ -1403,7 +1403,11 @@ when true then '<p class="text-success"><i class="fa fa-check"></i> Verified</p>
 when false then '<p class="text-danger"><i class="fa fa-exclamation"></i> Unverified</p>'
 end as verified_html,
 creators_page_fields.description as description,
-CONCAT('https://img.youtube.com/vi/',SUBSTRING(youtube_link, LOCATE('v=', youtube_link)+2),'/maxresdefault.jpg') as youtube_image_url
+IF(youtube_link IS NULL or youtube_link = '', 
+'https://img.youtube.com/vi/05BipfPpUsA/maxresdefault.jpg', 
+CONCAT('https://img.youtube.com/vi/',SUBSTRING(youtube_link, LOCATE('v=', youtube_link)+2),'/maxresdefault.jpg')
+) as youtube_image_url 
+
 from creators
 left join pieces_owned_value_current_by_creator
 on pieces_owned_value_current_by_creator.creators_id = creators.id
