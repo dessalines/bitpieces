@@ -22,7 +22,7 @@ $(document).ready(function() {
 
         // show the creator content
         $("#creator_edit_content").removeClass("hide");
-
+        $("#youtubeFrame").addClass("hide");
 
 
         // show the save btn
