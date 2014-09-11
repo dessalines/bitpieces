@@ -7,7 +7,7 @@ $(document).ready(function() {
 
     var userName = window.location.pathname.split('/').pop();
     $('#page_title').text(userName);
-
+     document.title = userName + ' - Bitpieces';
 
     setupMiniSubmenu();
     navigateWithParams();
