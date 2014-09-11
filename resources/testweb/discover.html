@@ -226,18 +226,28 @@
 
       <div class="tab-pane fade" id="square-style">
         <div class="row"> 
-         
-          
 
-          <div id="discover_creators_square" class="panel-body" style="height: 80vh;overflow:auto;">
+
+
+          <div id="discover_creators_square" class="panel-body">
             <script id="discover_creators_square_template" type="x-tmpl-mustache"> 
+              <div class="col-md-3">
+                <div class="panel panel-primary">
+                  <div class="panel-body">
 
-              {{#.}}
-              <a href="/creators/main/{{creators_name}}"> {{creators_name}} </a>
-              {{/.}}
+                  // picture at the top
+                  
+                    {{#.}}
+                    <a href="/creators/main/{{creators_name}}"> {{creators_name}} </a>
+                    {{/.}}
+
+                  </div>
+                </div>
+              </div>
             </script>
 
-            
+
+
           </div>
 
           <!-- end of tab -->
