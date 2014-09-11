@@ -1052,7 +1052,7 @@ public class WebTools {
 			
 			String link = creatorsPage.getString("youtube_link");
 			
-			String vLink = Tools.createMapFromAjaxPost(link).get("v");
+			String vLink = Tools.createMapFromAjaxPost(link).get("https://www.youtube.com/watch?v");
 		
 			json = vLink;
 		} catch(NullPointerException e) {
