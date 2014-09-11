@@ -38,7 +38,7 @@
       }
 
       .discover-image {
-       margin: -14px;
+       margin: -15px -14px -15px -15px;
        padding: 0px;
        border:0px;
        border-top-left-radius:4px;
