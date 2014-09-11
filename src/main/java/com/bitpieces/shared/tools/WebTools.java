@@ -1047,7 +1047,7 @@ public class WebTools {
 	public static String getYoutubeLink(String creatorName) {
 		String json = null;
 		try {
-			Creators_page_fields_view creatorsPage = Creators_funds_current.findFirst("creators_name=?",  creatorName);
+			Creators_page_fields_view creatorsPage = Creators_page_fields_view.findFirst("creators_name=?",  creatorName);
 			
 			
 			String link = creatorsPage.getString("youtube_link");
