@@ -38,19 +38,21 @@
       }
 
       .discover-image {
-        max-width: 100%;
-        height: 150px;
-      }
-
-      
-
-      .list-group-item {
-        margin-top: -2px;
-        margin-bottom: -2px;
-      }
+       margin: -100px;
+       padding: -100px;
+       max-width: 100%;
+       height: 150px;
+     }
 
 
-      .carousel-inner>.item>img, .carousel-inner>.item>a>img {
+
+     .list-group-item {
+      margin-top: -2px;
+      margin-bottom: -2px;
+    }
+
+
+    .carousel-inner>.item>img, .carousel-inner>.item>a>img {
 /*        position: absolute;
         margin-left:auto; margin-right:auto;
         overflow:hidden;
