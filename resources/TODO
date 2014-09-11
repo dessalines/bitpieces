@@ -102,12 +102,13 @@ BA2800 5.0, orangish-red
 
 - consult a securities lawyer
 + Work on some fiverr scripts for some 1 minute videos
-- Start working on a description field, youtube link field
-- Start emulating indiegogo/kickstarter discover
++ Start working on a description field, youtube link field
++ Start emulating indiegogo/kickstarter discover
 - Use youtube thumbnail as main image, show them the link of how to change the thumbnail
 
-- regen tables : creators_page_fields_view, creators_search_square_view
-- when on a creator, change the page title to the creator name
+- regen tables : creators_page_fields_view, creators_search_square_view, alter tables
++ when on a creator, change the page title to the creator name
+- Change the correct active classes on test site
 
 
 
