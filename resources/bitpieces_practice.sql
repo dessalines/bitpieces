@@ -1404,7 +1404,7 @@ when false then '<p class="text-danger text-right"><i class="fa fa-exclamation">
 end as verified_html,
 creators_page_fields.description as description,
 IF(youtube_link IS NULL or youtube_link = '', 
-'https://img.youtube.com/vi/05BipfPpUsA/maxresdefault.jpg', 
+'https://img.youtube.com/vi/G5pxWdJnnYg/maxresdefault.jpg', 
 CONCAT('https://img.youtube.com/vi/',SUBSTRING(youtube_link, LOCATE('v=', youtube_link)+2),'/maxresdefault.jpg')
 ) as youtube_image_url 
 
