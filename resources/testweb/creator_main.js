@@ -27,13 +27,13 @@ $(document).ready(function() {
             var youtube_link = jsonObj['youtube_link'];
             console.log('youtube ' + youtube_link);
             if (youtube_link != null) {
-                $('#youtubeLinkInput').text(youtube_link);
+                $('#youtubeInput').text(youtube_link);
             }
 
             var short_desc = jsonObj['description'];
             console.log('short_desc ' + short_desc);
             if (short_desc != null) {
-                $('#youtubeLinkInput').text(short_desc);
+                $('#youtubeInput').text(short_desc);
             }
 
 
