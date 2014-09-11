@@ -1232,7 +1232,7 @@ group by creators_id, creators_username;
 
 
 CREATE VIEW creators_page_fields_view as
-select creators_id, username, main_body from creators_page_fields
+select creators_id, username, main_body, youtube_link, description from creators_page_fields
 inner join 
 creators
 on creators_page_fields.creators_id = creators.id;
@@ -1428,6 +1428,8 @@ on creators.id = creators_page_fields.creators_id
 group by creators.id
 order by verified desc,
 pieces_owned_value_current_by_creator.value_total_current desc;
+
+
 
 -- select * from creators_page_fields
 
