@@ -10,7 +10,7 @@ $(document).ready(function() {
     setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
         '#discover_creators', template, '#discover_creators_table');
 
-    setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
+    setupDiscoverSearch('discover_square', '#discover_search', '#discover_search_btn',
         '#discover_creators_square', squareTemplate, '#discover_creators_table');
 
 
@@ -19,7 +19,7 @@ $(document).ready(function() {
         setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
             '#discover_creators', template, '#discover_creators_table');
 
-        setupDiscoverSearch('discover', '#discover_search', '#discover_search_btn',
+        setupDiscoverSearch('discover_square', '#discover_search', '#discover_search_btn',
             '#discover_creators_square', squareTemplate, '#discover_creators_table');
 
     });

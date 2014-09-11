@@ -1387,6 +1387,53 @@ group by creators.id
 order by verified desc,
 pieces_owned_value_current_by_creator.value_total_current desc;
 
+CREATE VIEW creators_search_square_view as 
+select creators.id as creators_id,
+creators.username as creators_name, 
+GROUP_CONCAT(categories.name) as category_names, 
+pieces_owned_value_current_by_creator.value_total_current as worth_current,
+CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
+backers_current_count.number_of_backers,
+CASE creators.verified 
+when true then 'yes'
+when false then 'no'
+end as verified,
+CASE creators.verified 
+when true then '<p class="text-success"><i class="fa fa-check"></i> Verified</p>'
+when false then '<p class="text-danger"><i class="fa fa-exclamation"></i> Unverified</p>'
+end as verified_html,
+creators_page_fields.description as description,
+CONCAT('https://img.youtube.com/vi/',SUBSTRING(youtube_link, LOCATE('v=', youtube_link)+2),'/maxresdefault.jpg') as youtube_image_url
+from creators
+left join pieces_owned_value_current_by_creator
+on pieces_owned_value_current_by_creator.creators_id = creators.id
+left join rewards_current
+on rewards_current.creators_id = creators.id
+left join backers_current_count
+on backers_current_count.creators_id = creators.id
+left join creators_categories
+on creators_categories.creators_id = creators.id
+inner join categories on
+creators_categories.categories_id = categories.id
+left join prices_current
+on creators.username = prices_current.creators_name
+left join creators_safety_current
+on creators.username = creators_safety_current.creators_name
+left join creators_page_fields
+on creators.id = creators_page_fields.creators_id
+group by creators.id
+order by verified desc,
+pieces_owned_value_current_by_creator.value_total_current desc;
+
+-- select * from creators_page_fields
+
+-- update creators_page_fields set youtube_link='https://www.youtube.com/watch?v=05BipfPpUsA' where creators_id=9
+
+
+-- link testing
+-- SELECT SUBSTRING(link, LOCATE('v=', link)+2)
+-- FROM (SELECT 'https://www.youtube.com/watch?v=05BipfPpUsA' AS link) temp
+
 
 
 select x_years_of_payments_to_funders from creators_safety;

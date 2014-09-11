@@ -185,6 +185,9 @@ public class Tables {
 	@Table("creators_search_view")
 	public static class Creators_search_view extends Model {}
 	
+	@Table("creators_search_square_view")
+	public static class Creators_search_square_view extends Model {}
+	
 	@Table("currencies")
 	public static class Currencies extends Model {}
 	

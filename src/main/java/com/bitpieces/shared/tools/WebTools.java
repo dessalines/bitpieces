@@ -37,6 +37,7 @@ import com.bitpieces.shared.Tables.Creators_page_fields_view;
 import com.bitpieces.shared.Tables.Creators_reputation;
 import com.bitpieces.shared.Tables.Creators_safety;
 import com.bitpieces.shared.Tables.Creators_safety_current;
+import com.bitpieces.shared.Tables.Creators_search_square_view;
 import com.bitpieces.shared.Tables.Creators_search_view;
 import com.bitpieces.shared.Tables.Creators_settings;
 import com.bitpieces.shared.Tables.Creators_transactions;
@@ -1162,6 +1163,41 @@ public class WebTools {
 				list = Creators_search_view.findAll().limit(limit);
 			} else {
 				list = Creators_search_view.find("category_names like '%" + category + "%'").limit(limit);;
+			}
+		}
+		String json = "0";
+		if (list.size() > 0) {
+			json = convertLOMtoJson(doUnitConversions(list, sf, settings.getPrecision(), settings.getIso(), false));
+		} 
+
+
+
+
+		return json;
+
+
+	}
+	
+	public static String getDiscoverSquareJson(String body, UID uid, UnitConverter sf) {
+
+		UsersSettings settings = new UsersSettings(null);
+		if (uid != null) {
+			settings = new UsersSettings(uid);
+		}
+
+
+		List<Model> list = null;
+		Long limit = 30L;
+		if (body.equals("")) {
+			list = Creators_search_square_view.findAll().limit(limit);
+		} else {
+			System.out.println(body);
+			Map<String, String> postMap = Tools.createMapFromAjaxPost(body);
+			String category = postMap.get("category");
+			if (category == null || category.equals("All")) {
+				list = Creators_search_square_view.findAll().limit(limit);
+			} else {
+				list = Creators_search_square_view.find("category_names like '%" + category + "%'").limit(limit);;
 			}
 		}
 		String json = "0";

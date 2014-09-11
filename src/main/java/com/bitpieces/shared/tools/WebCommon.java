@@ -1245,6 +1245,20 @@ public class WebCommon {
 
 
 		});
+		
+		post("/discover_square", (req, res) -> {
+			WebCommon.allowResponseHeaders(req, res);
+			dbInit(prop);
+			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
+			String json = WebTools.getDiscoverSquareJson(req.body(), uid, sf);
+
+			dbClose();
+
+			System.out.println(json);
+			return json;
+
+
+		});
 
 		post("/user_logout", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
