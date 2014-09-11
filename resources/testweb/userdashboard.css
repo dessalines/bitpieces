@@ -47,9 +47,10 @@
        
        height:206.25px !important;
        width:auto !important;*/
-  
 
-
+     }
+     .remove-border {
+      border:0px;
      }
 
 
