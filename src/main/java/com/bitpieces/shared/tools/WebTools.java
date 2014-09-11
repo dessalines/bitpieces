@@ -1033,7 +1033,7 @@ public class WebTools {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Creators_funds_current creatorsFundsCurrent = Creators_funds_current.findFirst("creators_name=?",  creatorName);
+			Creators_funds_current creatorsFundsCurrent = Creators_funds_current.findFirst("username=?",  creatorName);
 
 			String val = creatorsFundsCurrent.getString("current_funds");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
