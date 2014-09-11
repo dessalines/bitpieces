@@ -231,19 +231,21 @@
 
           <div id="discover_creators_square" class="panel-body">
             <script id="discover_creators_square_template" type="x-tmpl-mustache"> 
+            {{#.}}
               <div class="col-md-3">
                 <div class="panel panel-primary">
                   <div class="panel-body">
 
                   // picture at the top
-                  
-                    {{#.}}
+
+                    
                     <a href="/creators/main/{{creators_name}}"> {{creators_name}} </a>
-                    {{/.}}
+                    
 
                   </div>
                 </div>
               </div>
+              {{/.}}
             </script>
 
 
