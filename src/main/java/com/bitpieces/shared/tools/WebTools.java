@@ -107,7 +107,6 @@ public class WebTools {
 		String youtubeLink = postMap.get("youtube_link");
 		
 		
-		
 		Creators_page_fields page = Creators_page_fields.findFirst("creators_id = ?",  id);
 		Creator creator = Creator.findById(id);
 		String username = creator.getString("username");
