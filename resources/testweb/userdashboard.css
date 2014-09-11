@@ -42,7 +42,9 @@
 
 
       }
-
+      .discover-tile {
+        height: 608px;
+      }
       .discover-image {
        margin: -15px;
        padding: 0px;
