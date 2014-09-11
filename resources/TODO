@@ -108,7 +108,7 @@ BA2800 5.0, orangish-red
 
 - regen tables : creators_page_fields_view, creators_search_square_view, alter tables
 + when on a creator, change the page title to the creator name
-- Change the correct active classes on test site
++ Change the correct active classes on test site
 
 
 
