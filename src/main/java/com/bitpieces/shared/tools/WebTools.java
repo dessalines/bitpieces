@@ -1033,7 +1033,7 @@ public class WebTools {
 		UsersSettings settings = new UsersSettings(uid);
 		String json = null;
 		try {
-			Creators_funds_current creatorsFundsCurrent = Creators_funds_current.findFirst("username=?",  creatorName);
+			Creators_funds_current creatorsFundsCurrent = Creators_funds_current.findFirst("creators_name=?",  creatorName);
 
 			String val = creatorsFundsCurrent.getString("current_funds");
 			json = sf.convertSingleValueCurrentJson(val, settings.getIso(), settings.getPrecision());
@@ -1047,7 +1047,7 @@ public class WebTools {
 	public static String getYoutubeLink(String creatorName) {
 		String json = null;
 		try {
-			Creators_page_fields_view creatorsPage = Creators_page_fields_view.findFirst("creators_name=?",  creatorName);
+			Creators_page_fields_view creatorsPage = Creators_page_fields_view.findFirst("username=?",  creatorName);
 			
 			
 			String link = creatorsPage.getString("youtube_link");
