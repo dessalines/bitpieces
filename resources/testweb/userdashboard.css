@@ -18,17 +18,11 @@
       bottom:0;
       }*/
 
+      /*dynamically wraps the discover page*/
       #discover_creators_square > div:nth-child(4n+1) {
          clear: both;
       }
-      .stButton .stButton_gradient {
-        height: 24px !important;
-      }
-
-      .stButton .stFb, .stButton .stTwbutton, .stButton .stMainServices {
-        height: 24px !important;
-      }
-
+   
       img {
 /*        display: inline-block;
         height: 100%;
