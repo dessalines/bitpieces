@@ -42,8 +42,8 @@
        padding: 0px;
        border:0px;
        display: block;
-       max-width:640px;
-       max-height:480px;
+       width:640px !important;
+       height:480px !important;
        width: auto;
        height: auto;
 
