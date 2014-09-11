@@ -40,9 +40,13 @@
       .discover-image {
        margin: -16px;
        padding: 0px;
-       width: 100%;
-       height: 300px;
        border:0px;
+       display: block;
+       max-width:640px;
+       max-height:480px;
+       width: auto;
+       height: auto;
+
      }
 
 
