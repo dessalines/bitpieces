@@ -11,7 +11,7 @@ $(document).ready(function() {
     // fillUserHighChartStandardTemplate('get_users_funds_accum', '#users_funds', 'Funds ($)', '$');
 
     var userName = window.location.pathname.split('/').pop();
-
+    var userNameCookie = getCookie('username');
 
     var template = $('#recent_activity_template').html();
     pageNumbers['#recent_activity_table'] = 1;
@@ -35,13 +35,17 @@ $(document).ready(function() {
     // pageNumbers['#users_bids_asks_current_table'] = 1;
     // setupPagedTable(creatorName + '/get_users_bids_asks_current/', template, '#users_bids_asks_current', '#users_bids_asks_current_table');
 
-    simpleFetch(userName + '/get_pieces_value_current_by_owner').done(function(result) {
-        if (result == 0) {
-            $('.first-timers').removeClass('hide');
-        }
-    });
+    if (userName == userNameCookie) {
+        simpleFetch(userName + '/get_pieces_value_current_by_owner').done(function(result) {
+            if (result == 0) {
+                $('.first-timers').removeClass('hide');
+            }
+        });
+
 
     setupWithdrawForm();
+
+    }
 
 });
 
