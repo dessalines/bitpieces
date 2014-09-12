@@ -17,13 +17,17 @@
       position:relative; 
       bottom:0;
       }*/
-
+      .vtop {
+        display: inline-block;
+        vertical-align: top;
+        float: none;
+      }
       /*dynamically wraps the discover page*/
       #discover_creators_square > div:nth-child(4n+1) {
-         clear: both;
-      }
-   
-      img {
+       clear: both;
+     }
+
+     img {
 /*        display: inline-block;
         height: 100%;
         vertical-align: middle;
@@ -41,8 +45,8 @@
       }
       .discover-tile {
        /* height: 580px;*/
-      }
-      .discover-image {
+     }
+     .discover-image {
        margin: -15px;
        padding: 0px;
        border:0px;
