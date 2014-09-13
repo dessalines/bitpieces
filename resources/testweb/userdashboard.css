@@ -17,6 +17,13 @@
       position:relative; 
       bottom:0;
       }*/
+
+
+
+      .thin-hr {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
       .vtop {
         margin-top: 0px;
         margin-bottom: 0px;
@@ -60,7 +67,14 @@
        width:auto !important;*/
 
      }
-     .remove-border {
+
+     .discover-desc {
+      height:261px !important;
+      width:auto !important;*/
+    }
+
+
+    .remove-border {
       border:0px;
       border-top-left-radius:4px;
       border-top-right-radius:4px;
