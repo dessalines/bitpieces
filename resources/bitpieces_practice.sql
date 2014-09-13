@@ -1406,7 +1406,7 @@ end as verified_html,
 creators_page_fields.description as description,
 IF(youtube_link IS NULL or youtube_link = '', 
 'https://img.youtube.com/vi/G5pxWdJnnYg/maxresdefault.jpg', 
-CONCAT('https://img.youtube.com/vi/',SUBSTRING(youtube_link, LOCATE('v=', youtube_link)+2),'/maxresdefault.jpg')
+CONCAT('https://img.youtube.com/vi/',SUBSTRING(youtube_link, LOCATE('v=', youtube_link)+2),'/mqdefault.jpg')
 ) as youtube_image_url 
 from creators
 left join pieces_owned_value_current_by_creator
