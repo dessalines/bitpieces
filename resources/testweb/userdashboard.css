@@ -20,10 +20,7 @@
 
 
 
-      .thin-hr {
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
+
       .vtop {
         margin-top: 0px;
         margin-bottom: 0px;
@@ -52,6 +49,11 @@
 
 
       }
+
+      .thin-hr {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
       .discover-tile {
        /* height: 580px;*/
      }
@@ -61,10 +63,10 @@
        border:0px;
        border-top-left-radius:4px;
        border-top-right-radius:4px;
-/*       display: block;
+       display: block;
        
-       height:206.25px !important;
-       width:auto !important;*/
+       height:164px !important;
+       width:auto !important;
 
      }
 
