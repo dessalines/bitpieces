@@ -77,11 +77,19 @@
        width:auto !important;*/
 
      }
-
+     @media (min-width: 992px) {
      .discover-desc {
       height:152px !important;
       width:auto !important;*/
     }
+  }
+
+       @media (min-width: 1200px) {
+     .discover-desc {
+      height:114px !important;
+      width:auto !important;*/
+    }
+  }
 
 
     .remove-border {
