@@ -1393,6 +1393,7 @@ creators.username as creators_name,
 GROUP_CONCAT(categories.name) as category_names, 
 pieces_owned_value_current_by_creator.value_total_current as worth_current,
 CONCAT(format(rewards_current.reward_per_piece_per_year/prices_current.price_per_piece*100,2),'%') as reward_yield_current,
+prices_current.price_per_piece as price_current,
 backers_current_count.number_of_backers,
 CASE creators.verified 
 when true then 'yes'
