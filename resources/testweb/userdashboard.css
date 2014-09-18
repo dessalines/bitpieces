@@ -60,44 +60,49 @@
      }
      .discover-values {
       height: 35px;
-     }
-       .discover-under-name {
+    }
+    .discover-under-name {
       height: 40px;
-     }
-     .discover-image {
-      margin: -15px;
-      height: 240px;
-      width: auto !important;
-      
+    }
+
+
+
 
 /*
+      .discover-image-old {
        margin: -50px -15px -50px -15px;
        padding: 0px;
        border:0px;
        overflow:hidden;
        border-top-left-radius:4px;
-       border-top-right-radius:4px;*/
+       border-top-right-radius:4px;
        
 
-/*       display: block;
+       display: block;
        
        height:206.25px !important;
-       width:auto !important;*/
+       width:auto !important;
 
-     }
-     @media (min-width: 992px) {
-     .discover-desc {
-      height:152px !important;
-      width:auto !important;*/
-    }
-  }
+       }*/
 
-       @media (min-width: 1200px) {
-     .discover-desc {
-      height:114px !important;
-      width:auto !important;*/
+       @media (min-width: 992px) {
+         .discover-desc {
+          height:152px !important;
+          width:auto !important;*/
+        }
+      }
+
+      @media (min-width: 1200px) {
+       .discover-desc {
+        height:114px !important;
+        width:auto !important;*/
+      }
+      .discover-image {
+        margin: -15px;
+        height: 250px;
+        width: auto !important;
+      }
     }
-  }
 
 
     .remove-border {
