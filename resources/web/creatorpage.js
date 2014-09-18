@@ -11,7 +11,7 @@ $(document).ready(function() {
     // var creatorName = window.location.pathname.split('/').pop();
     var creatorName = window.location.pathname.split('/').pop();
     $('#page_title').text(creatorName);
-
+    document.title = creatorName + ' - Bitpieces';
 
     simpleFetch(creatorName + '/get_price_per_piece_current').done(function(result) {
         if (sessionId != null && userType == 'User' && result != 0) {

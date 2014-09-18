@@ -85,13 +85,14 @@ function setupRegisterAjax() {
                     window.location.replace("/users/overview/" + userName);
 
                 }, 1000);
+                
 
 
         },
         error: function(request, status, error) {
             delete_cookie("authenticated_session_id");
             toastr.error(request.responseText);
-
+            $("#registerBtn").button('reset');
         }
     });
 
@@ -112,11 +113,11 @@ function setupSigninAjax() {
     // Decide if its a creator or not
     var isCreator = $("#creatorCheckbox").is(':checked')
         // console.log(isCreator);
-    if (isCreator) {
-        url = sparkService + "creatorlogin";
-    } else {
-        url = sparkService + "userlogin";
-    }
+        if (isCreator) {
+            url = sparkService + "creatorlogin";
+        } else {
+            url = sparkService + "userlogin";
+        }
 
     // username = $('#userLoginDiv').find('input[name="username"]').val();
     // // = $("#inputUsername3").val();
@@ -184,14 +185,15 @@ function setupSigninAjax() {
         error: function(request, status, error) {
             delete_cookie("authenticated_session_id");
             toastr.error(request.responseText);
+            $("#signinBtn").button('reset');
         }
 
 
 
     });
 
-    
-    event.preventDefault();
-    return false;
+
+event.preventDefault();
+return false;
 
 }

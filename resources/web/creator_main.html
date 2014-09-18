@@ -225,9 +225,103 @@
       </div>
     </div>
 
+    <!-- Stuff for the creator only -->
+    <div id="creator_edit_content" class="hide">
+      <h3> Youtube link &nbsp;&nbsp;&nbsp; </h3>
+      <small> The thumbnail of the video will be your main image. </small>
 
+      <form id="youtubeLinkForm" class="form-horizontal" role="form">
+        <div id="youtubeLinkDiv" class="form-group">
+          <label for="youtubeLink3" class="col-sm-2 control-label">Youtube link</label>
+          <div class="col-sm-10">
+          <input id="youtubeLinkInput" name="youtube_link" type="url" class="form-control"
+            placeholder="Your video link"
+            data-bv-message="The link is not valid"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="The link is required and cannot be empty"
+
+            data-bv-uri-message="The link address is not valid"
+            >
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="youtubeLinkBtn" type="submit" class="btn btn-primary" 
+            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Save</button>
+          </div>
+        </div>
+      </form>
+
+      <h3> Description &nbsp;&nbsp;&nbsp; </h3>
+      <small> A short description of your brand. </small>
+
+      <form id="shortDescriptionForm" class="form-horizontal" role="form">
+        <div id="shortDescriptionDiv" class="form-group">
+          <label for="shortDescription3" class="col-sm-2 control-label">Description</label>
+          <div class="col-sm-10">
+          <textarea id="shortDescriptionInput" name="shortDescription" rows="3" type="name" class="form-control"
+            placeholder="140 characters max"
+
+            data-bv-message="Not valid"
+
+            data-bv-notempty="true"
+            data-bv-notempty-message="Can't be empty"
+
+            data-bv-stringlength="true"
+            data-bv-stringlength-min="1"
+            data-bv-stringlength-max="140"
+            data-bv-stringlength-message="The description must be more than 1 and less than 140 characters long"
+            
+            ></textarea>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="shortDescriptionBtn" type="submit" class="btn btn-primary" 
+            data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i>">Save</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+
+    <!-- Stuff for everyone -->
+
+    <!-- A centered panel -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="embed-responsive embed-responsive-16by9">
+              <iframe id="youtubeFrame" 
+              frameborder="0" allowfullscreen="">
+              </iframe>
+              </div>
+
+      </div>
+    </div>
+
+    <div id="social_buttons" class="row">
+      <div class="col-md-12">
+
+        <a class="btn btn-social-icon btn-facebook" href="https://www.facebook.com/sharer/sharer.php?u=&t=" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.URL) + '&t=' + encodeURIComponent(document.URL)); return false;"><i class="fa fa-facebook"></i></a>
+        <a class="btn btn-social-icon btn-twitter" href="https://twitter.com/intent/tweet?source=&text=:%20" target="_blank" title="Tweet" onclick="window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL)); return false;"><i class="fa fa-twitter"></i></a>
+        <a class="btn btn-social-icon btn-google-plus" href="https://plus.google.com/share?url=" target="_blank" title="Share on Google+" onclick="window.open('https://plus.google.com/share?url=' + encodeURIComponent(document.URL)); return false;"><i class="fa fa-google-plus"></i></a>
+        <a class="btn btn-social-icon btn-reddit" href="http://www.reddit.com/submit?url=&title=" target="_blank" title="Submit to Reddit" onclick="window.open('http://www.reddit.com/submit?url=' + encodeURIComponent(document.URL) + '&title=' +  encodeURIComponent(document.title)); return false;"><i class="fa fa-reddit"></i></a>
+
+      </div>
+    </div>
+    <br>
+
+    <h3 id="main_body_title" class="hide">Page body</h3>
     <div id="main_body" class="row">
+
       <script id="main_body_template" type="x-tmpl-mustache">
+
         <p class="lead">{{.}}</p>
       </script>
     </div>

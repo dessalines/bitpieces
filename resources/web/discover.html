@@ -11,7 +11,7 @@
   <title>Bitpieces</title>
 
   <!-- favicon -->
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="https://bitpieces.com/favicon.ico" type="image/x-icon" />
 
   <!-- Bootstrap core CSS -->
   <link href="united.bootstrap.css" rel="stylesheet">
@@ -125,14 +125,18 @@
 
 
       <div class="row">
+      <div class="col-md-10">
 
         <form id="discover_search" class="form-inline" role="form">
 
-          <h3 for="category" class="form-group col-xs-2 text"> Show me </h3>
+        <div class="col-xs-6">
+            <h2 for="category" class="form-group text vtop"> Show me &nbsp;&nbsp;&nbsp</h2>
+        
+        
 
 
-
-          <div class="col-xs-6 form-group" id="categories">
+        
+          <div class="form-group" id="categories">
 
             <script id="categories_template" type="x-tmpl-mustache"> 
 
@@ -145,20 +149,34 @@
 
             </script>
           </div>
-
+          </div>
+        
 
           
         </form>
       </div>
-      <hr></hr>
-      <div class="row"> 
-      <div class="col-md-12">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Creators</h3>
-            </div>
-            <div id="discover_creators" class="panel-body" style="height: 80vh;overflow:auto;">
-              <script id="discover_creators_template" type="x-tmpl-mustache"> 
+      <div class="col-md-2">
+        <ul class="nav nav-pills pull-right" role="tablist">
+          <li><a href="#list-style" role="tab" data-toggle="tab"><i class="fa fa-list"></i></a></li>
+          <li class="active "><a href="#square-style" role="tab" data-toggle="tab"><i class="fa fa-th"></i></a></li>
+        </ul>
+      </div>
+    </div>
+    <hr></hr>
+
+
+      <div class="tab-content">
+        <div class="tab-pane fade" id="list-style">
+
+
+          <div class="row"> 
+            <div class="col-md-12">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Creators</h3>
+                </div>
+                <div id="discover_creators" class="panel-body" style="height: 80vh;overflow:auto;">
+                  <script id="discover_creators_template" type="x-tmpl-mustache"> 
                 <table id="discover_creators_table" class="table table-hover table-striped tablesorter">
                   <thead>
                     <tr>
@@ -205,9 +223,99 @@
             </div>
           </div>
         </div>
-
-
+       
       </div>
+       <!-- end of tab -->
+      </div>
+
+      <div class="tab-pane fade in active" id="square-style">
+        <div class="row"> 
+
+
+
+          <div id="discover_creators_square" class="panel-body">
+            <script id="discover_creators_square_template" type="x-tmpl-mustache"> 
+            {{#.}}
+            
+              <div class="col-md-3">
+                <div class="discover-tile panel panel-primary">
+
+
+
+                  <div class="panel-body">
+                    <div class="embed-responsive embed-responsive-4by3 neg-margins">
+                      <iframe src="//www.youtube.com/embed/{{youtube_shortcode}}?rel=0&amp;controls=2;theme=light&amp;modestbranding=1&amp;wmode=transparent&amp;showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+                    </div>
+
+
+
+                    <br>
+                    <h2><b><a href="/creators/main/{{creators_name}}"> {{creators_name}} </a></b></h2>
+                    <div class="row discover-under-name">
+                      <div class="col-xs-6">
+                      <small> {{category_names}} </small>
+                      </div>
+                      <div class="col-xs-6">
+                       {{{verified_html}}}
+                     </div>
+                   </div>
+
+                   <div class="discover-desc">
+                    <h4> {{description}} </h4>
+                  </div>
+
+
+                  <hr class="thin-hr">                  
+                    <div class="row discover-values">
+                      <div class="col-xs-3">
+                      <h5><b>{{worth_current}}</b> </h5>
+                      </div>
+                      <div class="col-xs-3">
+                      <h5><b>{{price_current}}</b>  </h5>
+                      </div>
+                      <div class="col-xs-3">
+                      <h5><b>{{number_of_backers}}</b>  </h5>
+                      </div>
+                      <div class="col-xs-3">
+                      <h5><b>{{reward_yield_current}}</b>  </h5>
+
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-3">
+                        <h6 class="vtop">Worth</h6>
+                      </div>
+                      <div class="col-xs-3">
+                       <h6 class="vtop">Price</h6>
+                     </div>
+                     <div class="col-xs-3">
+                       <h6 class="vtop">Backers</h6>
+                     </div>
+                     <div class="col-xs-3">
+                      <h6 class="vtop">Reward</h6>
+                    </div>
+                  </div>
+
+                </div>
+                </div>
+              </div>
+              {{/.}}
+            </script>
+
+
+
+          </div>
+
+          <!-- end of tab -->
+        </div>
+
+      <!-- end of tabs content -->
+    </div>
+
+
+
+  </div>
 
 
       

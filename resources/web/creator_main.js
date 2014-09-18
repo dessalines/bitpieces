@@ -5,17 +5,47 @@ $(document).ready(function() {
 
     fillSimpleText(creatorName + '/get_main_body', '#main_body');
 
+    // Fill the youtube iframe
+    simpleFetch(creatorName + '/get_youtube_link').done(function(result) {
+
+        console.log("youtube v = " + result);
+
+        $("#youtubeFrame").attr("src",
+            "https://www.youtube.com/embed/" + result + "?rel=0&amp;theme=light&amp;modestbranding=1&amp;wmode=transparent&amp;showinfo=0");
+    });
+
     // if you're this creator, then set up summer note, issue pieces button
     var userName = getCookie('username');
 
 
     if (userName == creatorName) {
+
+        // show the creator content
+        $("#creator_edit_content").removeClass("hide");
+        $("#youtubeFrame,#social_buttons").addClass("hide");
+
+
         // show the save btn
         setupSummerNote('getcreatorpage', '#main_body', 'main_body');
 
         saveSummerNote('savecreatorpage', '#saveBtn', '#main_body');
 
         simpleFetch('getcreatorpage').done(function(result) {
+            var jsonObj = JSON.parse(result);
+            console.log(jsonObj);
+            var youtube_link = jsonObj['youtube_link'];
+            console.log('youtube ' + youtube_link);
+            if (youtube_link != null) {
+                $('#youtubeLinkInput').val(youtube_link);
+            }
+
+            var short_desc = jsonObj['description'];
+            console.log('short_desc ' + short_desc);
+            if (short_desc != null) {
+                $('#shortDescriptionInput').text(short_desc);
+            }
+
+
 
             var emptyObj = '{"main_body": "Nothing here yet"}';
             console.log('page = ' + result);
@@ -24,6 +54,27 @@ $(document).ready(function() {
                 console.log('unhiding');
                 $('.first-timers').removeClass('hide');
             }
+        });
+
+
+        $('#youtubeLinkForm').bootstrapValidator({
+            message: 'This value is not valid',
+            excluded: [':disabled'],
+            submitButtons: 'button[type="submit"]'
+
+        }).on('success.form.bv', function(event) {
+            event.preventDefault();
+            standardFormPost('save_youtube_link', "#youtubeLinkForm");
+        });
+
+        $('#shortDescriptionForm').bootstrapValidator({
+            message: 'This value is not valid',
+            excluded: [':disabled'],
+            submitButtons: 'button[type="submit"]'
+
+        }).on('success.form.bv', function(event) {
+            event.preventDefault();
+            standardFormPost('save_creator_description', "#shortDescriptionForm");
         });
 
     }

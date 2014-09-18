@@ -461,7 +461,7 @@ function setupSummerNote(url, id, sqlColName) {
             // JSON.useDateParser();
             var jsonObj = JSON.parse(data);
 
-
+            $(id+"_title").removeClass("hide");
 
 
             var mainBody = jsonObj[sqlColName];
@@ -746,7 +746,7 @@ function standardFormPost(shortUrl, formId, modalId, reload, successFunctions) {
             // "; expires=" + expireTimeString(60*60); // 1 hour (field is in seconds)
             // Hide the modal, reset the form, show successful
 
-            $(formId)[0].reset();
+            // $(formId)[0].reset();
             $(modalId).modal('hide');
             // console.log(modalId);
             toastr.success(data);
