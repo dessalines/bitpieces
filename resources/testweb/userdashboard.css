@@ -19,7 +19,9 @@
       }*/
 
 
-
+      .neg-margins {
+        margin: -15px;
+      }
 
       .vtop {
         margin-top: 0px;
