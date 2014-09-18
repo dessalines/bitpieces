@@ -1407,7 +1407,8 @@ creators_page_fields.description as description,
 IF(youtube_link IS NULL or youtube_link = '', 
 'https://img.youtube.com/vi/G5pxWdJnnYg/hqdefault.jpg', 
 CONCAT('https://img.youtube.com/vi/',SUBSTRING(youtube_link, LOCATE('v=', youtube_link)+2),'/hqdefault.jpg')
-) as youtube_image_url 
+) as youtube_image_url ,
+SUBSTRING(youtube_link, LOCATE('v=', youtube_link)+2) as youtube_shortcode
 from creators
 left join pieces_owned_value_current_by_creator
 on pieces_owned_value_current_by_creator.creators_id = creators.id
