@@ -19,10 +19,7 @@
       }*/
 
 
-      .black-borders {
-        margin-top: -30px;
-        margin-bottom: -30px;
-      }
+
 
       .vtop {
         margin-top: 0px;
@@ -68,6 +65,10 @@
       height: 40px;
      }
      .discover-image {
+
+        margin-top: -30px;
+        margin-bottom: -30px;
+
        margin: -15px;
        padding: 0px;
        border:0px;
