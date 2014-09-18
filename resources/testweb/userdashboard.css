@@ -65,8 +65,8 @@
       height: 40px;
      }
      .discover-image {
-      /*margin: -15px;*/
-      width: 100%;
+      margin: -15px;
+      width: auto !important;
       height: 300px;
 
 /*
