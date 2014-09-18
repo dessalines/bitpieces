@@ -90,6 +90,11 @@
           height:152px !important;
           width:auto !important;*/
         }
+        .discover-image {
+          margin: -15px;
+          height: 245px;
+          width: auto !important;
+        }
       }
 
       @media (min-width: 1200px) {
@@ -99,7 +104,7 @@
       }
       .discover-image {
         margin: -15px;
-        height: 250px;
+        height: 245px;
         width: auto !important;
       }
     }
