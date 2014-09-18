@@ -66,8 +66,9 @@
      }
      .discover-image {
       margin: -15px;
+      height: 240px;
       width: auto !important;
-      height: 300px;
+      
 
 /*
        margin: -50px -15px -50px -15px;
