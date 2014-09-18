@@ -3,8 +3,11 @@
 
 Real version
 -------------
-change tools.js :
-var sparkService = "https://bitpieces.com:4567/"
+test tools.js :
+var sparkService = "http://test.bitpieces.com:8080/"
+var cookie_path_name = "test";
+prod tools.js : 
+var sparkService = "https://bitpieces.com:8081/"
 var cookie_path_name = "prod";
 
 Real tracking code in common.js :
@@ -31,8 +34,82 @@ favicon :
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="https://bitpieces.com/favicon.ico" type="image/x-icon" />
 
+test htaccess: 
 
-htaccess
+
+#Options +FollowSymLinks +Indexes
+# php_flag engine off
+
+#DirectoryIndex derp.php
+
+RewriteBase /
+RewriteEngine On
+
+
+
+
+# html directs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.+)$ $1.html [L,QSA]
+
+
+# make landing look like the root
+RewriteRule ^$ /testing_home.html [L]
+
+ErrorDocument 404 /404.html
+
+
+# The creators rewrites
+RewriteRule ^creators/main/([^/.]+)/?$ /creator_main.html?creator=$1 [L]
+RewriteRule ^creators/main/(.*) $1  [L]
+
+RewriteRule ^creators/overview/([^/.]+)/?$ /creator_overview.html?creator=$1 [L]
+RewriteRule ^creators/overview/(.*) $1  [L]
+
+RewriteRule ^creators/funds/([^/.]+)/?$ /creator_funds.html?creator=$1 [L]
+RewriteRule ^creators/funds/(.*) $1  [L]
+
+RewriteRule ^creators/pieces/([^/.]+)/?$ /creator_pieces.html?creator=$1 [L]
+RewriteRule ^creators/pieces/(.*) $1  [L]
+
+RewriteRule ^creators/pricing/([^/.]+)/?$ /creator_pricing.html?creator=$1 [L]
+RewriteRule ^creators/pricing/(.*) $1  [L]
+
+RewriteRule ^creators/rewards/([^/.]+)/?$ /creator_rewards.html?creator=$1 [L]
+RewriteRule ^creators/rewards/(.*) $1  [L]
+
+RewriteRule ^creators/settings/([^/.]+)/?$ /creator_settings.html?creator=$1 [L]
+RewriteRule ^creators/settings/(.*) $1  [L]
+
+RewriteRule ^creators/worth/([^/.]+)/?$ /creator_worth.html?creator=$1 [L]
+RewriteRule ^creators/worth/(.*) $1  [L]
+
+# The users rewrites
+RewriteRule ^users/funds/([^/.]+)/?$ /userdashboard_funds.html?user=$1 [L]
+RewriteRule ^users/funds/(.*) $1  [L]
+
+RewriteRule ^users/overview/([^/.]+)/?$ /userdashboard_overview.html?user=$1 [L]
+RewriteRule ^users/overview/(.*) $1  [L]
+
+RewriteRule ^users/pieces/([^/.]+)/?$ /userdashboard_pieces.html?user=$1 [L]
+RewriteRule ^users/pieces/(.*) $1  [L]
+
+RewriteRule ^users/prices/([^/.]+)/?$ /userdashboard_prices.html?user=$1 [L]
+RewriteRule ^users/prices/(.*) $1  [L]
+
+RewriteRule ^users/settings/([^/.]+)/?$ /userdashboard_settings.html?user=$1 [L]
+RewriteRule ^users/settings/(.*) $1  [L]
+
+
+
+
+
+
+
+
+prod htaccess
 -------
 #Options +FollowSymLinks +Indexes
 # php_flag engine off
@@ -100,15 +177,9 @@ RewriteRule ^users/prices/(.*) $1  [L]
 RewriteRule ^users/settings/([^/.]+)/?$ /userdashboard_settings.html?user=$1 [L]
 RewriteRule ^users/settings/(.*) $1  [L]
 
-
 Javascript
 ----------
     
- 
-
-
-
-
 -- from : to 
 setupDepositButton("make_deposit_fake", '#placedepositBtn', '#depositForm', '#depositModal');
 fillFieldFromMustache('deposit_button', '#deposit_template', '#deposit_div', false);
@@ -220,7 +291,7 @@ Creator pages
 </div>
 
 
-The user withdrawal, remove the line that says its fake, and disabled
+The user withdrawal, remove the line that says its fake, and take out the disabled for bitcoin address.
 
 Fake version
 -----------
