@@ -69,6 +69,7 @@
        margin: -50px -15px -50px -15px;
        padding: 0px;
        border:0px;
+       overflow:hidden;
        border-top-left-radius:4px;
        border-top-right-radius:4px;
        
