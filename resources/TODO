@@ -111,8 +111,8 @@ BA2800 5.0, orangish-red
 + Change the correct active classes on test site
 - About to port changes to main site!
 - start adding openID facebook and google logins
-- fix deposit and withdrawal times, use the start_time instead? 
-	-It's weird to see deposit happen sooner than a buy, simply because it sent another callback 
++ fix deposit and withdrawal times, use the start_time instead? 
+	+It's weird to see deposit happen sooner than a buy, simply because it sent another callback 
 
 
 
