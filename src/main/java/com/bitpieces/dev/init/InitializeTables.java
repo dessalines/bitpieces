@@ -186,19 +186,19 @@ public class InitializeTables {
 		User terry = User.findFirst("username like 'Terry%'");
 
 
-		DBActions.makeOrUpdateOrder("fake1", "ofake1");
+		DBActions.makeOrUpdateCoinbaseOrder("fake1", "ofake1");
 		DBActions.makeDepositFake(dick.getId().toString(), .15d, "fake1");
 
 		// an exact amount, or a straight up pieces buy
-		DBActions.makeOrUpdateOrder("fake2", "ofake2");
+		DBActions.makeOrUpdateCoinbaseOrder("fake2", "ofake2");
 		DBActions.makeDepositFake(john.getId().toString(), .17d, "fake2");
 
 
-		DBActions.makeOrUpdateOrder("fake3", "ofake3");
+		DBActions.makeOrUpdateCoinbaseOrder("fake3", "ofake3");
 		DBActions.makeDepositFake(bill.getId().toString(), .015d, "fake3");
 
 
-		DBActions.makeOrUpdateOrder("fake4", "ofake4");
+		DBActions.makeOrUpdateCoinbaseOrder("fake4", "ofake4");
 		DBActions.makeDepositFake(terry.getId().toString(), .3d, "fake4");
 
 

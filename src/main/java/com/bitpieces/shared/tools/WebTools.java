@@ -407,7 +407,7 @@ public class WebTools {
 
 		String timeStr = Tools.SDF.get().format(new Date());
 
-		DBActions.makeOrUpdateOrder("fakeCbTid" + timeStr, "ofake1"+ timeStr);
+		DBActions.makeOrUpdateCoinbaseOrder("fakeCbTid" + timeStr, "ofake1"+ timeStr);
 		DBActions.makeDepositFake(uid.getId(),btcAmount, "fakeCbTid" + timeStr);
 
 		return message;
@@ -458,10 +458,10 @@ public class WebTools {
 
 			System.out.println(bitcents + "|" + btcAmount + "|" + "cb_tid");
 
-			DBActions.makeOrUpdateOrder(cb_tid, orderNumber);
+			DBActions.makeOrUpdateCoinbaseOrder(cb_tid, orderNumber);
 
 
-			DBActions.makeOrUpdateDeposit(userId,btcAmount,cb_tid, status);
+			DBActions.makeOrUpdateCoinbaseDeposit(userId,btcAmount,cb_tid, status);
 
 
 

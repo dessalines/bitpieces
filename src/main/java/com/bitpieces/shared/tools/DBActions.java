@@ -430,7 +430,7 @@ public class DBActions {
 	}
 
 
-	public static Users_deposits makeOrUpdateDeposit(String userId, Double btc_amount, String cb_tid, String status) {
+	public static Users_deposits makeOrUpdateCoinbaseDeposit(String userId, Double btc_amount, String cb_tid, String status) {
 
 		String timeStr = SDF.format(new Date());
 
@@ -446,10 +446,7 @@ public class DBActions {
 						"status", status);
 
 			} else {
-				dep.set("users_id", userId,
-						"cb_tid", cb_tid, 
-						"time_", timeStr, 
-						"btc_amount", btc_amount, 
+				dep.set(
 						"status", status).saveIt();
 				return dep;
 			}
@@ -461,7 +458,7 @@ public class DBActions {
 
 
 
-	public static Orders makeOrUpdateOrder(String cb_tid, String order_number) {
+	public static Orders makeOrUpdateCoinbaseOrder(String cb_tid, String order_number) {
 
 		Orders order = Orders.findFirst("cb_tid=?", cb_tid);
 
