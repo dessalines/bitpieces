@@ -45,6 +45,9 @@ public class UnitConverter {
 	public static String bitcoinCurrentCurrQuery(String ISO) {
 		return "https://api.bitcoinaverage.com/ticker/global/" + ISO + "/last" ;
 	}
+	public static String bitcoinCoinbaseCurrentCurrQuery(String ISO) {
+		return "https://api.coinbase.com/v1/prices/spot_rate?currency=" + ISO;
+	}
 
 
 	// The map of toCurrency, and the given currency service
@@ -60,7 +63,8 @@ public class UnitConverter {
 							Map<DateTime, Double> rates = btcSpotRatesFromBtcAverageResponse(historyRes);
 
 							// Grab the most recent rate for today, and add it
-							String currentRes = Tools.httpGet(bitcoinCurrentCurrQuery(ISO));
+//							String currentRes = Tools.httpGet(bitcoinCurrentCurrQuery(ISO));
+							String currentRes = Tools.httpGet(bitcoinCoinbaseCurrentCurrQuery(ISO));
 							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForToday(currentRes);
 							
 							rates.put(recentRate.getKey(), recentRate.getValue());

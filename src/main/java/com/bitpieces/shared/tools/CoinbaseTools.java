@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 import com.bitpieces.shared.DataSources;
@@ -205,6 +206,9 @@ public class CoinbaseTools {
 
 	@Deprecated // because it costs to transfer between accounts, have to keep track of funds other ways
 	public static String createCoinbaseAccount(Coinbase cb, String userName) {
+		
+	
+		
 		Account account = new Account();
 		account.setName(userName);
 	
