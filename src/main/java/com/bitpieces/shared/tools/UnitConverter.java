@@ -563,7 +563,7 @@ public class UnitConverter {
 		
 		// Goto the last one
 		List<Map<String, String>> lom = Tools.ListOfMapsPOJO(res);
-		log.info(Tools.GSON.toJson(lom));
+		log.info("LOM " + Tools.GSON.toJson(lom));
 		
 		Double value = Double.parseDouble(lom.get(0).get("amount"));
 
