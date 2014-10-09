@@ -64,8 +64,9 @@ public class UnitConverter {
 
 							// Grab the most recent rate for today, and add it
 //							String currentRes = Tools.httpGet(bitcoinCurrentCurrQuery(ISO));
+//							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForToday(currentRes);
 							String currentRes = Tools.httpGet(bitcoinCoinbaseCurrentCurrQuery(ISO));
-							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForToday(currentRes);
+							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForTodayCoinbase(currentRes);
 							
 							rates.put(recentRate.getKey(), recentRate.getValue());
 							log.info("recent rate put = " + recentRate.getValue());
@@ -551,6 +552,31 @@ public class UnitConverter {
 				new AbstractMap.SimpleEntry<DateTime, Double>(startOfToday, value);
 		return entry;
 	}
+	
+	public static final Map.Entry<DateTime, Double> getMostRecentConversionRateForTodayCoinbase(String res) {
+
+
+
+		// had a weird error where the date in the csv file looked like this: 2014-07-
+		DateTime time = new DateTime();
+		DateTime startOfToday = getStartOfDay(time);
+		
+		// Goto the last one
+		List<Map<String, String>> lom = Tools.ListOfMapsPOJO(res);
+		Double value = Double.parseDouble(lom.get(0).get("amount"));
+
+
+
+		// Normalize time to today
+		//		LocalDate today = time.toLocalDate();
+		//		DateTime startOfToday = today.toDateTimeAtStartOfDay(time.getZone());
+		
+
+		Map.Entry<DateTime, Double> entry = 
+				new AbstractMap.SimpleEntry<DateTime, Double>(startOfToday, value);
+		return entry;
+	}
+	
 	Map<DateTime, Double> getDateValueMapFromTable(List<Model> list, String dateColName, String valColName) {
 
 		Map<DateTime, Double> dv = new LinkedHashMap<DateTime, Double>();
