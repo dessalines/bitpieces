@@ -565,7 +565,7 @@ public class UnitConverter {
 		List<Map<String, String>> lom = Tools.ListOfMapsPOJO(res);
 		Double value = Double.parseDouble(lom.get(0).get("amount"));
 
-
+		log.info("obj = " + res  + "lom[0] = " + lom.get(0) + "val = " + value);
 
 		// Normalize time to today
 		//		LocalDate today = time.toLocalDate();
