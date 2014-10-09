@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -562,10 +563,12 @@ public class UnitConverter {
 		DateTime startOfToday = getStartOfDay(time);
 		
 		// Goto the last one
-		List<Map<String, String>> lom = Tools.ListOfMapsPOJO(res);
+		Map<String,String> lom=new HashMap<String,String>();
+		lom=(Map<String,String>) Tools.GSON.fromJson(res, lom.getClass());
+		
 		log.info("LOM " + Tools.GSON.toJson(lom));
 		
-		Double value = Double.parseDouble(lom.get(0).get("amount"));
+		Double value = Double.parseDouble(lom.get("amount"));
 
 		
 
