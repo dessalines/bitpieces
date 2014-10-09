@@ -64,10 +64,12 @@ public class UnitConverter {
 							Map<DateTime, Double> rates = btcSpotRatesFromBtcAverageResponse(historyRes);
 
 							// Grab the most recent rate for today, and add it
-//							String currentRes = Tools.httpGet(bitcoinCurrentCurrQuery(ISO));
-//							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForToday(currentRes);
-							String currentRes = Tools.httpGet(bitcoinCoinbaseCurrentCurrQuery(ISO));
-							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForTodayCoinbase(currentRes);
+							String currentRes = Tools.httpGet(bitcoinCurrentCurrQuery(ISO));
+							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForToday(currentRes);
+							
+							// This is the coinbase version
+//							String currentRes = Tools.httpGet(bitcoinCoinbaseCurrentCurrQuery(ISO));
+//							Entry<DateTime, Double> recentRate = getMostRecentConversionRateForTodayCoinbase(currentRes);
 							
 							rates.put(recentRate.getKey(), recentRate.getValue());
 							log.info("recent rate put = " + recentRate.getValue());
