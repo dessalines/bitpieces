@@ -68,7 +68,7 @@ public class WebCommon {
 
 
 		get("/get_users_settings", (req, res) -> {
-			String json = null;
+			String jsonderp = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
@@ -76,22 +76,22 @@ public class WebCommon {
 				//				verifyUser(uid);
 
 				// get currency if one exists
-				json = WebTools.getUsersSettingsJson(uid);
+				jsonderp = WebTools.getUsersSettingsJson(uid);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:user/get_pieces_owned_value_accum", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String userName = req.params(":user");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {
@@ -99,72 +99,72 @@ public class WebCommon {
 				dbInit(prop);
 				// get currency if one exists
 
-				json = WebTools.getPiecesOwnedValueAccumSeriesJson(userName, uid, sf);
+				jsonderp = WebTools.getPiecesOwnedValueAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
 
 		get("/:user/get_pieces_owned_value_current", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String userName = req.params(":user");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {
 
 
 				dbInit(prop);
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, uid, sf);
+				jsonderp = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, uid, sf);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
 
 		get("/:user/:creator/get_pieces_owned_value_current", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				String creatorName = req.params(":creator");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				dbInit(prop);
-				json = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, creatorName, uid, sf);
+				jsonderp = WebTools.getPiecesOwnedValueCurrentSeriesJson(userName, creatorName, uid, sf);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
 
 		get("/:user/:creator/get_pieces_owned_current", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 
 			try {
 				String userName = req.params(":user");
@@ -172,17 +172,17 @@ public class WebCommon {
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				dbInit(prop);
-				json = WebTools.getPiecesOwnedCurrentSeriesJson(userName, creatorName, uid, sf);
+				jsonderp = WebTools.getPiecesOwnedCurrentSeriesJson(userName, creatorName, uid, sf);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
@@ -191,110 +191,110 @@ public class WebCommon {
 
 		get("/:user/get_prices_for_user", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
 				dbInit(prop);
-				json = WebTools.getPricesForUserSeriesJson(userName, uid, sf);
+				jsonderp = WebTools.getPricesForUserSeriesJson(userName, uid, sf);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
 
 		get("/:user/get_rewards_earned_accum", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 
 				dbInit(prop);
-				json = WebTools.getRewardsEarnedAccumSeriesJson(userName, uid, sf);
+				jsonderp = WebTools.getRewardsEarnedAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
 
 		get("/:user/get_rewards_earned_total", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getRewardsEarnedTotalJson(userName, uid, sf);
+				jsonderp = WebTools.getRewardsEarnedTotalJson(userName, uid, sf);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:user/get_pieces_owned_accum", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getPiecesOwnedAccumSeriesJson(userName, uid, sf);
+				jsonderp = WebTools.getPiecesOwnedAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
 		get("/:user/get_users_funds_accum", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getUsersFundsAccumSeriesJson(userName, uid, sf);
+				jsonderp = WebTools.getUsersFundsAccumSeriesJson(userName, uid, sf);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
@@ -302,30 +302,30 @@ public class WebCommon {
 
 		get("/:user/get_users_transactions/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				Integer pageNum = Integer.parseInt(req.params(":page_num"));
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getUsersTransactionsJson(userName, uid, sf, pageNum);
+				jsonderp = WebTools.getUsersTransactionsJson(userName, uid, sf, pageNum);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 
 		});
 
 		get("/:user/get_users_activity/:page_num", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				Integer pageNum = Integer.parseInt(req.params(":page_num"));
@@ -333,176 +333,176 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get currency if one exists
-				json = WebTools.getUsersActivityJson(userName, uid, sf, pageNum);
+				jsonderp = WebTools.getUsersActivityJson(userName, uid, sf, pageNum);
 
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:user/get_users_funds_current", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getUsersFundsCurrentJson(userName, uid, sf);
+				jsonderp = WebTools.getUsersFundsCurrentJson(userName, uid, sf);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_creators_funds_current", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String creatorName = req.params(":creator");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getCreatorsFundsCurrentJson(creatorName, uid, sf);
+				jsonderp = WebTools.getCreatorsFundsCurrentJson(creatorName, uid, sf);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 		
 		get("/:creator/get_youtube_link", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String creatorName = req.params(":creator");
 				dbInit(prop);
-				json = WebTools.getYoutubeLink(creatorName);
+				jsonderp = WebTools.getYoutubeLink(creatorName);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/get_withdraw_fee_pct", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				uid.verifyCreator();
 				dbInit(prop);
-				json = WebTools.getCreatorsWithdrawFeePctJson(uid);
+				jsonderp = WebTools.getCreatorsWithdrawFeePctJson(uid);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:user/get_rewards_earned_total_by_user", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getRewardsEarnedTotalByUserJson(userName, uid, sf);
+				jsonderp = WebTools.getRewardsEarnedTotalByUserJson(userName, uid, sf);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:user/get_pieces_value_current_by_owner", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getPiecesValueCurrentByOwnerJson(userName, uid, sf);
+				jsonderp = WebTools.getPiecesValueCurrentByOwnerJson(userName, uid, sf);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:user/get_users_reputation", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 
 				dbInit(prop);
-				json = WebTools.getUsersReputationJson(userName);
+				jsonderp = WebTools.getUsersReputationJson(userName);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:user/get_users_bids_asks_current", (req, res) -> {
 			allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			try {
 				String userName = req.params(":user");
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 				dbInit(prop);
-				json = WebTools.getUsersBidsAsksCurrentJson(userName, uid, sf);
+				jsonderp = WebTools.getUsersBidsAsksCurrentJson(userName, uid, sf);
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
@@ -512,12 +512,12 @@ public class WebCommon {
 
 			String query = req.params(":query");
 
-			String json = WebTools.creatorsSearchJson(query);
+			String jsonderp = WebTools.creatorsSearchJson(query);
 
 			dbClose();
 
-			System.out.println(json);
-			return json;
+			System.out.println(jsonderp);
+			return jsonderp;
 
 
 		});
@@ -526,12 +526,12 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
 
-			String json = WebTools.getCategoriesJson(req.body());
+			String jsonderp = WebTools.getCategoriesJson(req.body());
 
 			dbClose();
 
-			System.out.println(json);
-			return json;
+			System.out.println(jsonderp);
+			return jsonderp;
 
 
 		});
@@ -540,18 +540,18 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
 
-			String json = WebTools.getCurrenciesJson(req.body());
+			String jsonderp = WebTools.getCurrenciesJson(req.body());
 
 			dbClose();
 
-			System.out.println(json);
-			return json;
+			System.out.println(jsonderp);
+			return jsonderp;
 
 
 		});
 
 		get("/getcreatorpage", (req, res) -> {
-			String json = null;
+			String jsonderp = null;
 			try {			
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
@@ -559,20 +559,20 @@ public class WebCommon {
 				cid.verifyCreator();
 
 				// get the creator id from the token		
-				json = WebTools.getCreatorPageJson(cid.getId(), req.body());
+				jsonderp = WebTools.getCreatorPageJson(cid.getId(), req.body());
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_pieces_owned_value_current_by_creator", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -580,20 +580,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token		
-				json = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, uid, sf);
+				jsonderp = WebTools.getPiecesOwnedValueCurrentByCreatorJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_funds_raised", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -601,60 +601,60 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token		
-				json = WebTools.getFundsRaisedJson(creator, uid, sf);
+				jsonderp = WebTools.getFundsRaisedJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_safety_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token		
-				json = WebTools.getSafetyCurrentJson(creator);
+				jsonderp = WebTools.getSafetyCurrentJson(creator);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_verified", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token		
-				json = WebTools.getVerifiedJson(creator);
+				jsonderp = WebTools.getVerifiedJson(creator);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_price_per_piece_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -662,20 +662,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPricePerPieceCurrentJson(creator, uid, sf);
+				jsonderp = WebTools.getPricePerPieceCurrentJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_rewards_owed", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -683,20 +683,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsOwedJson(creator, uid, sf);
+				jsonderp = WebTools.getRewardsOwedJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_pieces_owned_value_current_creator", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -704,20 +704,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesOwnedValueCurrentCreatorSeriesJson(creator, uid, sf);
+				jsonderp = WebTools.getPiecesOwnedValueCurrentCreatorSeriesJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_backers_current_count", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 
 			try {			
@@ -725,40 +725,40 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBackersCurrentCountJson(creator);
+				jsonderp = WebTools.getBackersCurrentCountJson(creator);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_main_body", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getMainBodyJson(creator, req.body());
+				jsonderp = WebTools.getMainBodyJson(creator, req.body());
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_pricing", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -766,20 +766,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPricesJson(creator, uid, sf);
+				jsonderp = WebTools.getPricesJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_safety", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -787,21 +787,21 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getSafetyJson(creator, uid, sf);
+				jsonderp = WebTools.getSafetyJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 
 		get("/:creator/get_worth", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -809,20 +809,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getWorthJson(creator, uid, sf);
+				jsonderp = WebTools.getWorthJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_bids_asks_current/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 
@@ -833,14 +833,14 @@ public class WebCommon {
 
 				// get the creator id from the token	
 
-				json = WebTools.getBidsAsksCurrentJson(creator, uid, sf, pageNum);
+				jsonderp = WebTools.getBidsAsksCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
@@ -848,7 +848,7 @@ public class WebCommon {
 
 		get("/:creator/get_rewards/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
@@ -857,20 +857,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsJson(creator, uid, sf, pageNum);
+				jsonderp = WebTools.getRewardsJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_rewards_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
@@ -879,20 +879,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsCurrentJson(creator, uid, sf);
+				jsonderp = WebTools.getRewardsCurrentJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_rewards_yield_current", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
@@ -901,20 +901,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsYieldCurrentJson(creator, uid, sf);
+				jsonderp = WebTools.getRewardsYieldCurrentJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_rewards_owed_to_user", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -922,20 +922,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getRewardsOwedToUserJson(creator,uid, sf);
+				jsonderp = WebTools.getRewardsOwedToUserJson(creator,uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_pieces_issued/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
@@ -944,20 +944,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesIssuedJson(creator, uid, sf, pageNum);
+				jsonderp = WebTools.getPiecesIssuedJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_backers_current/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
@@ -966,20 +966,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getBackersCurrentJson(creator, uid, sf, pageNum);
+				jsonderp = WebTools.getBackersCurrentJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_creators_reputation", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 
 			try {			
@@ -987,80 +987,80 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsReputationJson(creator);
+				jsonderp = WebTools.getCreatorsReputationJson(creator);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_pieces_available", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesAvailableJson(creator);
+				jsonderp = WebTools.getPiecesAvailableJson(creator);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_pieces_available_total", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesAvailableTotalJson(creator);
+				jsonderp = WebTools.getPiecesAvailableTotalJson(creator);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_pieces_owned_total", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			try {			
 
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesOwnedTotalJson(creator);
+				jsonderp = WebTools.getPiecesOwnedTotalJson(creator);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_creators_activity/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
@@ -1069,20 +1069,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsActivityJson(creator, uid, sf, pageNum);
+				jsonderp = WebTools.getCreatorsActivityJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_creators_transactions/:page_num", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			Integer pageNum = Integer.parseInt(req.params(":page_num"));
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
@@ -1091,20 +1091,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsTransactionsJson(creator, uid, sf, pageNum);
+				jsonderp = WebTools.getCreatorsTransactionsJson(creator, uid, sf, pageNum);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_creators_funds_accum", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -1112,20 +1112,20 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getCreatorsFundsAccumJson(creator,uid, sf);
+				jsonderp = WebTools.getCreatorsFundsAccumJson(creator,uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 
 		get("/:creator/get_pieces_issued_most_recent_price", (req, res) -> {
 			WebCommon.allowResponseHeaders(req, res);
-			String json = null;
+			String jsonderp = null;
 			String creator = req.params(":creator");
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 			try {			
@@ -1133,14 +1133,14 @@ public class WebCommon {
 				dbInit(prop);
 
 				// get the creator id from the token	
-				json = WebTools.getPiecesIssuedMostRecentPriceJson(creator, uid, sf);
+				jsonderp = WebTools.getPiecesIssuedMostRecentPriceJson(creator, uid, sf);
 
 				dbClose();
 			}catch (NoSuchElementException e) {
 				e.printStackTrace();
 			}
 
-			return json;
+			return jsonderp;
 
 		});
 	}
@@ -1206,28 +1206,28 @@ public class WebCommon {
 		});
 
 		post("/save_settings", (req, res) -> {
-			String json = null;
+			String jsonderp = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
 				UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
 
 				// get currency if one exists
-				json = WebTools.saveSettings(uid, req.body());
+				jsonderp = WebTools.saveSettings(uid, req.body());
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
 		post("/save_creators_categories", (req, res) -> {
-			String json = null;
+			String jsonderp = null;
 			try {
 				WebCommon.allowResponseHeaders(req, res);
 				dbInit(prop);
@@ -1235,16 +1235,16 @@ public class WebCommon {
 				cid.verifyCreator();
 
 				// get currency if one exists
-				json = WebTools.saveCreatorsCategories(cid, req.body());
+				jsonderp = WebTools.saveCreatorsCategories(cid, req.body());
 
 				dbClose();
 
-				System.out.println(json);
+				System.out.println(jsonderp);
 			} catch (NoSuchElementException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return json;
+			return jsonderp;
 
 		});
 
@@ -1255,12 +1255,12 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
-			String json = WebTools.getDiscoverJson(req.body(), uid, sf);
+			String jsonderp = WebTools.getDiscoverJson(req.body(), uid, sf);
 
 			dbClose();
 
-			System.out.println(json);
-			return json;
+			System.out.println(jsonderp);
+			return jsonderp;
 
 
 		});
@@ -1269,12 +1269,12 @@ public class WebCommon {
 			WebCommon.allowResponseHeaders(req, res);
 			dbInit(prop);
 			UID uid = WebCommon.getUserFromCookie(req, cache, cookiePath);
-			String json = WebTools.getDiscoverSquareJson(req.body(), uid, sf);
+			String jsonderp = WebTools.getDiscoverSquareJson(req.body(), uid, sf);
 
 			dbClose();
 
-			System.out.println(json);
-			return json;
+			System.out.println(jsonderp);
+			return jsonderp;
 
 
 		});
@@ -1678,8 +1678,8 @@ public class WebCommon {
 			res.cookie("authenticated_session_id_" + path, authenticatedSession, expireSeconds, secure);
 			res.cookie("username_" + path, uid.getUsername(), expireSeconds, secure);
 			res.cookie("usertype_" + path, uid.getType().toString(), expireSeconds, secure);
-			//			String json = Tools.GSON2.toJson(cache);
-			//			System.out.println(json);
+			//			String jsonderp = Tools.GSON2.toJson(cache);
+			//			System.out.println(jsonderp);
 
 
 			return authenticatedSession;

@@ -1,0 +1,989 @@
+13:50:40,589 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+13:50:40,589 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+13:50:40,589 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/sdcard/git/bitpieces/target/bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar!/logback.xml]
+13:50:40,631 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@1444d75 - URL [jar:file:/sdcard/git/bitpieces/target/bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar!/logback.xml] is not of type file
+13:50:40,885 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+13:50:40,895 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+13:50:40,917 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+13:50:41,178 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+13:50:41,178 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+13:50:41,178 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+13:50:41,179 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+13:50:41,183 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [FILE]
+13:50:41,191 |-WARN in ch.qos.logback.core.FileAppender[FILE] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+13:50:41,191 |-WARN in ch.qos.logback.core.FileAppender[FILE] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+13:50:41,192 |-WARN in ch.qos.logback.core.FileAppender[FILE] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+13:50:41,192 |-INFO in ch.qos.logback.core.FileAppender[FILE] - File property is set to [bitpieces_webservice_log]
+13:50:41,197 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.bitpieces] to TRACE
+13:50:41,198 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to DEBUG
+13:50:41,198 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+13:50:41,200 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[ROOT]
+13:50:41,200 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+13:50:41,206 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@80cdac - Registering current configuration as safe fallback point
+
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.web_service.WebService.main(WebService.java:39)
+java.io.FileNotFoundException: /root/bitpieces_dev_session.cache (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.readObjectFromFile(Tools.java:292)
+	at com.bitpieces.dev.web_service.WebService.main(WebService.java:42)
+13:50:42.036 [main] INFO  com.bitpieces.shared.tools.Tools - Wrote a new file @ /root/bitpieces_dev_session.cache
+13:50:42.190 [main] DEBUG spark.route.RouteMatcherFactory - creates RouteMatcher
+13:50:42.195 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /hello, spark.SparkBase$1@9bd883
+13:50:42.197 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /help, spark.SparkBase$1@19ad2e3
+13:50:42.199 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /, spark.SparkBase$1@50d156
+13:50:42.201 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /pass_encrypt, spark.SparkBase$1@11d0846
+13:50:42.205 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /get_users_settings, spark.SparkBase$1@15b53dc
+13:50:42.210 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_pieces_owned_value_accum, spark.SparkBase$1@19a3314
+13:50:42.212 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_pieces_owned_value_current, spark.SparkBase$1@11666ad
+13:50:42.214 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/:creator/get_pieces_owned_value_current, spark.SparkBase$1@171d0d8
+13:50:42.218 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/:creator/get_pieces_owned_current, spark.SparkBase$1@14a2ec7
+13:50:42.220 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_prices_for_user, spark.SparkBase$1@a70f16
+13:50:42.225 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_rewards_earned_accum, spark.SparkBase$1@8e4bb0
+13:50:42.227 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_rewards_earned_total, spark.SparkBase$1@6a205
+13:50:42.228 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_pieces_owned_accum, spark.SparkBase$1@1175e74
+13:50:42.231 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_funds_accum, spark.SparkBase$1@540f5a
+13:50:42.233 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_transactions/:page_num, spark.SparkBase$1@52a00
+13:50:42.235 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_activity/:page_num, spark.SparkBase$1@1009542
+13:50:42.237 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_funds_current, spark.SparkBase$1@8ff1a8
+13:50:42.238 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_funds_current, spark.SparkBase$1@177e91b
+13:50:42.240 [Thread-1] DEBUG org.eclipse.jetty.util.log - Logging to Logger[org.eclipse.jetty.util.log] via org.eclipse.jetty.util.log.Slf4jLog
+13:50:42.243 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_youtube_link, spark.SparkBase$1@128d34a
+13:50:42.245 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /get_withdraw_fee_pct, spark.SparkBase$1@1bb6bea
+13:50:42.247 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_rewards_earned_total_by_user, spark.SparkBase$1@12e5f00
+13:50:42.248 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_pieces_value_current_by_owner, spark.SparkBase$1@ea6137
+13:50:42.250 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_reputation, spark.SparkBase$1@67a849
+13:50:42.253 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_bids_asks_current, spark.SparkBase$1@67a738
+13:50:42.254 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /creators_search/:query, spark.SparkBase$1@17632c9
+13:50:42.257 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /get_categories, spark.SparkBase$1@1040f2f
+13:50:42.258 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /get_currencies, spark.SparkBase$1@cff1a
+13:50:42.260 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /getcreatorpage, spark.SparkBase$1@5f1e4e
+13:50:42.262 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_owned_value_current_by_creator, spark.SparkBase$1@aa2946
+13:50:42.265 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_funds_raised, spark.SparkBase$1@147c63f
+13:50:42.266 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_safety_current, spark.SparkBase$1@1bc39f8
+13:50:42.268 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_verified, spark.SparkBase$1@1f69090
+13:50:42.270 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_price_per_piece_current, spark.SparkBase$1@a263c2
+13:50:42.271 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards_owed, spark.SparkBase$1@1f45fa1
+13:50:42.273 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_owned_value_current_creator, spark.SparkBase$1@14df152
+13:50:42.274 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_backers_current_count, spark.SparkBase$1@1083305
+13:50:42.276 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_main_body, spark.SparkBase$1@1b80b2
+13:50:42.276 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - spark.webserver.JettyHandler@1c194e2 added {org.eclipse.jetty.server.session.HashSessionManager@102a0dd,AUTO}
+13:50:42.278 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pricing, spark.SparkBase$1@145433b
+13:50:42.280 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_safety, spark.SparkBase$1@e6dfe1
+13:50:42.282 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_worth, spark.SparkBase$1@5fece7
+13:50:42.284 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_bids_asks_current/:page_num, spark.SparkBase$1@2cd91f
+13:50:42.285 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards/:page_num, spark.SparkBase$1@168ef40
+13:50:42.289 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards_current, spark.SparkBase$1@1c072cb
+13:50:42.291 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards_yield_current, spark.SparkBase$1@1b485ba
+13:50:42.293 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards_owed_to_user, spark.SparkBase$1@1740a0f
+13:50:42.295 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_issued/:page_num, spark.SparkBase$1@d3d15a
+13:50:42.298 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_backers_current/:page_num, spark.SparkBase$1@1ca8de8
+13:50:42.299 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_reputation, spark.SparkBase$1@d3a4e9
+13:50:42.301 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_available, spark.SparkBase$1@1a65b77
+13:50:42.302 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_available_total, spark.SparkBase$1@12bf671
+13:50:42.304 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_owned_total, spark.SparkBase$1@1c87521
+13:50:42.306 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_activity/:page_num, spark.SparkBase$1@8a102f
+13:50:42.308 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_transactions/:page_num, spark.SparkBase$1@1c386de
+13:50:42.310 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_funds_accum, spark.SparkBase$1@f60048
+13:50:42.311 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_issued_most_recent_price, spark.SparkBase$1@aa0a0a
+13:50:42.313 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /userlogin, spark.SparkBase$1@11a7f8f
+13:50:42.315 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /creatorlogin, spark.SparkBase$1@1b062a
+13:50:42.316 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@1bb07cc added {qtp24447221{STOPPED,8<=0<=200,i=0,q=0},AUTO}
+13:50:42.316 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /recover_password, spark.SparkBase$1@19d4f9d
+13:50:42.319 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /save_settings, spark.SparkBase$1@50a6f6
+13:50:42.320 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /save_creators_categories, spark.SparkBase$1@1ca01a2
+13:50:42.334 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /discover, spark.SparkBase$1@e0fea4
+13:50:42.336 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /discover_square, spark.SparkBase$1@1168fa9
+13:50:42.338 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /user_logout, spark.SparkBase$1@1282c25
+13:50:42.340 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /change_password, spark.SparkBase$1@b419da
+13:50:42.341 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /savecreatorpage, spark.SparkBase$1@106ebcb
+13:50:42.343 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /save_youtube_link, spark.SparkBase$1@1d299e3
+13:50:42.344 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /save_creator_description, spark.SparkBase$1@1938003
+13:50:42.346 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /registeruser, spark.SparkBase$1@b1cc93
+13:50:42.347 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /registercreator, spark.SparkBase$1@1507a04
+13:50:42.349 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /placebid, spark.SparkBase$1@95d394
+13:50:42.350 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - HttpConnectionFactory@101ed90{HTTP/1.1} added {HttpConfiguration@1249f5b{32768,8192/8192,https://:0,[]},POJO}
+13:50:42.351 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /placeask, spark.SparkBase$1@17c8ad9
+13:50:42.352 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /placebuy, spark.SparkBase$1@12f2cc1
+13:50:42.354 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /issue_pieces, spark.SparkBase$1@12cf7ab
+13:50:42.356 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /new_reward, spark.SparkBase$1@1a8622
+13:50:42.357 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@fee10{null}{0.0.0.0:0} added {org.eclipse.jetty.server.Server@1bb07cc,UNMANAGED}
+13:50:42.359 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /raise_funds, spark.SparkBase$1@156496
+13:50:42.359 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@fee10{null}{0.0.0.0:0} added {qtp24447221{STOPPED,8<=0<=200,i=0,q=0},AUTO}
+13:50:42.360 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@fee10{null}{0.0.0.0:0} added {org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@d70258,AUTO}
+13:50:42.360 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /delete_bid_ask, spark.SparkBase$1@162fe6d
+13:50:42.361 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@fee10{null}{0.0.0.0:0} added {org.eclipse.jetty.io.ArrayByteBufferPool@1eba6f1,POJO}
+13:50:42.363 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@fee10{null}{0.0.0.0:0} added {HttpConnectionFactory@101ed90{HTTP/1.1},AUTO}
+13:50:42.368 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@fee10{HTTP/1.1}{0.0.0.0:0} added {org.eclipse.jetty.server.ServerConnector$ServerConnectorManager@40ff52,MANAGED}
+13:50:42.370 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@1bb07cc added {ServerConnector@fee10{HTTP/1.1}{0.0.0.0:8080},AUTO}
+13:50:42.370 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@1bb07cc added {spark.webserver.JettyHandler@1c194e2,AUTO}
+== Spark has ignited ...
+>> Listening on 0.0.0.0:8080
+13:50:42.371 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.server.Server@1bb07cc
+13:50:42.377 [Thread-1] INFO  org.eclipse.jetty.server.Server - jetty-9.0.z-SNAPSHOT
+13:50:42.432 [Thread-1] DEBUG o.e.j.server.handler.AbstractHandler - starting org.eclipse.jetty.server.Server@1bb07cc
+13:50:42.433 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting qtp24447221{STOPPED,8<=0<=200,i=0,q=0}
+13:50:42.438 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED qtp24447221{STARTED,8<=8<=200,i=7,q=0}
+13:50:42.439 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting spark.webserver.JettyHandler@1c194e2
+13:50:42.441 [Thread-1] DEBUG o.e.j.server.handler.AbstractHandler - starting spark.webserver.JettyHandler@1c194e2
+13:50:42.441 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.server.session.HashSessionManager@102a0dd
+13:50:42.454 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.server.session.HashSessionIdManager@1fa785e
+13:50:42.455 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.server.session.HashSessionIdManager@1fa785e
+13:50:42.455 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@1bb07cc added {org.eclipse.jetty.server.session.HashSessionIdManager@1fa785e,MANAGED}
+13:50:42.459 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.server.session.HashSessionManager@102a0dd
+13:50:42.460 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED spark.webserver.JettyHandler@1c194e2
+13:50:42.461 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting ServerConnector@fee10{HTTP/1.1}{0.0.0.0:8080}
+13:50:42.479 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+13:50:42.487 [main] INFO  org.quartz.simpl.SimpleThreadPool - Job execution threads will use class loader of thread: main
+13:50:42.491 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@fee10{HTTP/1.1}{0.0.0.0:8080} added {sun.nio.ch.ServerSocketChannelImpl[/0:0:0:0:0:0:0:0:8080],POJO}
+13:50:42.493 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@d70258
+13:50:42.508 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@d70258
+13:50:42.509 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting HttpConnectionFactory@101ed90{HTTP/1.1}
+13:50:42.510 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED HttpConnectionFactory@101ed90{HTTP/1.1}
+13:50:42.510 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.server.ServerConnector$ServerConnectorManager@40ff52
+13:50:42.517 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.io.SelectorManager$ManagedSelector@18f438d keys=-1 selected=-1
+13:50:42.523 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.io.SelectorManager$ManagedSelector@18f438d keys=0 selected=0
+13:50:42.525 [Thread-1] DEBUG o.e.j.util.thread.QueuedThreadPool - qtp24447221{STARTED,8<=8<=200,i=8,q=0} dispatched org.eclipse.jetty.io.SelectorManager$ManagedSelector@18f438d keys=0 selected=0
+13:50:42.526 [qtp24447221-11-selector-0] DEBUG org.eclipse.jetty.io.SelectorManager - Starting Thread[qtp24447221-11-selector-0,5,main] on org.eclipse.jetty.io.SelectorManager$ManagedSelector@18f438d keys=0 selected=0
+13:50:42.527 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+13:50:42.540 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.io.SelectorManager$ManagedSelector@33b1c7 keys=-1 selected=-1
+13:50:42.540 [qtp24447221-11-selector-0] DEBUG org.eclipse.jetty.io.SelectorManager - Selector loop waiting on select
+13:50:42.545 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.io.SelectorManager$ManagedSelector@33b1c7 keys=0 selected=0
+13:50:42.546 [Thread-1] DEBUG o.e.j.util.thread.QueuedThreadPool - qtp24447221{STARTED,8<=8<=200,i=7,q=0} dispatched org.eclipse.jetty.io.SelectorManager$ManagedSelector@33b1c7 keys=0 selected=0
+13:50:42.549 [qtp24447221-13-selector-1] DEBUG org.eclipse.jetty.io.SelectorManager - Starting Thread[qtp24447221-13-selector-1,5,main] on org.eclipse.jetty.io.SelectorManager$ManagedSelector@33b1c7 keys=0 selected=0
+13:50:42.549 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.2.1 created.
+13:50:42.550 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.server.ServerConnector$ServerConnectorManager@40ff52
+13:50:42.550 [qtp24447221-13-selector-1] DEBUG org.eclipse.jetty.io.SelectorManager - Selector loop waiting on select
+13:50:42.553 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+13:50:42.554 [Thread-1] DEBUG o.e.j.util.thread.QueuedThreadPool - qtp24447221{STARTED,8<=8<=200,i=6,q=0} dispatched org.eclipse.jetty.server.AbstractConnector$Acceptor@7d41c1
+13:50:42.555 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.2.1) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+13:50:42.556 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'DefaultQuartzScheduler' initialized from default resource file in Quartz package: 'quartz.properties'
+13:50:42.556 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.2.1
+13:50:42.558 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:50:42.558 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+13:50:42.559 [Thread-1] INFO  o.e.jetty.server.ServerConnector - Started ServerConnector@fee10{HTTP/1.1}{0.0.0.0:8080}
+13:50:42.560 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED ServerConnector@fee10{HTTP/1.1}{0.0.0.0:8080}
+13:50:42.561 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.server.Server@1bb07cc
+13:50:42.583 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:50:42.590 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-65e0c6b8-5031-4ed9-8498-4a564bf6d32a', class=com.bitpieces.dev.scheduled.AskBidAccepter
+13:50:42.592 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /make_deposit_fake, spark.SparkBase$1@167e60c
+13:50:42.594 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /make_withdrawal_fake, spark.SparkBase$1@aaecc3
+13:50:42.595 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /creator_withdraw_fake, spark.SparkBase$1@dda9cc
+13:50:42.600 [DefaultQuartzScheduler_Worker-1] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-65e0c6b8-5031-4ed9-8498-4a564bf6d32a
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+13:50:42.601 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:17)13:50:42.602 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-08828346-ac30-441a-bd58-40ad5c73a184', class=com.bitpieces.dev.scheduled.CreatorsFundsChecker
+
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:50:42.605 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:50:42.605 [DefaultQuartzScheduler_Worker-2] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-08828346-ac30-441a-bd58-40ad5c73a184
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:17)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:50:42.637 [DefaultQuartzScheduler_Worker-1] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-65e0c6b8-5031-4ed9-8498-4a564bf6d32a threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:50:42.637 [DefaultQuartzScheduler_Worker-2] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-08828346-ac30-441a-bd58-40ad5c73a184 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:50:42.639 [DefaultQuartzScheduler_Worker-1] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-65e0c6b8-5031-4ed9-8498-4a564bf6d32a threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:50:42.639 [DefaultQuartzScheduler_Worker-2] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-08828346-ac30-441a-bd58-40ad5c73a184 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:50:43.549 [Timer-0] DEBUG org.quartz.utils.UpdateChecker - Checking for available updated version of Quartz...
+13:50:48.702 [Timer-0] DEBUG org.quartz.utils.UpdateChecker - Quartz version update check failed: connect timed out
+13:51:06.281 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:55:08,122 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+13:55:08,123 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+13:55:08,123 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [jar:file:/sdcard/git/bitpieces/target/bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar!/logback.xml]
+13:55:08,172 |-INFO in ch.qos.logback.core.joran.spi.ConfigurationWatchList@1444d75 - URL [jar:file:/sdcard/git/bitpieces/target/bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar!/logback.xml] is not of type file
+13:55:08,470 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+13:55:08,479 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+13:55:08,503 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+13:55:08,795 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+13:55:08,795 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+13:55:08,795 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+13:55:08,798 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.FileAppender]
+13:55:08,803 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [FILE]
+13:55:08,814 |-WARN in ch.qos.logback.core.FileAppender[FILE] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+13:55:08,814 |-WARN in ch.qos.logback.core.FileAppender[FILE] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+13:55:08,814 |-WARN in ch.qos.logback.core.FileAppender[FILE] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+13:55:08,814 |-INFO in ch.qos.logback.core.FileAppender[FILE] - File property is set to [bitpieces_webservice_log]
+13:55:08,822 |-INFO in ch.qos.logback.classic.joran.action.LoggerAction - Setting level of logger [com.bitpieces] to TRACE
+13:55:08,823 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to DEBUG
+13:55:08,823 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+13:55:08,826 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [FILE] to Logger[ROOT]
+13:55:08,826 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+13:55:08,833 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@80cdac - Registering current configuration as safe fallback point
+
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.web_service.WebService.main(WebService.java:39)
+java.io.EOFException
+	at java.io.ObjectInputStream$PeekInputStream.readFully(ObjectInputStream.java:2328)
+	at java.io.ObjectInputStream$BlockDataInputStream.readShort(ObjectInputStream.java:2797)
+	at java.io.ObjectInputStream.readStreamHeader(ObjectInputStream.java:802)
+	at java.io.ObjectInputStream.<init>(ObjectInputStream.java:299)
+	at com.bitpieces.shared.tools.Tools.readObjectFromFile(Tools.java:295)
+	at com.bitpieces.dev.web_service.WebService.main(WebService.java:42)
+13:55:09.728 [main] INFO  com.bitpieces.shared.tools.Tools - Wrote a new file @ /root/bitpieces_dev_session.cache
+13:55:09.913 [main] DEBUG spark.route.RouteMatcherFactory - creates RouteMatcher
+13:55:09.918 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /hello, spark.SparkBase$1@9bd883
+13:55:09.921 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /help, spark.SparkBase$1@19ad2e3
+13:55:09.924 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /, spark.SparkBase$1@50d156
+13:55:09.928 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /pass_encrypt, spark.SparkBase$1@11d0846
+13:55:09.940 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /get_users_settings, spark.SparkBase$1@15b53dc
+13:55:09.949 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_pieces_owned_value_accum, spark.SparkBase$1@19a3314
+13:55:09.951 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_pieces_owned_value_current, spark.SparkBase$1@11666ad
+13:55:09.953 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/:creator/get_pieces_owned_value_current, spark.SparkBase$1@171d0d8
+13:55:09.957 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/:creator/get_pieces_owned_current, spark.SparkBase$1@14a2ec7
+13:55:09.960 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_prices_for_user, spark.SparkBase$1@a70f16
+13:55:09.967 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_rewards_earned_accum, spark.SparkBase$1@8e4bb0
+13:55:09.969 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_rewards_earned_total, spark.SparkBase$1@6a205
+13:55:09.971 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_pieces_owned_accum, spark.SparkBase$1@1175e74
+13:55:09.972 [Thread-1] DEBUG org.eclipse.jetty.util.log - Logging to Logger[org.eclipse.jetty.util.log] via org.eclipse.jetty.util.log.Slf4jLog
+13:55:09.975 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_funds_accum, spark.SparkBase$1@540f5a
+13:55:09.978 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_transactions/:page_num, spark.SparkBase$1@52a00
+13:55:09.980 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_activity/:page_num, spark.SparkBase$1@1009542
+13:55:09.982 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_funds_current, spark.SparkBase$1@8ff1a8
+13:55:09.984 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_funds_current, spark.SparkBase$1@177e91b
+13:55:09.990 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_youtube_link, spark.SparkBase$1@128d34a
+13:55:09.992 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /get_withdraw_fee_pct, spark.SparkBase$1@1bb6bea
+13:55:09.994 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_rewards_earned_total_by_user, spark.SparkBase$1@12e5f00
+13:55:09.996 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_pieces_value_current_by_owner, spark.SparkBase$1@ea6137
+13:55:10.000 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_reputation, spark.SparkBase$1@67a849
+13:55:10.002 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:user/get_users_bids_asks_current, spark.SparkBase$1@67a738
+13:55:10.005 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /creators_search/:query, spark.SparkBase$1@17632c9
+13:55:10.006 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /get_categories, spark.SparkBase$1@1040f2f
+13:55:10.008 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /get_currencies, spark.SparkBase$1@cff1a
+13:55:10.010 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - spark.webserver.JettyHandler@529bf4 added {org.eclipse.jetty.server.session.HashSessionManager@e9e330,AUTO}
+13:55:10.012 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /getcreatorpage, spark.SparkBase$1@5f1e4e
+13:55:10.019 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_owned_value_current_by_creator, spark.SparkBase$1@aa2946
+13:55:10.022 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_funds_raised, spark.SparkBase$1@147c63f
+13:55:10.023 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_safety_current, spark.SparkBase$1@1bc39f8
+13:55:10.026 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_verified, spark.SparkBase$1@1f69090
+13:55:10.028 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_price_per_piece_current, spark.SparkBase$1@a263c2
+13:55:10.030 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards_owed, spark.SparkBase$1@1f45fa1
+13:55:10.033 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_owned_value_current_creator, spark.SparkBase$1@14df152
+13:55:10.035 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_backers_current_count, spark.SparkBase$1@1083305
+13:55:10.037 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_main_body, spark.SparkBase$1@1b80b2
+13:55:10.040 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pricing, spark.SparkBase$1@145433b
+13:55:10.042 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_safety, spark.SparkBase$1@e6dfe1
+13:55:10.043 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_worth, spark.SparkBase$1@5fece7
+13:55:10.045 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_bids_asks_current/:page_num, spark.SparkBase$1@2cd91f
+13:55:10.050 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards/:page_num, spark.SparkBase$1@168ef40
+13:55:10.052 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards_current, spark.SparkBase$1@1c072cb
+13:55:10.054 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards_yield_current, spark.SparkBase$1@1b485ba
+13:55:10.056 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_rewards_owed_to_user, spark.SparkBase$1@1740a0f
+13:55:10.057 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_issued/:page_num, spark.SparkBase$1@d3d15a
+13:55:10.059 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_backers_current/:page_num, spark.SparkBase$1@1ca8de8
+13:55:10.061 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_reputation, spark.SparkBase$1@d3a4e9
+13:55:10.063 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@1cf83b0 added {qtp28443153{STOPPED,8<=0<=200,i=0,q=0},AUTO}
+13:55:10.064 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_available, spark.SparkBase$1@1a65b77
+13:55:10.065 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_available_total, spark.SparkBase$1@12bf671
+13:55:10.069 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_owned_total, spark.SparkBase$1@1c87521
+13:55:10.071 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_activity/:page_num, spark.SparkBase$1@8a102f
+13:55:10.082 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_transactions/:page_num, spark.SparkBase$1@1c386de
+13:55:10.084 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_creators_funds_accum, spark.SparkBase$1@f60048
+13:55:10.086 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: get, /:creator/get_pieces_issued_most_recent_price, spark.SparkBase$1@aa0a0a
+13:55:10.088 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /userlogin, spark.SparkBase$1@11a7f8f
+13:55:10.090 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /creatorlogin, spark.SparkBase$1@1b062a
+13:55:10.091 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /recover_password, spark.SparkBase$1@19d4f9d
+13:55:10.093 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /save_settings, spark.SparkBase$1@50a6f6
+13:55:10.096 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /save_creators_categories, spark.SparkBase$1@1ca01a2
+13:55:10.098 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /discover, spark.SparkBase$1@e0fea4
+13:55:10.100 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /discover_square, spark.SparkBase$1@1168fa9
+13:55:10.101 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - HttpConnectionFactory@121f525{HTTP/1.1} added {HttpConfiguration@1956e72{32768,8192/8192,https://:0,[]},POJO}
+13:55:10.102 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /user_logout, spark.SparkBase$1@1282c25
+13:55:10.104 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /change_password, spark.SparkBase$1@b419da
+13:55:10.106 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /savecreatorpage, spark.SparkBase$1@106ebcb
+13:55:10.107 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /save_youtube_link, spark.SparkBase$1@1d299e3
+13:55:10.109 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@7e6095{null}{0.0.0.0:0} added {org.eclipse.jetty.server.Server@1cf83b0,UNMANAGED}
+13:55:10.109 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /save_creator_description, spark.SparkBase$1@1938003
+13:55:10.111 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@7e6095{null}{0.0.0.0:0} added {qtp28443153{STOPPED,8<=0<=200,i=0,q=0},AUTO}
+13:55:10.112 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@7e6095{null}{0.0.0.0:0} added {org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@f16b1b,AUTO}
+13:55:10.114 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@7e6095{null}{0.0.0.0:0} added {org.eclipse.jetty.io.ArrayByteBufferPool@ec11c7,POJO}
+13:55:10.114 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /registeruser, spark.SparkBase$1@b1cc93
+13:55:10.115 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@7e6095{null}{0.0.0.0:0} added {HttpConnectionFactory@121f525{HTTP/1.1},AUTO}
+13:55:10.117 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /registercreator, spark.SparkBase$1@1507a04
+13:55:10.121 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /placebid, spark.SparkBase$1@95d394
+13:55:10.121 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@7e6095{HTTP/1.1}{0.0.0.0:0} added {org.eclipse.jetty.server.ServerConnector$ServerConnectorManager@1d01e5c,MANAGED}
+13:55:10.122 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /placeask, spark.SparkBase$1@17c8ad9
+13:55:10.123 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@1cf83b0 added {ServerConnector@7e6095{HTTP/1.1}{0.0.0.0:8080},AUTO}
+13:55:10.124 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@1cf83b0 added {spark.webserver.JettyHandler@529bf4,AUTO}
+== Spark has ignited ...
+13:55:10.124 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /placebuy, spark.SparkBase$1@12f2cc1
+>> Listening on 0.0.0.0:8080
+13:55:10.125 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.server.Server@1cf83b0
+13:55:10.126 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /issue_pieces, spark.SparkBase$1@12cf7ab
+13:55:10.130 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /new_reward, spark.SparkBase$1@1a8622
+13:55:10.131 [Thread-1] INFO  org.eclipse.jetty.server.Server - jetty-9.0.z-SNAPSHOT
+13:55:10.132 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /raise_funds, spark.SparkBase$1@156496
+13:55:10.134 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /delete_bid_ask, spark.SparkBase$1@162fe6d
+13:55:10.191 [Thread-1] DEBUG o.e.j.server.handler.AbstractHandler - starting org.eclipse.jetty.server.Server@1cf83b0
+13:55:10.192 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting qtp28443153{STOPPED,8<=0<=200,i=0,q=0}
+13:55:10.198 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED qtp28443153{STARTED,8<=8<=200,i=7,q=0}
+13:55:10.199 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting spark.webserver.JettyHandler@529bf4
+13:55:10.200 [Thread-1] DEBUG o.e.j.server.handler.AbstractHandler - starting spark.webserver.JettyHandler@529bf4
+13:55:10.200 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.server.session.HashSessionManager@e9e330
+13:55:10.212 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.server.session.HashSessionIdManager@7ceb83
+13:55:10.213 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.server.session.HashSessionIdManager@7ceb83
+13:55:10.214 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - org.eclipse.jetty.server.Server@1cf83b0 added {org.eclipse.jetty.server.session.HashSessionIdManager@7ceb83,MANAGED}
+13:55:10.215 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.server.session.HashSessionManager@e9e330
+13:55:10.216 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED spark.webserver.JettyHandler@529bf4
+13:55:10.218 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting ServerConnector@7e6095{HTTP/1.1}{0.0.0.0:8080}
+13:55:10.244 [Thread-1] DEBUG o.e.j.u.component.ContainerLifeCycle - ServerConnector@7e6095{HTTP/1.1}{0.0.0.0:8080} added {sun.nio.ch.ServerSocketChannelImpl[/0:0:0:0:0:0:0:0:8080],POJO}
+13:55:10.245 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@f16b1b
+13:55:10.249 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+13:55:10.250 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.util.thread.ScheduledExecutorScheduler@f16b1b
+13:55:10.251 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting HttpConnectionFactory@121f525{HTTP/1.1}
+13:55:10.251 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED HttpConnectionFactory@121f525{HTTP/1.1}
+13:55:10.252 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.server.ServerConnector$ServerConnectorManager@1d01e5c
+13:55:10.259 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.io.SelectorManager$ManagedSelector@13b60f8 keys=-1 selected=-1
+13:55:10.263 [main] INFO  org.quartz.simpl.SimpleThreadPool - Job execution threads will use class loader of thread: main
+13:55:10.266 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.io.SelectorManager$ManagedSelector@13b60f8 keys=0 selected=0
+13:55:10.270 [Thread-1] DEBUG o.e.j.util.thread.QueuedThreadPool - qtp28443153{STARTED,8<=8<=200,i=8,q=0} dispatched org.eclipse.jetty.io.SelectorManager$ManagedSelector@13b60f8 keys=0 selected=0
+13:55:10.272 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.io.SelectorManager$ManagedSelector@12168ba keys=-1 selected=-1
+13:55:10.272 [qtp28443153-12-selector-0] DEBUG org.eclipse.jetty.io.SelectorManager - Starting Thread[qtp28443153-12-selector-0,5,main] on org.eclipse.jetty.io.SelectorManager$ManagedSelector@13b60f8 keys=0 selected=0
+13:55:10.274 [qtp28443153-12-selector-0] DEBUG org.eclipse.jetty.io.SelectorManager - Selector loop waiting on select
+13:55:10.273 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.io.SelectorManager$ManagedSelector@12168ba keys=0 selected=0
+13:55:10.276 [Thread-1] DEBUG o.e.j.util.thread.QueuedThreadPool - qtp28443153{STARTED,8<=8<=200,i=7,q=0} dispatched org.eclipse.jetty.io.SelectorManager$ManagedSelector@12168ba keys=0 selected=0
+13:55:10.277 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - starting org.eclipse.jetty.io.SelectorManager$ManagedSelector@12d2233 keys=-1 selected=-1
+13:55:10.278 [qtp28443153-11-selector-1] DEBUG org.eclipse.jetty.io.SelectorManager - Starting Thread[qtp28443153-11-selector-1,5,main] on org.eclipse.jetty.io.SelectorManager$ManagedSelector@12168ba keys=0 selected=0
+13:55:10.278 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.io.SelectorManager$ManagedSelector@12d2233 keys=0 selected=0
+13:55:10.280 [qtp28443153-11-selector-1] DEBUG org.eclipse.jetty.io.SelectorManager - Selector loop waiting on select
+13:55:10.281 [Thread-1] DEBUG o.e.j.util.thread.QueuedThreadPool - qtp28443153{STARTED,8<=8<=200,i=6,q=0} dispatched org.eclipse.jetty.io.SelectorManager$ManagedSelector@12d2233 keys=0 selected=0
+13:55:10.282 [qtp28443153-13-selector-2] DEBUG org.eclipse.jetty.io.SelectorManager - Starting Thread[qtp28443153-13-selector-2,5,main] on org.eclipse.jetty.io.SelectorManager$ManagedSelector@12d2233 keys=0 selected=0
+13:55:10.282 [qtp28443153-13-selector-2] DEBUG org.eclipse.jetty.io.SelectorManager - Selector loop waiting on select
+13:55:10.282 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.server.ServerConnector$ServerConnectorManager@1d01e5c
+13:55:10.302 [Thread-1] DEBUG o.e.j.util.thread.QueuedThreadPool - qtp28443153{STARTED,8<=8<=200,i=5,q=0} dispatched org.eclipse.jetty.server.AbstractConnector$Acceptor@5640e5
+13:55:10.307 [Thread-1] INFO  o.e.jetty.server.ServerConnector - Started ServerConnector@7e6095{HTTP/1.1}{0.0.0.0:8080}
+13:55:10.308 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED ServerConnector@7e6095{HTTP/1.1}{0.0.0.0:8080}
+13:55:10.308 [Thread-1] DEBUG o.e.j.u.component.AbstractLifeCycle - STARTED org.eclipse.jetty.server.Server@1cf83b0
+13:55:10.321 [main] INFO  o.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+13:55:10.324 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.2.1 created.
+13:55:10.330 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+13:55:10.333 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.2.1) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+13:55:10.334 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'DefaultQuartzScheduler' initialized from default resource file in Quartz package: 'quartz.properties'
+13:55:10.334 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.2.1
+13:55:10.335 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+13:55:10.336 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:55:10.413 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:55:10.417 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /make_deposit_fake, spark.SparkBase$1@167e60c
+13:55:10.422 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156', class=com.bitpieces.dev.scheduled.AskBidAccepter
+13:55:10.424 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /make_withdrawal_fake, spark.SparkBase$1@aaecc3
+13:55:10.426 [main] DEBUG spark.route.SimpleRouteMatcher - Adds route: post, /creator_withdraw_fake, spark.SparkBase$1@dda9cc
+13:55:10.431 [DefaultQuartzScheduler_Worker-1] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:17)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:55:10.432 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:55:10.440 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13', class=com.bitpieces.dev.scheduled.CreatorsFundsChecker
+13:55:10.443 [DefaultQuartzScheduler_Worker-2] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:17)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:55:10.443 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:55:10.496 [DefaultQuartzScheduler_Worker-1] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:55:10.497 [DefaultQuartzScheduler_Worker-2] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:55:10.509 [DefaultQuartzScheduler_Worker-1] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:55:10.509 [DefaultQuartzScheduler_Worker-2] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:55:11.323 [Timer-0] DEBUG org.quartz.utils.UpdateChecker - Checking for available updated version of Quartz...
+13:55:30.362 [Timer-0] DEBUG org.quartz.utils.UpdateChecker - Quartz version update check failed: connect timed out
+13:55:34.826 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:56:02.027 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:56:10.374 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156', class=com.bitpieces.dev.scheduled.AskBidAccepter
+13:56:10.376 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:56:10.376 [DefaultQuartzScheduler_Worker-3] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:17)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:56:10.380 [DefaultQuartzScheduler_Worker-3] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:56:10.381 [DefaultQuartzScheduler_Worker-3] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:56:10.395 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13', class=com.bitpieces.dev.scheduled.CreatorsFundsChecker
+13:56:10.396 [DefaultQuartzScheduler_Worker-4] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:17)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:56:10.399 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:56:10.413 [DefaultQuartzScheduler_Worker-4] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:56:10.415 [DefaultQuartzScheduler_Worker-4] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:56:37.398 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:57:00.919 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:57:10.375 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156', class=com.bitpieces.dev.scheduled.AskBidAccepter
+13:57:10.379 [DefaultQuartzScheduler_Worker-5] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+13:57:10.384 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:17)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:57:10.396 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13', class=com.bitpieces.dev.scheduled.CreatorsFundsChecker
+13:57:10.409 [DefaultQuartzScheduler_Worker-6] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+13:57:10.417 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:17)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:57:10.425 [DefaultQuartzScheduler_Worker-6] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:57:10.427 [DefaultQuartzScheduler_Worker-6] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:57:10.404 [DefaultQuartzScheduler_Worker-5] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:57:10.429 [DefaultQuartzScheduler_Worker-5] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:57:36.882 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:58:03.614 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:58:10.375 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156', class=com.bitpieces.dev.scheduled.AskBidAccepter
+13:58:10.379 [DefaultQuartzScheduler_Worker-7] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+13:58:10.394 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:58:10.403 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13', class=com.bitpieces.dev.scheduled.CreatorsFundsChecker
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:17)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+13:58:10.412 [DefaultQuartzScheduler_Worker-8] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:58:10.414 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:17)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:58:10.424 [DefaultQuartzScheduler_Worker-7] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:58:10.453 [DefaultQuartzScheduler_Worker-7] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:58:10.454 [DefaultQuartzScheduler_Worker-8] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:58:10.456 [DefaultQuartzScheduler_Worker-8] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:58:38.825 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:59:04.936 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:59:10.375 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156', class=com.bitpieces.dev.scheduled.AskBidAccepter
+13:59:10.375 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+13:59:10.376 [DefaultQuartzScheduler_Worker-9] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:17)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:59:10.382 [DefaultQuartzScheduler_Worker-9] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:59:10.383 [DefaultQuartzScheduler_Worker-9] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:59:10.396 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13', class=com.bitpieces.dev.scheduled.CreatorsFundsChecker
+13:59:10.396 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+13:59:10.397 [DefaultQuartzScheduler_Worker-10] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:17)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+13:59:10.400 [DefaultQuartzScheduler_Worker-10] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:59:10.401 [DefaultQuartzScheduler_Worker-10] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+13:59:36.849 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+14:00:03.055 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+14:00:10.375 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156', class=com.bitpieces.dev.scheduled.AskBidAccepter
+14:00:10.379 [DefaultQuartzScheduler_Worker-1] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:17)14:00:10.384 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 1 triggers
+14:00:10.394 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.q.simpl.PropertySettingJobFactory - Producing instance of Job 'DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13', class=com.bitpieces.dev.scheduled.CreatorsFundsChecker
+
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)14:00:10.403 [DefaultQuartzScheduler_Worker-2] DEBUG org.quartz.core.JobRunShell - Calling execute on job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13
+
+java.io.FileNotFoundException: /root/bitpieces_dev_db.properties (No such file or directory)
+	at java.io.FileInputStream.open(Native Method)
+	at java.io.FileInputStream.<init>(FileInputStream.java:131)
+	at java.io.FileInputStream.<init>(FileInputStream.java:87)
+	at com.bitpieces.shared.tools.Tools.loadProperties(Tools.java:181)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:17)
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40)14:00:10.404 [DefaultQuartzScheduler_QuartzSchedulerThread] DEBUG o.quartz.core.QuartzSchedulerThread - batch acquisition of 0 triggers
+
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+14:00:10.419 [DefaultQuartzScheduler_Worker-1] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+14:00:10.434 [DefaultQuartzScheduler_Worker-2] ERROR org.quartz.core.JobRunShell - Job DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an unhandled Exception: 
+org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+14:00:10.435 [DefaultQuartzScheduler_Worker-1] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-668d831e-d105-4e33-bbbc-df672fbcd156 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.dbInit(AskBidAccepter.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.main(AskBidAccepter.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.AskBidAccepter.execute(AskBidAccepter.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
+14:00:10.436 [DefaultQuartzScheduler_Worker-2] ERROR org.quartz.core.ErrorLogger - Job (DEFAULT.6da64b5bd2ee-f2e13483-0e89-4895-af37-f6cd47365f13 threw an exception.
+org.quartz.SchedulerException: Job threw an unhandled exception.
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:213) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) [bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+Caused by: org.javalite.activejdbc.InitException: Failed to connect to JDBC URL: null
+	at org.javalite.activejdbc.DB.open(DB.java:67) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.javalite.activejdbc.Base.open(Base.java:53) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.dbInit(CreatorsFundsChecker.java:25) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.main(CreatorsFundsChecker.java:18) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at com.bitpieces.dev.scheduled.CreatorsFundsChecker.execute(CreatorsFundsChecker.java:40) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 1 common frames omitted
+Caused by: java.sql.SQLException: The url cannot be null
+	at java.sql.DriverManager.getConnection(DriverManager.java:649) ~[na:1.8.0_06]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[na:1.8.0_06]
+	at org.javalite.activejdbc.DB.open(DB.java:64) ~[bitpieces_practice-0.0.1-SNAPSHOT-jar-with-dependencies.jar:na]
+	... 6 common frames omitted
